@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+
+<title>Probability of or</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+<!-- Java Script -->
+<script src="../../plugins/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Python highlighting -->
+<script src="../../plugins/prism/prism.js"></script>
+<link href="../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- Probability Packages -->
+<script src="../../js/probabilityUtils.js"></script>
+<script src="../../plugins/probability/gaussian.js"></script>
+<script src="../../plugins/color.js"></script>
+
+<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+<!-- Stanford -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+
+<!-- Math Jax -->
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script> -->
+<script type="text/javascript">
+  MathJax = {
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "action.js"]
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+	"fast-preview": {
+	  disabled: true
+	}
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<script src="../../plugins/math.min.js"></script>
+
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+
+
+</head>
+
+
+<!-- I declare a few math operators I often use in equations -->
+<div style="display:none">
+  $\DeclareMathOperator{\p}{Pr}$
+  $\DeclareMathOperator{\c}{^C}$
+  $\DeclareMathOperator{\or}{  or}$
+  $\DeclareMathOperator{\and}{  and}$
+</div>
+
+<body class="greyBackground">
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <a href="../"><h3><i class="fas fa-home"></i> Probability for CS</h3></a>
+    </div>
+
+    <ul class="list-unstyled components">
+       <!--  <p>Chris Piech</p> -->
+        
+        <li>
+            <a href="../intro">Introduction</a>
+        </li>
+
+        <li>
+            <a href="../counting">Counting</a>
+        </li>
+
+        <li>
+            <a href="../probability">Definition of Probability</a>
+        </li>
+
+        <li>
+            <a href="../equally">Equally Likely Outcomes</a>
+        </li>
+
+        <li>
+            <a href="../probOr">Probability of "or"</a>
+        </li>
+
+        <li>
+            <a href="../probOr">Probability of "and"</a>
+        </li>
+
+        <li>
+            <a href="../probability">Analytic Probability</a>
+        </li>
+
+        <li>
+            <a href="../notation">Notation</a>
+        </li>
+        
+
+    </ul>
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            Ⓒ Chris Piech, Stanford University
+            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
+        </li>
+    </ul>
+</nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+<button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
+    <i class="fas fa-align-left"></i>
+    <span></span>
+</button>            
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col handout" >
+              
+                         
+<center><h1>Probability of "or"</h1></center>
+<hr/>
+
+<p>The equation for calculating the probability of either event E <b><i>or</i></b> event F happening, written  $\p(E \or F)$ or equivalently as $\p(E ∪ F)$, is deeply analogous
+to counting the size of two sets. As in counting, the equation that you can use  depends on whether or not the events are "mutually exclusive".</p>
+
+<h2>Mutually Exclusive Events</h2>
+
+<p>Two, events $E$ and $F$ are considered to be mutually exclusive (in set notation $E ∩ F = ∅$) if there are no outcomes that are
+in both events (recall that an event is a set of outcomes which is a subset of the sample
+space). In English, mutually exclusive means that two events can't both happen.</p>
+
+<p>Mutual exclusion can be visualized. Consider the following visual sample space where each outcome is a
+hexagon. The set of all the fifty hexagons is the full sample space:</p>
+
+<p>
+<center>
+	<img style="max-width: min(400px,100%)" src="../../img/probOr/mutuallyExclusive.png"></img><br/>
+	<i>Example of two events, $E$ and $F$, which are mutually exclusive.</i>
+</center>
+</p>
+
+<p>Both events $E$ and $F$ are subsets of the same sample space. Visually, we can note that
+the two sets do not overlap. They are mutually exclusive: there is no outcome that is in both sets.</p>
+
+<p>
+	<div class="bordered">
+		<b><i>Definition</i></b>: Probability of mututally exclusive events<br/>
+		<p>If two events, $E$ and $F$ are mutually exclusive then the probability of $E$ <b><i>or</i></b> $F$ occuring is:
+			$$
+			\p(E \or F) = \p(E) + \p(F)
+			$$
+		</p>
+		<p>This property applies regardless of how you calculate the probability of $E$ or $F$.
+Moreover, the idea extends to more than two events. Lets say you have $n$ events $E_1, E_2, \dots E_n$ where each
+event is mutually exclusive of one another (in other words, no outcome is in more than one event). Then:
+$$
+			\p(E_1 \or E_2 \or \dots \or E_n) = \p(E_1) + \p(E_2) + \dots + \p(E_n) = \sum_{i=1}^n \p(E_i)
+			$$</p>
+	</div>
+	</p>
+
+	<p>You may have noticed that this is one of the axioms of probability. Though it might seem intuitive, it is one of three rules that we accept without proof.</p>
+
+	<p>
+		<div class="alert alert-warning"><b>Caution</b>: Mutual exclusion only makes it easier to calculate the probability of $E \or F$ not other ways of combining events, such as $E \and F$. </div>
+	</p>
+
+	<p>At this point we know how to compute the probability of the "or" of events if and only if they have the mutual exclusion property. What if they don't?</p>
+
+<h2>Inclusion Exclusion</h2>
+               
+
+               
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+</script>                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+</html>

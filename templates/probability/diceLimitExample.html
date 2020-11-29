@@ -1,0 +1,166 @@
+<div class="purpleBox">
+	<p><b><i>Example</i></b>: Probability in the limit</p>
+
+	<p>Here we use the definition of probability to calculate the probability of event $E$, rolling a "5" or a "6" on a fair <a href="https://www.google.com/search?q=dice+roller">six-sided dice</a>. Hit the "Run trials" button to start running trials of the experiment "roll dice". Notice how $\p(E)$, converges to $2/6$ or 0.33 repeating.</p>
+	<p>Event $E$: Rolling a 5 or 6 on a six-sided dice.</p>
+	
+	<hr/>
+	<div class="d-flex justify-content-around mb-3">
+		<button id="diceButton" onclick = "onRunButtonClicked()" type="button" class="btn btn-primary btn-sm" style="font-size:1rem; width:120px"><i class="fas fa-play"></i> Run trials</button>
+
+		<span style="margin-top:11px; width: 120px">Dice outcome: <span id="trialOutcome"></span></span>
+		<div class="d-flex align-items-center ml-4" style="height: 50px;">
+			<i class="fas fa-walking" style="font-size:24px"></i>
+			<input id="speed" min="0" max="10" step="1" bsstyle="primary" type="range" class="slider primary custom-range form-control" value="0" style="margin: 10px;">
+			<i class="fas fa-running" style="font-size:24px"></i>
+		</div>
+
+	</div>
+
+	
+
+	<div class="d-flex justify-content-around">
+		<span style="width:110px">$n= $ <span id="n">0</span></span>
+		
+		
+		<span style="width:170px">$\text{count}(E) = $  <span id="countE">0</span></span>
+		<span style="width:210px">$\p(E) \approx \frac{\texttip{\text{count}(E)}{count of times that event occurs}}{n} = $ <span id="p"></span></span>
+	</div>
+</div>
+
+<script>
+
+const MIN_DELAY = 0
+const MAX_DELAY = 750
+const SPEED_STEPS = 10
+const FAST_TRIALS_PER_HEARTBEAT = 47
+
+// single global variables
+var isRunning = false
+
+function onRunButtonClicked() {
+	if(isRunning) {
+		isRunning = false
+		$("#diceButton").html('<i class="fas fa-play"></i> Run trials')
+		$("#diceButton").prop('disabled', true);
+		$("#n").html(0)
+		$("#countE").html(0)
+		$("#p").html('')
+		$("#trialOutcome").html('')
+	} else {
+		isRunning = true
+		$("#diceButton").html('<i class="fas fa-undo"></i> Reset')
+		runDiceLimitTrial(0, 0)
+	}
+}
+
+function getTrialOutcome() {
+	// let v = randInt(0, 1)
+	// if(v == 0) {
+	// 	return "Tails"
+	// } else {
+	// 	return "Heads"
+	// }
+	return randInt(1, 6)
+}
+
+function isSuccess(outcome) {
+	return outcome > 4
+}
+
+function updateTrialOutcomeHtml(outcome) {
+	let elem = $("#trialOutcome")
+	if(isSuccess(outcome)) {
+		elem.css("color", "blue");
+	} else {
+		elem.css("color", "red")
+	}
+	elem.html(outcome)
+}
+
+function fastTrials(n, countE, k) {
+	var lastOutcome = null;
+	for (var i = 0; i < k; i++) {
+		n += 1
+		lastOutcome = getTrialOutcome()
+		if(isSuccess(lastOutcome)) {
+			countE += 1
+		}
+	}
+	let p = countE / n;
+	updateTrialOutcomeHtml(lastOutcome)
+	$("#n").html(n)
+	$("#countE").html(countE)
+	$("#p").html(p.toFixed(4))
+
+	setTimeout(function() {
+		runDiceLimitTrial(n, countE)
+	}, 0)
+}
+
+function slowTrial(n, countE, delay) {
+	n += 1
+	let v = getTrialOutcome()
+	if(isSuccess(v)) {
+		countE += 1
+	}
+	$("#trialOutcome").fadeOut(delay/5, function() {
+		updateTrialOutcomeHtml(v)
+		$("#n").html(n)
+		$("#trialOutcome").fadeIn(delay/5, function() {
+			let p = countE / n;
+			
+			$("#countE").html(countE)
+			$("#p").html(p.toFixed(4))
+
+			setTimeout(function() {
+				runDiceLimitTrial(n, countE)
+			}, delay)
+		})
+
+	})
+}
+
+function runDiceLimitTrial(n, countE) {
+	if(!isRunning) {
+		$("#n").html(0)
+		$("#countE").html(0)
+		$("#p").html('')
+		$("#trialOutcome").html('')
+		$("#diceButton").prop('disabled', false);
+		return
+	}
+	
+	let delay = getDelay()
+
+	if(delay == -2) {
+		fastTrials(n, countE, 101) 
+	} else if(delay == -1){
+		fastTrials(n, countE, 9) 
+	} else if(delay == 0) {
+		fastTrials(n, countE, 1) 
+	} else {
+		slowTrial(n, countE, delay)
+	}
+	
+}
+
+function getDelay() {
+	let speedValue = $("#speed").val()
+	let delayValue = 10 - speedValue
+	if(delayValue == 0) {
+		return -2;
+	}
+	if(delayValue == 1) {
+		return -1;
+	}
+	if(delayValue == 2) {
+		return 0;
+	}
+	if(delayValue == 3) {
+		return 1;
+	}
+	let interval = (MAX_DELAY - MIN_DELAY) / SPEED_STEPS
+	return MIN_DELAY + delayValue * interval
+}
+</script>

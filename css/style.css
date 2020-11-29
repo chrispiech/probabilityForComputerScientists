@@ -1,0 +1,796 @@
+body {
+  font-family: "Times New Roman", serif;
+  font-size: 18px;
+}
+
+
+#sidebar ul li a,
+#sidebar ul li a:hover,
+#sidebar ul li a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+h1 {
+  font-size: 3.5rem;
+    margin-bottom: 30px;
+}
+
+h2 {
+  margin-top:40px;
+  font-size: 1.8rem;
+}
+
+
+/****
+Key constants: 
+Side Bar Break Width: 1068;
+****/
+
+
+@media (min-width: 1070px) {
+  .container {
+    max-width: 1040px !important;
+  }
+}
+
+/**
+Handout Styles:
+This is the CSS class for a handout. A few notes:
+The actual width of content is 700px. When the 
+handout is wider than 900px this inclues up to 100px
+padding on either side. To make the handout visible
+it must be on a grey background (often the body has
+greyBackground as a style class)
+**/
+.handout {
+  background-color: white;
+  padding:100px;
+  padding-top:50px;
+  max-width: 930px;
+  /*margin-top:20px;*/
+  margin-bottom:50px;
+}
+/* Style for the body of a handout page */
+.greyBackground{
+  background-color: #efefef
+}
+/* When the handout drops bellow a threshold remove padding */
+@media (max-width: 1000px) {
+  .greyBackground {
+    background-color: white;
+  }
+
+  .handout {
+    /* Note: since padding drops from 100 to 15, max-width
+       also drops. 760 = 930 - (100-15)*2 */
+    max-width: 760px;
+    padding-left:15px;
+    padding-right:15px;
+  }
+}
+
+/* 
+Bordered:
+Style for a pre tag with text that should look like a
+console (aka terminal) */
+.bordered {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  padding:10px;
+
+}
+
+/* 
+purpleBox:
+*/
+.purpleBox {
+  /*border-top: 2px solid black;*/
+  padding:20px;
+  /*border-bottom: 2px solid black;*/
+
+  background-color: #EFF1FC;
+  margin-top:20px;
+  margin-bottom: 30px;
+  border-radius:0.25rem;
+}
+
+
+/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    width: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #333;/*#7386D5;*/
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 10px;
+    background: #222;/*#6d7fcc;*/
+
+}
+
+.sidebar-header a {
+  color:white;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid black;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 10px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: calc(100% - 300px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+}
+
+.page {
+  max-width: 950px;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 1068px) {
+    #sidebar {
+        margin-left: -300px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 300px);
+
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+.splashBackground {
+  min-height: 100vh;
+  /*background-color:lavender;*/
+  background-image: url("../img/splash2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.announcement {
+  background-color: aliceblue;
+  border-color: #bce8f1;
+  margin-bottom: 20px;
+}
+
+.readingList {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.scrollArrow {
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 0px;
+  position: absolute;
+  margin-left: 5px;
+  margin-top: 5px;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+}
+
+.blue {
+  color: #346df1;
+  font-weight: bold;
+}
+
+
+
+p {
+  text-align: justify;
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+pre {
+  background-color: white;
+}
+
+li {
+  /*text-align: justify;*/
+}
+
+
+.blue {
+  color:blue;
+}
+
+.console {
+  color:black;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  padding:10px;
+}
+
+code {
+  padding: 0px;
+  border: 0px;
+  background-color: transparent;
+  font-weight: bold;
+}
+
+.lectureMaterials {
+  margin-top: 5px;
+}
+
+.inOut {
+  position: absolute;
+  top: 190px;
+  color: hsl(0, 0%, 60%);
+}
+
+.subtitle {
+  color: #959595;
+}
+
+.classLinks {
+  position: absolute;
+  top: 120px;
+  color: hsl(0, 0%, 60%);
+}
+
+.mapOverlay {
+  background: transparent;
+  position: relative;
+  width: 100%;
+  height: 450px; /* your iframe height */
+  top: 450px; /* your iframe height */
+  margin-top: -450px; /* your iframe height */
+  z-index: 9999;
+}
+
+.subtleHeading {
+  font-size: 14px;
+  font-weight: 700;
+  color: #959595;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.nopadding {
+  padding: 0px;
+}
+
+.caption {
+  min-height: 98px;
+}
+
+.calendarCell {
+  height: 250px;
+  width: 235px;
+  border: 1px solid black;
+  vertical-align: top;
+  padding: 10px;
+}
+
+@media (min-width: 500px) {
+  .calendarCell {
+    height: 210px;
+  }
+  .inOut {
+    top: 150px;
+  }
+
+  .classLinks {
+    top: 80px;
+  }
+}
+
+.calendarWeekCell {
+  max-width: 50px;
+  vertical-align: top;
+}
+
+.overview-table {
+  overflow: auto;
+}
+
+.overview-table-title {
+  overflow: hidden;
+}
+
+.overview-table-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.overview-table-list-li {
+  float: left;
+  width: 33.3%;
+  min-height: 150px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 3px solid #fff;
+  margin: 0px;
+}
+
+.overview-table-list-li-title {
+  float: left;
+  width: 33.3%;
+  height: 30px;
+  padding: 10px;
+  text-align: center;
+}
+
+.overview-class-title {
+  /*text-align:center !important;*/
+}
+
+.counting {
+  background-color: aliceblue;
+}
+
+a:link:after,
+a:visited:after {
+  content: "";
+}
+
+pre {
+  -moz-tab-size: 3;
+} /* Code for Firefox */
+pre {
+  -o-tab-size: 3;
+} /* Code for Opera 10.6-12.1 */
+pre {
+  tab-size: 3;
+}
+
+.comment {
+  color: #006400;
+  font-weight: bold;
+}
+
+.reading-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 15px;
+}
+
+.homeContainer {
+  flex-wrap: wrap;
+}
+
+.info-col {
+  width: 100%;
+}
+
+.announcement-col {
+  flex: 2;
+  padding-left: 0px;
+}
+
+.extra-col {
+  padding-left: 20px;
+  width: 220px;
+  height: 50px;
+}
+
+.mobile-only {
+  display: block;
+}
+
+.extra-body{
+  padding:1rem !important;
+}
+
+.non-mobile-only {
+  display: none;
+}
+
+.mobile-only-inline {
+  display: inline;
+}
+
+.non-mobile-only-inline {
+  display: none;
+}
+
+.round-img {
+  border-radius: 5px;
+  max-width: 45vw;
+  width: 100%;
+}
+
+@media (min-width: 1068px) {
+  .mobile-only {
+    display: none;
+  }
+
+  .non-mobile-only {
+    display: block;
+  }
+
+  .non-mobile-only-inline {
+    display: inline;
+  }
+
+  .mobile-only-inline {
+    display: none;
+  }
+}
+
+.myTocContainer {
+  display: none;
+}
+
+@media (min-width: 1160px) {
+  .myTocContainer {
+    display: block;
+  }
+}
+
+@media (min-width: 500px) {
+  .info-col {
+    width: 170px;
+  }
+
+  .announcement-col {
+    padding-left: 20px;
+  }
+}
+
+.moment {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+/* navbar
+.navbar-inverse {
+    background-color: #432109 !important;
+    border-color: #432109 !important;
+}
+ */
+
+/*.well{
+    background-color: mintcream;
+        border-color: #c0e184;
+}*/
+
+/*.well{
+    background-color: white;
+        border-color: #bce8f1;
+}*/
+
+.well {
+  background-color: aliceblue;
+  border-color: #bce8f1;
+}
+
+.secondHeading {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.input {
+  color: blue;
+  font-style: bold;
+}
+
+.sidebarOuter {
+  position: relative;
+}
+@media (min-width: 800px) {
+  .sidebar {
+    width: 160px;
+  }
+}
+
+/* INDEX */
+
+#title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.staffBox {
+  text-align: left !important;
+}
+
+#logoImg {
+  float: left;
+  width: 85px;
+}
+
+#headerText {
+  margin-left: 10px;
+  float: left;
+}
+
+.newsfeedTitle {
+  font-size: 16px;
+  color: #3b5998;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.sidebaricon {
+  width: 15px !important;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.newsfeedHeader {
+  margin-bottom: 5px;
+}
+
+.google-maps {
+  position: relative;
+  padding-bottom: 75%; // This is the aspect ratio
+  height: 0;
+  overflow: hidden;
+}
+.google-maps iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.staffImg {
+  height: 120px;
+}
+
+.nopadding {
+  padding: 3 !important;
+  margin: 0 !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+.thumbnail {
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+
+.thumbnailTitle {
+  text-align: center;
+  color: black;
+}
+
+/* OVERVIEW */
+
+.overviewIcon {
+  margin-right: 7px;
+}
+
+/* This is all standard from tocbot example */
+
+.toc {
+  overflow-y: auto;
+}
+
+.toc > ul {
+  overflow: hidden;
+  position: relative;
+}
+
+.toc > ul li {
+  list-style: none;
+}
+
+.toc-list {
+  margin: 0;
+  padding-left: 10px;
+}
+
+a.toc-link {
+  color: currentColor;
+  height: 100%;
+}
+
+.is-collapsible {
+  max-height: 1000px;
+  overflow: hidden;
+  transition: all 300ms ease-in-out;
+}
+
+.is-collapsed {
+  max-height: 0;
+}
+
+.is-position-fixed {
+  position: fixed !important;
+  top: 0;
+}
+
+.is-active-link {
+  font-weight: 700;
+}
+
+.myToc > ul > li > .nav-link {
+  color: #aaa !important;
+  border-left: 2px solid #eee !important;
+  margin-left: 2px !important;
+}
+
+.myTocTitle {
+  color: #888;
+  margin-left: 18px;
+}
+
+/* this puts light bar to the left of all links */
+
+/* Tiny tweaks/customizations */
+
+/* use larger font, light gray */
+.myToc > ul {
+  font-size: 110%;
+  color: #aaaaaa;
+}
+/* Use cardinal red bar for active link */
+.is-active-link::before {
+  background-color: #8c1515;
+}
+
+/* spacing between items */
+.toc > ul li:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
+.myToc > ul > li {
+  margin: 0px;
+}
+
+.myToc > ul > li > .nav-link {
+  padding-left: 12px !important;
+}
+
+.myToc > ul > li > .nav-link:hover {
+  padding-left: 12px !important;
+  color: black !important;
+}
+
+.myToc > ul > li > .nav-link.active {
+  color: #555 !important;
+  font-weight: normal !important;
+}

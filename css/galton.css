@@ -1,0 +1,48 @@
+$player-width: 55vw;
+$color-background: #111;
+
+html {
+  height: 100vh;
+}
+
+body {
+  background: $color-background
+}
+
+#player {
+  text-align: center;
+  width: $player-width;
+  margin: 0 auto;
+  position: relative;
+  
+  button {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    z-index: 1;
+    padding: 1em 2em;
+    margin: 0;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transform: rotate(-45deg);
+    background-color: darken(#85c226, 15%);
+    color: white;
+  }
+}
+
+#gravity {
+  height: calc(#{$player-width} * .6);
+  width: 4em;
+  appearance: slider-vertical;
+  transform: rotate(180deg);
+}
+
+canvas {
+  width: calc(100% - 4em);
+  transition: transform 1s;
+  
+  &.flip {
+    transform: rotate(180deg);
+  }
+}

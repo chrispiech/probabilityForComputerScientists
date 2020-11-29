@@ -1,0 +1,54 @@
+ % rebase('templates/parts/chapter.html', title='Probability of or')
+ 
+<center><h1>Probability of "or"</h1></center>
+<hr/>
+
+<p>The equation for calculating the probability of either event E <b><i>or</i></b> event F happening, written  $\p(E \or F)$ or equivalently as $\p(E ∪ F)$, is deeply analogous
+to counting the size of two sets. As in counting, the equation that you can use  depends on whether or not the events are "mutually exclusive".</p>
+
+<h2>Mutually Exclusive Events</h2>
+
+<p>Two, events $E$ and $F$ are considered to be mutually exclusive (in set notation $E ∩ F = ∅$) if there are no outcomes that are
+in both events (recall that an event is a set of outcomes which is a subset of the sample
+space). In English, mutually exclusive means that two events can't both happen.</p>
+
+<p>Mutual exclusion can be visualized. Consider the following visual sample space where each outcome is a
+hexagon. The set of all the fifty hexagons is the full sample space:</p>
+
+<p>
+<center>
+	<img style="max-width: min(400px,100%)" src="{{pathToRoot}}img/probOr/mutuallyExclusive.png"></img><br/>
+	<i>Example of two events, $E$ and $F$, which are mutually exclusive.</i>
+</center>
+</p>
+
+<p>Both events $E$ and $F$ are subsets of the same sample space. Visually, we can note that
+the two sets do not overlap. They are mutually exclusive: there is no outcome that is in both sets.</p>
+
+<p>
+	<div class="bordered">
+		<b><i>Definition</i></b>: Probability of mututally exclusive events<br/>
+		<p>If two events, $E$ and $F$ are mutually exclusive then the probability of $E$ <b><i>or</i></b> $F$ occuring is:
+			$$
+			\p(E \or F) = \p(E) + \p(F)
+			$$
+		</p>
+		<p>This property applies regardless of how you calculate the probability of $E$ or $F$.
+Moreover, the idea extends to more than two events. Lets say you have $n$ events $E_1, E_2, \dots E_n$ where each
+event is mutually exclusive of one another (in other words, no outcome is in more than one event). Then:
+$$
+			\p(E_1 \or E_2 \or \dots \or E_n) = \p(E_1) + \p(E_2) + \dots + \p(E_n) = \sum_{i=1}^n \p(E_i)
+			$$</p>
+	</div>
+	</p>
+
+	<p>You may have noticed that this is one of the axioms of probability. Though it might seem intuitive, it is one of three rules that we accept without proof.</p>
+
+	<p>
+		<div class="alert alert-warning"><b>Caution</b>: Mutual exclusion only makes it easier to calculate the probability of $E \or F$ not other ways of combining events, such as $E \and F$. </div>
+	</p>
+
+	<p>At this point we know how to compute the probability of the "or" of events if and only if they have the mutual exclusion property. What if they don't?</p>
+
+<h2>Inclusion Exclusion</h2>
+               
