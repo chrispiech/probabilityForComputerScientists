@@ -1,10 +1,10 @@
  % rebase('templates/parts/chapter.html', title='Probability of or')
  
-<center><h1>Probability of "or"</h1></center>
+<center><h1>Probability of <b><i>or</i></b></h1></center>
 <hr/>
 
 <p>The equation for calculating the probability of either event E <b><i>or</i></b> event F happening, written  $\p(E \or F)$ or equivalently as $\p(E ∪ F)$, is deeply analogous
-to counting the size of two sets. As in counting, the equation that you can use  depends on whether or not the events are "mutually exclusive".</p>
+to counting the size of two sets. As in counting, the equation that you can use  depends on whether or not the events are "mutually exclusive". If events are mutually exclusive, it is very straightforward to calculate the probability of either event happening. Otherwise, you need the more complex "inclusion exclusion" formula.</p>
 
 <h2>Mutually Exclusive Events</h2>
 
@@ -27,7 +27,7 @@ the two sets do not overlap. They are mutually exclusive: there is no outcome th
 
 <p>
 	<div class="bordered">
-		<b><i>Definition</i></b>: Probability of mututally exclusive events<br/>
+		<b><i>Definition</i></b>: Probability of <b><i>or</i></b> for mututally exclusive events<br/>
 		<p>If two events, $E$ and $F$ are mutually exclusive then the probability of $E$ <b><i>or</i></b> $F$ occuring is:
 			$$
 			\p(E \or F) = \p(E) + \p(F)
@@ -50,5 +50,50 @@ $$
 
 	<p>At this point we know how to compute the probability of the "or" of events if and only if they have the mutual exclusion property. What if they don't?</p>
 
-<h2>Inclusion Exclusion</h2>
+<h2>Non-mutually Exclusive Events</h2>
+
+<p>Unfortunately, not all events are mutually exclusive. If you want to calculate $\p(E \or F)$ where the events $E$
+and F are <b><i>not</i></b> mutually exclusive you can <b><i>not</i></b> simply add the probabilities. As a simple sanity check, consider the event $E$: getting heads on a coin flip, where $\p(E) = 0.5$. Now imagine the sample space $S$, getting either a heads or a tails on a coin flip. These events are not mutually exclusive (the outcome heads is in both). If you incorrectly assumed they were mutually exclusive and tried to calculate $\p(E \or S)$ you would get this buggy derivation:
+
+<div class="alert alert-warning">
+	<p><b>Buggy derivation</b>: Incorrectly assuming mutual exclusion</p>
+	<p>Calculate the probability of $E$, getting a heads on a coin flip, or $S$.
+	$$
+	\begin{align}
+	\p(E \or S) &= \p(E) + \p(S) && \text{Incorrectly assumes mutual exclusion} \\
+	&= 0.5 + 1 && \text{substitute the probabilities of $E$ and $S$} \\
+	&= 1.5 && \text{uh oh!}
+	\end{align}
+	$$
+	<p>No probability should be greater than one! We incorrectly assumed mutual exclusion.</p>
+</div>
+
+<p>What went wrong? If two events are not mutually exclusive, simply adding their probabilities double counts the probability of any outcome which is in both events. There is a formula for calculating <b><i>or</i></b> of two non-mutually exclusive events: it is called the "inclusion exclusion" principle.
+</p>
+
+<p>
+<div class="bordered">
+<b><i>Definition</i></b>: Inclusion Exclusion principle<br/>
+<p>For any two events: E, F:
+$$
+\p(E \or F) = \p(E) + \p(F) − \p(E \and F)
+$$</p>
+<p>This formula does have a version for more than two events, but it gets rather complex. For three events, $E$, $F$, and $G$ the formula is:
+	$$
+	\begin{align}
+	\p(E \or F \or G) =& \text{ }\p(E) + \p(F) + \p(G) \\
+& −\p(E \and F) − \p(E \and G)−P(F \and G) \\
+& +\p(E \and F \and G)
+	\end{align}
+	$$
+</p>
+<p>For $n$ events, $E_1, E_2, \dots E_n$: build a running sum. Add all the probabilities of the events on their own. Then subtract all pairs of events. Then add all subsets of 3 events. Then subtract all subset of 4 events. Continue this process, up until $n$, adding the subsets if the size of subsets is odd, else subtracting them. The alternating addition and subtraction is where the name inclusion exclusion comes from. This is a complex process and you should first check if there is an easier way to calculate your probability.
+</div>
+</p>
+
+<p>Note that the inclusion exclusion principle also applies for mutually exclusive events. If two events are mutually exclusive $\p(E \and F) = 0$ since its not possible for both $E$ and $F$ to occur. As such the formula $\p(E) + \p(F) - \p(E \and F)$ reduces to $\p(E) + \p(F)$.</p>
+
+<p>
+	The formulas for calculating the <b><i>or</i></b> of events that are not mutually exclusive often requires calculating the probability of the <b><i>and</i></b> of events. Learn more in the next section:
+	</p>
                

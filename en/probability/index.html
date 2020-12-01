@@ -104,38 +104,64 @@
 
     <ul class="list-unstyled components">
        <!--  <p>Chris Piech</p> -->
+
+       <li>
+            <a href="../freeBook">A Free Online Textbook</a>
+        </li>
         
         <li>
             <a href="../intro">Introduction</a>
         </li>
 
         <li>
-            <a href="../counting">Counting</a>
+            <a href="../notation">Notation</a>
         </li>
 
         <li>
             <a href="../probability">Definition of Probability</a>
         </li>
 
+        
+
+        
+
+        <!-- <li><a><b>Part 1: Analytic Probability</b></a></li> -->
+
         <li>
-            <a href="../equally">Equally Likely Outcomes</a>
+            <a href="../counting">Counting</a>
+        </li>
+
+        
+
+        <li>
+            <a href="../equallyLikely">Equally Likely Outcomes</a>
         </li>
 
         <li>
-            <a href="../probOr">Probability of "or"</a>
+            <a href="../probOr">Probability of <b><i>or</i></b></a>
         </li>
 
         <li>
-            <a href="../probOr">Probability of "and"</a>
+            <a href="../probAnd">Probability of <b><i>and</i></b></a>
         </li>
 
         <li>
-            <a href="../probability">Analytic Probability</a>
+            <a href="../conditional">Conditional Probability</a>
         </li>
 
         <li>
-            <a href="../notation">Notation</a>
+            <a href="../totalProbability">Law of Total Probability</a>
         </li>
+
+        <li>
+            <a href="../bayesTheorem">Bayes' Theorem</a>
+        </li>
+
+         <!-- <li><a><b>Part 2: Random Variables</b></a></li> -->
+
+        
+
+
         
 
     </ul>
@@ -166,7 +192,7 @@
 
 <h2 id="events">Events and Experiments</h2>
 
-<p>When we speak about probabilities, there is always an implied context, which we formally call the "experiment". For example: flipping two coins is something that probability folks would call an experiment. In order to precicely speak about probability, we must first define two  <a target="_blank"  href="https://en.wikipedia.org/wiki/Set_(mathematics)">sets</a>: the set of all possible outcomes of an experiment, and the subset that we consider to be our event.</p>
+<p>When we speak about probabilities, there is always an implied context, which we formally call the "experiment". For example: flipping two coins is something that probability folks would call an experiment. In order to precisely speak about probability, we must first define two  sets: the set of all possible outcomes of an experiment, and the subset that we consider to be our event (<a target="_blank"  href="https://en.wikipedia.org/wiki/Set_(mathematics)">what is a set?</a>).</p>
 
 <p>
 	<div class="bordered">
@@ -185,11 +211,11 @@
 	<div class="bordered">
 <b>Definition: Event, $E$</b><br/> An Event is some subset of $S$ that we ascribe meaning to. In set notation ($E ⊆ S$).For example:
 <ul>
-<li> Coin flip is heads: E = {Heads}
+<li> Coin flip is heads: $E$ = {Heads}
 <li> Greater than 1 head on 2 coin flips = {(H, H), (H, T), (T, H)}
 <li> Roll of die is 3 or less: E = {1, 2, 3}
-<li> You receive less than 20 emails in a day: E = {$x|x ∈ Z,0 ≤ x < 20$} (non-neg. ints)
-<li> Wasted day (≥ 5 YouTube hours): E = {$x|x ∈ R, 5 ≤ x ≤ 24$}
+<li> You receive less than 20 emails in a day: $E = \{x|x ∈ Z,0 ≤ x < 20\}$ (non-neg. ints)
+<li> Wasted day (≥ 5 YouTube hours): $E = \{x|x ∈ R, 5 ≤ x ≤ 24\}$
 </ul>
 Events can be represented as capital letters such as $E$ or $F$.
 </div>
@@ -222,7 +248,7 @@ common meaning ascribed is that $\p(E)$ is a measure of the chance of event E oc
 		<span style="margin-top:11px; width: 120px">Dice outcome: <span id="trialOutcome"></span></span>
 		<div class="d-flex align-items-center ml-4" style="height: 50px;">
 			<i class="fas fa-walking" style="font-size:24px"></i>
-			<input id="speed" min="0" max="10" step="1" bsstyle="primary" type="range" class="slider primary custom-range form-control" value="0" style="margin: 10px;">
+			<input id="speed" min="0" max="10" step="1" bsstyle="primary" type="range" class="slider primary custom-range form-control" value="3" style="margin: 10px;">
 			<i class="fas fa-running" style="font-size:24px"></i>
 		</div>
 
