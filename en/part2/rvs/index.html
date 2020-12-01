@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Introduction</title>
+<title>Random Variables</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -229,8 +229,71 @@
               
                         
  
-<center><h1>Introduction</h1></center>
+<center><h1>Random Variables</h1></center>
 <hr/>
+
+<p>
+A Random Variable is a variable that probabilistically takes on different values. You can think of an RV as
+being like a variable in a programming language. They take on values, have types and have domains over
+which they are applicable. We can define events that occur if the random variable takes one values that satisfy
+a numerical test (eg does the variable equal 5, is the variable less than 8). We often think of the probabilities
+of such events.
+As an example, let’s say we flip three fair coins. We can define a random variable Y to be the total number
+of “heads” on the three coins. We can ask about the probability of Y taking on different values using the
+following notation:
+</p>
+
+<p>
+<table>
+	<tr>
+
+<td style="min-width:200px">$\p(Y = 0)$ = 1/8 <td>(T, T, T)</td>
+</tr>
+<tr>
+<td>$\p(Y = 1)$ = 3/8 <td>(H, T, T), (T, H, T), (T, T, H)</td>
+</tr>
+<tr>
+<td>$\p(Y = 2)$ = 3/8 <td>(H, H, T), (H, T, H), (T, H, H)</td>
+</tr>
+<tr>
+<td>$\p(Y = 3)$ = 1/8 <td>(H, H, H)</td>
+</tr>
+<tr>
+<td>$\p(Y ≥ 4)$ = 0</td>
+</tr>
+</table>
+</p>
+
+<p>Even though we use the same notation for random variables and for events (both use capitol letters) they
+are distinct concepts. An event is a scenario, a random variable is an object. The scenario where a random
+variable takes on a particular value (or range of values) is an event. When possible, I will try and use letters
+E,F,G for events and X,Y,Z for random variables.</p>
+
+<p>Using random variables is a convenient notation technique that assists in decomposing problems. There are
+many different types of random variables (indicator, binary, choice, Bernoulli, etc). The two main families of
+random variable types are discrete and continuous. [todo explain discrete and continuous]. For now we are going to develop intuition around discrete
+random variables</p>
+
+<p>[todo: something about variables in programming languages]</p>
+
+<p>[todo: something about the word "distributions"]</p>
+
+<h2>How to describe a random variable</h2>
+
+<p>
+The definition of a random variable is the probabilities for all possible outcomes. The mapping from outcome to probability is generally called a "likelihood function". For discrete random variables we call this relationship the Probability Mass Function (PMF). For continuous random variables its called Probability Density Function (PDF).</p>
+
+<p>Random variables have a name</p>
+
+<p>
+	Useful random variables also often have semantic meaning.
+	</p>
+
+<p>
+	For random variables there are numbers called "summary statistics" which tell you about key properties of the random variable. While they don't
+</p>
+
+<h2>Random variables vs Events </h2>
 
 
                

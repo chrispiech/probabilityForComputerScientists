@@ -31,6 +31,7 @@ book_outline = {
 	'part2':{
 		'title':'Part 2: Random Variables',
 		'sections': {
+			'rvs':'Random Variables',
 			'pmf':'Likelihood Functions',
 			'expectation':'Expectation',
 			'variance':'Variance',
@@ -95,7 +96,9 @@ def create_sidebar():
 	for part_key in book_outline:
 		part_html = create_part_html(part_key,)
 		html += part_html
-	print(html)
+	writer = open('templates/chapterList.html', 'w')
+	writer.write(html)
+	
 
 def create_part_html(part_key):
 	part = book_outline[part_key]
@@ -135,8 +138,10 @@ def make_index(path, title):
 	safe_make_file(index_path, index_html)
 
 def safe_make_file(path, content):
-	writer = open(path, 'w')
-	writer.write(content)
+	if not os.path.isfile(path):
+		print('creating ' + path)
+		writer = open(path, 'w')
+		writer.write(content)
 
 def safe_mkdir(path):
 	pathlib.Path(path).mkdir(exist_ok=True)
