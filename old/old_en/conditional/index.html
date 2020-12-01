@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+
+<title>Conditional Probability</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+   
+
+<!-- Java Script -->
+<script src="../../plugins/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Python highlighting -->
+<script src="../../plugins/prism/prism.js"></script>
+<link href="../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- Probability Packages -->
+<script src="../../js/probabilityUtils.js"></script>
+<script src="../../plugins/probability/gaussian.js"></script>
+<script src="../../plugins/color.js"></script>
+
+<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+<!-- Stanford -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+
+<!-- Math Jax -->
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script> -->
+<script type="text/javascript">
+  MathJax = {
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "action.js"]
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+	"fast-preview": {
+	  disabled: true
+	}
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<script src="../../plugins/math.min.js"></script>
+
+
+
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+ <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script src="../../plugins/jquery.mCustomScrollbar.js"></script>
+
+</head>
+
+
+<!-- I declare a few math operators I often use in equations -->
+<div style="display:none">
+  $\DeclareMathOperator{\p}{Pr}$
+  $\DeclareMathOperator{\c}{^C}$
+  $\DeclareMathOperator{\or}{  or}$
+  $\DeclareMathOperator{\and}{  and}$
+</div>
+
+<body class="greyBackground">
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <a href="../"><h3><i class="fas fa-home"></i> Probability for CS</h3></a>
+    </div>
+
+    <ul class="list-unstyled components">
+       <!--  <p>Chris Piech</p> -->
+
+       <li>
+            <a href="../freeBook">A Free Online Textbook</a>
+        </li>
+        
+        <li>
+            <a href="../intro">Introduction</a>
+            <a href="../notation">Notation</a>
+            <a href="../python">Probability in Python</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled components">
+        <li>
+            <p>Part I: Core Probability</p>
+        </li>
+
+        <li>
+            <a href="../notation">Notation</a>
+        </li>
+
+         <li>
+            <a href="../">Combinatorics</a>
+        </li>
+
+        <li>
+            <a href="../probability">Definition of Probability</a>
+        </li>
+
+        
+
+        
+
+        <!-- <li><a><b>Part 1: Analytic Probability</b></a></li> -->
+
+        <li>
+            <a href="../counting">Counting</a>
+        </li>
+
+        
+
+        <li>
+            <a href="../equallyLikely">Equally Likely Outcomes</a>
+        </li>
+
+        <li>
+            <a href="../probOr">Probability of <b><i>or</i></b></a>
+        </li>
+
+        <li>
+            <a href="../probAnd">Probability of <b><i>and</i></b></a>
+        </li>
+
+        <li>
+            <a href="../conditional">Conditional Probability</a>
+        </li>
+
+        <li>
+
+            <a href="../totalProbability">Law of Total Probability</a>
+        </li>
+
+        <li>
+            <a href="../bayesTheorem">Bayes' Theorem</a>
+
+            <a href="../probability">Randomness in Computers</a>
+        </li>
+
+        <li>
+            <a href="../probability">Log Probabilities</a>
+        </li>
+
+         <!-- <li><a><b>Part 2: Random Variables</b></a></li> -->
+
+        
+
+
+        
+
+    </ul>
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part II: Random Variables</p>
+        </li>
+        <li>
+             
+             <a href="../">Likelihood Functions</a>
+             <a href="../">Expectation</a>
+             <a href="../">Variance</a>
+
+             <a href="../">Bernoulli and Binomial</a>
+             <a href="../">Poisson</a>
+             <a href="../">Continuous Distributions</a>
+             <a href="../">Normal Disribution</a>
+             <a href="../">Convolution</a>
+             <a href="../">Parametric Variable List</a>
+
+              
+        </li>
+    </ul>
+
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part III: Probabilistic Models</p>
+        </li>
+        <li>
+             <a href="../">Joint Probability</a>
+             <a href="../">Independence in Variables</a>
+             <a href="../">Conditional Distributions</a>
+             <a href="../">Inference</a>
+             <a href="../">Bayesian Networks</a>
+             <a href="../">Continuous Joint</a>
+             <a href="../">Multivariate Gaussian</a>
+             
+              <a href="../">Computational Inference</a>
+              
+             
+             
+        </li>
+    </ul>
+
+       <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part IV: Uncertainty Theory</p>
+        </li>
+        <li>
+             <a href="../">Central Limit Theorem</a>
+             <a href="../">Bootstrapping</a>
+             <a href="../">Parameters</a>
+             <a href="../">Beta Distributions</a>
+             <a href="../">Probability Bounds</a>              
+        </li>
+    </ul>
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part V: Machine Learning</p>
+        </li>
+        <li>
+            <a href="../">Maximum Likelihood Estimation</a>
+             <a href="../">Maximum A Posteriori</a>
+              <a href="../">Naïve Bayes</a>
+              <a href="../">Gradient Ascent Optimization</a>
+              <a href="../">Logistic Regression</a>
+              <a href="../">Artificial Neural Networks</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part ?: Misfits</p>
+        </li>
+        <li>
+            
+             <a href="../">Sampling from a likelihood function</a>
+             <a href="../">Law of Total Expectation</a>
+            
+        </li>
+    </ul>
+
+
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            Ⓒ Chris Piech, Stanford University
+            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
+        </li>
+    </ul>
+</nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+<button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
+    <i class="fas fa-align-left"></i>
+    <span></span>
+</button>            
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col handout" >
+              
+                         
+<center><h1>Conditional Probability</h1></center>
+<hr/>
+
+<p>In English, a conditional probability states "what is the chance of an event $E$ happening given that I have
+already observed some other event $F$". It is a critical idea in machine learning and probability because it
+allows us to update our probabilities in the face of new evidence.</p>
+
+<p>When you condition on an event happening you are entering the universe where that event has taken place.
+Mathematically, if you condition on $F$, then $F$ becomes your new sample space. In the universe where $F$ has
+taken place, all rules of probability still hold!</p>
+
+<p>
+	<div class="bordered">
+
+<b><i>Definition</i></b>: Conditional Probability.<br/>
+
+<p>The probability of E given that (aka conditioned on) event F already happened:
+$$
+\p(E |F) = \frac{\p(E \and F)}{\p(F)}
+$$
+</p>
+	</div>
+	</p>
+
+<p>
+	 Let's use a visualization to get an intuition for why the conditional probability formula is true. Again consider events $E$ and $F$	
+which have outcomes that are subsets of a sample space with 50 equally likely outcomes, each one drawn as
+a hexagon:
+</p>
+
+<p>
+	Conditioning on $F$ means that we have entered the world where $F$ has happened (and $F$, which has 14
+equally likely outcomes, has become our new sample space). Given that event $F$ has occurred, the conditional
+probability that event $E$ occurs is the subset of the outcomes of E that are consistent with $F$. In this case we
+can visually see that those are the three outcomes in $E \and F$. Thus we have the:
+$$
+\p(E |F) = \frac{\p(E \and F)}{\p(F)} = \frac{3/50}{14/50} = \frac{3}{14} \approx 0.21
+$$
+
+Even though the visual example (with equally likely outcome spaces) is useful for gaining intuition, conditional probability applies regardless of whether the sample space has equally likely outcomes!
+</p>
+
+
+<p>
+	<div class="bordered">
+
+<b><i>Definition</i></b>: The chain rule.<br/>
+
+<p>The formula in the definition of conditional probability can be re-arranged to derive a general way of calculating the probability of the <b><i>and</i></b> of any two events:
+$$
+\p(E \and F) = \p(E | F) \cdot \p(F)
+$$
+</p>
+<p>Of course there is nothing special about $E$ that says it should go first. Equivalently:
+	$$
+	\p(E \and F) = \p(F \and E) =  \p(F | E) \cdot \p(E)
+	$$
+</p>
+
+<p>We call this formula the "chain rule." Intuitively it states that the probability of observing events $E$ <b><i>and</i></b> $F$ is the
+probability of observing $F$, multiplied by the probability of observing $E$, given that you have observed $F$.
+It generalizes to more than two events:
+$$
+\begin{align}
+\p(E_1 \and E_2 \and \dots \and E_n) = &\p(E_1) \cdot \p(E_2|E_1) \cdot \p(E_3 |E_1 \and E_2) \dots  \\  &\p(E_n|E_1 \dots E_{n−1})
+\end{align}
+$$
+	</div>
+	</p>
+
+	<h2>Conditioning on Multiple Events</h2>
+
+	
+
+	<h2>The Conditional Paradigm</h2>
+
+	<p>When you condition on an event you enter the universe where that event has taken place. In that new universe
+all the laws of probability still hold. Thus, as long as you condition consistently on the same event, every one of
+the tools we have learned still apply. Let’s look at a few of our old friends when we condition consistently on
+an event (in this case $G$):</p>
+
+<p>
+	<table class="table borderless">
+		<thead>
+		<tr>
+			<th>Name of Rule</th>
+			<th>Original Rule</th>
+			<th>Rule Conditioned on $G$</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr >
+			<td>Axiom of probability 1</td>
+			<td>$0 ≤ \p(E) ≤ 1$</td>
+			<td>$0 ≤ \p(E|G) ≤ 1$</td>
+		</tr>
+		<tr >
+			<td>Axiom of probability 2</td>
+			<td>$\p(S) = 1$</td>
+			<td>$\p(S | G) = 1$</td>
+		</tr>
+		<tr >
+			<td>Axiom of probability 3</td>
+			<td>$\p(E \or F) = \p(E) + \p(F)$ <br/>for mutually exclusive events</td>
+			<td>$\p(E \or F | G) = \p(E | G) + \p(F | G)$ <br/>for mutually exclusive events</td>
+		</tr>
+		<tr style="border-bottom: 1px solid #ddd;">
+			<td>Identity 1</td>
+			<td>$\p(E\c) = 1 - \p(E)$</td>
+			<td>$\p(E\c | G) = 1 - \p(E |G)$</td>
+		</tr>
+
+
+		</tbody>
+
+	</table>
+	</p>
+
+	<h2>Independence Revisited</h2>
+
+	<p>Our new understanding of conditional probability can give us a fresh insight into the independence. It also
+introduces a new concept: conditional independence.
+First, lets revisit the definition of conditional probability, this time for two independent events E and F:</p>
+
+
+
+               
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal",
+            mouseWheel: {preventDefault: true},
+            scrollInertia: 60
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+</script>                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,178 @@
+% rebase('templates/parts/chapter.html', title='Probability')
+              
+<center><h1>Definition of Probability</h1></center>
+<hr/>
+
+<p>What does it mean when someone makes a claim like "the probability that you find a pearl in an oyster is 1 in 5,000?" or "the probability that it will rain tomorrow is 52%?</p>
+
+<h2 id="events">Events and Experiments</h2>
+
+<p>When we speak about probabilities, there is always an implied context, which we formally call the "experiment". For example: flipping two coins is something that probability folks would call an experiment. In order to precisely speak about probability, we must first define two  sets: the set of all possible outcomes of an experiment, and the subset that we consider to be our event (<a target="_blank"  href="https://en.wikipedia.org/wiki/Set_(mathematics)">what is a set?</a>).</p>
+
+<p>
+	<div class="bordered">
+<b id="sampleSpace">Definition: Sample Space, $S$</b><br/> A Sample Space is set of all possible outcomes of an experiment. For example:
+<ul>
+<li> Coin flip: $S$ = {Heads, Tails}
+<li> Flipping two coins: $S$ = {(H, H), (H, T), (T, H), (T, T)}
+<li> Roll of 6-sided die: $S$ = {1, 2, 3, 4, 5, 6}
+<li> The number of emails you receive in a day: $S = \{x|x ∈ ℤ, x ≥ 0\}$ (non-neg. ints)
+<li> YouTube hours in a day: $S = \{x|x ∈ ℝ,0 ≤ x ≤ 24\}$
+</ul>
+</div>
+</p>
+
+<p>
+	<div class="bordered">
+<b>Definition: Event, $E$</b><br/> An Event is some subset of $S$ that we ascribe meaning to. In set notation ($E ⊆ S$).For example:
+<ul>
+<li> Coin flip is heads: $E$ = {Heads}
+<li> Greater than 1 head on 2 coin flips = {(H, H), (H, T), (T, H)}
+<li> Roll of die is 3 or less: E = {1, 2, 3}
+<li> You receive less than 20 emails in a day: $E = \{x|x ∈ Z,0 ≤ x < 20\}$ (non-neg. ints)
+<li> Wasted day (≥ 5 YouTube hours): $E = \{x|x ∈ R, 5 ≤ x ≤ 24\}$
+</ul>
+Events can be represented as capital letters such as $E$ or $F$.
+</div>
+</p>
+
+
+<h2 id="events">Definition of Probability</h2>
+
+<p>It wasn't until the 20th century that humans figured out a way to precisely define what the word probability means:</p>
+
+<p>$$ \p(\text{Event}) = \lim_{n \rightarrow \infty}\frac{\texttip{\text{count}(\text{Event})}{count of times that event occurs}}{n} $$</p>
+
+
+<p>In English this reads: lets say you perform $n$ trials of an "experiment" which could result in a particular "<a href="#events">Event</a>" occuring. The probability of the event occuring, $\p(\text{Event})$,
+is the ratio of trials that result in the event, written as $\text{count}(\text{Event})$, to the number of trials performed, $n$.  In the limit, as your number of trials
+approaches infinity, the ratio will converve to the true probability. People also apply other semantics to the concept of a probability. One
+common meaning ascribed is that $\p(E)$ is a measure of the chance of event E occurring. </p>
+               
+<p>
+% include('templates/probability/diceLimitExample.html')
+</p>
+
+<p><b>Measure of uncertainty</b>: It is tempting to think of probability as representing some natural randomness in the world. That might be the case. But perhaps the world isn't random. I propose a deeper way of thinking about probability. There is so much that we as humans don't know, and probability is our robust language for expressing my belief that an event will happen given my limited knowledge.
+This interpretation acknowledges that your own uncertainty of an event. Perhaps if you knew the position of every water molecule, you could perfectly predict tomorrow's weather. But we don't have such knowledge and as such we use probability to talk about the chance of rain tomorrow given the information that we have access to.</p>
+
+
+
+<p><b>Origins of probabilities</b>: The different interpretations of probability are reflected in the many origins of probabilities that you will encounter in the wild (and not so wild) world. Some probabilities are calculated analytically using mathematical
+proofs. Some probabilities are calculated from data, experiments or simulations. Some probabilities are just
+made up to represent a belief. Most probabilities are generated from a combination of the above. For example, someone will make up a prior belief, that
+belief will be mathematically updated using data and evidence. Here is an example of calculating a probability from data: </p>
+
+<!-- <h2>Approximating Probability from Experiments</h2> -->
+
+
+<!--
+
+Probability of hitting a bulls eye
+Probability of giving birth on your due date
+Probability of having a genetic variation
+Probability of finding a pearl in an oyester
+
+Probability of 
+--> 
+
+
+
+<p>
+	<b>Probabilities and simulations</b>: Another way to compute probabilities is via simulation. For some complex problems where the probabilities are too hard to compute analytically you can run
+simulations using your computer.
+If your simulations generate believable trials from the sample space, then the probability of an event E is
+approximately equal to the fraction of simulations that produced an outcome from E. Again, by the definition
+of probability, as your number of simulations approaches infinity, the estimate becomes more accurate.
+
+<p>
+<b>Probabilities and percentages</b>: You might hear people refer to a probability as a percent. That the probability of rain tomorrow is 32%. The proper way to state this would be to say that 0.32 is the probability of rain. Percentages are simply probabilities multiplied by 100. "percent" is latin for "out of one hundred".  
+</p>
+
+<div class="purpleBox">
+<p><b><i>Problem:</i></b> Use the definition of probability to approximate the answer to the question: "What is the probability a new-born child is female?" Contrary to popular myth the answer is not ½. Base your answer off a report from the 2017 report from the Australian government which states that 309,142 children were born in Australia of which 149,998 were female [<a href="https://www.aihw.gov.au/getmedia/2a0c22a2-ba27-4ba0-ad47-ebbe51854cd6/aihw-per-100-in-brief.pdf.aspx">citation</a>].</p>
+
+<p><b><i>Answer:</i></b>
+	The Experiment is: A single child birth in Australia. <br/>The sample space is the set of possible sexes assigned at birth, {Male, Female, Intersex}. <br/>$E$ is the event that a new-born child is female, which in set notation is the subset {Female} of the sample space.</p>  
+
+	<p> By the definition of probability, the ratio of trials that result in the event to the number of trials will tend to our desired probability:</p>
+
+	<p>$$ \begin{aligned} \p(\text{Born Female}) &= \p(E) \\
+		&= \lim_{n \rightarrow \infty}\frac{\texttip{\text{count}(E)}{count of times that event occurs}}{n} \\
+	    &\approx \frac{149,998}{309,142} \\
+	    &\approx 0.485\end{aligned}$$</p>
+
+	    <p>Since 300,000 is quite a bit less than infinity, this is an approximation. It turns out, however, to be a rather good one. In the overall human population it is estimated that there are around 109 male births for every 100 female births (and females tend to live longer).
+</div>
+
+<h2>Axioms of Probability</h2>
+
+<p>Here are some basic truths about probabilities that we accept as axioms:</p>
+
+<p>
+<div class="bordered">
+<table  style="vertical-align: top">
+  <tr style="height:50px; vertical-align: top">
+  	<td style="width:350px"><b>Axiom 1</b>: $0 ≤ \p(E) ≤ 1$</td>
+  	<td>All probabilities are numbers between 0 and 1.</td>
+  </tr>
+  <tr style="height:50px; vertical-align: top">
+  	<td><b>Axiom 2</b>: $\p(S) = 1$</td>
+  	<td>All outcomes must be from the <a href="#sampleSpace">Sample Space</a>.</td>
+  </tr>
+  <tr style="height:60px; vertical-align: top">
+  	<td ><b>Axiom 3</b>: If $E$ and $F$ are mutually exclusive, then $\p(E \text{ or } F) = \p(E) + \p(F)$</td>
+  	<td> The probability of "or" for mutually exclusive events</td>
+  </tr>
+</table>
+</div>
+</p>
+
+<p>These three axioms are formally called the <a target="_blank" href="https://en.wikipedia.org/wiki/Probability_axioms">Kolmogorov axioms</a> and they are considered to be the foundation of probability theory. They are also useful identities!</p>
+
+<p>You can convince yourself of the first axiom by thinking about the math definition of probability. As you
+perform trials of an experiment it is not possible to get more events than trials (thus probabilities are less than
+1) and its not possible to get less than 0 occurrences of the event (thus probabilities are greater than 0).
+The second axiom makes sense too. If your event is the sample space, then each trial must produce
+the event. This is sort of like saying; the probability of you eating cake (event) if you eat cake (sample
+space that is the same as the event) is 1.
+
+The third axiom is more complex and in this textbook we dedicate an entire chapter to understanding it: <a href="">Probability of or</a>. It applies to events that have a special property called "mutual exclusion": the events do not share any outcomes.
+
+
+<p>These axioms have great historical significance. In the early 1900s it was not clear if probability was somehow different than other fields of math -- perhaps the set of techniques and systems of proofs from other fields of mathematics couldn't apply.  Kolmogorov's great success was to show to the world that the tools of mathematics did infact apply to probability. From the foundation provided by this set of axioms mathematicians built the edifice of probability theory.</p>
+
+<h2>Provable Identities</h2>
+
+<p>We often refer to these as corollaries that are directly provable from the three
+axioms given above.</p>
+
+<p>
+<div class="bordered">
+<table  style="vertical-align: top">
+  <tr style="height:50px; vertical-align: top">
+  	<td style="width:350px"><b>Identity 1</b>: $\p(E\c) = 1 - \p(E)$</td>
+  	<td>The probability of event E not happening</td>
+  </tr>
+  <tr style="height:30px; vertical-align: top">
+  	<td><b>Identity 2</b>: If $E ⊆ F$, then $\p(E) ≤ \p(F)$</td>
+  	<td>Events which are subsets</td>
+  </tr>
+</table>
+</div>
+</p>
+
+<p>This first identity is truly useful. For any event, you can calculate the probability of the event <i>not</i> occuring which we write in probability notation as $E\c$, if you know the probability of it occuring -- and vice versa. We can also use this identity to show you what it looks like to prove a theorem in probability.</p>
+
+<div class="purpleBox">
+<p><b><i>Proof:</i></b> $\p(E\c) = 1 - \p(E)$
+
+$$
+\begin{align}
+\p(S) &= \p(E \or E\c) && \text{$E$ or $E\c$ covers every outcome in the sample space} \\
+\p(S) &= \p(E) + \p(E\c) && \text{Events $E$ and $E\c$ are mututally exclusive} \\
+1 &= \p(E) + \p(E\c) && \text{Axiom 2 of probability} \\
+\p(E\c) &= 1 - \p(E) && \text{By re-arranging}
+\end{align}
+$$
+</div>

@@ -71,9 +71,14 @@ $$
 	</div>
 	</p>
 
-	<h2>Conditioning on Multiple Events</h2>
 
-	
+<h2>Difference between <b>and</b> and conditionals</h2>
+
+	<h2>Independence Revisited</h2>
+
+	<p>Our new understanding of conditional probability can give us a fresh insight into the independence. It also
+introduces a new concept: conditional independence.
+First, lets revisit the definition of conditional probability, this time for two independent events E and F:</p>
 
 	<h2>The Conditional Paradigm</h2>
 
@@ -119,9 +124,13 @@ an event (in this case $G$):</p>
 	</table>
 	</p>
 
-	<h2>Independence Revisited</h2>
+	<h2>Conditioning on Multiple Events</h2>
 
-	<p>Our new understanding of conditional probability can give us a fresh insight into the independence. It also
-introduces a new concept: conditional independence.
-First, lets revisit the definition of conditional probability, this time for two independent events E and F:</p>
+	<p>The conditional paradigm also applies to the definition of conditional probability! Again if we consistently condition on some event $G$ occuring, the rule still holds:
+		$$
+\p(E |F, G) = \frac{\p(E \and F | G)}{\p(F | G)}
+		$$
+The term $\p(E | F, G)$ is new notation for conditioning on multiple events.  You should read that term as "The probability of E occuring, given that both F and G have occured". This equation states that the definition for conditional probability of $E | F$ still applies in the universe where $G$ has occured. Do you think that  $\p(E |F, G)$ should be equal to $\p(E |F)$? The answer is: sometimes yes and sometimes no. 
+
+	
 

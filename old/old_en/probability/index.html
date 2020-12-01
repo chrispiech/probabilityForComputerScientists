@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+
+<title>Probability</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+   
+
+<!-- Java Script -->
+<script src="../../plugins/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Python highlighting -->
+<script src="../../plugins/prism/prism.js"></script>
+<link href="../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- Probability Packages -->
+<script src="../../js/probabilityUtils.js"></script>
+<script src="../../plugins/probability/gaussian.js"></script>
+<script src="../../plugins/color.js"></script>
+
+<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+<!-- Stanford -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+
+<!-- Math Jax -->
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script> -->
+<script type="text/javascript">
+  MathJax = {
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "action.js"]
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+	"fast-preview": {
+	  disabled: true
+	}
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<script src="../../plugins/math.min.js"></script>
+
+
+
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+ <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script src="../../plugins/jquery.mCustomScrollbar.js"></script>
+
+</head>
+
+
+<!-- I declare a few math operators I often use in equations -->
+<div style="display:none">
+  $\DeclareMathOperator{\p}{Pr}$
+  $\DeclareMathOperator{\c}{^C}$
+  $\DeclareMathOperator{\or}{  or}$
+  $\DeclareMathOperator{\and}{  and}$
+</div>
+
+<body class="greyBackground">
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <a href="../"><h3><i class="fas fa-home"></i> Probability for CS</h3></a>
+    </div>
+
+    <ul class="list-unstyled components">
+       <!--  <p>Chris Piech</p> -->
+
+       <li>
+            <a href="../freeBook">A Free Online Textbook</a>
+        </li>
+        
+        <li>
+            <a href="../intro">Introduction</a>
+            <a href="../notation">Notation</a>
+            <a href="../python">Probability in Python</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled components">
+        <li>
+            <p>Part I: Core Probability</p>
+        </li>
+
+        <li>
+            <a href="../notation">Notation</a>
+        </li>
+
+         <li>
+            <a href="../">Combinatorics</a>
+        </li>
+
+        <li>
+            <a href="../probability">Definition of Probability</a>
+        </li>
+
+        
+
+        
+
+        <!-- <li><a><b>Part 1: Analytic Probability</b></a></li> -->
+
+        <li>
+            <a href="../counting">Counting</a>
+        </li>
+
+        
+
+        <li>
+            <a href="../equallyLikely">Equally Likely Outcomes</a>
+        </li>
+
+        <li>
+            <a href="../probOr">Probability of <b><i>or</i></b></a>
+        </li>
+
+        <li>
+            <a href="../probAnd">Probability of <b><i>and</i></b></a>
+        </li>
+
+        <li>
+            <a href="../conditional">Conditional Probability</a>
+        </li>
+
+        <li>
+
+            <a href="../totalProbability">Law of Total Probability</a>
+        </li>
+
+        <li>
+            <a href="../bayesTheorem">Bayes' Theorem</a>
+
+            <a href="../probability">Randomness in Computers</a>
+        </li>
+
+        <li>
+            <a href="../probability">Log Probabilities</a>
+        </li>
+
+         <!-- <li><a><b>Part 2: Random Variables</b></a></li> -->
+
+        
+
+
+        
+
+    </ul>
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part II: Random Variables</p>
+        </li>
+        <li>
+             
+             <a href="../">Likelihood Functions</a>
+             <a href="../">Expectation</a>
+             <a href="../">Variance</a>
+
+             <a href="../">Bernoulli and Binomial</a>
+             <a href="../">Poisson</a>
+             <a href="../">Continuous Distributions</a>
+             <a href="../">Normal Disribution</a>
+             <a href="../">Convolution</a>
+             <a href="../">Parametric Variable List</a>
+
+              
+        </li>
+    </ul>
+
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part III: Probabilistic Models</p>
+        </li>
+        <li>
+             <a href="../">Joint Probability</a>
+             <a href="../">Independence in Variables</a>
+             <a href="../">Conditional Distributions</a>
+             <a href="../">Inference</a>
+             <a href="../">Bayesian Networks</a>
+             <a href="../">Continuous Joint</a>
+             <a href="../">Multivariate Gaussian</a>
+             
+              <a href="../">Computational Inference</a>
+              
+             
+             
+        </li>
+    </ul>
+
+       <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part IV: Uncertainty Theory</p>
+        </li>
+        <li>
+             <a href="../">Central Limit Theorem</a>
+             <a href="../">Bootstrapping</a>
+             <a href="../">Parameters</a>
+             <a href="../">Beta Distributions</a>
+             <a href="../">Probability Bounds</a>              
+        </li>
+    </ul>
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part V: Machine Learning</p>
+        </li>
+        <li>
+            <a href="../">Maximum Likelihood Estimation</a>
+             <a href="../">Maximum A Posteriori</a>
+              <a href="../">Naïve Bayes</a>
+              <a href="../">Gradient Ascent Optimization</a>
+              <a href="../">Logistic Regression</a>
+              <a href="../">Artificial Neural Networks</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part ?: Misfits</p>
+        </li>
+        <li>
+            
+             <a href="../">Sampling from a likelihood function</a>
+             <a href="../">Law of Total Expectation</a>
+            
+        </li>
+    </ul>
+
+
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            Ⓒ Chris Piech, Stanford University
+            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
+        </li>
+    </ul>
+</nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+<button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
+    <i class="fas fa-align-left"></i>
+    <span></span>
+</button>            
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col handout" >
+              
+                                      
+<center><h1>Definition of Probability</h1></center>
+<hr/>
+
+<p>What does it mean when someone makes a claim like "the probability that you find a pearl in an oyster is 1 in 5,000?" or "the probability that it will rain tomorrow is 52%?</p>
+
+<h2 id="events">Events and Experiments</h2>
+
+<p>When we speak about probabilities, there is always an implied context, which we formally call the "experiment". For example: flipping two coins is something that probability folks would call an experiment. In order to precisely speak about probability, we must first define two  sets: the set of all possible outcomes of an experiment, and the subset that we consider to be our event (<a target="_blank"  href="https://en.wikipedia.org/wiki/Set_(mathematics)">what is a set?</a>).</p>
+
+<p>
+	<div class="bordered">
+<b id="sampleSpace">Definition: Sample Space, $S$</b><br/> A Sample Space is set of all possible outcomes of an experiment. For example:
+<ul>
+<li> Coin flip: $S$ = {Heads, Tails}
+<li> Flipping two coins: $S$ = {(H, H), (H, T), (T, H), (T, T)}
+<li> Roll of 6-sided die: $S$ = {1, 2, 3, 4, 5, 6}
+<li> The number of emails you receive in a day: $S = \{x|x ∈ ℤ, x ≥ 0\}$ (non-neg. ints)
+<li> YouTube hours in a day: $S = \{x|x ∈ ℝ,0 ≤ x ≤ 24\}$
+</ul>
+</div>
+</p>
+
+<p>
+	<div class="bordered">
+<b>Definition: Event, $E$</b><br/> An Event is some subset of $S$ that we ascribe meaning to. In set notation ($E ⊆ S$).For example:
+<ul>
+<li> Coin flip is heads: $E$ = {Heads}
+<li> Greater than 1 head on 2 coin flips = {(H, H), (H, T), (T, H)}
+<li> Roll of die is 3 or less: E = {1, 2, 3}
+<li> You receive less than 20 emails in a day: $E = \{x|x ∈ Z,0 ≤ x < 20\}$ (non-neg. ints)
+<li> Wasted day (≥ 5 YouTube hours): $E = \{x|x ∈ R, 5 ≤ x ≤ 24\}$
+</ul>
+Events can be represented as capital letters such as $E$ or $F$.
+</div>
+</p>
+
+
+<h2 id="events">Definition of Probability</h2>
+
+<p>It wasn't until the 20th century that humans figured out a way to precisely define what the word probability means:</p>
+
+<p>$$ \p(\text{Event}) = \lim_{n \rightarrow \infty}\frac{\texttip{\text{count}(\text{Event})}{count of times that event occurs}}{n} $$</p>
+
+
+<p>In English this reads: lets say you perform $n$ trials of an "experiment" which could result in a particular "<a href="#events">Event</a>" occuring. The probability of the event occuring, $\p(\text{Event})$,
+is the ratio of trials that result in the event, written as $\text{count}(\text{Event})$, to the number of trials performed, $n$.  In the limit, as your number of trials
+approaches infinity, the ratio will converve to the true probability. People also apply other semantics to the concept of a probability. One
+common meaning ascribed is that $\p(E)$ is a measure of the chance of event E occurring. </p>
+               
+<p>
+<div class="purpleBox">
+	<p><b><i>Example</i></b>: Probability in the limit</p>
+
+	<p>Here we use the definition of probability to calculate the probability of event $E$, rolling a "5" or a "6" on a fair <a href="https://www.google.com/search?q=dice+roller">six-sided dice</a>. Hit the "Run trials" button to start running trials of the experiment "roll dice". Notice how $\p(E)$, converges to $2/6$ or 0.33 repeating.</p>
+	<p>Event $E$: Rolling a 5 or 6 on a six-sided dice.</p>
+	
+	<hr/>
+	<div class="d-flex justify-content-around mb-3">
+		<button id="diceButton" onclick = "onRunButtonClicked()" type="button" class="btn btn-primary btn-sm" style="font-size:1rem; width:120px"><i class="fas fa-play"></i> Run trials</button>
+
+		<span style="margin-top:11px; width: 120px">Dice outcome: <span id="trialOutcome"></span></span>
+		<div class="d-flex align-items-center ml-4" style="height: 50px;">
+			<i class="fas fa-walking" style="font-size:24px"></i>
+			<input id="speed" min="0" max="10" step="1" bsstyle="primary" type="range" class="slider primary custom-range form-control" value="3" style="margin: 10px;">
+			<i class="fas fa-running" style="font-size:24px"></i>
+		</div>
+
+	</div>
+
+	
+
+	<div class="d-flex justify-content-around">
+		<span style="width:110px">$n= $ <span id="n">0</span></span>
+		
+		
+		<span style="width:170px">$\text{count}(E) = $  <span id="countE">0</span></span>
+		<span style="width:210px">$\p(E) \approx \frac{\texttip{\text{count}(E)}{count of times that event occurs}}{n} = $ <span id="p"></span></span>
+	</div>
+</div>
+
+<script>
+
+const MIN_DELAY = 0
+const MAX_DELAY = 750
+const SPEED_STEPS = 10
+const FAST_TRIALS_PER_HEARTBEAT = 47
+
+// single global variables
+var isRunning = false
+
+function onRunButtonClicked() {
+	if(isRunning) {
+		isRunning = false
+		$("#diceButton").html('<i class="fas fa-play"></i> Run trials')
+		$("#diceButton").prop('disabled', true);
+		$("#n").html(0)
+		$("#countE").html(0)
+		$("#p").html('')
+		$("#trialOutcome").html('')
+	} else {
+		isRunning = true
+		$("#diceButton").html('<i class="fas fa-undo"></i> Reset')
+		runDiceLimitTrial(0, 0)
+	}
+}
+
+function getTrialOutcome() {
+	// let v = randInt(0, 1)
+	// if(v == 0) {
+	// 	return "Tails"
+	// } else {
+	// 	return "Heads"
+	// }
+	return randInt(1, 6)
+}
+
+function isSuccess(outcome) {
+	return outcome > 4
+}
+
+function updateTrialOutcomeHtml(outcome) {
+	let elem = $("#trialOutcome")
+	if(isSuccess(outcome)) {
+		elem.css("color", "blue");
+	} else {
+		elem.css("color", "red")
+	}
+	elem.html(outcome)
+}
+
+function fastTrials(n, countE, k) {
+	var lastOutcome = null;
+	for (var i = 0; i < k; i++) {
+		n += 1
+		lastOutcome = getTrialOutcome()
+		if(isSuccess(lastOutcome)) {
+			countE += 1
+		}
+	}
+	let p = countE / n;
+	updateTrialOutcomeHtml(lastOutcome)
+	$("#n").html(n)
+	$("#countE").html(countE)
+	$("#p").html(p.toFixed(4))
+
+	setTimeout(function() {
+		runDiceLimitTrial(n, countE)
+	}, 0)
+}
+
+function slowTrial(n, countE, delay) {
+	n += 1
+	let v = getTrialOutcome()
+	if(isSuccess(v)) {
+		countE += 1
+	}
+	$("#trialOutcome").fadeOut(delay/5, function() {
+		updateTrialOutcomeHtml(v)
+		$("#n").html(n)
+		$("#trialOutcome").fadeIn(delay/5, function() {
+			let p = countE / n;
+			
+			$("#countE").html(countE)
+			$("#p").html(p.toFixed(4))
+
+			setTimeout(function() {
+				runDiceLimitTrial(n, countE)
+			}, delay)
+		})
+
+	})
+}
+
+function runDiceLimitTrial(n, countE) {
+	if(!isRunning) {
+		$("#n").html(0)
+		$("#countE").html(0)
+		$("#p").html('')
+		$("#trialOutcome").html('')
+		$("#diceButton").prop('disabled', false);
+		return
+	}
+	
+	let delay = getDelay()
+
+	if(delay == -2) {
+		fastTrials(n, countE, 101) 
+	} else if(delay == -1){
+		fastTrials(n, countE, 9) 
+	} else if(delay == 0) {
+		fastTrials(n, countE, 1) 
+	} else {
+		slowTrial(n, countE, delay)
+	}
+	
+}
+
+function getDelay() {
+	let speedValue = $("#speed").val()
+	let delayValue = 10 - speedValue
+	if(delayValue == 0) {
+		return -2;
+	}
+	if(delayValue == 1) {
+		return -1;
+	}
+	if(delayValue == 2) {
+		return 0;
+	}
+	if(delayValue == 3) {
+		return 1;
+	}
+	let interval = (MAX_DELAY - MIN_DELAY) / SPEED_STEPS
+	return MIN_DELAY + delayValue * interval
+}
+</script></p>
+
+<p><b>Measure of uncertainty</b>: It is tempting to think of probability as representing some natural randomness in the world. That might be the case. But perhaps the world isn't random. I propose a deeper way of thinking about probability. There is so much that we as humans don't know, and probability is our robust language for expressing my belief that an event will happen given my limited knowledge.
+This interpretation acknowledges that your own uncertainty of an event. Perhaps if you knew the position of every water molecule, you could perfectly predict tomorrow's weather. But we don't have such knowledge and as such we use probability to talk about the chance of rain tomorrow given the information that we have access to.</p>
+
+
+
+<p><b>Origins of probabilities</b>: The different interpretations of probability are reflected in the many origins of probabilities that you will encounter in the wild (and not so wild) world. Some probabilities are calculated analytically using mathematical
+proofs. Some probabilities are calculated from data, experiments or simulations. Some probabilities are just
+made up to represent a belief. Most probabilities are generated from a combination of the above. For example, someone will make up a prior belief, that
+belief will be mathematically updated using data and evidence. Here is an example of calculating a probability from data: </p>
+
+<!-- <h2>Approximating Probability from Experiments</h2> -->
+
+
+<!--
+
+Probability of hitting a bulls eye
+Probability of giving birth on your due date
+Probability of having a genetic variation
+Probability of finding a pearl in an oyester
+
+Probability of 
+--> 
+
+
+
+<p>
+	<b>Probabilities and simulations</b>: Another way to compute probabilities is via simulation. For some complex problems where the probabilities are too hard to compute analytically you can run
+simulations using your computer.
+If your simulations generate believable trials from the sample space, then the probability of an event E is
+approximately equal to the fraction of simulations that produced an outcome from E. Again, by the definition
+of probability, as your number of simulations approaches infinity, the estimate becomes more accurate.
+
+<p>
+<b>Probabilities and percentages</b>: You might hear people refer to a probability as a percent. That the probability of rain tomorrow is 32%. The proper way to state this would be to say that 0.32 is the probability of rain. Percentages are simply probabilities multiplied by 100. "percent" is latin for "out of one hundred".  
+</p>
+
+<div class="purpleBox">
+<p><b><i>Problem:</i></b> Use the definition of probability to approximate the answer to the question: "What is the probability a new-born child is female?" Contrary to popular myth the answer is not ½. Base your answer off a report from the 2017 report from the Australian government which states that 309,142 children were born in Australia of which 149,998 were female [<a href="https://www.aihw.gov.au/getmedia/2a0c22a2-ba27-4ba0-ad47-ebbe51854cd6/aihw-per-100-in-brief.pdf.aspx">citation</a>].</p>
+
+<p><b><i>Answer:</i></b>
+	The Experiment is: A single child birth in Australia. <br/>The sample space is the set of possible sexes assigned at birth, {Male, Female, Intersex}. <br/>$E$ is the event that a new-born child is female, which in set notation is the subset {Female} of the sample space.</p>  
+
+	<p> By the definition of probability, the ratio of trials that result in the event to the number of trials will tend to our desired probability:</p>
+
+	<p>$$ \begin{aligned} \p(\text{Born Female}) &= \p(E) \\
+		&= \lim_{n \rightarrow \infty}\frac{\texttip{\text{count}(E)}{count of times that event occurs}}{n} \\
+	    &\approx \frac{149,998}{309,142} \\
+	    &\approx 0.485\end{aligned}$$</p>
+
+	    <p>Since 300,000 is quite a bit less than infinity, this is an approximation. It turns out, however, to be a rather good one. In the overall human population it is estimated that there are around 109 male births for every 100 female births (and females tend to live longer).
+</div>
+
+<h2>Axioms of Probability</h2>
+
+<p>Here are some basic truths about probabilities that we accept as axioms:</p>
+
+<p>
+<div class="bordered">
+<table  style="vertical-align: top">
+  <tr style="height:50px; vertical-align: top">
+  	<td style="width:350px"><b>Axiom 1</b>: $0 ≤ \p(E) ≤ 1$</td>
+  	<td>All probabilities are numbers between 0 and 1.</td>
+  </tr>
+  <tr style="height:50px; vertical-align: top">
+  	<td><b>Axiom 2</b>: $\p(S) = 1$</td>
+  	<td>All outcomes must be from the <a href="#sampleSpace">Sample Space</a>.</td>
+  </tr>
+  <tr style="height:60px; vertical-align: top">
+  	<td ><b>Axiom 3</b>: If $E$ and $F$ are mutually exclusive, then $\p(E \text{ or } F) = \p(E) + \p(F)$</td>
+  	<td> The probability of "or" for mutually exclusive events</td>
+  </tr>
+</table>
+</div>
+</p>
+
+<p>These three axioms are formally called the <a target="_blank" href="https://en.wikipedia.org/wiki/Probability_axioms">Kolmogorov axioms</a> and they are considered to be the foundation of probability theory. They are also useful identities!</p>
+
+<p>You can convince yourself of the first axiom by thinking about the math definition of probability. As you
+perform trials of an experiment it is not possible to get more events than trials (thus probabilities are less than
+1) and its not possible to get less than 0 occurrences of the event (thus probabilities are greater than 0).
+The second axiom makes sense too. If your event is the sample space, then each trial must produce
+the event. This is sort of like saying; the probability of you eating cake (event) if you eat cake (sample
+space that is the same as the event) is 1.
+
+The third axiom is more complex and in this textbook we dedicate an entire chapter to understanding it: <a href="">Probability of or</a>. It applies to events that have a special property called "mutual exclusion": the events do not share any outcomes.
+
+
+<p>These axioms have great historical significance. In the early 1900s it was not clear if probability was somehow different than other fields of math -- perhaps the set of techniques and systems of proofs from other fields of mathematics couldn't apply.  Kolmogorov's great success was to show to the world that the tools of mathematics did infact apply to probability. From the foundation provided by this set of axioms mathematicians built the edifice of probability theory.</p>
+
+<h2>Provable Identities</h2>
+
+<p>We often refer to these as corollaries that are directly provable from the three
+axioms given above.</p>
+
+<p>
+<div class="bordered">
+<table  style="vertical-align: top">
+  <tr style="height:50px; vertical-align: top">
+  	<td style="width:350px"><b>Identity 1</b>: $\p(E\c) = 1 - \p(E)$</td>
+  	<td>The probability of event E not happening</td>
+  </tr>
+  <tr style="height:30px; vertical-align: top">
+  	<td><b>Identity 2</b>: If $E ⊆ F$, then $\p(E) ≤ \p(F)$</td>
+  	<td>Events which are subsets</td>
+  </tr>
+</table>
+</div>
+</p>
+
+<p>This first identity is truly useful. For any event, you can calculate the probability of the event <i>not</i> occuring which we write in probability notation as $E\c$, if you know the probability of it occuring -- and vice versa. We can also use this identity to show you what it looks like to prove a theorem in probability.</p>
+
+<div class="purpleBox">
+<p><b><i>Proof:</i></b> $\p(E\c) = 1 - \p(E)$
+
+$$
+\begin{align}
+\p(S) &= \p(E \or E\c) && \text{$E$ or $E\c$ covers every outcome in the sample space} \\
+\p(S) &= \p(E) + \p(E\c) && \text{Events $E$ and $E\c$ are mututally exclusive} \\
+1 &= \p(E) + \p(E\c) && \text{Axiom 2 of probability} \\
+\p(E\c) &= 1 - \p(E) && \text{By re-arranging}
+\end{align}
+$$
+</div>
+
+               
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal",
+            mouseWheel: {preventDefault: true},
+            scrollInertia: 60
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+</script>                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+</html>
