@@ -8,7 +8,7 @@ import sys
 IGNORE_DIRS = [
     'parts'
 ]
-TEMPLATE_DIR = 'templates'
+TEMPLATE_DIR = 'chapters'
 ROOT = 'pythonreader'
 OUT_DIR = 'en'
 

@@ -1,0 +1,47 @@
+
+% rebase('templates/chapter.html', title="Probability of and")
+ 
+
+<center><h1>Probability of <b><i>and</i></b></h1></center>
+<hr/>
+
+<p>The probability of the <b><i>and</i></b> of two events, say $E$ and $F$, written $\p(E \and F)$, is the probability of both events happening. You might see equivalent notations $\p(EF)$ or $\p(E ∩ F)$ to mean the probability of and. How you calculate the probability of event $E$ and event $F$ happening
+depends on whether or not the events are "independent". In the same way that mutual exclusion makes it easy to calculate the probability of the <b><i>or</i></b> of events, independence is a property that makes it easy to calculate the <b><i>and</i></b> of events.</p>     
+
+<h2>Independent Events</h2>
+
+<p>Two events are independent if knowing the outcome of one event does not change your belief about whether or not the other event will occur. For example, you might say that two separate dice rolls are independent of one another: the outcome of the first dice gives you no information about the outcome of the second -- and vice versa. If events are <b></i>independent</i></b> then calculating the probability of <b><i>and</i></b> becomes simple multiplication:
+
+<p>
+	<div class="bordered">
+		<b><i>Definition</i></b>: Probability of <b><i>and</i></b> for independent events.<br/>
+
+		<p>If two events, $E$ and $F$ are independent then the probability of $E$ <b><i>and</i></b> $F$ occuring is:
+			$$
+			\p(E \and F) = \p(E) \cdot \p(F)
+			$$
+		</p> 
+		<p>This property applies regardless of how the probabilities of $E$ and $F$ were calculated and
+whether or not the events are mutually exclusive. This equation applies if and only if events are independent, and as such, if you can show it applies, you can claim the events are independent.</p>
+
+<p> The independence principle extends to more than two
+events. For $n$ events $E_1, E_2, \dots E_n$ that are <b><i>mutually</i></b> independent of one another -- the independence equation also holds for all subsets of the events.
+$$
+\p(E_1 \and E_2 \and \dots \and E_n) = \prod_{i=1}^n \p(E_i)
+$$
+</p>
+<p></p>
+	</div>
+</p>
+
+<p>Independence is a property which is often "assumed". You could prove that two events are independent by showing that the product of their probabilities is equal to the probability of both events happening. When working with probabilities that come from data,
+very few things will exactly match the mathematical definition of independence. That can happen for two reasons:
+first, events that are calculated from data or simulation are not perfectly precise and it can be impossible to know if a discreptancy is due to innacuracy in estimating probabilities, or dependence of events. Second, in our complex
+world many things actually influence each other, even if just a tiny amount. Despite that we often make the
+wrong, but useful, independence assumption. Since independence makes it so much easier for humans and machines to calculate composite probabilities, you may declare the events to be independent. It could mean your resulting calculation is slightly incorrect -- but this "modelling assumption" might make it feasible to come up with a result.</p>
+
+<h2>Dependent Events</h2>
+
+<p>Events which are not independent are called <b><i>dependent</i></b> events. How can you calculate the <b>and</b> of dependent events? If your events are mutually exclusive you might be able to use a technique called DeMorgan's law, which we cover in a latter chapter. For the probability of and in dependent events there is a direct formula called the <a href="conditional">chain rule</a>  which we cover in the next chapter: <a href="conditional">Conditional Probability</a>.</p>
+
+</p>

@@ -1,0 +1,127 @@
+
+% rebase('templates/chapter.html', title="Conditional Probability")
+ 
+<center><h1>Conditional Probability</h1></center>
+<hr/>
+
+<p>In English, a conditional probability states "what is the chance of an event $E$ happening given that I have
+already observed some other event $F$". It is a critical idea in machine learning and probability because it
+allows us to update our probabilities in the face of new evidence.</p>
+
+<p>When you condition on an event happening you are entering the universe where that event has taken place.
+Mathematically, if you condition on $F$, then $F$ becomes your new sample space. In the universe where $F$ has
+taken place, all rules of probability still hold!</p>
+
+<p>
+	<div class="bordered">
+
+<b><i>Definition</i></b>: Conditional Probability.<br/>
+
+<p>The probability of E given that (aka conditioned on) event F already happened:
+$$
+\p(E |F) = \frac{\p(E \and F)}{\p(F)}
+$$
+</p>
+	</div>
+	</p>
+
+<p>
+	 Let's use a visualization to get an intuition for why the conditional probability formula is true. Again consider events $E$ and $F$	
+which have outcomes that are subsets of a sample space with 50 equally likely outcomes, each one drawn as
+a hexagon:
+</p>
+
+<p>
+	Conditioning on $F$ means that we have entered the world where $F$ has happened (and $F$, which has 14
+equally likely outcomes, has become our new sample space). Given that event $F$ has occurred, the conditional
+probability that event $E$ occurs is the subset of the outcomes of E that are consistent with $F$. In this case we
+can visually see that those are the three outcomes in $E \and F$. Thus we have the:
+$$
+\p(E |F) = \frac{\p(E \and F)}{\p(F)} = \frac{3/50}{14/50} = \frac{3}{14} \approx 0.21
+$$
+
+Even though the visual example (with equally likely outcome spaces) is useful for gaining intuition, conditional probability applies regardless of whether the sample space has equally likely outcomes!
+</p>
+
+
+<p>
+	<div class="bordered">
+
+<b><i>Definition</i></b>: The chain rule.<br/>
+
+<p>The formula in the definition of conditional probability can be re-arranged to derive a general way of calculating the probability of the <b><i>and</i></b> of any two events:
+$$
+\p(E \and F) = \p(E | F) \cdot \p(F)
+$$
+</p>
+<p>Of course there is nothing special about $E$ that says it should go first. Equivalently:
+	$$
+	\p(E \and F) = \p(F \and E) =  \p(F | E) \cdot \p(E)
+	$$
+</p>
+
+<p>We call this formula the "chain rule." Intuitively it states that the probability of observing events $E$ <b><i>and</i></b> $F$ is the
+probability of observing $F$, multiplied by the probability of observing $E$, given that you have observed $F$.
+It generalizes to more than two events:
+$$
+\begin{align}
+\p(E_1 \and E_2 \and \dots \and E_n) = &\p(E_1) \cdot \p(E_2|E_1) \cdot \p(E_3 |E_1 \and E_2) \dots  \\  &\p(E_n|E_1 \dots E_{n−1})
+\end{align}
+$$
+	</div>
+	</p>
+
+	<h2>Conditioning on Multiple Events</h2>
+
+	
+
+	<h2>The Conditional Paradigm</h2>
+
+	<p>When you condition on an event you enter the universe where that event has taken place. In that new universe
+all the laws of probability still hold. Thus, as long as you condition consistently on the same event, every one of
+the tools we have learned still apply. Let’s look at a few of our old friends when we condition consistently on
+an event (in this case $G$):</p>
+
+<p>
+	<table class="table borderless">
+		<thead>
+		<tr>
+			<th>Name of Rule</th>
+			<th>Original Rule</th>
+			<th>Rule Conditioned on $G$</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr >
+			<td>Axiom of probability 1</td>
+			<td>$0 ≤ \p(E) ≤ 1$</td>
+			<td>$0 ≤ \p(E|G) ≤ 1$</td>
+		</tr>
+		<tr >
+			<td>Axiom of probability 2</td>
+			<td>$\p(S) = 1$</td>
+			<td>$\p(S | G) = 1$</td>
+		</tr>
+		<tr >
+			<td>Axiom of probability 3</td>
+			<td>$\p(E \or F) = \p(E) + \p(F)$ <br/>for mutually exclusive events</td>
+			<td>$\p(E \or F | G) = \p(E | G) + \p(F | G)$ <br/>for mutually exclusive events</td>
+		</tr>
+		<tr style="border-bottom: 1px solid #ddd;">
+			<td>Identity 1</td>
+			<td>$\p(E\c) = 1 - \p(E)$</td>
+			<td>$\p(E\c | G) = 1 - \p(E |G)$</td>
+		</tr>
+
+
+		</tbody>
+
+	</table>
+	</p>
+
+	<h2>Independence Revisited</h2>
+
+	<p>Our new understanding of conditional probability can give us a fresh insight into the independence. It also
+introduces a new concept: conditional independence.
+First, lets revisit the definition of conditional probability, this time for two independent events E and F:</p>
+

@@ -51,13 +51,15 @@ greyBackground as a style class)
   max-width: 930px;
   /*margin-top:20px;*/
   margin-bottom:50px;
+  overflow-x:scroll;
+  min-width: 300px;
 }
 /* Style for the body of a handout page */
 .greyBackground{
   background-color: #efefef
 }
 /* When the handout drops bellow a threshold remove padding */
-@media (max-width: 1000px) {
+@media (max-width: 1300px) {
   .greyBackground {
     background-color: white;
   }
@@ -68,6 +70,12 @@ greyBackground as a style class)
     max-width: 760px;
     padding-left:15px;
     padding-right:15px;
+    padding-top:00px;
+    background-color: transparent;
+  }
+
+  #content {
+    padding:15px !important;
   }
 }
 
@@ -143,7 +151,7 @@ purpleBox:
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 999;
+    z-index: 9999;
     background: #333;/*#7386D5;*/
     color: #fff;
     transition: all 0.3s;
@@ -164,18 +172,22 @@ purpleBox:
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 10px 0;
     border-bottom: 1px solid black;
+    margin:0px;
 }
 
 #sidebar ul p {
     color: #fff;
-    padding: 10px;
+    font-size: 1.1em;
+    padding-left: 10px;
+    margin:0px;
+    font-style: italic;
 }
 
 #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
+    padding-left: 15px;
+    font-size: 1em;
     display: block;
 }
 
