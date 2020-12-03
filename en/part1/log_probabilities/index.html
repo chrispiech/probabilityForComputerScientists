@@ -232,7 +232,7 @@
 <center><h1>Log Probabilities</h1></center>
 <hr/>
 
-<p>A log probability $\log \p(E)$ is simply the log function of a probability. For example if $\p(E) = 0.00001$ then $\log \p(E) = \log(0.00001) \approx -11.51$. There are many reasons why log probabilities are an essential tool for probabilities in computers: (a) computers can be rather limited when representing <a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic">very small numbers</a> and (b) logs have the wonderful ability to turn multiplication into addition, and computers are much faster at addition. The default base is the natural base $e$.</p>
+<p>A log probability $\log \p(E)$ is simply the log function applied to a probability. For example if $\p(E) = 0.00001$ then $\log \p(E) = \log(0.00001) \approx -11.51$. There are many reasons why log probabilities are an essential tool for probabilities in computers: (a) computers can be rather limited when representing <a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic">very small numbers</a> and (b) logs have the wonderful ability to turn multiplication into addition, and computers are much faster at addition. The default base is the natural base $e$.</p>
 
 	<p>You may have noticed that the log in the above example produced a negative number. Recall that $\log b = c$, with the implied natural base $e$ is the same as the statement $e ^ c = b$. It says that $c$ is the exponent of $e$ that produces $b$. If $b$ is a number between 0 and 1, what power should you raise $e$ to in order to produce $b$? If you raise $e^0$ it produces 1. To produce a number less than 1, you must raise $e$ to a power less than 0. That is a long way of saying: if you take the log of a probability, the result will be a negative number.
 
