@@ -103,7 +103,7 @@
         <!-- Sidebar  -->
 <nav id="sidebar">
     <div class="sidebar-header">
-        <a href="../../"><h3><i class="fas fa-seedling"></i> Coding Probability</h3></a>
+        <a href="../../"><h3><i class="fas fa-book-open"></i> Probability <br/>for a Digital World</h3></a>
     </div>
 
 <!-- intro -->
@@ -112,7 +112,7 @@
 <a href="../../intro/intro">Introduction</a>
 <a href="../../intro/free_book">A Free Online Textbook</a>
 <a href="../../intro/notation">Notation</a>
-<a href="../../intro/python">Probability in Python</a>
+<a href="../../intro/prob_code">Probability in Code</a>
 </li>
 </ul>
 
@@ -124,12 +124,12 @@
 <a href="../../part1/combinatorics">Combinatorics</a>
 <a href="../../part1/probability">Definition of Probability</a>
 <a href="../../part1/equally_likely">Equally Likely Outcomes</a>
-<a href="../../part1/prob_or">Probability of or</a>
-<a href="../../part1/prob_and">Probability of and</a>
+<a href="../../part1/prob_or">Probability of <b>or</b></a>
 <a href="../../part1/cond_prob">Conditional Probability</a>
+<a href="../../part1/independence">Independence</a>
+<a href="../../part1/prob_and">Probability of <b>and</b></a>
 <a href="../../part1/law_total">Law of Total Probability</a>
 <a href="../../part1/bayes_theorem">Bayes' Theorem</a>
-<a href="../../part1/random_computers">Randomness in Computers</a>
 <a href="../../part1/log_probabilities">Log Probabilities</a>
 </li>
 </ul>
@@ -139,7 +139,7 @@
 <li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
 <li>
 <a href="../../part2/rvs">Random Variables</a>
-<a href="../../part2/pmf">Probability Mass Functions</a>
+<a href="../../part2/pmf">Likelihood Functions</a>
 <a href="../../part2/expectation">Expectation</a>
 <a href="../../part2/variance">Variance</a>
 <a href="../../part2/binomial">Bernoulli and Binomial</a>
@@ -233,7 +233,7 @@
 <hr/>
 
 <p>
-A Random Variable is a variable that probabilistically takes on different values. You can think of an RV as
+A Random Variables (RV) is a variable that probabilistically takes on a value. You can think of an RV as
 being like a variable in a programming language. They take on values, have types and have domains over
 which they are applicable. We can define events that occur if the random variable takes one values that satisfy
 a numerical test (eg does the variable equal 5, is the variable less than 8). We often think of the probabilities
@@ -294,6 +294,48 @@ The definition of a random variable is the probabilities for all possible outcom
 </p>
 
 <h2>Random variables vs Events </h2>
+
+<p>
+Random variables and events are two different concepts. An event is an outcome, or a set of outcomes, to an experiment. A random variable is a more like an experiment -- it will take on an outcome eventually. Probabilities are over events, so if you want to talk about probability in the context of a random variable, you must construct an event. You can make events by using any of the <a href="https://en.wikipedia.org/wiki/Relational_operator">Relational Operators</a>: 
+<, ≤, >, ≥, =, or ≠ (not equal to). This is analogous to coding where you can use relational operators to create boolean expressions from numbers. </p>
+
+<p>
+	Lets continue our example of the random variable $Y$ which represents the number of heads on three coin flips. Here are some events using the variable $Y$:
+	
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Event</th><th>Meaning</th><th>Probability Statement</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>$Y= 1$</td><td>$Y$ takes on the value 1 (there was one heads)</td><td>$\p(Y=1)$</td>
+		</tr>
+		<tr>
+			<td>$Y< 2$</td><td>$Y$ takes on 0 or 1</td><td>$\p(Y<2)$</td>
+		</tr>
+		<tr>
+			<td>$X > Y$</td><td>$X$ takes on a value greater than the value $Y$ takes on.</td><td>$\p(X>Y)$</td>
+		</tr>
+		<tr>
+			<td>$Y= k$</td><td>$Y$ takes on a value represented by non-random variable $k$</td><td>$\p(Y = k)$</td>
+		</tr>
+		</tbody>
+	</table>
+	</p>
+
+	<p>You will see many examples like this last one, $\p(Y=k)$, in this text book as well as in scientific and math research papers. It allows us to talk about the likelihood of $Y$ taking on a value, in general. For example, later in this book we will derive that for three coin flips where $Y$ is the number of heads, the probability of getting exactly $y$ heads is:
+$$
+\begin{align}
+\p(Y = y) = {3 \choose y} \cdot 0.5^3 && \text{If } 0 \leq y \leq 3
+\end{align}
+$$
+	This allows us to use one equation to talk about the probability that the number of heads is 0, 1, 2 or 3 all in one expression. You can plug in any one of those values for $y$ to get the corresponding probability. It is customary to use lower-case symbols for non-random values. This might seem like redundant notation. In probability research papers, scientists often use the shorthand with only the value such as $\p(y)$ for $\p(Y=y)$. This shorthand assumes that the random variable referred to is the capital version of the value, and that the probability event is that the random variable equals the value $y$. In this book we will continue to be explicit about the event.</p>
+
+	<p>
+		The use of an equals sign in the "event" can be confusing. For example what does this expression say $P(Y = 1) = 0.375$? It says that the probability that "$Y$ takes on the value 4" is 0.375.
+	</p>
 
 
                

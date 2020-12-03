@@ -105,6 +105,17 @@ purpleBox:
   border-radius:0.25rem;
 }
 
+.mainFigure {
+  max-width: min(400px,100%)
+}
+
+.mainFigureFull {
+  width:100%;
+}
+
+.indent {
+  margin-left:20px;
+}
 
 /*
     DEMO STYLE

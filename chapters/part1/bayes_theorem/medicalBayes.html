@@ -1,0 +1,228 @@
+
+<div class="purpleBox">
+	<p><b><i>Example:</i></b> Probability of a disease given a noisy test</p>
+<p>In this problem we are going to calculate the probability that a patient has an illness given test-result for the illness. A positive test result means the test thinks the patient has the illness. Things that we neeed to know: The  percent of the population that has the illness. The probability the test returns a positive test for a patient with the disease. The probability the test returns a positive test for a patient who does not have th disease.
+</p>
+
+<p>This example was origianlly presented in the context of the Mamogram test for breast cancer. The seriousness of cancer underscores the potential for bayesian probability to be applied to important contexts. Here we leave the disease and the test abstract to highlight that this same calculation can be used for many different circumstances. The natural occurence of breast cancer is 8%. The mamogram test returns a positive result 95% of the time for patients who have breast cancer. The test resturns a positive result 7% of the time for people who do not have breast cancer. In this demo you can enter different probabilities and calculate the corresponding chance of disease given a positive test result.</p>
+
+<div class="form-group">
+				    <label for="exampleInputEmail1">Natural % of population with illness</label>
+				    <input type="number" class="form-control" id="priorInput" value="8">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Probability of a positive result given the patient has illness</label>
+				    <input type="number" class="form-control" id="condInput" value="0.95">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Probability of a positive result given the patient does not have illness</label>
+				    <input type="number" class="form-control" id="condNegInput" value="0.07">
+				  </div>
+
+				  <button id="calcButton" class="btn btn-success" onclick="recalculate();">Recalculate probability of disease given positive test result</button>
+				  
+				 
+ <hr/> 
+
+				  
+<p><b><i>Answer</i></b></p>
+
+<p>
+
+</p>
+
+				  <p>
+				  	The probability that the patient has the illness given a positive test result is: <span class="ansValue"></span>
+				  </p>
+				 
+				  <div id="explination" >
+				  	
+					  
+					  <div id="answer">
+					  	<p>
+					  		<b>Terms:</b><br/>
+					  				Let $I$ be the event that the patient has the illness<br/>
+					  				Let $E$ be the event that the test result is positive<br/>
+					  				$\p(I|E)$ = probability of the illness given a positive test. This is the number we want to calculate.<br/>
+					  				$\p(E|I)$ = probability of a positive result given illness = <span class="condValue"></span><br/>
+					  				$\p(E|I\c)$ = probability of a positive result given no illness = <span class="condNegValue"></span><br/>
+					  				$\p(I)$ = natural probability of the illness = <span class="priorValue"></span>
+					  	</p>
+					  	<p><b>Bayes Theorem:</b><br/>
+					  	
+					  		In this problem we know $\p(E|I)$ and $\p(E|I\c)$ but we want to know $\p(I|E)$. We can apply Bayes Theorem to turn our knowledge of one conditional into knowledge of the reverse.
+					  	</p>
+
+					  	<p >
+					  		$$\begin{align}\p(I|E) &= \frac{\p(E|I)P(I)}{\p(E|I)\p(I) + \p(E|I\c)\p(I\c)} && \text{Bayes' Theorem with Total Prob.}\end{align}$$
+					  	</p>
+					  		Now all we need to do is plug values into this formula. The only value we don't explicitly have is $P(I\c)$. But we can simply calculate it since $P(I\c) = 1 - P(I)$. Thus:
+						</p>
+
+						<p id="bayesApplied">
+					  		
+					  	</p>
+					  </div>
+				</div>
+			</div>
+
+			<h2>Natural Frequency Intuition</h2>
+				<p>
+							One way to build intuition for Bayes Theorem is to think about "natural frequences". Let's take another approach at answer the probability question in the above example on belief of illness given a test. In this take, we are going to imagine we have a population of 1000 people. Let's think about how many of those have the illness and test positive and how many don't have the illness and test positive. This visualization is based off the numbers in the fields above. Feel free to change them!
+						</p>
+
+						<p>
+							There are many possibilities for how many people have the illness, but one very plaussible number is 1000, the number of people in our population, multiplied by the probability of the disease.</p>
+						<p class="indent">
+							$1000 \times \p(\text{Illness})$ people have the illness<br/>
+							$1000 \times (1- \p(\text{Illness}))$ people do not have the illness.
+						</p>
+						<p>
+							We are going to color people who <span style="color:LightSkyBlue"><b>have the illness</b></span> in blue and those <span style="color:LightPink"><b>without the illness</b></span> in pink (those colors do not imply gender!). 
+						</p>
+						
+						<p>
+							A certain number of people <span style="color:DodgerBlue"><b>with the illness will test positive</b></span> (which we will draw in Dark Blue) and a certain number of people <span style="color:HotPink"><b>without the illness will test positive</b></span> (which we will draw in Dark Pink):
+						</p>
+						<p class="indent">
+							$1000 \times \p(\text{Illness}) \times \p(\text{Positive}|\text{Illness})$ people have the illness and test positive<br/>
+							$1000 \times \p(\text{Illness}\c) \times \p(\text{Positive}|\text{Illness}\c)$ people do not have the illness and test positive.
+						</p>
+						<p>
+							Here is the whole population of 1000 people:
+						</p>
+
+						<p>
+							<canvas style="width:100%; height:370px;" id="naturalFrequencyCanvas"></canvas>
+						</p>
+						<p>
+							
+							The number of people who <span style="color:DodgerBlue"><b>test positive and have the illness</b></span> is <span class="naturalTruePosValue">?</span>. <br/>
+							The number of people who <span style="color:HotPink"><b>test positive and don't have the illness</b></span> is <span class="naturalFalsePosValue">?</span>. <br/>
+							The total number of people who test positive is <span class="naturalPosValue">?</span>. 
+
+						</p>
+						<p>
+							Out of the subset of people who test positive, the fraction that have the illness is <span class="naturalTruePosValue">?</span>/<span class="naturalPosValue">?</span> = <span class="naturalAprox">?</span> which is a close approximation of the answer. If instead of using 1000 imaginary people, we had used more, the approximation would have been even closer to the actual answer (which we calculated using Bayes Theorem).
+						</p>
+
+
+
+
+
+		
+		
+		
+				
+		<script>
+			function recalculate() {
+				calculate()
+				MathJax.typeset()
+			}
+
+			function calculate() {
+				$("#calcButton").html('Re-calculate probability of disease given positive test result')
+				var cond = $("#condInput").val() 
+				var condNeg = $("#condNegInput").val()
+				var prior = $("#priorInput").val() / 100
+
+				/*if(cond > 1 || cond < 0 || condNeg > 1 || condNeg < 0) {
+					alert("all probabilities must be between 0 and 1");
+					return;
+				}*/
+
+				
+
+				var ans = (cond * prior) / (cond * prior + condNeg * (1 - prior))
+				ans = ans.toFixed(4)
+
+				$(".condValue").html(cond)
+				$(".condNegValue").html(condNeg)
+				$(".priorValue").html(prior)
+				$(".ansValue").html(ans)
+
+				$("#bayesApplied").html('$$P(I|E) = \\frac{('+ cond +')('+ prior +')}{('+cond+')('+prior+') + ('+condNeg+')(1 - ' + prior+')} = '+ans+'$$');
+
+				
+				$("#explination").show()
+
+				drawNaturalFrequencies(prior, cond, condNeg);
+			}
+
+			function drawNaturalFrequencies(prior, cond, condNeg){
+				var width = $("#naturalFrequencyCanvas").outerWidth();
+				var height =  0.6* width;
+				$("#naturalFrequencyCanvas").height(height);
+				console.log($("#naturalFrequencyCanvas").height())
+				console.log()
+				var canvas = document.getElementById('naturalFrequencyCanvas');
+				canvas.width = width;
+				canvas.height = height;
+				var ctx = canvas.getContext('2d');
+
+				var N_ROWS = 20
+				var N_COLS = 50
+				var SPACING = 5
+
+				var ICON_WIDTH = (width - (N_COLS - 1)*SPACING) / N_COLS
+				var ICON_HEIGHT = (height - (N_ROWS - 1) * SPACING) / N_ROWS
+				console.log(ICON_WIDTH)
+				console.log(ICON_HEIGHT)
+
+				var numSick = prior * 1000
+				var numSickPos = numSick * cond
+				var numHealthPos = (1-prior) * 1000 * condNeg
+				
+
+				var index = 0
+				for (var c = 0; c < N_COLS; c++) {
+			    	for(var r = 0; r < N_ROWS; r++) {
+			    		if(index < numSickPos){
+			    			ctx.fillStyle = "DodgerBlue";
+			    		} else if(index < numSick){
+			    			ctx.fillStyle = "LightSkyBlue";
+			    		} else if(index < numSick + numHealthPos) {
+			    			ctx.fillStyle = "HotPink";
+			    		} else {
+			    			ctx.fillStyle = "LightPink";
+			    		}
+			    		var x = c * (SPACING + ICON_WIDTH)
+			    		var y = r * (SPACING + ICON_HEIGHT)
+			    		drawPerson(ctx, x, y, ICON_WIDTH, ICON_HEIGHT)
+			    		index++
+			    		
+			    	}
+			    }
+
+			    var numPos = Math.ceil(numSickPos) + Math.ceil(numHealthPos)
+			    var naturalAprox = (Math.ceil(numSickPos) / numPos).toFixed(4)
+			    $(".naturalPosValue").html(numPos);
+			    $(".naturalTruePosValue").html(Math.ceil(numSickPos));
+			    $(".naturalFalsePosValue").html(Math.ceil(numHealthPos));
+			    $(".naturalAprox").html(naturalAprox)
+			}
+
+			function drawPerson(ctx, x, y, width, height) {
+				// head
+				var headRadius = height * 0.15
+				filledCircle(ctx, x + width * 0.5, y + headRadius, headRadius);
+
+				// arms
+				ctx.fillRect(x, y + height * 0.3, width, height *.4)	
+
+				// body
+				ctx.fillRect(x + width *.15, y + height * 0.3, width*.7, height *.8)
+			}
+
+			function filledCircle(ctx, x, y, r) {
+				ctx.beginPath();
+				ctx.arc(x, y, r, 0, Math.PI*2, true); 
+				ctx.closePath();
+				ctx.fill();
+			}
+
+			calculate()
+			drawNaturalFrequencies(0.08, 0.95, 0.07)
+			
+			
+		</script>

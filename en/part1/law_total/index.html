@@ -103,7 +103,7 @@
         <!-- Sidebar  -->
 <nav id="sidebar">
     <div class="sidebar-header">
-        <a href="../../"><h3><i class="fas fa-seedling"></i> Coding Probability</h3></a>
+        <a href="../../"><h3><i class="fas fa-book-open"></i> Probability <br/>for a Digital World</h3></a>
     </div>
 
 <!-- intro -->
@@ -112,7 +112,7 @@
 <a href="../../intro/intro">Introduction</a>
 <a href="../../intro/free_book">A Free Online Textbook</a>
 <a href="../../intro/notation">Notation</a>
-<a href="../../intro/python">Probability in Python</a>
+<a href="../../intro/prob_code">Probability in Code</a>
 </li>
 </ul>
 
@@ -124,12 +124,12 @@
 <a href="../../part1/combinatorics">Combinatorics</a>
 <a href="../../part1/probability">Definition of Probability</a>
 <a href="../../part1/equally_likely">Equally Likely Outcomes</a>
-<a href="../../part1/prob_or">Probability of or</a>
-<a href="../../part1/prob_and">Probability of and</a>
+<a href="../../part1/prob_or">Probability of <b>or</b></a>
 <a href="../../part1/cond_prob">Conditional Probability</a>
+<a href="../../part1/independence">Independence</a>
+<a href="../../part1/prob_and">Probability of <b>and</b></a>
 <a href="../../part1/law_total">Law of Total Probability</a>
 <a href="../../part1/bayes_theorem">Bayes' Theorem</a>
-<a href="../../part1/random_computers">Randomness in Computers</a>
 <a href="../../part1/log_probabilities">Log Probabilities</a>
 </li>
 </ul>
@@ -139,7 +139,7 @@
 <li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
 <li>
 <a href="../../part2/rvs">Random Variables</a>
-<a href="../../part2/pmf">Probability Mass Functions</a>
+<a href="../../part2/pmf">Likelihood Functions</a>
 <a href="../../part2/expectation">Expectation</a>
 <a href="../../part2/variance">Variance</a>
 <a href="../../part2/binomial">Bernoulli and Binomial</a>
@@ -231,6 +231,47 @@
  
 <center><h1>Law of Total Probability</h1></center>
 <hr/>
+
+<p>An astute person once observed that when looking at a picture, like the one we say for conditional probability:
+</p>
+
+<p>
+	<center>
+<img src="../../../img/chapters/conditionalProbability.png" class="mainFigure"></img>
+</center>
+</p>
+
+<p>that event $E$ can be
+thought of as having two parts, the part that is in $F$, $(E \and F)$, and the part that isn’t, $(E \and F\c)$.
+This is true
+because $F$ and $F\c$ are (a) mutually exclusive sets of outcomes which (b) together cover the entire sample space.
+After further investigation this proved to be mathematically true, and there was much rejoicing:</p>
+
+$$\p(E) = \p(E \and F) + \p(E \and F\c)$$</p>
+
+<p>This observation proved to be particularly useful when it was combined with the chain rule and gave rise to a
+tool so useful, it was given the big name, law of total probability.</p>
+
+<p>
+	<div class="bordered">
+		<b>The Law of Total Probability</b><br/>
+If we combine our above observation with the chain rule, we get a very useful formula:
+$$
+\p(E) = \p(E | F) \p(F) + \p(E | F\c) \p(F\c)
+$$
+
+<p>There is a more general version of the rule. If you can divide your sample space into any number of
+<a href="../../part1/prob_or/">mutually exclusive</a> events: $B_1, B_2, \dots B_n$ such that every outcome in sample space fall into one of those
+events, then:
+$$
+\begin{align}
+\p(E) 
+&= \sum_{i=1}^n \p(E \and B_i) && \text{Extension of our observation}\\
+&= \sum_{i=1}^n \p(E | B_i) \p(B_i) && \text{Using chain rule on each term}
+\end{align}
+$$</p>
+	</div>
+	</p>
 
 
                

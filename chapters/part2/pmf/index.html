@@ -10,3 +10,32 @@ The probability mass functions (PMF) is a function that maps possible outcomes o
 corresponding probabilities. Because it is a function, we can plot PMF graphs where the x-axis are the values
 that the random variable could take on and the y-axis is the probability of the random variable taking on said
 value:</p>
+
+<p>
+<div class="row">
+	<div class="col-6">
+		<img style="max-width:100%" src="{{pathToRoot}}img/chapters/dicePmf.png"></img>
+	</div>
+	<div class="col-6">
+		<img style="max-width:100%" src="{{pathToRoot}}img/chapters/diceSumPmf.png"></img>
+	</div>
+</div>
+<center><i>Left: the PMF of a single 6 sided die roll. Right: the PMF of the sum of two dice rolls.</i></center>
+</p>
+
+<h2>Probabilities Must Sum to 1</h2>
+
+For a variable (call it $X$) to be a proper random variable it must be the case that if you summed up the values of $\p(X = k)$ for all possible values $k$ that $X$ can take on, the result must be 1:
+$$
+\sum_{k} \p(X = k) = 1
+$$
+For further undertanding lets derive why this is the case. A random variable taking on a value is an event (for example $X = 2$)
+
+<h2>Functions</h2>
+<p> The "function" part of the name comes from the mathematical concept of a <a href="https://en.wikipedia.org/wiki/Function_(mathematics)">function</a>: it is a mapping from one number (representing a value the variable could take on) to another number (the corresponding probability of that variable taking on said value).</p>
+
+<p>There are many ways that these Probability Mass Functions can be specified. One option is a normalized histogram</p>
+
+<h2>Different Computational Representations</h2>
+
+

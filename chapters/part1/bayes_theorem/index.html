@@ -4,63 +4,192 @@
  <center><h1>Bayes' Theorem</h1></center>
 <hr/>
 
-<p>Bayes Theorem is one of the most ubiquitous results in probability for computer scientists. Very often we
-know a conditional probability in one direction, say P(E|F), but we would like to know the conditional
-probability in the other direction. Bayes Theorem provides a way to convert from one to the other. We can
-derive Bayes Theorem by starting with the definition of conditional probability:
+<p>Bayes' Theorem is one of the most ubiquitous results in probability for computer scientists. Very often we
+know a conditional probability in one direction, say $\p(E|F)$, but we would like to know the conditional
+probability in the other direction $\p(F |E)$. Bayes' Theorem provides a way to convert from one to the other. We can
+derive Bayes' Theorem by starting with the definition of conditional probability and then expanding the and term using the chain rule:
 
 
 $$
 \begin{align}
-\p(E|F) 
-&= \frac{\p(E \and F)}{\p(F)} && \text{Def of conditional probability}  \\
-&= \frac{\p(F | E) \cdot \p(E)}{\p(F)} && \text{Substitute the chain rule}
+\p(F|E) 
+&= \frac{\p(F \and E)}{\p(E)} && \text{Def of }
+
+\href{ {{pathToLang}}part1/cond_prob/}{\text{conditional probability}}
+
+  \\
+&= \frac{\p(E | F) \cdot \p(F)}{\p(E)} && \text{Substitute the chain rule}
 \end{align}
 $$
+
+<p>
+This theorem makes no assumptions about $E$ or $F$ so it will apply for any two events. Bayes' theorem allows you to use knowledge of a conditional probability in one direction, $\p(E | F$), to calculate the probability of the condional in the other direction $\p(F | E)$. It turns out to be exceptionally useful because it is the ubiquitous way to answer the question, how can I update a belief about something which is not directly observable given evidence. For many "noisy evidence measures" it is much easier to calculate out the probability of the evidence given the true state of the world, but what you would really like to know is the conditional probability the other way around: what is the probability of the true state of the world given evidence.  There are countless real world situations that fit this situation:
+</p>
+<p>
+	<div class="purpleBox">
+	<b>Example 1: Medical tests</b><br/>
+<i>What you want to know:</i> Probability of a disease given a test result<br/>
+<i>What is easy to know:</i> Probability of a test result given the true state of disease<br/>
+<i>Causality:</i> We believe that diseases influences test results
+</p>
+
+<p>
+	<b>Example 2: Student ability</b><br/>
+<i>What you want to know:</i> Student knowledge of a subject given their answers<br/>
+<i>What is easy to know:</i> Likelihood of answers given a student's knowledge of a subject<br/>
+<i>Causality:</i> We believe that ability influences answers 
+</p>
+
+<p>
+	<b>Example 3: Cell phone location</b><br/>
+<i>What you want to know:</i> Where is a cell phone, given noisy measure of distance to tower<br/>
+<i>What is easy to know:</i> Error in noisy measure, given the true distance to tower<br/>
+<i>Causality:</i> We believe that cell phone location influences distance measure
+</div>
+</p>
+
+
+<p>
+	There is a pattern here: in each example we care about knowing some unobservable -- or hard to observe -- state of the world. This state of the world "causes" some easy-to-observe evidence. For example: having the flu (something we would like to know) <b><i>causes</i></b> a fever (something we can easily observe), not the other way around. We often call the unobservable state the "belief" and the observable state the "evidence". For that reason lets rename the events! Lets call the unobservable thing we want to know $B$ for belief. Lets call the thing we have evidence of $E$ for evidence. This makes is clear that Bayes' theorem allows us to calculate an updated belief given evidence: $\p(B | E)$
+</p>
 
 </p>
 
 <p>
 <div class="bordered">
-	<b><i>Definition</i></b>: Bayes Theorem <br/>
+	<b><i>Definition</i></b>: Bayes' Theorem <br/>
 
-	<p>The most common form of Bayes Theorem is:
+	<p> The most common form of Bayes' Theorem is 
+		<b>Bayes' Theorem Classic</b>:
 		$$
-		\p(E|F) = \frac{\p(F | E) \cdot \p(E)}{\p(F)} 
+		\p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E)} 
 		$$
 	</p>
 
-	<p>There are names for the different terms in the Bayes Rule formula. The term $\p(E|F)$  is often called the
-"posterior". The term $\p(E)$ is often called the "prior". The term $\p(F|E)$ is called the update and $\p(F)$ is
+	<p>There are names for the different terms in the Bayes' Rule formula. The term $\p(B|E)$  is often called the
+"posterior": it is your updated belief of $B$ after you take into account evidence $E$. The term $\p(B)$ is often called the "prior": it was your belief before seeing any evidence. The term $\p(E|B)$ is called the update and $\p(E)$ is
 often called the normalization constant.</p>
 
-<p>There are several techniques for handling the case where the denominator is not know. One technique is to use the law of total probability to expand out the term, resulting in another formula, also called Bayes' Theorem:
+<p>There are several techniques for handling the case where the denominator is not know. One technique is to use the law of total probability to expand out the term, resulting in another formula, called <b>Bayes' Theorem with Law of Total Probability</b>:
 $$
-\p(E|F) = \frac{\p(F | E) \cdot \p(E)}{\p(F|E)\cdot \p(E) + \p(F|E\c) \cdot \p(E\c)} 
+\p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E|B)\cdot \p(B) + \p(E|B\c) \cdot \p(B\c)} 
 $$
 </p>
 Recall the law of total probability which is responsible for our new denominator:
 $$
 \begin{align}
-\p(F) &= \p(F \and E) + \p(F \and E\c)\\
-&= \p(F|E)\cdot \p(E) + \p(F|E\c) \cdot \p(E\c)
+\p(E) = \p(E|B)\cdot \p(B) + \p(E|B\c) \cdot \p(B\c)
 \end{align}
 $$
 </div>
 </p>
 
-<p>A common scenario for applying the Bayes Rule formula is when you want to know the probability of
+<p>A common scenario for applying the Bayes' Rule formula is when you want to know the probability of
 something “unobservable” given an “observed” event. For example, you want to know the probability that a
 student understands a concept, given that you observed them solving a particular problem. It turns out it is
 much easier to first estimate the probability that a student can solve a problem given that they understand the
-concept and then to apply Bayes Theorem. Intuitively, you can think about this as updating a belief given
+concept and then to apply Bayes' Theorem. Intuitively, you can think about this as updating a belief given
 evidence.</p>
 
-<h2>Unknown normalization constant</h2>
+<h2>Bayes' Theorem Applied</h2>
 
-<p>There are times when we would like to use Bayes Theorem to update a belief, but there is no way to calculate
-the probability of the event observed, P(F). All hope is not lost. In such situations we can still calculate
-the relative probability of events. For example, imagine we would like to answer the question, is even A
-or event B more likely given an observation F. We can express this mathematically as calculating whether
-P(A|F)/P(B|F) is greater than or equal to 1. Both of those terms can be expanded using Bayes, and when
-they are expanded the P(F) term cancels out:</p>
+<p>Bayes' theorem can produce amazing results. Sometimes those results can be counter intuitive. Here we can work through a classic result: Bayes' applied to medical tests and present a nice visualization for understanding what is happening.</p>
+
+
+<p>
+% include('chapters/part1/bayes_theorem/medicalBayes.html')
+</p>
+
+<h2>Unknown Normalization Constant, $\p(E)$</h2>
+
+<p>There are times when we would like to use Bayes' Theorem to update a belief, but we don't know the probability of $E$, $\p(E)$. All hope is not lost. This term is called the "normalization constant" because it is the same regardless of whether or not the event $B$ happens. The most traditional solution is to use the law of total probability: $\p(E) = \p(E |B) \p(B) + \p(E|B\c)\p(B\c)$. Here are some other useful "tricks" for dealing with $\p(E)$. </p>
+
+
+
+
+<p>
+	We can make the normalization cancel out by calculating the ratio of $\frac{\p(B|E)}{\p(B\c|E)}$. This fraction tells you how many times more likely it is that $B$ will happen given $E$ than not $B$:
+$$
+\begin{align}
+\frac{\p(B|E)}{\p(B\c|E)} 
+&= \frac{
+	\frac{\p(E|B)\p(B)}{\p(E)}
+}{
+	\frac{\p(E|B\c)\p(B\c)}{\p(E)}
+}
+&& \text{Apply Bayes' Theorm to both terms} \\
+&= \frac{
+	\p(E|B)\p(B)
+}{
+	\p(E|B\c)\p(B\c)
+}
+&& \text{The term $\p(E)$ cancels}
+\end{align}
+$$
+	</p>
+
+	<p>
+We can always use the fact that either $B$ will happen or it won't when consistently conditioned on $E$:  $\p(B |E) + \p(B\c|E) =1$ to compute $\p(E)$. Note that this is the simply the <a href="{{pathToLang}}part1/cond_prob/#cond_paradigm">first identity of probability</a>, consistently conditioning:
+$$
+\begin{align}
+1 &= \p(B|E) + \p(B\c|E) 
+&& \text{Either $B$ occurs or it doesn't} \\
+
+1 &= \frac{\p(E|B)\p(B)}{\p(E)}
+ + 
+\frac{\p(E|B\c)\p(B\c)}{\p(E)}
+&& \text{Apply Bayes' Theorem to both terms}
+\\
+
+1 &= \frac{1}{\p(E)} \cdot \big[\p(E|B)\p(B) + \p(E|B\c)\p(B\c)\big]
+&& \text{Factor out $1/ \p(E)$} \\
+
+\p(E) &= \p(E|B)\p(B) + \p(E|B\c)\p(B\c)
+&& \text{Rearrange terms}
+\end{align}
+$$
+If you look closely at the last line, you will notice that we have simply found a new way to derive the total law of probability for $E$. The law of total probability is truly a great way of dealing with $\p(E)$.
+	</p>
+
+	<h2>Bayes with the General Law of Total Probability</h2>
+
+	<p>The way to work around not directly knowing $P(B)$ employed by the expanded version of Bayes was to
+use the simple case of the law of total probability. In other contexts you may want to use the more general
+version of the law. For example say we are trying to track a phone which could be in any one of $n$ discrete
+locations and we have prior beliefs $\p(B_1) \dots \p(B_n)$ as to whether the phone is in location $B_i$. Now we gain
+some evidence (such as a particular signal strength from a particular cell tower) that we call $E$ and we need
+to update all of our probabilities to be $\p(B_i
+|E). We should use Bayes' Theorem!</p>
+
+<p>The probability of the observation, assuming that the the phone is in location $B_i$, $\p(E|B_i)$, is something that
+can be given to you by an expert. In this case the probability of getting a particular signal strength given a
+location $B_i$ will be determined by the distance between the cell tower and location $B_i$
+.</p>
+<p>Since we are assuming that the phone must be in <i>exactly</i> one of the locations, we can find the probability of
+any of the event $B_i$ given $E$ by first applying Bayes' Theorem and then applying the general version of the law of
+total probability:</p>
+$$
+\begin{align}
+\p(B_i | E) &= \frac{\p(E|B_i) \cdot \p(B_i)}{\p(E)}
+&& \text{Bayes Theorem. What to do about $\p(E)$?} \\
+ &= \frac{\p(E|B_i) \cdot \p(B_i)}{\sum_{i=1}^n \p(E|B_i) \cdot \p(B_i)}
+&& \text{Use General Law of Total Probability for $\p(E)$} \\
+\end{align}
+$$
+
+
+
+
+<!-- <p>
+	If you compute: 
+	$$
+	\begin{align}
+	\p(B | E) &\propto \p(E|B)\p(B) \\
+	\p(B\c | E) &\propto \p(E|B\c)\p(B\c) 
+	\end{align}
+	$$
+</p> -->
+
+	
+<!-- 
+	<h2>Unknown Prior, $\p(B)$</h2> -->

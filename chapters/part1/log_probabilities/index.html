@@ -3,3 +3,24 @@
  
 <center><h1>Log Probabilities</h1></center>
 <hr/>
+
+<p>A log probability is simply the log function of a probability. For example if $\p(E) = 0.00001$ then $\log \p(E) = \log(0.00001) \approx -11.51$. There are many reasons why log probabilities are an essential tool for probabilities in computers: (a) computers can be rather limited when representing <a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic">very small numbers</a> and (b) logs have the wonderful ability to turn multiplication into addition, and computers are much faster at addition. The default base is the natural base $e$.</p>
+
+	<p>You may have noticed that the log in the above example produced a negative number. Recall that $\log b = c$, with the implied natural base $e$ is the same as the statement $e ^ c = b$ </p>
+
+<h2>Products become Addition</h2>
+
+The product of probabilities $\p(E)$ and $\p(F)$ becomes addition in logarithmic space:
+$$
+\log (\p(E) \cdot \p(F) ) = \log \p(E) + \log \p(F)
+$$
+
+This generalizes to multiple products:
+
+$$
+\log \prod_i \p(E_i) = \sum_i \log \p(E_i)
+$$
+
+<h2>Logs are Monotonic</h2>
+
+The argmax of a function is the same as the argmax of the log of a function.

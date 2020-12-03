@@ -9,7 +9,7 @@ book_outline = {
 			'intro':'Introduction',
 			'free_book':'A Free Online Textbook',
 			'notation': 'Notation',
-			'python': 'Probability in Python'
+			'prob_code': 'Probability in Code'
 		}
 	},
 	'part1': {
@@ -19,12 +19,13 @@ book_outline = {
 			'combinatorics':'Combinatorics',
 			'probability':'Definition of Probability',
 			'equally_likely':'Equally Likely Outcomes',
-			'prob_or':'Probability of or',
-			'prob_and':'Probability of and',
+			'prob_or':'Probability of <b>or</b>',
 			'cond_prob':'Conditional Probability',
+			'independence': 'Independence',
+			'prob_and':'Probability of <b>and</b>',
 			'law_total':'Law of Total Probability',
 			'bayes_theorem':"Bayes' Theorem",
-			'random_computers':'Randomness in Computers',
+			# 'random_computers':'Randomness in Computers',
 			'log_probabilities':'Log Probabilities'
 		}
 	},
