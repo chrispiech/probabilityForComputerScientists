@@ -1,10 +1,8 @@
 
 <div class="purpleBox">
 	<p><b><i>Example:</i></b> Probability of a disease given a noisy test</p>
-<p>In this problem we are going to calculate the probability that a patient has an illness given test-result for the illness. A positive test result means the test thinks the patient has the illness. Things that we neeed to know: The  percent of the population that has the illness. The probability the test returns a positive test for a patient with the disease. The probability the test returns a positive test for a patient who does not have th disease.
+<p>In this problem we are going to calculate the probability that a patient has an illness given test-result for the illness. A positive test result means the test thinks the patient has the illness. Things that we neeed to know: The  percent of the population that has the illness. The probability the test returns a positive test for a patient with the disease. The probability the test returns a positive test for a patient who does not have the disease.
 </p>
-
-<p>This example was origianlly presented in the context of the Mamogram test for breast cancer. The seriousness of cancer underscores the potential for bayesian probability to be applied to important contexts. Here we leave the disease and the test abstract to highlight that this same calculation can be used for many different circumstances. The natural occurence of breast cancer is 8%. The mamogram test returns a positive result 95% of the time for patients who have breast cancer. The test resturns a positive result 7% of the time for people who do not have breast cancer. In this demo you can enter different probabilities and calculate the corresponding chance of disease given a positive test result.</p>
 
 <div class="form-group">
 				    <label for="exampleInputEmail1">Natural % of population with illness</label>
@@ -19,9 +17,10 @@
 				    <input type="number" class="form-control" id="condNegInput" value="0.07">
 				  </div>
 
-				  <button id="calcButton" class="btn btn-success" onclick="recalculate();">Recalculate probability of disease given positive test result</button>
+				  <p><button id="calcButton" class="btn btn-success" onclick="recalculate();">Recalculate probability of disease given positive test result</button></p>
 				  
-				 
+<p>The numbers in this example are from the Mamogram test for breast cancer. The seriousness of cancer underscores the potential for bayesian probability to be applied to important contexts. The natural occurence of breast cancer is 8%. The mamogram test returns a positive result 95% of the time for patients who have breast cancer. The test resturns a positive result 7% of the time for people who do not have breast cancer. In this demo you can enter different probabilities and calculate the corresponding chance of disease given a positive test result.</p>
+
  <hr/> 
 
 				  
@@ -56,7 +55,7 @@
 					  	<p >
 					  		$$\begin{align}\p(I|E) &= \frac{\p(E|I)P(I)}{\p(E|I)\p(I) + \p(E|I\c)\p(I\c)} && \text{Bayes' Theorem with Total Prob.}\end{align}$$
 					  	</p>
-					  		Now all we need to do is plug values into this formula. The only value we don't explicitly have is $P(I\c)$. But we can simply calculate it since $P(I\c) = 1 - P(I)$. Thus:
+					  		Now all we need to do is plug values into this formula. The only value we don't explicitly have is $\p(I\c)$. But we can simply calculate it since $\p(I\c) = 1 - \p(I)$. Thus:
 						</p>
 
 						<p id="bayesApplied">

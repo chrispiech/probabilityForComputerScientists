@@ -3,3 +3,93 @@
  
 <center><h1>Equally Likely Outcomes</h1></center>
 <hr/>
+
+<p>Some sample spaces have equally likely outcomes. We like those sample spaces, because there is a way
+to calculate probability questions about those sample spaces simply by counting. Here are a few examples
+where there are equally likely outcomes:</p>
+
+<p>
+<ul>
+	<li>Coin flip: S = {Head, Tails}
+	<li>Flipping two coins: S = {(H, H), (H, T), (T, H), (T, T)}
+	<li>Roll of 6-sided die: S = {1, 2, 3, 4, 5, 6}
+	</ul>
+</p>
+
+<p>Because every outcome is equally likely, and the probability of the <a href="{{pathToLang}}part1/probability/#sampleSpace">sample space</a> must be 1, we can prove
+that each outcome must have probability:</p>
+$$
+\p(\text{an outcome}) = \frac{1}{|S|}
+$$
+Where |S| is the size of the sample space, or, put in other words, the total number of outcomes of the experiment. Of course this is only true in the special case where every outcome has the same likelihood. </p>
+
+<p>
+	<div class="bordered">
+
+		<p><b><i>Definition:</i></b> Probability of Equally Likely Outcomes </p>
+
+		If $S$ is a sample space with equally likely outcomes, for an
+event $E$ that is a subset of the outcomes in $S$:
+$$
+\begin{align}
+\p(E) &= \frac{\text{number of outcomes in $E$}}{\text{number of outcomes in $S$}} 
+= \frac{|E|}{|S|}
+\end{align}
+$$
+
+	</div>
+	</p>
+
+<p>There is some art form to setting up a problem to calculate a probability based on the equally likely outcome
+rule. (1) The first step is to explicitly define your sample space and to argue that all outcomes in your sample
+space are equally likely. (2) Next, you need to count the number of elements in the sample space and (3)
+finally you need to count the size of the event space. The event space must be all elements of the sample
+space that you defined in part (1). The first step leaves you with a lot of choice! For example you can decide
+to make indistinguishable objects distinct, as long as your calculation of the size of the event space makes the
+exact same assumptions.</p>
+
+<p>
+	<div class="purpleBox">
+		<p><b><i>Example:</i></b> What is the probability that the sum of two die is equal to 7?</p>
+
+		<div class="alert alert-warning"><b>Buggy Solution:</b> You could define your sample space to be all the possible sum values of two die (2 through 12).
+However this sample space fails the “equally likely” test. You are not equally likely to have a sum of 2 as you
+are to have a sum of 7.</div>
+
+<p><b><i>Solution:</i></b> Consider the sample space from the previous chapter where we thought of the die as distinct and
+enumerated all of the outcomes in the sample space. The first number is the roll on die 1 and the second
+number is the roll on die 2. Note that (1, 2) is distinct from (2, 1). Since each outcome is equally likely, and the sample space has exactly 36 outcomes, the likelihood of any one outcome is $\frac{1}{36}$. Here is a visualization of all outcomes:
+
+<center>
+<table>
+	<tr><td style="width:50px">(1,1)</td><td style="width:50px">(1,2)</td><td style="width:50px">(1,3)</td><td style="width:50px">(1,4)</td><td style="width:50px">(1,5)</td><td style="width:50px"><b class="blue">(1,6)</b></td></tr>
+	<tr><td style="width:50px">(2,1)</td><td style="width:50px">(2,2)</td><td style="width:50px">(2,3)</td><td style="width:50px">(2,4)</td><td style="width:50px"><b class="blue">(2,5)</b></td><td style="width:50px">(2,6)</td></tr>
+	<tr><td style="width:50px">(3,1)</td><td style="width:50px">(3,2)</td><td style="width:50px">(3,3)</td><td style="width:50px"><b class="blue">(3,4)</b></td><td style="width:50px">(3,5)</td><td style="width:50px">(3,6)</td></tr>
+	<tr><td style="width:50px">(4,1)</td><td style="width:50px">(4,2)</td><td style="width:50px"><b class="blue">(4,3)</b></td><td style="width:50px">(4,4)</td><td style="width:50px">(4,5)</td><td style="width:50px">(4,6)</td></tr>
+	<tr><td style="width:50px">(5,1)</td><td style="width:50px"><b class="blue">(5,2)</b></td><td style="width:50px">(5,3)</td><td style="width:50px">(5,4)</td><td style="width:50px">(5,5)</td><td style="width:50px">(5,6)</td></tr>
+	<tr><td style="width:50px"><b class="blue">(6,1)</b></td><td style="width:50px">(6,2)</td><td style="width:50px">(6,3)</td><td style="width:50px">(6,4)</td><td style="width:50px">(6,5)</td><td style="width:50px">(6,6)</td></tr></table>
+</center>
+
+</p>
+
+<p>The event (sum of dice is 7) is the subset of the sample space where the sum of the two dice is 7. Each outcome in the event is highlighted in <b class="blue">blue</b>. There are 6 such outcomes: (1, 6), (2, 5), (3, 4), (4, 3), (5, 2), (6, 1). Notice that (1, 6) is a different outcome than (6, 1). To make the outcomes equally likely we had to make the die distinct.
+	$$
+	\begin{align}
+	\p(\text{Sum of two dice is 7}) 
+	&= \frac{|E|}{|S|}
+	&& \text{Since outcomes are equally likely} \\
+	&= \frac{6}{36} = \frac{1}{6}
+	&& \text{There are 6 outcomes in the event}
+	\end{align}
+	$$
+
+</p>
+
+
+	</div>
+	</p>
+
+	<p>Interestingly, this idea also applies to continuous sample spaces. Consider the sample space of all the outcomes of the computer function "random" which produces a real valued number between 0 and 1, where all
+real valued numbers are equally likely. Now consider the event $E$ that the number generated is in the range
+[0.3 to 0.7]. Since the sample space is equally likely, $\p(E)$ is the ratio of the size of $E$ to the size of $S$. In this
+case $\p(E) = \frac{0.4}{1} = 0.4$.</p>
