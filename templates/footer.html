@@ -1,10 +1,26 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        const hasStorage = typeof(Storage) !== "undefined"
+        const scrollTop = getScrollTop()
+        console.log(scrollTop)
         $("#sidebar").mCustomScrollbar({
             theme: "minimal",
             mouseWheel: {preventDefault: true},
-            scrollInertia: 60
+            advanced:{
+             autoScrollOnFocus: false,
+             updateOnContentResize: true
+            },
+            setTop:scrollTop + 'px',
+            callbacks:{
+                onScroll:function(){
+                    if(hasStorage) {
+
+                        localStorage.scrollTop = this.mcs.top;
+                        console.log(localStorage.scrollTop)
+                    }
+                }
+            } 
         });
 
         $('#sidebarCollapse').on('click', function () {
@@ -12,7 +28,37 @@
             $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
+
+        
+        let lastPart = getUrlKey()
+        let scrollKey = 'sidebar-' + lastPart
+
+        // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
+        //     scrollInertia:0
+        // });
     });
+
+    function getScrollTop() {
+        if(typeof(Storage) !== "undefined") {
+            return Number(localStorage.scrollTop)
+        }
+        return 0;
+    }
+
+    function getUrlKey() {
+        var pathname = window.location.pathname;
+        
+        let parts = pathname.split('/')
+        var currIndex = parts.length - 1
+        while(currIndex >= 0) {
+            let nextPart = parts[currIndex]
+            if(nextPart) {
+                return nextPart
+            }
+            currIndex -= 1
+        }
+        return ''
+    }
 </script>
 
 <script src="sweetalert2.all.min.js"></script>

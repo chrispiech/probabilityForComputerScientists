@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Random Variables</title>
+<title>Sampling Revisited</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -249,113 +249,8 @@
               
                         
  
-<center><h1>Random Variables</h1></center>
+<center><h1>Sampling Revisited</h1></center>
 <hr/>
-
-<p>
-A Random Variables (RV) is a variable that probabilistically takes on a value. You can think of an RV as
-being like a variable in a programming language. They take on values, have types and have domains over
-which they are applicable. We can define events that occur if the random variable takes one values that satisfy
-a numerical test (eg does the variable equal 5, is the variable less than 8). We often think of the probabilities
-of such events.
-As an example, let’s say we flip three fair coins. We can define a random variable Y to be the total number
-of “heads” on the three coins. We can ask about the probability of Y taking on different values using the
-following notation:
-</p>
-
-<p>
-<table>
-	<tr>
-
-<td style="min-width:200px">$\p(Y = 0)$ = 1/8 <td>(T, T, T)</td>
-</tr>
-<tr>
-<td>$\p(Y = 1)$ = 3/8 <td>(H, T, T), (T, H, T), (T, T, H)</td>
-</tr>
-<tr>
-<td>$\p(Y = 2)$ = 3/8 <td>(H, H, T), (H, T, H), (T, H, H)</td>
-</tr>
-<tr>
-<td>$\p(Y = 3)$ = 1/8 <td>(H, H, H)</td>
-</tr>
-<tr>
-<td>$\p(Y ≥ 4)$ = 0</td>
-</tr>
-</table>
-</p>
-
-<p>Even though we use the same notation for random variables and for events (both use capitol letters) they
-are distinct concepts. An event is a scenario, a random variable is an object. The scenario where a random
-variable takes on a particular value (or range of values) is an event. When possible, I will try and use letters
-E,F,G for events and X,Y,Z for random variables.</p>
-
-<p>Using random variables is a convenient notation technique that assists in decomposing problems. There are
-many different types of random variables (indicator, binary, choice, Bernoulli, etc). The two main families of
-random variable types are discrete and continuous. [todo explain discrete and continuous]. For now we are going to develop intuition around discrete
-random variables</p>
-
-<p>[todo: something about variables in programming languages]</p>
-
-<p>[todo: something about the word "distributions"]</p>
-
-<h2>How to describe a random variable</h2>
-
-<p>
-The definition of a random variable is the probabilities for all possible outcomes. The mapping from outcome to probability is generally called a "likelihood function". For discrete random variables we call this relationship the Probability Mass Function (PMF). For continuous random variables its called Probability Density Function (PDF).</p>
-
-<p>Random variables have a name</p>
-
-<p>
-	Useful random variables also often have semantic meaning.
-	</p>
-
-<p>
-	For random variables there are numbers called "summary statistics" which tell you about key properties of the random variable. While they don't
-</p>
-
-<h2>Random variables vs Events </h2>
-
-<p>
-Random variables and events are two different concepts. An event is an outcome, or a set of outcomes, to an experiment. A random variable is a more like an experiment -- it will take on an outcome eventually. Probabilities are over events, so if you want to talk about probability in the context of a random variable, you must construct an event. You can make events by using any of the <a href="https://en.wikipedia.org/wiki/Relational_operator">Relational Operators</a>: 
-<, ≤, >, ≥, =, or ≠ (not equal to). This is analogous to coding where you can use relational operators to create boolean expressions from numbers. </p>
-
-<p>
-	Lets continue our example of the random variable $Y$ which represents the number of heads on three coin flips. Here are some events using the variable $Y$:
-	
-	<table class="table">
-		<thead>
-		<tr>
-			<th>Event</th><th>Meaning</th><th>Probability Statement</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-			<td>$Y= 1$</td><td>$Y$ takes on the value 1 (there was one heads)</td><td>$\p(Y=1)$</td>
-		</tr>
-		<tr>
-			<td>$Y< 2$</td><td>$Y$ takes on 0 or 1</td><td>$\p(Y<2)$</td>
-		</tr>
-		<tr>
-			<td>$X > Y$</td><td>$X$ takes on a value greater than the value $Y$ takes on.</td><td>$\p(X>Y)$</td>
-		</tr>
-		<tr>
-			<td>$Y= k$</td><td>$Y$ takes on a value represented by non-random variable $k$</td><td>$\p(Y = k)$</td>
-		</tr>
-		</tbody>
-	</table>
-	</p>
-
-	<p>You will see many examples like this last one, $\p(Y=k)$, in this text book as well as in scientific and math research papers. It allows us to talk about the likelihood of $Y$ taking on a value, in general. For example, later in this book we will derive that for three coin flips where $Y$ is the number of heads, the probability of getting exactly $y$ heads is:
-$$
-\begin{align}
-\p(Y = y) = {3 \choose y} \cdot 0.5^3 && \text{If } 0 \leq y \leq 3
-\end{align}
-$$
-	This allows us to use one equation to talk about the probability that the number of heads is 0, 1, 2 or 3 all in one expression. You can plug in any one of those values for $y$ to get the corresponding probability. It is customary to use lower-case symbols for non-random values. This might seem like redundant notation. In probability research papers, scientists often use the shorthand with only the value such as $\p(y)$ for $\p(Y=y)$. This shorthand assumes that the random variable referred to is the capital version of the value, and that the probability event is that the random variable equals the value $y$. In this book we will often use the full form of the event $\P(Y=y)$ but will occasionally use the shorthand $\p(y)$.</p>
-
-	<p>
-		The use of an equals sign in the "event" can be confusing. For example what does this expression say $P(Y = 1) = 0.375$? It says that the probability that "$Y$ takes on the value 4" is 0.375.
-	</p>
 
 
                

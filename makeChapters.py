@@ -113,7 +113,8 @@ def create_part_html(part_key):
 	for section_key in part['sections']:
 		section_path = '{{pathToLang}}' + part_key + '/' + section_key
 		section_title = part['sections'][section_key]
-		html += '<a href="{}">{}</a>\n'.format(section_path, section_title)
+		sidebar_id = 'sidebar-' + section_key
+		html += '<a id={} href="{}">{}</a>\n'.format(sidebar_id, section_path, section_title)
 	html += '</li>\n'
 	html += '</ul>\n\n'
 	return html

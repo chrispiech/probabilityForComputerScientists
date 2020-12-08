@@ -51,6 +51,7 @@ greyBackground as a style class)
   padding:100px;
   padding-top:50px;
   max-width: 930px;
+
   /*margin-top:20px;*/
   margin-bottom:50px;
   overflow-x:scroll;
@@ -73,6 +74,8 @@ greyBackground as a style class)
     padding-left:15px;
     padding-right:15px;
     padding-top:00px;
+    margin-bottom:0px;
+    padding-bottom: 0px;
     background-color: transparent;
   }
 
