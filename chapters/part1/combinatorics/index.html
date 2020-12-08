@@ -3,3 +3,39 @@
  
 <center><h1>Combinatorics</h1></center>
 <hr/>
+
+<p>Counting problems can be approached from the basic building blocks described in the first section: <a href="{{pathToLang}}part1/counting">Counting</a>. However some counting problems are so ubiquitous in the world of probability that it is worth knowing a few
+higher level counting abstractions. When solving problems, if you can find the analogy from these canonical
+examples you can build off of the corresponding combinatorics formulas:</p>
+
+<h2>Permutations of Distinct Objects</h2>
+
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Permutation Rule</p>
+
+		<p>A permutation is an ordered arrangement of n distinct object. Those $n$ objects can
+be permuted in $n \cdot (n – 1) \cdot (n – 2)  \cdots 2  \cdot 1 = n!$ ways.</p>
+	</div>
+</p>
+
+
+<h2>Permutations of In-Distinct Objects</h2>
+
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Permutations of In-Distinct Objects</p>
+
+		<p>Generally when there are $n$ objects and:</p>
+		<p class="indent">
+$n_1$ are the same (indistinguishable) and<br/>
+$n_2$ are the same and<br/>
+...<br/>
+$n_r$ are the same, then there are:
+</p>
+$$
+\frac{n!}{n_1!n_2!\cdots n_r!}
+$$
+Distinct permutations.</p>
+	</div>
+</p>

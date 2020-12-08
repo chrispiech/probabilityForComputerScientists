@@ -1,5 +1,7 @@
 body {
   font-family: "Times New Roman", serif;
+  /*font-family: 'Source Serif Pro', serif;*/
+  /*font-family: 'Crimson Text', serif;*/
   font-size: 18px;
 }
 
@@ -109,6 +111,10 @@ purpleBox:
   max-width: min(400px,100%)
 }
 
+.mainFigureLg {
+  max-width: min(500px,100%)
+}
+
 .mainFigureFull {
   width:100%;
 }
@@ -117,9 +123,12 @@ purpleBox:
   margin-left:20px;
 }
 
-/*
-    DEMO STYLE
-*/
+#curiosityButton {
+  position:fixed;
+  right:15px;
+  bottom:15px;
+  z-index: 1000;
+}
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
@@ -175,11 +184,16 @@ purpleBox:
 #sidebar .sidebar-header {
     padding: 10px;
     background: #222;/*#6d7fcc;*/
-
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 .sidebar-header a {
-  color:cornflowerblue;
+  
+}
+
+.sidebar-header a h3 {
+  margin-top: 10px;
+  color:white;
 }
 
 #sidebar ul.components {
@@ -223,6 +237,32 @@ a[data-toggle="collapse"] {
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
+}
+
+#probability-for-digital-world-search {
+  margin-left: 10px;
+  width: calc(100% - 30px);
+  margin-top: 10px;
+      background: #444;
+    border-color: black;
+    color:white;
+}
+
+.bookSearch::-webkit-input-placeholder {
+    color:white !important;
+}
+
+.bookSearch::-moz-placeholder {
+    color:white !important;
+}
+
+.bookSearch::-ms-placeholder {
+    color:white !important;
+}
+
+.bookSearch::placeholder {
+    color:white !important;
+
 }
 
 ul ul a {

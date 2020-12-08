@@ -38,12 +38,13 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
 <!-- SWAL -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 <!-- Stanford -->
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
 
 <!-- Math Jax -->
 <!-- <script type="text/x-mathjax-config">
@@ -91,9 +92,13 @@
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
   $\DeclareMathOperator{\p}{Pr}$
+  $\DeclareMathOperator{\P}{Pr}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\var}{Var}$
+  $\DeclareMathOperator{\E}{E}$
+  $\DeclareMathOperator{\std}{Std}$
 </div>
 
 <body class="greyBackground">
@@ -103,14 +108,23 @@
         <!-- Sidebar  -->
 <nav id="sidebar">
     <div class="sidebar-header">
-        <a href="../../"><h3><i class="fas fa-book-open"></i> Probability <br/>for a Digital World</h3></a>
+        <!-- <div></div> -->
+        <a style="text-align:center" href="../../"><h3><i class="fas fa-book-open"></i><br/> Probability for a <br/>Digital World<br/></h3></a>
+    </div>
+
+    <div> 
+        <div class="searchCol" style="font-family: 'Source Sans Pro', sans-serif;">
+            <!-- This adds a search bar! -->
+            <input type="text" class="form-control bookSearch" id="probability-for-digital-world-search" aria-describedby="search box" placeholder="🔍 Search book..."/>
+        </div>
+        <!-- The magnifying glass icon -->
+        
     </div>
 
 <!-- intro -->
 <ul class="list-unstyled components">
 <li>
 <a href="../../intro/intro">Introduction</a>
-<a href="../../intro/free_book">A Free Online Textbook</a>
 <a href="../../intro/notation">Notation</a>
 <a href="../../intro/prob_code">Probability in Code</a>
 </li>
@@ -222,7 +236,12 @@
 <button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
     <i class="fas fa-align-left"></i>
     <span></span>
-</button>            
+</button>
+            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+              <i class="fas fa-question-circle" style="font-size:200%"></i>
+              <span></span>
+          </button>
+            
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
@@ -231,6 +250,121 @@
  
 <center><h1>Counting</h1></center>
 <hr/>
+
+<h2>Counting with Steps</h2>
+
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Step Rule of Counting</p>
+
+		<p>If an experiment has two parts, where the first part can result in one of $m$ outcomes and the second part
+can result in one of $n$ outcomes regardless of the outcome of the first part, then the total number of
+outcomes for the experiment is $m \cdot n$.</p>
+	</div>
+</p>	
+
+<p>Rewritten using set notation, the Step Rule of Counting states that if an experiment with two parts has an outcome
+from set $A$ in the first part, where $|A| = m$, and an outcome from set $B$ in the second part (where the number of outcomes in $B$ is the same regardless of the
+outcome of the first part), where $|B| = n$, then the total number of outcomes of the experiment is $|A||B| = m \cdot n $.</p>
+
+<p>
+	<div class="purpleBox">
+		<p><b><i>Simple Example</i></b>:</p>
+		Consider a hash table with 100 buckets. Two arbitrary strings are independently hashed and added to the
+table. How many possible ways are there for the strings to be stored in the table?
+Each string can be hashed to one of 100 buckets. Since the results of hashing the first string do not impact the
+hash of the second, there are 100 * 100 = 10,000 ways that the two strings may be stored in the hash table.
+	</div>
+	</p>
+
+	<p>
+Peter Norvig, a leading expert on Artificial Intelligence made the following argument to make a compelling point on why computer scientists need to know how to count. To start, lets set a baseline for a really big number: The number of atoms in the observable universe, often estimated to be around 10 to the 80th power ($10^{80}$). There
+certainly are a lot of atoms in the universe. As a leading expert said,</p>
+<p class="indent">
+	“Space is big. Really big. You just won’t believe how vastly, hugely, mind-bogglingly big it is.
+I mean, you may think it’s a long way down the road to the chemist, but that’s just peanuts to
+space.” - Douglas Adams</p>
+
+<p>This number is often used to demonstrate tasks that computers will never be able to solve. Problems can
+quickly grow to an absurd size, and we can understand why using the Step Rule of Counting.</p>
+
+<p>There is an art project to display every possible picture.
+Surely that would take a long time, because there must be many possible pictures. But how many? We will
+assume the color model known as <a href="https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)">True Color</a>, in which each <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a> can be one of $2^{24}$ ≈ 17 million distinct
+colors.</p>
+
+<p>How many distinct pictures can you generate from (a) a smart phone camera shown with 12 million pixels, (b) a
+grid with 300 pixels, and (c) a grid with just 12 pixels?</p>
+
+<p>
+<center>
+	<img class="mainFigureLg" src="../../../img/chapters/digitalPictures.png"></img>
+	</center>
+</p>
+
+<p>
+	Answer: We can use the steps rule of counting. An image can be created one pixel at a time, step by step. Each time we chose a pixel you can select its color out of 17 million choices. An array of $n$ pixels produces (17 million)$^n$ different pictures. (17 million)$^{12}$ ≈ 1086, so the tiny
+12-pixel grid produces a million times more pictures than the number of atoms in the universe! How about
+the 300 pixel array? It can produce $10^{2167}$ pictures. You may think the number of atoms in the universe is big,
+but that’s just peanuts to the number of pictures in a 300-pixel array. And 12M pixels? $10^{86696638}$ pictures.
+	</p>
+
+<p>
+<div class="purpleBox">
+	<p><b><i>Example</i></b>: Unique states of Go</p>
+<p>For example a Go board has 19 × 19 points where a user can place a stone. Each of the points can be empty or occupied
+by black or white stone. By the Step Rule of Counting, we can compute the number of unique board
+configurations.</p>
+
+<p><center><img class="mainFigure" src=../../../img/chapters/go.png></img><br/><i>In go there are 19x19 points. Each point can have a black stone, white stone, or no stone at all.</center></i></p>
+
+<p> Here we are going to construct the board one point at a time, step by step. Each time we add a point we have a unique choice where we can decide to make the point one of three options:
+ {Black, White, No Stone}. Using this construction we can apply the Step Rule of Counting. If there was only one point, there would be three unique board configurations. If there were four points you would have $3 \cdot 3 \cdot 3 \cdot 3 = 81$ unique combinations. In Go there are $3^{(19×19)} ≈ 10^{172}$ possible board positions. The way we constructed our board didn't take into account which ones were illegal by the rules of Go. It turns out that "only" about
+$10^{170}$ of those positions are legal. That is about the square of the number of atoms in the universe. In otherwords: if there was another universe of atoms for every single atom, only then would there be as many atoms
+in the universe as there are unique configurations of a Go board. </p>
+<p>
+	As a computer scientist this sort of result can be very important. While computers are powerful, an algorithm which needed to store each configuration of the board would not be a reasonable approach. No computer can store more information than atoms in the universe squared!
+	</p>
+</div>
+</p>
+
+<p>The above argument might leave you feeling like some problems are incredibly hard as a result of the product
+rule of counting. Let’s take a moment to talk about how the product rule of counting can help! Most logrithmic
+time algorithms leverage this principle. </p>
+
+<p>
+	Imagine you are building a machine learning system that needs to learn from data and you want to synthetically generate 10 million unique data points for it. How many steps would you need to encode to get to 10 million? Assuming that at each step you have a binary choice, the number of unique data points you produce will be $2^n$ by the Steps Rule of counting. If we chose $n$ such that $\log_{2} 10,000,000 < n$. You would only need to encode $n=24$ binary decisions.
+	</p>
+
+<h2>Counting with <b>or</b></h2>
+
+<p>
+	If you want to consider the total number of unique outcomes, when outcomes can come from source $A$ <b>or</b> source $B$, then the equation you use depends on whether or not there are outcomes which are both in $A$ and $B$. If not, you can use the simpler "Mutually Exclusive Counting" rule. Otherwise you need to use the slightly more involved Inclusiong Exclusion rule.
+</p>
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Mutually Exclusive Counting</p>
+
+		<p>If the outcome of an experiment can either be drawn from set $A$ or set $B$, and sets $A$ and $B$, where none of
+the outcomes in set $A$ is the same as the any of the outcomes in set $B$ (called mutual exclusion),
+then there are $|A \or B| = |A|+|B|$ possible outcomes of the experiment.</p>
+	</div>
+</p>
+
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Inclusion  Exclusion Counting</p>
+
+		<p>If the outcome of an experiment can either be drawn from set $A$ or set $B$, and sets $A$ and $B$ may potentially
+overlap (i.e., it is not the case that $|A \and B| = 0$), then the number of outcomes of the experiment is
+$|A \or B| = |A|+|B| −|A \and B|$.</p>
+	</div>
+</p>
+
+<p>Note that the Inclusion-Exclusion Principle generalizes the Sum Rule of Counting for arbitrary sets $A$ and
+$B$. In the case where $A \and B = ∅$, the Inclusion-Exclusion Principle gives the same result as the Sum Rule of
+Counting since $|A \and B| = 0$.</p>
+
 
 
                
@@ -250,7 +384,11 @@
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
     });
-</script>                
+</script>
+
+<script src="sweetalert2.all.min.js"></script>
+<!-- Optional: include a polyfill for ES6 Promises for IE11 -->
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>                
                     </div>
                 </div>
             </div>
@@ -258,6 +396,18 @@
     </div>
 
 </body>
+
+<script>
+function onCuriosity() {
+    Swal.fire({
+      title: 'Curious?',
+      position: 'bottom-end',
+      text: 'What sort of feedback do you have?',
+      icon: 'info',
+      confirmButtonText: 'Cool'
+    })
+}
+  </script>
 
 
 </html>

@@ -3,3 +3,72 @@
  
 <center><h1>Variance</h1></center>
 <hr/>
+
+<h2>Intuition of variance</h2>
+
+<p>Show a few distributions, ask what is different about them (lets use peer grading errors).</p>
+
+<p>How should we turn the idea of spread into a number? The formula for variance asks the question: What
+is the expected Euclidean distance between a given grade and the expected grade? In the figure bellow for
+a single grader’s accuracy random variable, we show three sample grades that could have been given by the
+grader and calculate the Euclidean distance between that grade and the expectation of the distribution (57.5).
+The Expectation is simply the weighted average of those distances: </p>
+
+<center>
+	<img class="mainFigureFull" src="{{pathToRoot}}img/chapters/varianceGraders.png"></img>
+</center>
+
+
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Variance of a Random Variable</p>
+
+		<p>The variance of a discrete random variable, X, with expected value $\E[X] = µ$ is:
+			$$
+\var(X) = \E[(X–µ)^2]
+$$
+Intuitively this is the weighted average distance of a sample to the mean. When computing the variance often we use a different (equivalent) form of the variance equation, based off the linearity of expectation:
+$$
+\begin{align}
+\var(X) &= \E[X^2] - \E[X]^2
+\end{align}
+$$
+	</div>
+</p>
+
+<p>
+	<div class="purpleBox">
+		<p><b><i>Proof</i></b>: $\var(X) = \E[X^2] - \E[X]^2$</p>
+<p>It is much easier to compute variance using $\E[X^2] - \E[X]^2$. You certainly don't need to know why its an equivalent expression, but in case you were wondering, here is the proof.</p>
+		
+			$$
+\begin{align}
+\var(X) 
+&= \E[(X–µ)^2] && \text{Note: } \mu = \E[X]\\
+&= \sum_x(x-\mu)^2 \p(x) && \text{Definition of Expectation}\\
+&= \sum_x (x^2 -2\mu x + \mu^2) \P(x) 
+&& \text{Expanding the square}\\
+&= \sum_x x^2\P(x)- 2\mu \sum_x x \P(x) + \mu^2 \sum_x \P(x)
+&& \text{Propagating the sum}\\
+&= \sum_x x^2\P(x)- 2\mu \E[X] + \mu^2 \sum_x \P(x) && \text{Substitute def of expectation}\\
+&= \E[X^2]- 2\mu \E[X] + \mu^2 \sum_x \P(x)
+&& \text{LOTUS } g(x) = x^2 \\
+&= \E[X^2]- 2\mu \E[X] + \mu^2
+&& \text{Since }\sum_x \P(x) = 1\\
+&= \E[X^2]- 2\E[X]^2 + \E[X]^2
+&& \text{Since }\mu = \E[X]\\
+&= \E[X^2]- \E[X]^2
+&& \text{Cancelation}\\
+\end{align}
+$$
+	</div>
+	</p>
+
+<h2>Standard Deviation</h2>
+
+<p>Variance is especially useful for comparing the "spread" of two distributions. A larger variance means that
+there is more deviation around the mean &mdash; more spread. However, if you look at the leading example, the units of variance
+are the square of points. This makes it hard to interpret the numerical value. What does it mean that the
+spread is 52 points$^2$
+? A more interpretable measure of spread is the square root of Variance, which we call
+the Standard Deviation $\std(X) = \sqrt{\var(X)}$. The standard deviation of our grader is 7.2 points. In this example folks find it easier to think of spread in points rather than points $^2$.</p>

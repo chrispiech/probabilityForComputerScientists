@@ -38,12 +38,13 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
 <!-- SWAL -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 <!-- Stanford -->
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
 
 <!-- Math Jax -->
 <!-- <script type="text/x-mathjax-config">
@@ -91,9 +92,13 @@
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
   $\DeclareMathOperator{\p}{Pr}$
+  $\DeclareMathOperator{\P}{Pr}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\var}{Var}$
+  $\DeclareMathOperator{\E}{E}$
+  $\DeclareMathOperator{\std}{Std}$
 </div>
 
 <body class="greyBackground">
@@ -103,14 +108,23 @@
         <!-- Sidebar  -->
 <nav id="sidebar">
     <div class="sidebar-header">
-        <a href="../../"><h3><i class="fas fa-book-open"></i> Probability <br/>for a Digital World</h3></a>
+        <!-- <div></div> -->
+        <a style="text-align:center" href="../../"><h3><i class="fas fa-book-open"></i><br/> Probability for a <br/>Digital World<br/></h3></a>
+    </div>
+
+    <div> 
+        <div class="searchCol" style="font-family: 'Source Sans Pro', sans-serif;">
+            <!-- This adds a search bar! -->
+            <input type="text" class="form-control bookSearch" id="probability-for-digital-world-search" aria-describedby="search box" placeholder="🔍 Search book..."/>
+        </div>
+        <!-- The magnifying glass icon -->
+        
     </div>
 
 <!-- intro -->
 <ul class="list-unstyled components">
 <li>
 <a href="../../intro/intro">Introduction</a>
-<a href="../../intro/free_book">A Free Online Textbook</a>
 <a href="../../intro/notation">Notation</a>
 <a href="../../intro/prob_code">Probability in Code</a>
 </li>
@@ -222,7 +236,12 @@
 <button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
     <i class="fas fa-align-left"></i>
     <span></span>
-</button>            
+</button>
+            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+              <i class="fas fa-question-circle" style="font-size:200%"></i>
+              <span></span>
+          </button>
+            
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
@@ -381,7 +400,11 @@ The term $\p(E | F, G)$ is new notation for conditioning on multiple events.  Yo
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
     });
-</script>                
+</script>
+
+<script src="sweetalert2.all.min.js"></script>
+<!-- Optional: include a polyfill for ES6 Promises for IE11 -->
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>                
                     </div>
                 </div>
             </div>
@@ -389,6 +412,18 @@ The term $\p(E | F, G)$ is new notation for conditioning on multiple events.  Yo
     </div>
 
 </body>
+
+<script>
+function onCuriosity() {
+    Swal.fire({
+      title: 'Curious?',
+      position: 'bottom-end',
+      text: 'What sort of feedback do you have?',
+      icon: 'info',
+      confirmButtonText: 'Cool'
+    })
+}
+  </script>
 
 
 </html>

@@ -7,7 +7,7 @@ book_outline = {
 		'title':None,
 		'sections': {
 			'intro':'Introduction',
-			'free_book':'A Free Online Textbook',
+			# 'free_book':'A Free Online Textbook',
 			'notation': 'Notation',
 			'prob_code': 'Probability in Code'
 		}
@@ -54,6 +54,7 @@ book_outline = {
 			'continuous_joint':'Continuous Joint',
 			'multivariate_gaussian':'Multivariate Gaussian',
 			'bayesian_networks':'Bayesian Networks',
+			'sampling_revisited':'Sampling Revisited',
 			'computational_inference':'Computational Inference',
 		}
 	},

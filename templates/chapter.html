@@ -13,9 +13,13 @@
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
   $\DeclareMathOperator{\p}{Pr}$
+  $\DeclareMathOperator{\P}{Pr}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\var}{Var}$
+  $\DeclareMathOperator{\E}{E}$
+  $\DeclareMathOperator{\std}{Std}$
 </div>
 
 <body class="greyBackground">
@@ -29,12 +33,17 @@
         <div id="content">
 
             %include templates/sideBarButton.html
+
+            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+              <i class="fas fa-question-circle" style="font-size:200%"></i>
+              <span></span>
+          </button>
             
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
               
-                        {{!body}}
+                        {{!base}}
 
                
 
@@ -47,6 +56,18 @@
     </div>
 
 </body>
+
+<script>
+function onCuriosity() {
+    Swal.fire({
+      title: 'Curious?',
+      position: 'bottom-end',
+      text: 'What sort of feedback do you have?',
+      icon: 'info',
+      confirmButtonText: 'Cool'
+    })
+}
+  </script>
 
 
 </html>

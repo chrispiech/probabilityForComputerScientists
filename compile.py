@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-from plugins.bottle.bottle import SimpleTemplate
+# make sure to run 
+# > python -m pip install bottle
+# I used version bottle-0.12.19
+from bottle import SimpleTemplate
 
 import os.path
 import sys
 
 IGNORE_DIRS = [
-    'parts'
 ]
 TEMPLATE_DIR = 'chapters'
 ROOT = 'pythonreader'

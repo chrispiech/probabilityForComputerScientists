@@ -22,7 +22,7 @@ depends on whether or not the events are "independent". In the same way that mut
 			$$
 		</p> 
 		<p>This property applies regardless of how the probabilities of $E$ and $F$ were calculated and
-whether or not the events are mutually exclusive. This equation applies if and only if events are independent, and as such, if you can show it applies, you can claim the events are independent.</p>
+whether or not the events are mutually exclusive. </p>
 
 <p> The independence principle extends to more than two
 events. For $n$ events $E_1, E_2, \dots E_n$ that are <b><i>mutually</i></b> independent of one another -- the independence equation also holds for all subsets of the events.
@@ -33,6 +33,23 @@ $$
 <p></p>
 	</div>
 </p>
+
+<p >
+	We can prove this equation by combining the definition of conditional probability and the definition of independence.
+	<div class="purpleBox">
+	<p><b><i>Proof</i></b>: If $E$ is independent of $F$ then $\p(E \and F) = \p(E) \cdot \p(F)$</p>
+	$$
+	\begin{align}
+	\p(E|F) &= \frac{\p(E \and F)}{\p(F)} && \text{Definition of }
+	\href{ {{pathToLang}}part1/cond_prob/}{\text{conditional probability}} 
+	\\
+	\p(E) &=  \frac{\p(E \and F)}{\p(F)} && \text{Definition of }
+	\href{ {{pathToLang}}part1/independence/}{\text{independence}} \\
+	\p(E \and F) &= \p(E) \cdot \p(F) && \text{Rearranging terms}
+	\end{align}
+	$$
+</div>
+	</p>
 
 <p>Independence is a property which is often "assumed". You could prove that two events are independent by showing that the product of their probabilities is equal to the probability of both events happening. When working with probabilities that come from data,
 very few things will exactly match the mathematical definition of independence. That can happen for two reasons:
