@@ -178,6 +178,7 @@ purpleBox:
     background: #333;/*#7386D5;*/
     color: #fff;
     transition: all 0.3s;
+    overflow-y: scroll;
 }
 
 #sidebar.active {
