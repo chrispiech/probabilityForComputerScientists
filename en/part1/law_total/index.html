@@ -14,7 +14,8 @@
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
+<!-- Firebase CDN -->
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="../../../css/style.css">
@@ -296,9 +297,24 @@ $$</p>
 
                
 
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
 
 <script type="text/javascript">
+    // const firebase = require("firebase");
+    // Required for side-effects
+    // require("firebase/firestore");
+
     $(document).ready(function () {
+
         const hasStorage = typeof(Storage) !== "undefined"
         const scrollTop = getScrollTop()
         console.log(scrollTop)
@@ -309,6 +325,7 @@ $$</p>
              autoScrollOnFocus: false,
              updateOnContentResize: true
             },
+            scrollInertia:0,
             setTop:scrollTop + 'px',
             callbacks:{
                 onScroll:function(){
@@ -329,11 +346,12 @@ $$</p>
 
         
         let lastPart = getUrlKey()
-        let scrollKey = 'sidebar-' + lastPart
 
         // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
         //     scrollInertia:0
         // });
+
+        // addExampleToFirebase()
     });
 
     function getScrollTop() {
@@ -357,6 +375,56 @@ $$</p>
         }
         return ''
     }
+
+    function submitQuestion() {
+        firebase.initializeApp({
+          apiKey: "AIzaSyBqZVV7Qrp0DT3aBCCTCTMUCrPJO0pb3tY",
+          authDomain: "probability-digital-world.firebaseapp.com",
+          projectId: "probability-digital-world"
+        });
+
+        var db = firebase.firestore();
+
+        db.collection("questions").add({
+            email: $("#question-email").val(),
+            question: "Lovelace",
+            page: getUrlKey()
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            alert('success')
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+        // // // Generate a new push ID for the new post
+        // var questionListRef = db.child("questions")
+        // var newQuestionRef = questionListRef.push();
+        // newQuestionRef.set({
+        //     'title':'test'
+        // });
+        
+    }
+
+    function onCuriosity() {
+        Swal.fire({
+          title: 'Curious?',
+          position: 'bottom-end',
+          allowOutsideClick:false,
+          backdrop:false,
+          confirmButtonText: 'Submit',
+          input: 'textarea',
+          html:
+            '<p>We are trying to make this book better. Let us know if you find something confusing. If you ask a question we will try to answer it. If you find a mistake we will fix it. </p>' +
+            '<input placeholder="Your email (optional)..." id="question-email" class="swal2-input">',
+          inputPlaceholder: 'Type your question or message here...',
+          inputAttributes: {
+            'aria-label': 'Type your question or message here'
+          },
+          showCancelButton: true,
+          preConfirm: () => submitQuestion()
+        })
+    }
 </script>
 
 <script src="sweetalert2.all.min.js"></script>
@@ -370,17 +438,7 @@ $$</p>
 
 </body>
 
-<script>
-function onCuriosity() {
-    Swal.fire({
-      title: 'Curious?',
-      position: 'bottom-end',
-      text: 'What sort of feedback do you have?',
-      icon: 'info',
-      confirmButtonText: 'Cool'
-    })
-}
-  </script>
+
 
 
 </html>
