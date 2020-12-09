@@ -265,7 +265,7 @@ Probability for Computer Scientists
   Department of Computer Science<br>
   Stanford University<br>
   December 2020<br/>
-  V 0.1.0.2
+  V 0.1.0.3
   </p>
 
 	<a class="btn btn-primary btn-lg" href="intro" role="button"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Get Started</a>
@@ -295,29 +295,29 @@ Probability for Computer Scientists
         const hasStorage = typeof(Storage) !== "undefined"
         const scrollTop = getScrollTop()
         console.log(scrollTop)
-        $("#sidebar").mCustomScrollbar({
-            theme: "minimal",
-            mouseWheel: {preventDefault: true},
-            advanced:{
-             autoScrollOnFocus: false,
-             updateOnContentResize: true
-            },
-            scrollInertia:0,
-            contentTouchScroll:1,
-            mouseWheel: {
-                scrollAmount:1000
-            },
-            setTop:scrollTop + 'px',
-            callbacks:{
-                onScroll:function(){
-                    if(hasStorage) {
+        // $("#sidebar").mCustomScrollbar({
+        //     theme: "minimal",
+        //     mouseWheel: {preventDefault: true},
+        //     advanced:{
+        //      autoScrollOnFocus: false,
+        //      updateOnContentResize: true
+        //     },
+        //     scrollInertia:0,
+        //     contentTouchScroll:1,
+        //     mouseWheel: {
+        //         scrollAmount:1000
+        //     },
+        //     setTop:scrollTop + 'px',
+        //     callbacks:{
+        //         onScroll:function(){
+        //             if(hasStorage) {
 
-                        localStorage.scrollTop = this.mcs.top;
-                        console.log(localStorage.scrollTop)
-                    }
-                }
-            } 
-        });
+        //                 localStorage.scrollTop = this.mcs.top;
+        //                 console.log(localStorage.scrollTop)
+        //             }
+        //         }
+        //     } 
+        // });
 
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar, #content').toggleClass('active');

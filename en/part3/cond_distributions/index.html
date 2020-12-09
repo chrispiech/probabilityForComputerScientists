@@ -278,29 +278,29 @@
         const hasStorage = typeof(Storage) !== "undefined"
         const scrollTop = getScrollTop()
         console.log(scrollTop)
-        $("#sidebar").mCustomScrollbar({
-            theme: "minimal",
-            mouseWheel: {preventDefault: true},
-            advanced:{
-             autoScrollOnFocus: false,
-             updateOnContentResize: true
-            },
-            scrollInertia:0,
-            contentTouchScroll:1,
-            mouseWheel: {
-                scrollAmount:1000
-            },
-            setTop:scrollTop + 'px',
-            callbacks:{
-                onScroll:function(){
-                    if(hasStorage) {
+        // $("#sidebar").mCustomScrollbar({
+        //     theme: "minimal",
+        //     mouseWheel: {preventDefault: true},
+        //     advanced:{
+        //      autoScrollOnFocus: false,
+        //      updateOnContentResize: true
+        //     },
+        //     scrollInertia:0,
+        //     contentTouchScroll:1,
+        //     mouseWheel: {
+        //         scrollAmount:1000
+        //     },
+        //     setTop:scrollTop + 'px',
+        //     callbacks:{
+        //         onScroll:function(){
+        //             if(hasStorage) {
 
-                        localStorage.scrollTop = this.mcs.top;
-                        console.log(localStorage.scrollTop)
-                    }
-                }
-            } 
-        });
+        //                 localStorage.scrollTop = this.mcs.top;
+        //                 console.log(localStorage.scrollTop)
+        //             }
+        //         }
+        //     } 
+        // });
 
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar, #content').toggleClass('active');
