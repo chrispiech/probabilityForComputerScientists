@@ -33,14 +33,13 @@ book_outline = {
 		'title':'Part 2: Random Variables',
 		'sections': {
 			'rvs':'Random Variables',
-			'pmf':'Likelihood Functions',
+			'pmf':'Probability Mass Functions',
 			'expectation':'Expectation',
 			'variance':'Variance',
 			'binomial':'Bernoulli and Binomial',
 			'poisson':'Poisson Distribution',
 			'continuous':'Continuous Distribution',
 			'normal':'Normal Distribution',
-			'convolution':'Convolution',
 			'all_distributions':'Random Variable Reference'
 		}
 	},

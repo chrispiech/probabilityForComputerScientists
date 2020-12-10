@@ -11,8 +11,15 @@
 
 <meta http-equiv="content-type" content="text/html; charset=UTF8">
 
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Lunr CDN -->
+ <script src="https://unpkg.com/lunr/lunr.js"></script>
 
 <!-- Firebase CDN -->
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
@@ -100,6 +107,7 @@
   $\DeclareMathOperator{\var}{Var}$
   $\DeclareMathOperator{\E}{E}$
   $\DeclareMathOperator{\std}{Std}$
+  $\DeclareMathOperator{\Ber}{Bern}$
 </div>
 
 <body class="greyBackground">
@@ -154,7 +162,7 @@
 <li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
 <li>
 <a id=sidebar-rvs href="../../part2/rvs">Random Variables</a>
-<a id=sidebar-pmf href="../../part2/pmf">Likelihood Functions</a>
+<a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
 <a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
 <a id=sidebar-variance href="../../part2/variance">Variance</a>
 <a id=sidebar-binomial href="../../part2/binomial">Bernoulli and Binomial</a>
@@ -298,7 +306,7 @@ to make indistinguishable objects distinct, as long as your calculation of the s
 exact same assumptions.</p>
 
 <p>
-	<div class="purpleBox">
+	<div id="sum_dice"class="purpleBox">
 		<p><b><i>Example:</i></b> What is the probability that the sum of two die is equal to 7?</p>
 
 		<div class="alert alert-warning"><b>Buggy Solution:</b> You could define your sample space to be all the possible sum values of two die (2 through 12).
@@ -362,10 +370,13 @@ case $\p(E) = \frac{0.4}{1} = 0.4$.</p>
     // require("firebase/firestore");
 
     $(document).ready(function () {
-
-        const hasStorage = typeof(Storage) !== "undefined"
+        console.log('ready')
         const scrollTop = getScrollTop()
         console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
         // $("#sidebar").mCustomScrollbar({
         //     theme: "minimal",
         //     mouseWheel: {preventDefault: true},
@@ -407,6 +418,7 @@ case $\p(E) = \frac{0.4}{1} = 0.4$.</p>
     });
 
     function getScrollTop() {
+        console.log('here')
         if(typeof(Storage) !== "undefined") {
             return Number(localStorage.scrollTop)
         }

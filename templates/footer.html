@@ -15,10 +15,13 @@
     // require("firebase/firestore");
 
     $(document).ready(function () {
-
-        const hasStorage = typeof(Storage) !== "undefined"
+        console.log('ready')
         const scrollTop = getScrollTop()
         console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
         // $("#sidebar").mCustomScrollbar({
         //     theme: "minimal",
         //     mouseWheel: {preventDefault: true},
@@ -60,6 +63,7 @@
     });
 
     function getScrollTop() {
+        console.log('here')
         if(typeof(Storage) !== "undefined") {
             return Number(localStorage.scrollTop)
         }

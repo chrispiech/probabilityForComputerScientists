@@ -11,8 +11,15 @@
 
 <meta http-equiv="content-type" content="text/html; charset=UTF8">
 
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Lunr CDN -->
+ <script src="https://unpkg.com/lunr/lunr.js"></script>
 
 <!-- Firebase CDN -->
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
@@ -100,6 +107,7 @@
   $\DeclareMathOperator{\var}{Var}$
   $\DeclareMathOperator{\E}{E}$
   $\DeclareMathOperator{\std}{Std}$
+  $\DeclareMathOperator{\Ber}{Bern}$
 </div>
 
 <body class="greyBackground">
@@ -154,7 +162,7 @@
 <li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
 <li>
 <a id=sidebar-rvs href="../../part2/rvs">Random Variables</a>
-<a id=sidebar-pmf href="../../part2/pmf">Likelihood Functions</a>
+<a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
 <a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
 <a id=sidebar-variance href="../../part2/variance">Variance</a>
 <a id=sidebar-binomial href="../../part2/binomial">Bernoulli and Binomial</a>
@@ -253,30 +261,36 @@
 <center><h1>Variance</h1></center>
 <hr/>
 
-<h2>Intuition of variance</h2>
+<!-- <h2>Intuition of variance</h2> -->
 
-<p>Show a few distributions, ask what is different about them (lets use peer grading errors).</p>
+<p>In the last section we showed that Expectation was a useful summary of a random variable (it calculates the "weighted average" of the random variable). One of the next most important properties of random variables to understand is variance: the measure of spread.
 
-<p>How should we turn the idea of spread into a number? The formula for variance asks the question: What
-is the expected Euclidean distance between a given grade and the expected grade? In the figure bellow for
-a single grader’s accuracy random variable, we show three sample grades that could have been given by the
-grader and calculate the Euclidean distance between that grade and the expectation of the distribution (57.5).
-The Expectation is simply the weighted average of those distances: </p>
+<p>To start, lets consider probability mass functions for three sets of graders. When each of them grades an assigment, meant to receive a 70/100, they each have a probability distribution of grades that they could give.   
 
+<p>
 <center>
 	<img class="mainFigureFull" src="../../../img/chapters/varianceGraders.png"></img>
+	<i>Distributions of three types of peer graders. Data is from a massive online course.</i>
 </center>
+</p>
 
+<p>
+	The distribution for graders in group $C$ have a different <i>expectation</i>. The average grade that they give when grading an assignment worth 70 is a 55/100. That is clearly not great! But what is the difference between graders $A$ and $B$? Both of them have the same expected value (which is equal to the correct grade). The graders in group $A$ have a higher "spread". When grading an assignment worth 70, they have a reasonable chance of giving it a 100, or of giving it a 40. Graders in group $B$ have much less spread. Most of the probability mass is close to 70. You want graders like those in group $B$: in expectation they give the correct grade, and they have low spread. As an aside: scores in group $B$ came from a probabilistic algorithm over peer grades.
+	</p>
+
+<p>
+	Theorists wanted a number to describe spread. They invented variance to be the average of the distance between values that the random variable could take on and the mean of the random variable. There are many reasonable choices for the distance function, probability theorists chose squared deviation:
+</p>
 
 <p>
 	<div class="bordered">
 		<p><b><i>Definition</i></b>: Variance of a Random Variable</p>
 
-		<p>The variance of a discrete random variable, X, with expected value $\E[X] = µ$ is:
+		<p>The variance is a measure of the "spread" of a random variable around the mean. Variance for a random variable, X, with expected value $\E[X] = µ$ is:
 			$$
 \var(X) = \E[(X–µ)^2]
 $$
-Intuitively this is the weighted average distance of a sample to the mean. When computing the variance often we use a different (equivalent) form of the variance equation, based off the linearity of expectation:
+Semantically, this is the average distance of a sample from the distribution to the mean. When computing the variance often we use a different (equivalent) form of the variance equation, which we will derive bellow:
 $$
 \begin{align}
 \var(X) &= \E[X^2] - \E[X]^2
@@ -313,14 +327,14 @@ $$
 	</div>
 	</p>
 
-<h2>Standard Deviation</h2>
+<h2 id="standard_deviation">Standard Deviation</h2>
 
-<p>Variance is especially useful for comparing the "spread" of two distributions. A larger variance means that
+<p>Variance is especially useful for comparing the "spread" of two distributions and it has the useful property that it is easy to calculate. In general a larger variance means that
 there is more deviation around the mean &mdash; more spread. However, if you look at the leading example, the units of variance
 are the square of points. This makes it hard to interpret the numerical value. What does it mean that the
 spread is 52 points$^2$
 ? A more interpretable measure of spread is the square root of Variance, which we call
-the Standard Deviation $\std(X) = \sqrt{\var(X)}$. The standard deviation of our grader is 7.2 points. In this example folks find it easier to think of spread in points rather than points $^2$.</p>
+the Standard Deviation $\std(X) = \sqrt{\var(X)}$. The standard deviation of our grader is 7.2 points. In this example folks find it easier to think of spread in points rather than points $^2$. As an aside, the standard deviation is the average distance of a sample (from the distribution) to the mean, using the <a href="https://en.wikipedia.org/wiki/Euclidean_distance">euclidean distance</a> function</p>
 
 
                
@@ -342,10 +356,13 @@ the Standard Deviation $\std(X) = \sqrt{\var(X)}$. The standard deviation of our
     // require("firebase/firestore");
 
     $(document).ready(function () {
-
-        const hasStorage = typeof(Storage) !== "undefined"
+        console.log('ready')
         const scrollTop = getScrollTop()
         console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
         // $("#sidebar").mCustomScrollbar({
         //     theme: "minimal",
         //     mouseWheel: {preventDefault: true},
@@ -387,6 +404,7 @@ the Standard Deviation $\std(X) = \sqrt{\var(X)}$. The standard deviation of our
     });
 
     function getScrollTop() {
+        console.log('here')
         if(typeof(Storage) !== "undefined") {
             return Number(localStorage.scrollTop)
         }

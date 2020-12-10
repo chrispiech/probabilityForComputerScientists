@@ -11,8 +11,15 @@
 
 <meta http-equiv="content-type" content="text/html; charset=UTF8">
 
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Lunr CDN -->
+ <script src="https://unpkg.com/lunr/lunr.js"></script>
 
 <!-- Firebase CDN -->
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
@@ -100,6 +107,7 @@
   $\DeclareMathOperator{\var}{Var}$
   $\DeclareMathOperator{\E}{E}$
   $\DeclareMathOperator{\std}{Std}$
+  $\DeclareMathOperator{\Ber}{Bern}$
 </div>
 
 <body class="greyBackground">
@@ -154,7 +162,7 @@
 <li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
 <li>
 <a id=sidebar-rvs href="../../part2/rvs">Random Variables</a>
-<a id=sidebar-pmf href="../../part2/pmf">Likelihood Functions</a>
+<a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
 <a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
 <a id=sidebar-variance href="../../part2/variance">Variance</a>
 <a id=sidebar-binomial href="../../part2/binomial">Bernoulli and Binomial</a>
@@ -253,6 +261,102 @@
 <center><h1>Bernoulli and Binomial</h1></center>
 <hr/>
 
+<h2>Parametric Random Variables</h2>
+
+<p>There are some classic random variable abstractions that show up in many problems. At this point in the class you will learn about several of the most significant parametic discrete distributions. When solving problems, if you are able to recognize that a random variable fits one of these formats, then you can use its precalculated probability mass function (PMF), expectation, variance, and other properties. Random variables of this sort are called <b>parametric</b> random variables. If you can argue that a random variable falls under one of the studied parametric types, you simply need to provide parameters. A good analogy is a <code>class</code> in programming. Creating a parametric random variable is very similar to calling a constructor with input parameters.</p>
+
+<h2>Bernoulli Random Variable</h2>
+
+<p>
+	A Bernoulli random variable (also called a <i>boolean</i> or <i>indicator</i> random variable) is the simplest kind of parametric random variable. It can take on
+two values, 1 and 0. It takes on a 1 if an experiment with probability $p$ resulted
+in success and a 0 otherwise. Some example uses include a coinflip, a random binary digit, whether a disk drive crashed, and whether someone likes a Netflix movie.  Here $p$ is the parameter, different instances of Bernoulli random variables might have different values of $p$.
+	</p>
+
+<p>
+	Here is a full description of the key properties of a Bernoulli random variable. If $X$ is declared to be a Bernoulli random variable with parameter $p$, denoted $X ∼ \Ber(p)$:
+
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Bernoulli Random Variable</b></p>
+
+
+<table>
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Ber(p)$</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+		<td>$p \in [0, 1]$, the probability that $X=1$.</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A boolean variable which is 1 with probability $p$</td>
+	</tr>
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{0, 1\}$</td>
+	</tr>
+	<tr>
+		<th>PMF:</th>
+		<td>$\p(X=x) = 
+			\begin{cases}
+				p && \text{if }x = 1\\
+				1-p && \text{if }x = 0
+			\end{cases}$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E(X) = p$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = p (1-p)$</td>
+	</tr>
+	<tr>
+	</tr>
+</table>
+
+</div></p>
+
+<p>Because Bernoulli is a parametric random variable, as soon as you declare a random variable to be of type Bernoulli you automatically can know all of these pre-derived properties! Some of the properties are straightforward to compute for a Bernoulli. For example you could have solved for expectation:
+
+	<p>
+		<div class="purpleBox">
+			<p><b>Proof</b>: Expectation of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
+		
+
+	$$
+	\begin{align} \E[X] &= \sum_x x \cdot \p(X=x) && \text{Definition of expectation} \\&= 1 \cdot p + 0 \cdot (1-p) && X \text{ can take on values 0 and 1}\\&= p  && \text{Remove the 0 term} \end{align}$$
+</div>
+</p>
+
+<p>
+		<div class="purpleBox">
+			<p><b>Proof</b>: Variance of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
+	To compute variance, first compute $E[X^2]$:
+		$$
+		\begin{align}
+		E[X^2] 
+		&= \sum_x x^2 \cdot \p(X=x) &&\text{LOTUS}\\
+		&= 0^2 \cdot p + 1^2 \cdot p\\
+		&= p
+		\end{align}
+		$$
+	$$
+	\begin{align} 
+	\var(X) 
+		&= E[X^2] - E[X]^2&& \text{Def of variance} \\
+		&= p - p^2 && \text{Substitute }E[X^2]=p, E[X] = p \\
+		&= p (1-p) && \text{Factor out }p
+	\end{align}$$
+</div>
+</p>
+
+	<p>Bernoulli random variables and indicator variables are two aspects of the same concept. A random variable $I$ is an indicator variable for an event $A$ if $I = 1$ when $A$ occurs and $I = 0$ if $A$ does not occur.$\P(I=1)=\P(A)$ and $\E[I]=\P(A)$. Indicator random variables are Bernoulli random variables, with $p=\P(A)$.</p>
 
                
 
@@ -273,10 +377,13 @@
     // require("firebase/firestore");
 
     $(document).ready(function () {
-
-        const hasStorage = typeof(Storage) !== "undefined"
+        console.log('ready')
         const scrollTop = getScrollTop()
         console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
         // $("#sidebar").mCustomScrollbar({
         //     theme: "minimal",
         //     mouseWheel: {preventDefault: true},
@@ -318,6 +425,7 @@
     });
 
     function getScrollTop() {
+        console.log('here')
         if(typeof(Storage) !== "undefined") {
             return Number(localStorage.scrollTop)
         }
