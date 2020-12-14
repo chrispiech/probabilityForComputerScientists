@@ -18,6 +18,12 @@
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<!-- D3 CDN -->
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<!-- Chart CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
 <!-- Lunr CDN -->
  <script src="https://unpkg.com/lunr/lunr.js"></script>
 
@@ -165,11 +171,11 @@
 <a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
 <a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
 <a id=sidebar-variance href="../../part2/variance">Variance</a>
-<a id=sidebar-binomial href="../../part2/binomial">Bernoulli and Binomial</a>
+<a id=sidebar-bernoulli href="../../part2/bernoulli">Bernoulli Distribution</a>
+<a id=sidebar-binomial href="../../part2/binomial">Binomial Distribution</a>
 <a id=sidebar-poisson href="../../part2/poisson">Poisson Distribution</a>
 <a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
 <a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
-<a id=sidebar-convolution href="../../part2/convolution">Convolution</a>
 <a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
 </li>
 </ul>
@@ -224,6 +230,7 @@
             <p>Part ?: Misfits</p>
         </li>
         <li>
+             <a href="../../examples/probBabies.html">Probability and babies</a>
             
              <a href="../../">Sampling from a likelihood function</a>
              <a href="../../">Law of Total Expectation</a>
@@ -313,7 +320,7 @@ grid with 300 pixels, and (c) a grid with just 12 pixels?</p>
 </p>
 
 <p>
-	Answer: We can use the steps rule of counting. An image can be created one pixel at a time, step by step. Each time we chose a pixel you can select its color out of 17 million choices. An array of $n$ pixels produces (17 million)$^n$ different pictures. (17 million)$^{12}$ ≈ 1086, so the tiny
+	Answer: We can use the steps rule of counting. An image can be created one pixel at a time, step by step. Each time we chose a pixel you can select its color out of 17 million choices. An array of $n$ pixels produces (17 million)$^n$ different pictures. (17 million)$^{12}$ ≈ $10^{86}$, so the tiny
 12-pixel grid produces a million times more pictures than the number of atoms in the universe! How about
 the 300 pixel array? It can produce $10^{2167}$ pictures. You may think the number of atoms in the universe is big,
 but that’s just peanuts to the number of pictures in a 300-pixel array. And 12M pixels? $10^{86696638}$ pictures.

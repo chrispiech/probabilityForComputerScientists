@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Beta Distribution</title>
+<title>Bernoulli and Binomial</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -265,9 +265,105 @@
               
                         
  
-<center><h1>Beta Distribution</h1></center>
+<center><h1>Bernoulli Distribution</h1></center>
 <hr/>
 
+<h2>Parametric Random Variables</h2>
+
+<p>There are some classic random variable abstractions that show up in many problems. At this point in the class you will learn about several of the most significant parametic discrete distributions. When solving problems, if you are able to recognize that a random variable fits one of these formats, then you can use its precalculated probability mass function (PMF), expectation, variance, and other properties. Random variables of this sort are called <b>parametric</b> random variables. If you can argue that a random variable falls under one of the studied parametric types, you simply need to provide parameters. A good analogy is a <code>class</code> in programming. Creating a parametric random variable is very similar to calling a constructor with input parameters.</p>
+
+<h2>Bernoulli Random Variable</h2>
+
+<p>
+	A Bernoulli random variable (also called a <i>boolean</i> or <i>indicator</i> random variable) is the simplest kind of parametric random variable. It can take on
+two values, 1 and 0. It takes on a 1 if an experiment with probability $p$ resulted
+in success and a 0 otherwise. Some example uses include a coinflip, a random binary digit, whether a disk drive crashed, and whether someone likes a Netflix movie.  Here $p$ is the parameter, different instances of Bernoulli random variables might have different values of $p$.
+	</p>
+
+<p>
+	Here is a full description of the key properties of a Bernoulli random variable. If $X$ is declared to be a Bernoulli random variable with parameter $p$, denoted $X ∼ \Ber(p)$:
+
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Bernoulli Random Variable</b></p>
+
+
+<table>
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Ber(p)$</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+		<td>$p \in [0, 1]$, the probability that $X=1$.</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A boolean variable that is 1 with probability $p$</td>
+	</tr>
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{0, 1\}$</td>
+	</tr>
+	<tr>
+		<th>PMF:</th>
+		<td>$\p(X=x) = 
+			\begin{cases}
+				p && \text{if }x = 1\\
+				1-p && \text{if }x = 0
+			\end{cases}$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E(X) = p$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = p (1-p)$</td>
+	</tr>
+	<tr>
+	</tr>
+</table>
+
+</div></p>
+
+<p>Because Bernoulli is a parametric random variable, as soon as you declare a random variable to be of type Bernoulli you automatically can know all of these pre-derived properties! Some of the properties are straightforward to prove for a Bernoulli. For example you could have solved for expectation:
+
+	<p>
+		<div class="purpleBox">
+			<p><b>Proof</b>: Expectation of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
+		
+
+	$$
+	\begin{align} \E[X] &= \sum_x x \cdot \p(X=x) && \text{Definition of expectation} \\&= 1 \cdot p + 0 \cdot (1-p) && X \text{ can take on values 0 and 1}\\&= p  && \text{Remove the 0 term} \end{align}$$
+</div>
+</p>
+
+<p>
+		<div class="purpleBox">
+			<p><b>Proof</b>: Variance of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
+	To compute variance, first compute $E[X^2]$:
+		$$
+		\begin{align}
+		E[X^2] 
+		&= \sum_x x^2 \cdot \p(X=x) &&\text{LOTUS}\\
+		&= 0^2 \cdot p + 1^2 \cdot p\\
+		&= p
+		\end{align}
+		$$
+	$$
+	\begin{align} 
+	\var(X) 
+		&= E[X^2] - E[X]^2&& \text{Def of variance} \\
+		&= p - p^2 && \text{Substitute }E[X^2]=p, E[X] = p \\
+		&= p (1-p) && \text{Factor out }p
+	\end{align}$$
+</div>
+</p>
+
+	<p>Bernoulli random variables and indicator variables are two aspects of the same concept. A random variable $I$ is an indicator variable for an event $A$ if $I = 1$ when $A$ occurs and $I = 0$ if $A$ does not occur. $\P(I=1)=\P(A)$ and $\E[I]=\P(A)$. Indicator random variables are Bernoulli random variables, with $p=\P(A)$.</p>
 
                
 

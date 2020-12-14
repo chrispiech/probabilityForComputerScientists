@@ -1,0 +1,284 @@
+
+% rebase('templates/chapter.html', title="Maximum Likelihood Estimation")
+ 
+<center><h1>Probability and Babies</h1></center>
+<hr/>
+
+<p>What is the probability that Laura gives birth today (given that she hasn't given birth up until today)?</p>
+
+<hr/>
+<p>
+The length of human pregnancy varies by quite a lot! Have you heard that it is 9 months? That is a rough, point estimate. While the mean duration of pregnancy is 278.6 days, it has a standard deviation (SD) of 12.5 days. This distribution is not normal, but roughly matches a "<a href="https://en.wikipedia.org/wiki/Skew_normal_distribution">skewed normal</a>".
+</p>
+
+<p>
+Probability of delivery today: <b class="keyValue" id="prDeliveryToday"></b><br/>
+Probability of delivery in next 7 days: <b id="prDeliveryWeek"></b><br/>
+Current days past due date: <b id="daysPastDue"></b> days<br/>
+Unconditioned probability mass before today: <b id="pastProbMass"></b>
+</p>
+<p>
+How likely is delivery, in humans, relative to the due date? There have been millions of births which gives us a relatively good picture [<a href="#cite1">1</a>]. This is a general graph for the first pregnancy (it is very similar across demographics, but changes if this is not the first pregnancy).<br/>
+<canvas id="unconditionalPMF" style="max-height: 400px"></canvas>
+</p>
+
+<p>
+How likely is delivery given that we haven't delivered up until today?<br/>
+<canvas id="conditionalPMF" style="max-height: 400px"></canvas>
+</p>
+
+
+
+<p>
+	Implementation notes: this calculation was performed by storing the PDF as a list of (day, probability) points. These values are sometimes called weighted samples, or "particles" and are the key component to a "<a href="https://en.wikipedia.org/wiki/Particle_filter">particle filtering</a>" approach. After we observe no-delivery, we set the probability of every point which has a day before today to be 0, and then re-normalize the remaining points (aka we "filter" the "particles"). This is convenient because the "posterior" belief doesn't follow a simple equation -- using particles means we never have to write that equation down in our code.
+	</p>
+
+<span id="cite1">[1]</span> <a href="https://www.sciencedirect.com/science/article/pii/S0029784400011315?casa_token=yV-QZInYkl8AAAAA:0U_Z2dT-r0y1etlX8hRG5ulyrjtzoVXRXIlvJkcSyXhtllUlkhWPNr5f3MJL0LMFzHZv5TwsN4Q">Predicting delivery date by ultrasound and last menstrual period in early gestation</a>
+
+<script>
+$(document).ready(function() {
+	addVerticalLinePlugin()
+    $.ajax({
+        type: "GET",
+        url: "{{pathToRoot}}data/prLabor.csv",
+        dataType: "text",
+        success: function(data) {processData(data);}
+     });
+});
+
+function processData(data) {
+	let table = loadCsvTable(data)
+	let currDate = new Date()//Date.parse('15 Jan 2021 00:18:00 GMT');
+	let dueDate = Date.parse('18 Jan 2021 00:18:00 GMT');
+	let deltaMs = currDate - dueDate
+	let daysPastDue = Math.ceil(deltaMs / 86400000)
+	let pastProbMass = calcPastProbMass(table, daysPastDue)
+
+	let unconditionalScatterData = []
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		if(datum['day'] >= -51 && datum['day'] <= 25) {
+			unconditionalScatterData.push({
+				'x':datum['day'],
+				'y':datum['probability']
+			})
+		}
+	}
+	drawLineGraph("unconditionalPMF", unconditionalScatterData, 'Days past due date', 'Probability of delivery')
+
+
+	normalizeProbabilities(table, pastProbMass)
+	let prDeliveryToday = calcPrCurrDay(table, daysPastDue)
+	let prDeliveryWeek = calcPrDeliveryWeek(table, daysPastDue)
+
+	$("#daysPastDue").html(daysPastDue)
+	$("#pastProbMass").html(pastProbMass.toFixed(3))
+	$("#prDeliveryToday").html(prDeliveryToday.toFixed(3))
+	$("#prDeliveryWeek").html(prDeliveryWeek.toFixed(3))
+
+
+	let conditionalScatterData = []
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		if(datum['day'] >= -51 && datum['day'] <= 25) {
+			let pr = 0.0
+			if(datum['day'] >= daysPastDue) {
+				pr = datum['probability']
+			}
+			conditionalScatterData.push({
+				'x':datum['day'],
+				'y':pr
+			})
+		}
+	}
+	drawLineGraph("conditionalPMF", conditionalScatterData, 'Days past due date', 'Probability of delivery')
+
+
+}
+
+function calcPrDeliveryWeek(table, daysPastDue) {
+	let prWeek = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		if(day >= daysPastDue && day <= daysPastDue + 7) {
+			prWeek += datum['probability']
+		}
+	}
+	return prWeek
+}
+
+function calcPrCurrDay(table, daysPastDue) {
+	let pastProbMass = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		if(day == daysPastDue) {
+			return datum['probability']
+		}
+	}
+	return 0.0
+}
+
+function normalizeProbabilities(table, pastProbMass){
+	let denominator = (1 - pastProbMass)
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		datum['probability'] /= denominator
+	}
+}
+
+function calcPastProbMass(table, daysPastDue) {
+	let pastProbMass = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		let prDay = datum['probability']
+		if(day < daysPastDue) {
+			pastProbMass += prDay
+		}
+	}
+	return pastProbMass
+}
+
+function loadCsvTable(allText) {
+	let lines = allText.split("\n");
+	let head = lines[0].split(',')
+	let body = lines.slice(1);
+	let data = []
+	for (var i = 0; i < body.length; i++) {
+		let nextLine = body[i].split(',')
+		data.push(makeNewDatum(head, nextLine))
+	}
+	return data
+}
+
+function makeNewDatum(head, nextLine){
+	let datum = {}
+	for (var i = 0; i < head.length; i++) {
+		let key = head[i]
+		let value = parseFloat(nextLine[i])
+		datum[key] = value
+	}
+	return datum
+}
+
+// DEPRECATED
+window.randomScalingFactor = function() {
+	return 5.0
+};
+
+Chart.types.Line.extend({
+    name: "LineWithLine",
+    draw: function () {
+        Chart.types.Line.prototype.draw.apply(this, arguments);
+
+        var point = this.datasets[0].points[this.options.lineAtIndex]
+        var scale = this.scale
+
+        // draw line
+        this.chart.ctx.beginPath();
+        this.chart.ctx.moveTo(point.x, scale.startPoint + 24);
+        this.chart.ctx.strokeStyle = '#ff0000';
+        this.chart.ctx.lineTo(point.x, scale.endPoint);
+        this.chart.ctx.stroke();
+
+        // write TODAY
+        this.chart.ctx.textAlign = 'center';
+        this.chart.ctx.fillText("TODAY", point.x, scale.startPoint + 12);
+    }
+});
+
+function drawLineGraph(parentDivId, dataPoints, xLabel = 'x', yLabel = 'y') {
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < dataPoints.length; i++) {
+		let point = dataPoints[i]
+		xValues.push(point['x'])
+		yValues.push(point['y'])
+	}
+
+	var config = {
+		type: 'line',
+		lineAtIndex: [51],
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: yLabel,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					}
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myLine = new Chart(ctx, config);
+}
+
+function addVerticalLinePlugin() {
+	const verticalLinePlugin = {
+	  getLinePosition: function (chart, pointIndex) {
+	      const meta = chart.getDatasetMeta(0); // first dataset is used to discover X coordinate of a point
+	      const data = meta.data;
+	      return data[pointIndex]._model.x;
+	  },
+	  renderVerticalLine: function (chartInstance, pointIndex) {
+	      const lineLeftOffset = this.getLinePosition(chartInstance, pointIndex);
+	      const scale = chartInstance.scales['y-axis-0'];
+	      const context = chartInstance.chart.ctx;
+
+	      // render vertical line
+	      context.beginPath();
+	      context.strokeStyle = '#000000';
+	      context.moveTo(lineLeftOffset, scale.top);
+	      context.lineTo(lineLeftOffset, scale.bottom);
+	      context.stroke();
+
+	      // write label
+	      context.fillStyle = "#000000";
+	      context.textAlign = 'center';
+	      context.fillText('Due Date', lineLeftOffset, (scale.bottom - scale.top) / 2 + scale.top);
+	  },
+
+	  afterDatasetsDraw: function (chart, easing) {
+	      if (chart.config.lineAtIndex) {
+	          chart.config.lineAtIndex.forEach(pointIndex => this.renderVerticalLine(chart, pointIndex));
+	      }
+	  }
+  };
+
+  Chart.plugins.register(verticalLinePlugin);
+}
+	
+</script>

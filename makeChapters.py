@@ -36,7 +36,8 @@ book_outline = {
 			'pmf':'Probability Mass Functions',
 			'expectation':'Expectation',
 			'variance':'Variance',
-			'binomial':'Bernoulli and Binomial',
+			'bernoulli':'Bernoulli Distribution',
+			'binomial':'Binomial Distribution',
 			'poisson':'Poisson Distribution',
 			'continuous':'Continuous Distribution',
 			'normal':'Normal Distribution',
@@ -79,6 +80,15 @@ book_outline = {
 			'neural_nets':'Artificial Neural Networks'
 		}
 	}
+	# TODO: Mehran to add as he sees fit
+	# 'part6':{
+	# 	'title':'Part 6: Intro to Information Theory',
+	# 	'sections': {
+	# 		'entropy':'Maximum Likelihood Estimation',
+	#		'cross_entopy':'Cross Entropy',
+	# 		'kl_divergence':'KL Divergence',
+	# 	}
+	# }
 }
 
 INDEX_TEMPLATE = '''
