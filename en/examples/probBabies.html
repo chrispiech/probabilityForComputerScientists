@@ -297,7 +297,11 @@ Of course, we have more information. Specifically, we know that Laura <b>hasn't<
 	Implementation notes: this calculation was performed by storing the PDF as a list of (day, probability) points. These values are sometimes called weighted samples, or "particles" and are the key component to a "<a href="https://en.wikipedia.org/wiki/Particle_filter">particle filtering</a>" approach. After we observe no-delivery, we set the probability of every point which has a day before today to be 0, and then re-normalize the remaining points (aka we "filter" the "particles"). This is convenient because the "posterior" belief doesn't follow a simple equation -- using particles means we never have to write that equation down in our code.
 	</p>
 
+<p>
 <span id="cite1">[1]</span> <a href="https://www.sciencedirect.com/science/article/pii/S0029784400011315?casa_token=yV-QZInYkl8AAAAA:0U_Z2dT-r0y1etlX8hRG5ulyrjtzoVXRXIlvJkcSyXhtllUlkhWPNr5f3MJL0LMFzHZv5TwsN4Q">Predicting delivery date by ultrasound and last menstrual period in early gestation</a>
+</p>
+
+<p>Acknowledgements: This problem was first posed to me by Chris Gregg.
 
 <script>
 $(document).ready(function() {
