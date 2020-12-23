@@ -59,11 +59,11 @@ Of course, we have more information. Specifically, we know that Laura <b>hasn't<
 Probability of three couples on the same day: <b id="pr3SameDay"></b><br/>
 </p>
 
-<p>How did we get that number? Let $p_i$ be the probability that one baby is delivered on day $i$ -- this number can be read off the probability mass function.  Let $X_i$ be the event that all three babies are delivered on day $i$. Note that the event $X_i$ is <a href="{{pathToLang}}part1/prob_or/">mutually exclusive</a> with the event that all three babies are born on another day (So for example, $X_1$ is mutually exclusive with $X_2$, $X_3$ etc):
+<p>How did we get that number? Let $p_i$ be the probability that one baby is delivered on day $i$ -- this number can be read off the probability mass function.  Let $X_i$ be the event that all three babies are delivered on day $i$. Note that the event $X_i$ is <a href="{{pathToLang}}part1/prob_or/">mutually exclusive</a> with the event that all three babies are born on another day (So for example, $X_1$ is mutually exclusive with $X_2$, $X_3$ etc). Let $N=3$ be the event that all babies are born on the same day:
 
 	$$
 \begin{align}
-\p(\text{all three on same day}) &= \sum_i \p(X_i) && \text{Since days are mutually exclusive} \\
+\p(N=3) &= \sum_i \p(X_i) && \text{Since days are mutually exclusive} \\
 &= \sum_i p_i^3 && \text{Since the three couples are independent} 
 \end{align}
 	$$
