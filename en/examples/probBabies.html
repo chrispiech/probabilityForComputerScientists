@@ -17,6 +17,8 @@
 
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+ <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 <!-- D3 CDN -->
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -270,7 +272,19 @@
 
 <p>What is the probability that Laura gives birth today (given that she hasn't given birth up until today)?</p>
 
-<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" onchange="todayDateChange()" id="todaysDateLabel" style="min-width: 120px">Today's Date</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Today's Date" aria-label="Username" aria-describedby="todaysDateLabel" id="todaysDateInput">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="dueDateLabel" style="min-width: 120px">Due Date</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Due Date" aria-label="Username" aria-describedby="dueDateLabel" id="dueDateInput" disabled value="18/1/2021"></input>
+</div>
 
 <hr/>
 <p>
@@ -300,13 +314,41 @@ Of course, we have more information. Specifically, we know that Laura <b>hasn't<
 	</p>
 
 <p>
+
+<div class="bordered">
+
+	<p>Two of Chris' best friends from his PhD have the exact same due date as Chris (Really! this isn't a hypothetical) What is the probability that all three couples deliver on the exact same day?
+
+
+		<p>
+<!-- Probability of two couples on the same day: <b class="keyValue" id="prDeliveryToday"></b><br/> -->
+Probability of three couples on the same day: <b id="pr3SameDay"></b><br/>
+</p>
+
+</div>
+
+<hr/>
+
+
 <span id="cite1">[1]</span> <a href="https://www.sciencedirect.com/science/article/pii/S0029784400011315?casa_token=yV-QZInYkl8AAAAA:0U_Z2dT-r0y1etlX8hRG5ulyrjtzoVXRXIlvJkcSyXhtllUlkhWPNr5f3MJL0LMFzHZv5TwsN4Q">Predicting delivery date by ultrasound and last menstrual period in early gestation</a>
 </p>
 
 <p>Acknowledgements: This problem was first posed to me by Chris Gregg.
 
 <script>
+// global singleton
+let table = null
+let dueDate = Date.parse('18 Jan 2021 00:18:00 GMT');
+
 $(document).ready(function() {
+
+	$('input').datepicker({
+		format: "dd/mm/yyyy",
+		onSelect: function(dateText) {
+			let currDate = Date.parse(dateText)
+	        calculateProbabilities(currDate, dueDate)
+	    }
+	});
 	addVerticalLinePlugin()
     $.ajax({
         type: "GET",
@@ -316,17 +358,32 @@ $(document).ready(function() {
      });
 });
 
+
 function processData(data) {
-	let table = loadCsvTable(data)
+	table = loadCsvTable(data)
 	let currDate = new Date()//Date.parse('15 Jan 2021 00:18:00 GMT');
-	let dueDate = Date.parse('18 Jan 2021 00:18:00 GMT');
+	
+	setInputValue('todaysDateInput', currDate)
+	// $("#todaysDateInput").val(currDate)
+	// $("#dueDateInput").val(dueDate)
+	calculateProbabilities(currDate, dueDate)
+}
+
+function setInputValue(inputId, date) {
+	console.log(date)	
+	let str = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+	$("#" + inputId).val(str)
+}
+
+function calculateProbabilities(currDate, dueDate) {
+	let tempTable = JSON.parse(JSON.stringify(table))
 	let deltaMs = currDate - dueDate
 	let daysPastDue = Math.ceil(deltaMs / 86400000)
-	let pastProbMass = calcPastProbMass(table, daysPastDue)
+	let pastProbMass = calcPastProbMass(tempTable, daysPastDue)
 
 	let unconditionalScatterData = []
-	for (var i = 0; i < table.length; i++) {
-		let datum = table[i]
+	for (var i = 0; i < tempTable.length; i++) {
+		let datum = tempTable[i]
 		if(datum['day'] >= -51 && datum['day'] <= 25) {
 			unconditionalScatterData.push({
 				'x':datum['day'],
@@ -337,19 +394,21 @@ function processData(data) {
 	drawLineGraph("unconditionalPMF", unconditionalScatterData, 'Days past due date', 'Probability of delivery')
 
 
-	normalizeProbabilities(table, pastProbMass)
-	let prDeliveryToday = calcPrCurrDay(table, daysPastDue)
-	let prDeliveryWeek = calcPrDeliveryWeek(table, daysPastDue)
+	normalizeProbabilities(tempTable, pastProbMass)
+	let prDeliveryToday = calcPrCurrDay(tempTable, daysPastDue)
+	let prDeliveryWeek = calcPrDeliveryWeek(tempTable, daysPastDue)
+	let pr3SameDay = calcPrMultiDay(tempTable, daysPastDue)
 
 	$("#daysPastDue").html(daysPastDue)
 	$("#pastProbMass").html(pastProbMass.toFixed(3))
 	$("#prDeliveryToday").html(prDeliveryToday.toFixed(3))
 	$("#prDeliveryWeek").html(prDeliveryWeek.toFixed(3))
+	$("#pr3SameDay").html(pr3SameDay.toFixed(3))
 
 
 	let conditionalScatterData = []
-	for (var i = 0; i < table.length; i++) {
-		let datum = table[i]
+	for (var i = 0; i < tempTable.length; i++) {
+		let datum = tempTable[i]
 		if(datum['day'] >= -51 && datum['day'] <= 25) {
 			let pr = 0.0
 			if(datum['day'] >= daysPastDue) {
@@ -364,6 +423,18 @@ function processData(data) {
 	drawLineGraph("conditionalPMF", conditionalScatterData, 'Days past due date', 'Probability of delivery')
 
 
+}
+
+function calcPrMultiDay(table, daysPastDue) {
+	console.log(table)
+	let prSameDay = 0
+	for(var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		let prDay = datum['probability']
+		prSameDay += prDay ** 3
+	}
+	return prSameDay
 }
 
 function calcPrDeliveryWeek(table, daysPastDue) {
@@ -433,32 +504,6 @@ function makeNewDatum(head, nextLine){
 	return datum
 }
 
-// DEPRECATED
-window.randomScalingFactor = function() {
-	return 5.0
-};
-
-Chart.types.Line.extend({
-    name: "LineWithLine",
-    draw: function () {
-        Chart.types.Line.prototype.draw.apply(this, arguments);
-
-        var point = this.datasets[0].points[this.options.lineAtIndex]
-        var scale = this.scale
-
-        // draw line
-        this.chart.ctx.beginPath();
-        this.chart.ctx.moveTo(point.x, scale.startPoint + 24);
-        this.chart.ctx.strokeStyle = '#ff0000';
-        this.chart.ctx.lineTo(point.x, scale.endPoint);
-        this.chart.ctx.stroke();
-
-        // write TODAY
-        this.chart.ctx.textAlign = 'center';
-        this.chart.ctx.fillText("TODAY", point.x, scale.startPoint + 12);
-    }
-});
-
 function drawLineGraph(parentDivId, dataPoints, xLabel = 'x', yLabel = 'y') {
 	var xValues = []
 	var yValues = []
@@ -510,7 +555,12 @@ function drawLineGraph(parentDivId, dataPoints, xLabel = 'x', yLabel = 'y') {
 					scaleLabel: {
 						display: true,
 						labelString: yLabel
-					}
+					},
+					ticks: {
+                        // callback: function (value) {
+                        //     return parseFloat(value).toFixed(2)
+                        // }
+                    }
 				}]
 			}
 		}
