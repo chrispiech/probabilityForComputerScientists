@@ -294,14 +294,14 @@ Current days past due date: <b id="daysPastDue"></b> days<br/>
 Unconditioned probability mass before today: <b id="pastProbMass"></b>
 </p>
 <p>
-How likely is delivery, in humans, relative to the due date? There have been millions of births which gives us a relatively good picture [<a href="#cite1">1</a>]. The length of human pregnancy varies by quite a lot! Have you heard that it is 9 months? That is a rough, point estimate. The mean duration of pregnancy is 278.6 days, and pregnancy length has a standard deviation (SD) of 12.5 days. This distribution is not normal, but roughly matches a "<a href="https://en.wikipedia.org/wiki/Skew_normal_distribution">skewed normal</a>". This is a general probability mass function for the first pregnancy collected from hundreds of thousands of women (it is very similar across demographics, but changes if this is not the first pregnancy):<br/></p>
+How likely is delivery, in humans, relative to the due date? There have been millions of births which gives us a relatively good picture [<a href="#cite1">1</a>]. The length of human pregnancy varies by quite a lot! Have you heard that it is 9 months? That is a rough, point estimate. The mean duration of pregnancy is 278.6 days, and pregnancy length has a standard deviation (SD) of 12.5 days. This distribution is not normal, but roughly matches a "<a href="https://en.wikipedia.org/wiki/Skew_normal_distribution">skewed normal</a>". This is a general probability mass function for the first pregnancy collected from hundreds of thousands of women (this PMF is very similar across demographics, but changes based on whether the woman has given birth before):<br/></p>
 <p>
 <canvas id="unconditionalPMF" style="max-height: 400px"></canvas>
 </p>
 
 
 <p>
-Of course, we have more information. Specifically, we know that Laura <b>hasn't</b> given birth up until today (we will update this example when that changes). How likely is delivery given that we haven't delivered up until today?<br/>
+Of course, we have more information. Specifically, we know that Laura <b>hasn't</b> given birth up until today (we will update this example when that changes). How likely is delivery given that we haven't delivered up until today? Note that the y-axis is scalled differently:<br/>
 </p>
 <p>
 <canvas id="conditionalPMF" style="max-height: 400px"></canvas>
@@ -324,6 +324,15 @@ Of course, we have more information. Specifically, we know that Laura <b>hasn't<
 <!-- Probability of two couples on the same day: <b class="keyValue" id="prDeliveryToday"></b><br/> -->
 Probability of three couples on the same day: <b id="pr3SameDay"></b><br/>
 </p>
+
+<p>How did we get that number? Let $p_i$ be the probability that one baby is delivered on day $i$ -- this number can be read off the probability mass function.  Let $X_i$ be the event that all three babies are delivered on day $i$. Note that the event $X_i$ is <a href="../part1/prob_or/">mutually exclusive</a> with the event that all three babies are born on another day (So for example, $X_1$ is mutually exclusive with $X_2$, $X_3$ etc):
+
+	$$
+\begin{align}
+\p(\text{all three on same day}) &= \sum_i \p(X_i) && \text{Since days are mutually exclusive} \\
+&= \sum_i p_i^3 && \text{Since the three couples are independent} 
+\end{align}
+	$$
 
 </div>
 
@@ -394,7 +403,7 @@ function calculateProbabilities(currDate, dueDate) {
 	drawLineGraph("unconditionalPMF", unconditionalScatterData, 'Days past due date', 'Probability of delivery')
 
 
-	normalizeProbabilities(tempTable, pastProbMass)
+	conditionProbabilities(tempTable, pastProbMass)
 	let prDeliveryToday = calcPrCurrDay(tempTable, daysPastDue)
 	let prDeliveryWeek = calcPrDeliveryWeek(tempTable, daysPastDue)
 	let pr3SameDay = calcPrMultiDay(tempTable, daysPastDue)
@@ -461,11 +470,30 @@ function calcPrCurrDay(table, daysPastDue) {
 	return 0.0
 }
 
-function normalizeProbabilities(table, pastProbMass){
+function conditionProbabilities(table, pastProbMass){
+	// first, normalize probabilities with the missing mass
 	let denominator = (1 - pastProbMass)
 	for (var i = 0; i < table.length; i++) {
 		let datum = table[i]
 		datum['probability'] /= denominator
+	}
+
+	// second, we note that babies are induced after 14 days.
+	let prPostInduced = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		if(datum['day'] > 14) {
+			prPostInduced += datum['probability']
+		}
+	}
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		if(datum['day'] == 14) {
+			datum['probability'] += prPostInduced
+		}
+		if(datum['day'] > 14) {
+			datum['probability'] = 0
+		}
 	}
 }
 
@@ -514,7 +542,7 @@ function drawLineGraph(parentDivId, dataPoints, xLabel = 'x', yLabel = 'y') {
 	}
 
 	var config = {
-		type: 'line',
+		type: 'bar',
 		lineAtIndex: [51],
 		data: {
 			labels: xValues,
@@ -591,7 +619,7 @@ function addVerticalLinePlugin() {
 	      // write label
 	      context.fillStyle = "#000000";
 	      context.textAlign = 'center';
-	      context.fillText('Due Date', lineLeftOffset, (scale.bottom - scale.top) / 2 + scale.top);
+	      context.fillText('Due Date', lineLeftOffset, (scale.bottom - scale.top) *0.05 + scale.top);
 	  },
 
 	  afterDatasetsDraw: function (chart, easing) {
