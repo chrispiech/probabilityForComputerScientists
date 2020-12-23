@@ -267,6 +267,7 @@ function makeNewDatum(head, nextLine){
 }
 
 function drawLineGraph(parentDivId, dataPoints, xLabel = 'x', yLabel = 'y') {
+	console.log('draw graph', parentDivId)
 	var xValues = []
 	var yValues = []
 	for (var i = 0; i < dataPoints.length; i++) {
