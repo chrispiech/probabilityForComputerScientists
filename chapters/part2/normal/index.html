@@ -3,3 +3,36 @@
  
 <center><h1>Normal Distribution</h1></center>
 <hr/>
+
+<%
+  include('templates/rvCards/normal.html')
+%>
+
+<p>
+	<div class="purpleBox">
+		<p><b><i>Example</i></b>: The 67% rule of a normal within one standard deviation. What is the probability that a normal variable $X \sim \N(\mu, \sigma)$ has a value within one standard deviation of its mean?</p>
+		$$
+		\begin{align}
+		\p(\text{Within one }\sigma \text{ of } \mu) 
+			&= \p(\mu - \sigma < X < \mu + \sigma)
+				 \\
+			&= \p(X < \mu + \sigma) - \p(X < \mu - \sigma)
+				&& \text{Prob of a range} \\
+			&= \Phi\Big(\frac{(\mu + \sigma)-\mu}{\sigma}\Big) -
+				\Phi\Big(\frac{(\mu - \sigma)-\mu}{\sigma}\Big)
+				&& \text{CDF of Normal} \\
+			&= \Phi\Big(\frac{\sigma}{\sigma}\Big) -
+				\Phi\Big(\frac{- \sigma}{\sigma}\Big)
+				&& \text{Cancel $\mu$s} \\
+			&= \Phi(1) -
+				\Phi(-1)
+				&& \text{Cancel $\sigma$s} \\
+			&\approx 0.8413 - 0.1587 \approx 0.683
+				&& \text{Plug into $\Phi$}
+
+		\end{align}
+		
+		$$
+We made no assumption about the value of $\mu$ or the value of $\sigma$ so this will apply to every single normal random variable. Since it uses the Normal CDF this doesn't apply to other types of random variables.
+	</div>
+</p>

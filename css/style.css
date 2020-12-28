@@ -56,10 +56,11 @@ greyBackground as a style class)
   margin-bottom:50px;
   overflow-x:scroll;
   min-width: 300px;
+  overflow-y: hidden;
 }
 /* Style for the body of a handout page */
 .greyBackground{
-  background-color: #efefef
+  background-color: #555; /*#efefef*/
 }
 /* When the handout drops bellow a threshold remove padding */
 @media (max-width: 1300px) {
@@ -70,9 +71,9 @@ greyBackground as a style class)
   .handout {
     /* Note: since padding drops from 100 to 15, max-width
        also drops. 760 = 930 - (100-15)*2 */
-    max-width: 760px;
-    padding-left:15px;
-    padding-right:15px;
+    max-width: 786px;
+    padding-left:2px;
+    padding-right:2px;
     padding-top:00px;
     margin-bottom:0px;
     padding-bottom: 0px;
@@ -94,6 +95,7 @@ console (aka terminal) */
   border-width: 1px;
   padding:10px;
   overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 /* 
@@ -126,6 +128,11 @@ purpleBox:
   margin-left:20px;
 }
 
+.example-inline-input{
+  display:inline-block;
+  width:75px;
+}
+
 #curiosityButton {
   position:fixed;
   right:15px;
@@ -133,6 +140,26 @@ purpleBox:
   z-index: 1000;
 }
 
+.mathLeft {}
+
+.mathLeft mjx-container {
+  text-align: left !important;
+  margin-top:1px !important;
+  margin-bottom: 1px !important;
+}
+
+.wrapPre {
+   white-space: pre-wrap !important;       /* css-3 */
+ white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap !important;      /* Opera 4-6 */
+ white-space: -o-pre-wrap !important;    /* Opera 7 */
+ word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+}
+
+
+.rvCardBody {
+  vertical-align: top;
+}
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
@@ -395,6 +422,7 @@ h3 {
 
 pre {
   background-color: white;
+  font-size: 0.9rem;
 }
 
 li {

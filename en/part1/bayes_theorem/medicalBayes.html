@@ -1,25 +1,23 @@
 
 <div class="purpleBox">
 	<p><b><i>Example:</i></b> Probability of a disease given a noisy test</p>
-<p>In this problem we are going to calculate the probability that a patient has an illness given test-result for the illness. A positive test result means the test thinks the patient has the illness. Things that we neeed to know: The  percent of the population that has the illness. The probability the test returns a positive test for a patient with the disease. The probability the test returns a positive test for a patient who does not have the disease.
+<p>In this problem we are going to calculate the probability that a patient has an illness given test-result for the illness. A positive test result means the test thinks the patient has the illness. You know the following information, which is typical for medical tests:
 </p>
 
-<div class="form-group">
-				    <label for="exampleInputEmail1">Natural % of population with illness</label>
-				    <input type="number" class="form-control" id="priorInput" value="8">
-				  </div>
-				  <div class="form-group">
-				    <label for="exampleInputPassword1">Probability of a positive result given the patient has illness</label>
-				    <input type="number" class="form-control" id="condInput" value="0.95">
-				  </div>
-				  <div class="form-group">
-				    <label for="exampleInputPassword1">Probability of a positive result given the patient does not have illness</label>
-				    <input type="number" class="form-control" id="condNegInput" value="0.07">
-				  </div>
 
-				  <p><button id="calcButton" class="btn btn-success" onclick="recalculate();">Recalculate probability of disease given positive test result</button></p>
+
+<label for="exampleInputEmail1">Natural % of population with illness:</label>
+<input onchange="recalculate()" type="number" class="form-control example-inline-input" id="priorInput" value="13" >			  
+
+<label for="exampleInputPassword1">Probability of a positive result given the patient has illness</label>
+<input onchange="recalculate()" type="number" class="form-control example-inline-input" id="condInput" value="0.92" step = "0.01">
 				  
-<p>The numbers in this example are from the Mamogram test for breast cancer. The seriousness of cancer underscores the potential for bayesian probability to be applied to important contexts. The natural occurence of breast cancer is 8%. The mamogram test returns a positive result 95% of the time for patients who have breast cancer. The test resturns a positive result 7% of the time for people who do not have breast cancer. In this demo you can enter different probabilities and calculate the corresponding chance of disease given a positive test result.</p>
+<label for="exampleInputPassword1">Probability of a positive result given the patient does not have illness</label>
+<input onchange="recalculate()" type="number" class="form-control example-inline-input mb-3" id="condNegInput" value="0.10" step = "0.01">
+
+				  <!--<p><button id="calcButton" class="btn btn-success" onclick="recalculate();">Recalculate probability of disease given positive test result</button></p>-->
+				  
+<p>The numbers in this example are from the Mamogram test for breast cancer. The seriousness of cancer underscores the potential for bayesian probability to be applied to important contexts. The natural occurence of breast cancer is 8%. The mamogram test returns a positive result 95% of the time for patients who have breast cancer. The test resturns a positive result 7% of the time for people who do not have breast cancer. In this demo you can enter different input numbers and it will reclaculate.</p>
 
  <hr/> 
 

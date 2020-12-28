@@ -1,71 +1,86 @@
 <!-- Template that renders a single random variable card -->
 
 <div class="bordered">
-<p><b>Bernoulli Random Variable</b></p>
+<p><b>Poisson Random Variable</b></p>
 
 
 <table>
+<tbody class="rvCardBody">
 	<tr>
 		<th style="width:150px">Notation:</td>
-		<td>$X \sim \Ber(p)$</td>
+		<td>$X \sim \Poi(\lambda)$</td>
 	</tr>
 	<tr>
 		<th>Description:</td>
-		<td>A boolean variable that is 1 with probability $p$</td>
+		<td>Number of events in a fixed time frame if (a) the events occur with a constant mean rate and (b) they occur independently of time since last event.</td>
 	</tr>
 	<tr>
 		<th>Parameters:</td>
-		<td>$p$, the probability that $X=1$.</td>
+
+		<td>$\lambda \in \{0, 1, \dots\}$, the constant average rate.</td>
 	</tr>
 	
 	
 	<tr>
 		<th>Support:</td>
-		<td>$x$ is either 0 or 1</td>
+		<td>$x \in \{0, 1, \dots\}$</td>
 	</tr>
 	<tr>
 		<th>PMF equation:</th>
-		<td>$\p(X=x) = 
-			\begin{cases}
-				p && \text{if }x = 1\\
-				1-p && \text{if }x = 0
-			\end{cases}$</td>
+		<td class="mathLeft">$$\p(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}$$</td>
 	</tr>
 	<tr>
 		<th>Expectation:</th>
-		<td>$\E[X] = p$</td>
+		<td>$\E[X] = \lambda$</td>
 	</tr>
 	<tr>
 		<th>Variance:</th>
-		<td>$\var(X) = p (1-p)$</td>
+		<td>$\var(X) = \lambda$</td>
 	</tr>
 	<tr>
 		<th>PMF graph:</th>
 	</tr>
+</tbody>
 </table>
-Parameter $p$: <input onchange="redrawBernoulliPmf()" type="number" class="form-control example-inline-input mb-3" id="bernoulliPmfP" min="0" max="1" value="0.80" step = "0.05">
-<canvas id="bernoulliPmf" style="max-height: 400px"></canvas>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\lambda$: <input onchange="redrawPoissonPmf()" type="number" class="form-control example-inline-input mb-3" id="poissonPmfLambda" min="1" max="130" value="5" step = "1">
+</div>
+</div>
+<canvas id="poissonPmf" style="max-height: 400px"></canvas>
 </div>
 
 <script>
 
 $(document).ready(function(){
-	redrawBernoulliPmf()
+	redrawPoissonPmf()
 })
 
-function redrawBernoulliPmf() {
-	let parentDivId = 'bernoulliPmf'
-	let p = parseFloat($('#bernoulliPmfP').val())
-	drawBernoulliPmf(parentDivId, p)
+function redrawPoissonPmf() {
+	let parentDivId = 'poissonPmf'
+	let lambda = parseFloat($("#poissonPmfLambda").val())
+	drawPoissonPmf(parentDivId, lambda)
 }
 
-function drawBernoulliPmf(parentDivId, p) {
+function drawPoissonPmf(parentDivId, lambda) {
 	if(window.myLine) {
 		window.myLine.destroy()
 	}
-	var xValues = [0, 1]
-	var q = 1 - p;
-	var yValues = [q.toFixed(5), p.toFixed(5)]
+
+
+	var xValues = []
+	var yValues = []
+	var i = 0
+	while(true){
+		let pr_x = jStat.poisson.pdf(lambda, i).toFixed(5)
+		xValues.push(i)
+		yValues.push(pr_x)
+		i += 1
+		if(pr_x < 0.00001 && i > lambda) {
+			break;
+		}
+	}
+	console.log(xValues, yValues)
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
@@ -74,7 +89,7 @@ function drawBernoulliPmf(parentDivId, p) {
 		data: {
 			labels: xValues,
 			datasets: [{
-				label: 'x',
+				label: 'Pr(X=x)',
 				fill: false,
 				backgroundColor: 'blue',
 				borderColor: 'blue',
@@ -113,10 +128,7 @@ function drawBernoulliPmf(parentDivId, p) {
 						labelString: yLabel
 					},
 					ticks: {
-                        beginAtZero: true,
-                        steps: 10,
-                        stepValue: 0.1,
-                        max: 1.0
+                        beginAtZero: true
                     }
 				}]
 			}

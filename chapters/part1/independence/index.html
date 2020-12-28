@@ -5,7 +5,7 @@
 <hr/>
 
 
-
+<p>So far we have talked about mutual exclusion as an important "property" that two or more events can have. In this chapter we will introduce you to a second property: independence. Independence is perhaps one of the most important properties to consider! Like for mutual exclusion, if you can establish that this property applies (either by logic, or by declaring it as an assumption) it will make analytic probability calculations much easier!
 
 
 <p>
@@ -24,6 +24,23 @@
 $$</a>
 </div>
 </p>
+
+<h2>How to establish independence</h2>
+
+<p>
+	How can you show that two or more events are independent? The default option is to show it mathematically. If you can show that $\p(E | F) = \p(E)$ then you have proven that the two events are indepedent. When working with probabilities that come from data,
+very few things will exactly match the mathematical definition of independence. That can happen for two reasons:
+first, events that are calculated from data or simulation are not perfectly precise and it can be impossible to know if a discreptancy between $\p(E)$ and $\p(E |F)$ is due to innacuracy in estimating probabilities, or dependence of events. Second, in our complex
+world many things actually influence each other, even if just a tiny amount. Despite that we often make the
+wrong, but useful, independence assumption. Since independence makes it so much easier for humans and machines to calculate composite probabilities, you may declare the events to be independent. It could mean your resulting calculation is slightly incorrect -- but this "modelling assumption" might make it feasible to come up with a result.
+</p>
+
+<p>Independence is a property which is often "assumed" if you think it is reasonable that one event is unlikely to influence your belief that the other will occur (or if the influence is negligable). Let's worth through a few examples to better understand:</p>
+
+<table>
+	</table>
+
+
 	<h2>Conditional Independence</h2>
 We saw earlier that the laws of probability still held if you consistently conditioned on an event. While the rules stay the same, the independence property might change. Events that were dependent can become independent when conditioning on an event. Events that were independent can become dependent.
 </p>

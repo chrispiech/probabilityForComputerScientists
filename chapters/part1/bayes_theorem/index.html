@@ -4,10 +4,10 @@
  <center><h1>Bayes' Theorem</h1></center>
 <hr/>
 
-<p>Bayes' Theorem is one of the most ubiquitous results in probability for computer scientists. Very often we
-know a conditional probability in one direction, say $\p(E|F)$, but we would like to know the conditional
-probability in the other direction $\p(F |E)$. Bayes' Theorem provides a way to convert from one to the other. We can
-derive Bayes' Theorem by starting with the definition of conditional probability and then expanding the and term using the chain rule:
+<p>Bayes' Theorem is one of the most ubiquitous results in probability for computer scientists. In a nutshell, Bayes' theorem  provides a way to convert a conditional probability from one direction, say $\p(E|F)$, to the other direction, $\p(F|E)$.</p> 
+
+	Bayes' theorem is a mathematical identity which we can
+derive ourselves. Start with the definition of conditional probability and then expanding the $\and$ term using the chain rule:
 
 
 $$
@@ -18,12 +18,12 @@ $$
 
   \\
 &= \frac{\p(E | F) \cdot \p(F)}{\p(E)} && \text{Substitute the }
-\href{ {{pathToLang}}part1/cond_prob/#chain_rule}{\text{chain rule}}
+\href{ {{pathToLang}}part1/cond_prob/#chain_rule}{\text{chain rule}} \text{ for $\p(F \and E)$}
 \end{align}
 $$
 
 <p>
-This theorem makes no assumptions about $E$ or $F$ so it will apply for any two events. Bayes' theorem allows you to use knowledge of a conditional probability in one direction, $\p(E | F$), to calculate the probability of the condional in the other direction $\p(F | E)$. It turns out to be exceptionally useful because it is the ubiquitous way to answer the question, how can I update a belief about something which is not directly observable given evidence. For many "noisy evidence measures" it is much easier to calculate out the probability of the evidence given the true state of the world, but what you would really like to know is the conditional probability the other way around: what is the probability of the true state of the world given evidence.  There are countless real world situations that fit this situation:
+This theorem makes no assumptions about $E$ or $F$ so it will apply for any two events. Bayes' theorem  is exceptionally useful because it turns out to be the ubiquitous way to answer the question: "how can I update a belief about something,  which is not directly observable, given evidence." This is for good reason. For many "noisy" measurements it is straightforward to estimate the probability of the noisy observation given the true state of the world. However, what you would really like to know is the conditional probability the other way around: what is the probability of the true state of the world given evidence.  There are countless real world situations that fit this situation:
 </p>
 <p>
 	<div class="purpleBox">
@@ -100,6 +100,34 @@ evidence.</p>
 % include('chapters/part1/bayes_theorem/medicalBayes.html')
 </p>
 
+	<h2>Bayes with the General Law of Total Probability</h2>
+
+	<p>A classic challenge when applying Bayes' theorm is to calculate the probability of the normalization constant $\p(E)$ in the denominator of Bayes' Theorem. One common strategy for calculating this probability is to use the law of total probability. Our expanded version of Bayes' Theorem uses the simple version of the total law of probability: $\p(E) = \p(E|F)\p(F) + \p(E|F^c)
+	\p(F^c)$. Sometimes you will want the more expanded version of the <a href="{{pathToLang}}part1/law_total">law of total probability</a>: $\p(E) = \sum_i\p(E|B_i)\p(B_i)$. Recall that this only works if the events $B_i$ are mutually exclusive and cover the sample space.
+	</p>
+	<p>For example say we are trying to track a phone which could be in any one of $n$ discrete
+locations and we have prior beliefs $\p(B_1) \dots \p(B_n)$ as to whether the phone is in location $B_i$. Now we gain
+some evidence (such as a particular signal strength from a particular cell tower) that we call $E$ and we need
+to update all of our probabilities to be $\p(B_i
+|E)$. We should use Bayes' Theorem!</p>
+
+<p>The probability of the observation, assuming that the the phone is in location $B_i$, $\p(E|B_i)$, is something that
+can be given to you by an expert. In this case the probability of getting a particular signal strength given a
+location $B_i$ will be determined by the distance between the cell tower and location $B_i$
+.</p>
+<p>Since we are assuming that the phone must be in <i>exactly</i> one of the locations, we can find the probability of
+any of the event $B_i$ given $E$ by first applying Bayes' Theorem and then applying the general version of the law of
+total probability:</p>
+$$
+\begin{align}
+\p(B_i | E) &= \frac{\p(E|B_i) \cdot \p(B_i)}{\p(E)}
+&& \text{Bayes Theorem. What to do about $\p(E)$?} \\
+ &= \frac{\p(E|B_i) \cdot \p(B_i)}{\sum_{i=1}^n \p(E|B_i) \cdot \p(B_i)}
+&& \text{Use General Law of Total Probability for $\p(E)$} \\
+\end{align}
+$$
+
+
 <h2>Unknown Normalization Constant, $\p(E)$</h2>
 
 <p>There are times when we would like to use Bayes' Theorem to update a belief, but we don't know the probability of $E$, $\p(E)$. All hope is not lost. This term is called the "normalization constant" because it is the same regardless of whether or not the event $B$ happens. The most traditional solution is to use the law of total probability: $\p(E) = \p(E |B) \p(B) + \p(E|B\c)\p(B\c)$. Here are some other useful "tricks" for dealing with $\p(E)$. </p>
@@ -150,34 +178,6 @@ $$
 $$
 If you look closely at the last line, you will notice that we have simply found a new way to derive the total law of probability for $E$. The law of total probability is truly a great way of dealing with $\p(E)$.
 	</p>
-
-	<h2>Bayes with the General Law of Total Probability</h2>
-
-	<p>The way to work around not directly knowing $P(B)$ employed by the expanded version of Bayes was to
-use the simple case of the law of total probability. In other contexts you may want to use the more general
-version of the law. For example say we are trying to track a phone which could be in any one of $n$ discrete
-locations and we have prior beliefs $\p(B_1) \dots \p(B_n)$ as to whether the phone is in location $B_i$. Now we gain
-some evidence (such as a particular signal strength from a particular cell tower) that we call $E$ and we need
-to update all of our probabilities to be $\p(B_i
-|E)$. We should use Bayes' Theorem!</p>
-
-<p>The probability of the observation, assuming that the the phone is in location $B_i$, $\p(E|B_i)$, is something that
-can be given to you by an expert. In this case the probability of getting a particular signal strength given a
-location $B_i$ will be determined by the distance between the cell tower and location $B_i$
-.</p>
-<p>Since we are assuming that the phone must be in <i>exactly</i> one of the locations, we can find the probability of
-any of the event $B_i$ given $E$ by first applying Bayes' Theorem and then applying the general version of the law of
-total probability:</p>
-$$
-\begin{align}
-\p(B_i | E) &= \frac{\p(E|B_i) \cdot \p(B_i)}{\p(E)}
-&& \text{Bayes Theorem. What to do about $\p(E)$?} \\
- &= \frac{\p(E|B_i) \cdot \p(B_i)}{\sum_{i=1}^n \p(E|B_i) \cdot \p(B_i)}
-&& \text{Use General Law of Total Probability for $\p(E)$} \\
-\end{align}
-$$
-
-
 
 
 <!-- <p>

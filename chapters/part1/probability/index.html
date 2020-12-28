@@ -43,7 +43,12 @@ Events can be represented as capital letters such as $E$ or $F$.
 
 <p>It wasn't until the 20th century that humans figured out a way to precisely define what the word probability means:</p>
 
-<p>$$ \p(\text{Event}) = \lim_{n \rightarrow \infty}\frac{\texttip{\text{count}(\text{Event})}{count of times that event occurs}}{n} $$</p>
+<p>$$ \p(\text{Event}) 
+  = \lim_{n \rightarrow \infty}
+    \frac
+        {\text{count}(\text{Event})}
+        {n} 
+    $$</p>
 
 
 <p>In English this reads: lets say you perform $n$ trials of an "experiment" which could result in a particular "<a href="#events">Event</a>" occuring. The probability of the event occuring, $\p(\text{Event})$,
@@ -100,7 +105,7 @@ of probability, as your number of simulations approaches infinity, the estimate 
 	<p> By the definition of probability, the ratio of trials that result in the event to the number of trials will tend to our desired probability:</p>
 
 	<p>$$ \begin{aligned} \p(\text{Born Female}) &= \p(E) \\
-		&= \lim_{n \rightarrow \infty}\frac{\texttip{\text{count}(E)}{count of times that event occurs}}{n} \\
+		&= \lim_{n \rightarrow \infty}\frac{\text{count}(E)}{n} \\
 	    &\approx \frac{149,998}{309,142} \\
 	    &\approx 0.485\end{aligned}$$</p>
 

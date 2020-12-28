@@ -8,6 +8,7 @@
 higher level counting abstractions. When solving problems, if you can find the analogy from these canonical
 examples you can build off of the corresponding combinatorics formulas:</p>
 
+
 <h2>Permutations of Distinct Objects</h2>
 
 <p>
@@ -19,8 +20,28 @@ be permuted in $n \cdot (n – 1) \cdot (n – 2)  \cdots 2  \cdot 1 = n!$ ways.
 	</div>
 </p>
 
+<p>This changes slightly if you are permuting a subset of distinct objects, or if some of your objects
+are indistinct. We will handle those cases shortly! Note that unique is a synonym for distinct.</p>
 
-<h2>Permutations of In-Distinct Objects</h2>
+<p>
+	<div class="purpleBox">
+		<b><i>Example</i></b>: How many unique orderings of characters are possible for the string "BAYES"?
+<b><i>Solution</i></b>: Since the order of characters is important, we are considering all permutations of the 5 distinct
+characters B, A, Y, E, and S: $5! = 120$.
+	</div>
+</p>
+
+<p>
+	<div class="purpleBox">
+		<b><i>Example</i></b>: a smart-phone has a 4-digit passcode. Suppose there are 4 smudges over 4 digits on
+the screen. How many distinct passcodes are possible?<br/>
+<b><i>Solution</i></b>: Since the order of digits in the code is important, we should use permutations. And since
+there are exactly four smudges we know that each number in the passcode is distinct. Thus, we can plug in the
+permutation formula: 4! = 24.
+	</div>
+</p>
+
+<h2>Permutations of Indistinct Objects</h2>
 
 <p>
 	<div class="bordered">
@@ -31,11 +52,129 @@ be permuted in $n \cdot (n – 1) \cdot (n – 2)  \cdots 2  \cdot 1 = n!$ ways.
 $n_1$ are the same (indistinguishable) and<br/>
 $n_2$ are the same and<br/>
 ...<br/>
-$n_r$ are the same, then there are:
+$n_r$ are the same, then the number of distinct permutations is:
 </p>
+<span class="mathLeft">
 $$
-\frac{n!}{n_1!n_2!\cdots n_r!}
-$$
-Distinct permutations.</p>
+\text{Number of unique orderings} = \frac{n!}{n_1!n_2!\cdots n_r!}
+$$</span></p>
 	</div>
 </p>
+
+<p>
+	<div class="purpleBox">
+		<b><i>Example</i></b>: How many distinct bit strings can be formed from three 0’s and two 1’s?<br/>
+<b><i>Solution</i></b>: 5 total digits would give 5! permutations. But that is assuming the 0’s and 1’s are
+distinguishable (to make that explicit, let’s give each one a subscript). Here are the $3! \cdot 2! = 12$ different ways that we could have arrived at the identical string "01100" if we thought of each 0 and 1 as unique.
+<center>
+<table id="three0sTwo1s"></table>
+</center>
+<script>
+$(document).ready(function() {
+	function makeLine(perm_0, perm_1) {
+		const base = '01100'
+		let zero_i = 0
+		let one_i = 0
+		let line = ''
+		for (var i = 0; i < base.length; i++) {
+			let ch = base[i]
+			let subscript = null
+			if(ch == '0') {
+				subscript = perm_0[zero_i]
+				zero_i += 1
+			} else {
+				subscript = perm_1[one_i]
+				one_i += 1
+			}
+			line += `<td width="30px">$${ch}_${subscript}$<td>`
+		}
+		return line
+	}
+
+	let perms = permute([1, 2, 3])
+	let html = ''
+	for (var i = 0; i < perms.length; i++) {
+		let perm = perms[i];
+		let line = makeLine(perm, [0, 1])
+		html += `<tr>${line}</tr>`
+	}
+	html += '<tr height="10px"></tr>'
+	for (var i = 0; i < perms.length; i++) {
+		let perm = perms[i];
+		let line = makeLine(perm, [1, 0])
+		html += `<tr>${line}</tr>`
+	}
+	$("#three0sTwo1s").html(html)
+})
+
+</script>
+
+Since identical digits are indistinguishable, all the listed permutations are the same. For any given
+permutation, there are 3! ways of rearranging the 0’s and 2! ways of rearranging the 1’s (resulting in
+indistinguishable strings). We have over-counted. Using the formula for permutations of indistinct
+objects, we can correct for the over-counting:
+
+<span class="mathLeft">
+$$
+\text{Total} = \frac{5!}{3! \cdot 2!} = \frac{120}{6 \cdot 2}
+= 10.
+$$
+</span>
+	</div>
+</p>
+
+<p>
+	You can use the power of computers to enumerate all permutations. Here is sample python which uses the built in itertools library:
+	</p>
+
+<pre class="language-python wrapPre"><code class="wrapPre">>>> import itertools
+
+# get all 4! = 24 permutations of 1,2,3,4 as a list:
+>>> list(itertools.permutations([1,2,3,4]))
+[(1, 2, 3, 4), (1, 2, 4, 3), (1, 3, 2, 4), (1, 3, 4, 2), (1, 4, 2, 3), (1, 4, 3, 2), (2, 1, 3, 4), (2, 1, 4, 3), (2, 3, 1, 4), (2, 3, 4, 1), (2, 4, 1, 3), (2, 4, 3, 1), (3, 1, 2, 4), (3, 1, 4, 2), (3, 2, 1, 4), (3, 2, 4, 1), (3, 4, 1, 2), (3, 4, 2, 1), (4, 1, 2, 3), (4, 1, 3, 2), (4, 2, 1, 3), (4, 2, 3, 1), (4, 3, 1, 2), (4, 3, 2, 1)]
+
+# get all 3!/2! = 3 unique permutations of 1,1,2 as a set:
+>>> set(itertools.permutations([1,1,2]))
+{(1, 2, 1), (2, 1, 1), (1, 1, 2)}</code></pre>
+
+<h2>Combinations of Distinct Objects</h2>
+
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Combinations</p>
+
+		<p>A combination is an unordered selection of r objects from a set of n objects. If all objects
+are distinct, and objects are not "replaced" once selected, then the number of ways of making the selection is:</p>
+<p class="mathLeft">
+	$$
+	\text{Number of unique selections} = \frac{n!}{r!(n-r!)} = {n \choose r}
+	$$
+</p>
+	</div>
+</p>
+
+<p>
+	Here are all the $10 = {5 \choose 3}$ ways of choosing three items from a list of 5 unique numbers:
+	<pre class="language-python wrapPre"><code class="wrapPre"># Get all ways of chosing three numbers from [1,2,3,4,5]
+>>> list(itertools.combinations([1,2,3,4,5], 3))
+[(1, 2, 3), (1, 2, 4), (1, 2, 5), (1, 3, 4), (1, 3, 5), (1, 4, 5), (2, 3, 4), (2, 3, 5), (2, 4, 5), (3, 4, 5)]</code></pre>
+	</p>
+
+	<p>Notice how order doesn't matter. Since (1, 2, 3) is in the set of combinations, we don't also include (3, 2, 1) as this is considered to be the same selection. Note that this formula does not work if some of the objects are indistinct form one another.</p>
+
+<p>How did we get the formula $\frac{n!}{r!(n-r!)}$? Consider this general way to select $r$ unordered objects from a set of $n$
+objects, e.g., “7 choose 3”:</p>
+
+<ol>
+	<li>First consider permutations of all $n$ objects. There are $n!$ ways to do that.
+<li>Then select the first $r$ in the permutation. There is one way to do that.
+<li>Note that the order of $r$ selected objects is irrelevant. There are $r!$ ways to permute them. The
+selection remains unchanged.
+<li> Note that the order of $(n − r)$ unselected objects is irrelevant. There are $(n − r)!$ ways to
+permute them. The selection remains unchanged.
+	</ol>
+	<span class="mathLeft">
+	$$
+	\text{Total} = \frac{n!}{r! \cdot (n-r)!} = {n \choose r}
+	$$
+</span>

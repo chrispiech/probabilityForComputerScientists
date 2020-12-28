@@ -1,0 +1,162 @@
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Normal (aka Gaussian) Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \N(\mu, \sigma)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A common, naturally occuring distribution.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$\mu \in \mathbb{R}$, the mean.<br/>$\sigma \in \mathbb{R}$, the standard deviation.<br/></td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \mathbb{R}$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)^2}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$\begin{align}
+		F(x) &= \phi(\frac{x-\mu}{\sigma})
+		   && \text{Where $\phi$ is the CDF of the standard normal}
+	\end{align}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \mu$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \sigma^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\mu$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input mb-3" id="normalPdfMu" value="5" step = "1">
+	</div>
+	<div>
+Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input mb-3" id="normalPdfSigma" value="5" step = "1">
+	</div>
+</div>
+<canvas id="normalPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawNormalPdf()
+})
+
+function redrawNormalPdf() {
+	let parentDivId = 'normalPdf'
+	let mu = parseFloat($("#normalPdfMu").val())
+	let sigma = parseFloat($("#normalPdfSigma").val())
+	drawNormalPdf(parentDivId, mu, sigma)
+}
+
+function drawNormalPdf(parentDivId, mu, sigma) {
+	if(window.myLine) {
+		window.myLine.destroy()
+	}
+	var xValues = []
+	var yValues = []
+
+	var yStandardNorm = []
+
+	var min_i = mu - 3 * sigma
+	var max_i = mu + 3 * sigma
+	var step = (max_i - min_i) / 100
+	for (var i = min_i; i <= max_i; i+= step) {
+		let pr_x = jStat.normal.pdf(i, mu, sigma)
+		let pr_std_x = jStat.normal.pdf(i, 0, 1)
+		xValues.push(i.toFixed(3))
+		yValues.push(pr_x.toFixed(5))
+		yStandardNorm.push(pr_std_x.toFixed(5))
+	}
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: `X ~ N(μ=${mu},σ=${sigma})`,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}, {
+				label: 'Standard Normal',
+				fill: false,
+				backgroundColor: 'purple',
+				borderColor: 'purple',
+				data: yStandardNorm,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myLine = new Chart(ctx, config);
+}
+</script>

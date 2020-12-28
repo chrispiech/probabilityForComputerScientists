@@ -5,12 +5,12 @@
 <center><h1>Probability of <b>and</b></h1></center>
 <hr/>
 
-<p>The probability of the <b><i>and</i></b> of two events, say $E$ and $F$, written $\p(E \and F)$, is the probability of both events happening. You might see equivalent notations $\p(EF)$ or $\p(E ∩ F)$ to mean the probability of and. How you calculate the probability of event $E$ and event $F$ happening
+<p>The probability of the <b><i>and</i></b> of two events, say $E$ and $F$, written $\p(E \and F)$, is the probability of both events happening. You might see equivalent notations $\p(EF)$, $\p(E ∩ F)$ and $\p(E,F)$ to mean the probability of and. How you calculate the probability of event $E$ and event $F$ happening
 depends on whether or not the events are "independent". In the same way that mutual exclusion makes it easy to calculate the probability of the <b><i>or</i></b> of events, independence is a property that makes it easy to calculate the <b><i>and</i></b> of events.</p>     
 
 <h2>Independent Events</h2>
 
-<p>If events are <b></i>independent</i></b> then calculating the probability of <b><i>and</i></b> becomes simple multiplication:
+<p>If events are <a href="{{pathToLang}}part1/independence"><b></i>independent</i></b></a> then calculating the probability of <b><i>and</i></b> becomes simple multiplication:
 
 <p>
 	<div class="bordered">
@@ -51,11 +51,7 @@ $$
 </div>
 	</p>
 
-<p>Independence is a property which is often "assumed". You could prove that two events are independent by showing that the product of their probabilities is equal to the probability of both events happening. When working with probabilities that come from data,
-very few things will exactly match the mathematical definition of independence. That can happen for two reasons:
-first, events that are calculated from data or simulation are not perfectly precise and it can be impossible to know if a discreptancy is due to innacuracy in estimating probabilities, or dependence of events. Second, in our complex
-world many things actually influence each other, even if just a tiny amount. Despite that we often make the
-wrong, but useful, independence assumption. Since independence makes it so much easier for humans and machines to calculate composite probabilities, you may declare the events to be independent. It could mean your resulting calculation is slightly incorrect -- but this "modelling assumption" might make it feasible to come up with a result.</p>
+<p>See the chapter on <a href="{{pathToLang}}part1/independence">independence</a> to learn about when you can assume that two events are independent</p>
 
 <h2>Dependent Events</h2>
 

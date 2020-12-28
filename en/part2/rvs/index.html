@@ -49,6 +49,8 @@
 <script src="../../../js/probabilityUtils.js"></script>
 <script src="../../../plugins/probability/gaussian.js"></script>
 <script src="../../../plugins/color.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js'></script>
+
 
 <!-- font awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -116,6 +118,10 @@
   $\DeclareMathOperator{\E}{E}$
   $\DeclareMathOperator{\std}{Std}$
   $\DeclareMathOperator{\Ber}{Bern}$
+  $\DeclareMathOperator{\Bin}{Bin}$
+  $\DeclareMathOperator{\Poi}{Poi}$
+  $\DeclareMathOperator{\Exp}{Exp}$
+  $\DeclareMathOperator{\N}{N}$
 </div>
 
 <body class="greyBackground">
@@ -224,6 +230,14 @@
 </li>
 </ul>
 
+<!-- examples -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}examples">Examples</p></li>
+<li>
+<a id=sidebar-prob_baby_delivery href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a>
+</li>
+</ul>
+
 
 
     <ul class="list-unstyled components">
@@ -257,7 +271,8 @@
     <span></span>
 </button>
             <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
-              <i class="fas fa-question-circle" style="font-size:200%"></i>
+              <span style="font-size:150%">I'm Curious</span>
+              <!-- <i class="fas fa-question-circle" style="font-size:200%"></i> -->
               <span></span>
           </button>
             
@@ -431,7 +446,7 @@ $$
 	This statement above is a function which takes in a parameter $y$ as input and returns the numeric probability $\P(Y=y)$ as output. This particular expression allows us to talk about the probability that the number of heads is 0, 1, 2 or 3 all in one expression. You can plug in any one of those values for $y$ to get the corresponding probability. It is customary to use lower-case symbols for non-random values. The use of an equals sign in the "event" can be confusing. For example what does this expression say $\P(Y = 1) = 0.375$? It says that the probability that "$Y$ takes on the value 4" is 0.375. For discrete random variables this function is called the "<a href="../../part2/pmf">probability mass function</a>" and it is the topic of our next chapter.</p>
 
 
-               
+                        
 
 <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>

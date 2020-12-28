@@ -49,6 +49,8 @@
 <script src="../../../js/probabilityUtils.js"></script>
 <script src="../../../plugins/probability/gaussian.js"></script>
 <script src="../../../plugins/color.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js'></script>
+
 
 <!-- font awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -116,6 +118,10 @@
   $\DeclareMathOperator{\E}{E}$
   $\DeclareMathOperator{\std}{Std}$
   $\DeclareMathOperator{\Ber}{Bern}$
+  $\DeclareMathOperator{\Bin}{Bin}$
+  $\DeclareMathOperator{\Poi}{Poi}$
+  $\DeclareMathOperator{\Exp}{Exp}$
+  $\DeclareMathOperator{\N}{N}$
 </div>
 
 <body class="greyBackground">
@@ -224,6 +230,14 @@
 </li>
 </ul>
 
+<!-- examples -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}examples">Examples</p></li>
+<li>
+<a id=sidebar-prob_baby_delivery href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a>
+</li>
+</ul>
+
 
 
     <ul class="list-unstyled components">
@@ -257,7 +271,8 @@
     <span></span>
 </button>
             <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
-              <i class="fas fa-question-circle" style="font-size:200%"></i>
+              <span style="font-size:150%">I'm Curious</span>
+              <!-- <i class="fas fa-question-circle" style="font-size:200%"></i> -->
               <span></span>
           </button>
             
@@ -269,6 +284,13 @@
  
 <center><h1>Counting</h1></center>
 <hr/>
+
+<p>Although you may have thought you had a pretty good grasp on the notion of counting at the age of
+three, it turns out that you had to wait until now to learn how to really count. Aren’t you glad you
+took this class now?! But seriously, counting is like
+the foundation of a house (where the house is all the great things we will do later in this book, such
+as machine learning). Houses are awesome. Foundations, on the other hand, are pretty much just
+concrete in a hole. But don’t make a house without a foundation. It won’t turn out well.</p>
 
 <h2>Counting with Steps</h2>
 
@@ -288,16 +310,16 @@ outcome of the first part), where $|B| = n$, then the total number of outcomes o
 
 <p>
 	<div class="purpleBox">
-		<p><b><i>Simple Example</i></b>:</p>
+		<p><b><i>Simple Example</i></b>: 
 		Consider a hash table with 100 buckets. Two arbitrary strings are independently hashed and added to the
 table. How many possible ways are there for the strings to be stored in the table?
 Each string can be hashed to one of 100 buckets. Since the results of hashing the first string do not impact the
-hash of the second, there are 100 * 100 = 10,000 ways that the two strings may be stored in the hash table.
+hash of the second, there are 100 * 100 = 10,000 ways that the two strings may be stored in the hash table.</p>
 	</div>
 	</p>
 
 	<p>
-Peter Norvig, a leading expert on Artificial Intelligence made the following argument to make a compelling point on why computer scientists need to know how to count. To start, lets set a baseline for a really big number: The number of atoms in the observable universe, often estimated to be around 10 to the 80th power ($10^{80}$). There
+<a href="https://en.wikipedia.org/wiki/Peter_Norvig">Peter Norvig</a>, the author of the cannonical text book "Artificial Intelligence" made the following compelling point on why computer scientists need to know how to count. To start, lets set a baseline for a really big number: The number of atoms in the observable universe, often estimated to be around 10 to the 80th power ($10^{80}$). There
 certainly are a lot of atoms in the universe. As a leading expert said,</p>
 <p class="indent">
 	“Space is big. Really big. You just won’t believe how vastly, hugely, mind-bogglingly big it is.
@@ -355,6 +377,41 @@ time algorithms leverage this principle. </p>
 	Imagine you are building a machine learning system that needs to learn from data and you want to synthetically generate 10 million unique data points for it. How many steps would you need to encode to get to 10 million? Assuming that at each step you have a binary choice, the number of unique data points you produce will be $2^n$ by the Steps Rule of counting. If we chose $n$ such that $\log_{2} 10,000,000 < n$. You would only need to encode $n=24$ binary decisions.
 	</p>
 
+<p>
+<div class="purpleBox">
+	<p><b><i>Example</i></b>: Rolling two dice. Two 6-sided dice , with faces numbered 1 through 6, are rolled. How many possible
+outcomes of the roll are there?</p>
+
+		<hr>
+		<b><i>Solution</i></b>: 
+		Note that we are not concerned with the total value of the two die ("die" is the singular form of "dice"), but rather the set of
+all explicit outcomes of the rolls. Since the first die can come up with 6 possible values and the
+second die similarly can have 6 possible values (regardless of what appeared on the first die), the
+total number of potential outcomes is 36 (= 6 × 6). These possible outcomes are explicitly listed
+below as a series of pairs, denoting the values rolled on the pair of dice:
+<center>
+<table id="diceRolls">
+</table>
+
+<script>
+$(document).ready(function(){
+	var html = ''
+	for (var d1 = 1; d1 <= 6; d1++) {
+		var line = ''
+		for(var d2 = 1; d2 <= 6; d2++) {
+			line += `<td style="width:50px">(${d1}, ${d2})</td>`
+		}
+		html += `<tr>${line}</tr>`
+	}
+	$("#diceRolls").html(html)
+
+})
+</script>
+
+</center>
+</div>
+</p>
+
 <h2>Counting with <b>or</b></h2>
 
 <p>
@@ -371,22 +428,57 @@ then there are $|A \or B| = |A|+|B|$ possible outcomes of the experiment.</p>
 </p>
 
 <p>
+	<div class="purpleBox">
+		<p><b><i>Example</i></b>: Sum of Routes. A route finding algorithm needs to find routes from Nairobi to Dar Es Salaam. It finds routes that either pass through Mt Kilimanjaro or Mombasa. There are 20 routes that pass through Mt Kilimanjaro, 15 routes that pass through Mombasa and 0 routes which pass through both Mt Kilimanjaro and Mombasa. How many routes are there total?</p>
+
+		<hr>
+		<b><i>Solution</i></b>: 
+		Routes can come from either Mt Kilimanjaro <b>or</b> Mombasa. The two sets of routes are mutually exclusive as there are zero routes which are in both groups. As such the total number of routes is addition: 20 + 15 = 35.
+	</div>
+</p>
+
+<p>
+	If you can show that two groups are mutually exclusive counting becomes simple addition. Of course not all sets are mutually exclusive. In the example above, imagine there had been a single route which went through both Mt Kilimanjaro and Mombasa. We would have double counted that routes because it would be included in both the sets. If sets are not mutually exclusive, counting the <b>or</b> is still addition, we simply need to take into account any double counting.
+	</p>
+
+<p>
 	<div class="bordered">
 		<p><b><i>Definition</i></b>: Inclusion  Exclusion Counting</p>
 
 		<p>If the outcome of an experiment can either be drawn from set $A$ or set $B$, and sets $A$ and $B$ may potentially
-overlap (i.e., it is not the case that $|A \and B| = 0$), then the number of outcomes of the experiment is
+overlap (i.e., it is not the case that $A$ and $B$ are mutually exclusive), then the number of outcomes of the experiment is
 $|A \or B| = |A|+|B| −|A \and B|$.</p>
 	</div>
 </p>
+
+
+
 
 <p>Note that the Inclusion-Exclusion Principle generalizes the Sum Rule of Counting for arbitrary sets $A$ and
 $B$. In the case where $A \and B = ∅$, the Inclusion-Exclusion Principle gives the same result as the Sum Rule of
 Counting since $|A \and B| = 0$.</p>
 
+<p>
+	<div class="purpleBox">
+		<p><b><i>Example</i></b>: An 8-bit string (one byte) is sent over a network. The valid set of strings recognized by
+the receiver must either start with "01" or end with "10". How many such strings are there?</p>
+
+		<hr>
+		<b><i>Solution</i></b>: 
+		The potential bit strings that match the receiver’s criteria can either be the 64 strings that
+start with "01" (since that last 6 bits are left unspecified, allowing for $2^6 = 64$ possibilities) or the 64
+strings that end with "10" (since the first 6 bits are unspecified). Of course, these two sets overlap,
+since strings that start with "01" and end with "10" are in both sets. There are 2
+4 = 16 such strings
+(since the middle 4 bits can be arbitrary). Casting this description into corresponding set notation,
+we have: |A| = 64, |B| = 64, and |A ∩ B| = 16, so by the Inclusion-Exclusion Principle, there are
+64 + 64 − 16 = 112 strings that match the specified receiver’s criteria.
+	</div>
+</p>
 
 
-               
+
+                        
 
 <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>

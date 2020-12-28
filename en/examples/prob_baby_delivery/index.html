@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Log Probabilities</title>
+<title>Probability of Baby Delivery</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -281,44 +281,375 @@
                     <div class="col handout" >
               
                         
+
  
-<center><h1>Log Probabilities</h1></center>
+<center><h1>Probability and Babies</h1></center>
 <hr/>
 
-<p>A log probability $\log \p(E)$ is simply the log function applied to a probability. For example if $\p(E) = 0.00001$ then $\log \p(E) = \log(0.00001) \approx -11.51$. Note that in this book, the default base is the natural base $e$. There are many reasons why log probabilities are an essential tool for digital probability: (a) computers can be rather limited when representing <a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic">very small numbers</a> and (b) logs have the wonderful ability to turn multiplication into addition, and computers are much faster at addition. </p>
+<p>What is the probability that Laura gives birth today (given that she hasn't given birth up until today)?</p>
 
-	<p>You may have noticed that the log in the above example produced a negative number. Recall that $\log b = c$, with the implied natural base $e$ is the same as the statement $e ^ c = b$. It says that $c$ is the exponent of $e$ that produces $b$. If $b$ is a number between 0 and 1, what power should you raise $e$ to in order to produce $b$? If you raise $e^0$ it produces 1. To produce a number less than 1, you must raise $e$ to a power less than 0. That is a long way of saying: if you take the log of a probability, the result will be a negative number.
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" onchange="todayDateChange()" id="todaysDateLabel" style="min-width: 120px">Today's Date</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Today's Date" aria-label="Username" aria-describedby="todaysDateLabel" id="todaysDateInput">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="dueDateLabel" style="min-width: 120px">Due Date</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Due Date" aria-label="Username" aria-describedby="dueDateLabel" id="dueDateInput" disabled value="18/1/2021"></input>
+</div>
+
+<hr/>
+<p>
+Probability of delivery today: <b class="keyValue" id="prDeliveryToday"></b><br/>
+Probability of delivery in next 7 days: <b id="prDeliveryWeek"></b><br/>
+Current days past due date: <b id="daysPastDue"></b> days<br/>
+Unconditioned probability mass before today: <b id="pastProbMass"></b>
+</p>
+<p>
+How likely is delivery, in humans, relative to the due date? There have been millions of births which gives us a relatively good picture [<a href="#cite1">1</a>]. The length of human pregnancy varies by quite a lot! Have you heard that it is 9 months? That is a rough, point estimate. The mean duration of pregnancy is 278.6 days, and pregnancy length has a standard deviation (SD) of 12.5 days. This distribution is not normal, but roughly matches a "<a href="https://en.wikipedia.org/wiki/Skew_normal_distribution">skewed normal</a>". This is a general probability mass function for the first pregnancy collected from hundreds of thousands of women (this PMF is very similar across demographics, but changes based on whether the woman has given birth before):<br/></p>
+<p>
+<canvas id="unconditionalPMF" style="max-height: 400px"></canvas>
+</p>
+
+
+<p>
+Of course, we have more information. Specifically, we know that Laura <b>hasn't</b> given birth up until today (we will update this example when that changes). We also know that babies which are over 14 days late are "<a href="https://en.wikipedia.org/wiki/Labor_induction">induced</a>" on day 14. How likely is delivery given that we haven't delivered up until today? Note that the y-axis is scalled differently:<br/>
+</p>
+<p>
+<canvas id="conditionalPMF" style="max-height: 400px"></canvas>
+</p>
+
+
+
+<p>
+	Implementation notes: this calculation was performed by storing the PDF as a list of (day, probability) points. These values are sometimes called weighted samples, or "particles" and are the key component to a "<a href="https://en.wikipedia.org/wiki/Particle_filter">particle filtering</a>" approach. After we observe no-delivery, we set the probability of every point which has a day before today to be 0, and then re-normalize the remaining points (aka we "filter" the "particles"). This is convenient because the "posterior" belief doesn't follow a simple equation -- using particles means we never have to write that equation down in our code.
+	</p>
+
+<p>
+
+<div class="bordered">
+
+	<p>Three friends have the exact same due date (Really! this isn't a hypothetical) What is the probability that all three couples deliver on the exact same day?
+
+
+		<p>
+<!-- Probability of two couples on the same day: <b class="keyValue" id="prDeliveryToday"></b><br/> -->
+Probability of three couples on the same day: <b id="pr3SameDay"></b><br/>
+</p>
+
+<p>How did we get that number? Let $p_i$ be the probability that one baby is delivered on day $i$ -- this number can be read off the probability mass function.  Let $X_i$ be the event that all three babies are delivered on day $i$. Note that the event $X_i$ is <a href="../../part1/prob_or/">mutually exclusive</a> with the event that all three babies are born on another day (So for example, $X_1$ is mutually exclusive with $X_2$, $X_3$ etc). Let $N=3$ be the event that all babies are born on the same day:
 
 	$$
-	\begin{align}
-	0 &\leq  \p(E) \leq 1 && \text{Axiom 1 of probability} \\
-	-\infty &\leq \log \p(E) \leq 0 && \text{Rule for log probabilities}
-	\end{align}
-$$</p>
+\begin{align}
+\p(N=3) &= \sum_i \p(X_i) && \text{Since days are mutually exclusive} \\
+&= \sum_i p_i^3 && \text{Since the three couples are independent} 
+\end{align}
+	$$
 
-<h2>Products become Addition</h2>
+</div>
 
-The product of probabilities $\p(E)$ and $\p(F)$ becomes addition in logarithmic space:
-$$
-\log (\p(E) \cdot \p(F) ) = \log \p(E) + \log \p(F)
-$$
-This is especially convenient because computers are much more efficient when adding than when multiplying. It can also make derivations easier to write. This is especially true when you need to multiply many probabilities together:
-
-$$
-\log \prod_i \p(E_i) = \sum_i \log \p(E_i)
-$$
+<hr/>
 
 
-<h2>Representing Very Small Probabilities</h2>
+<span id="cite1">[1]</span> <a href="https://www.sciencedirect.com/science/article/pii/S0029784400011315?casa_token=yV-QZInYkl8AAAAA:0U_Z2dT-r0y1etlX8hRG5ulyrjtzoVXRXIlvJkcSyXhtllUlkhWPNr5f3MJL0LMFzHZv5TwsN4Q">Predicting delivery date by ultrasound and last menstrual period in early gestation</a>
+</p>
 
-Computers have the power to process many events and consider the probability of very unlikely situations. While computers are capable of doing all the computation, the floating point representation means that computers can not represent decimals to perfect precision. In fact, python is unable to represent any probability smaller than 2.225e-308. On the other hand the log of that same number is -307.652 is very easy for a computer to store.</p>
+<p>Acknowledgements: This problem was first posed to me by Chris Gregg.
 
-<p>Why would you care? Often in the digital world, computers are asked to reason about the probability of data, or a whole dataset. For example, perhaps your data is words and you want to reason about the probability that a given author would write these specific words. While this probability is very small (we are talking about an exact document) it might be larger than the probability that a different author would write a specific document with specific words. For these sort of small probabilities, if you use computers, you would need to use log probabilities.
+<script>
+// global singleton
+let table = null
+let dueDate = Date.parse('18 Jan 2021 00:18:00 GMT');
+
+$(document).ready(function() {
+
+	$('input').datepicker({
+		format: "dd/mm/yyyy",
+		onSelect: function(dateText) {
+			let currDate = Date.parse(dateText)
+	        calculateProbabilities(currDate, dueDate)
+	    }
+	});
+	addVerticalLinePlugin()
+    $.ajax({
+        type: "GET",
+        url: "../../../data/prLabor.csv",
+        dataType: "text",
+        success: function(data) {processData(data);}
+     });
+});
 
 
-<!-- <h2>Logs are Monotonic</h2>
+function processData(data) {
+	table = loadCsvTable(data)
+	let currDate = new Date()//Date.parse('15 Jan 2021 00:18:00 GMT');
+	
+	setInputValue('todaysDateInput', currDate)
+	// $("#todaysDateInput").val(currDate)
+	// $("#dueDateInput").val(dueDate)
+	calculateProbabilities(currDate, dueDate)
+}
 
-The argmax of a function is the same as the argmax of the log of a function. -->
+function setInputValue(inputId, date) {
+	console.log(date)	
+	let str = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+	$("#" + inputId).val(str)
+}
+
+function calculateProbabilities(currDate, dueDate) {
+	let tempTable = JSON.parse(JSON.stringify(table))
+	let deltaMs = currDate - dueDate
+	let daysPastDue = Math.ceil(deltaMs / 86400000)
+	let pastProbMass = calcPastProbMass(tempTable, daysPastDue)
+
+	let unconditionalScatterData = []
+	for (var i = 0; i < tempTable.length; i++) {
+		let datum = tempTable[i]
+		if(datum['day'] >= -51 && datum['day'] <= 25) {
+			unconditionalScatterData.push({
+				'x':datum['day'],
+				'y':datum['probability']
+			})
+		}
+	}
+	drawLineGraph("unconditionalPMF", unconditionalScatterData, 'Days past due date', 'Probability of delivery')
+
+
+	conditionProbabilities(tempTable, pastProbMass)
+	let prDeliveryToday = calcPrCurrDay(tempTable, daysPastDue)
+	let prDeliveryWeek = calcPrDeliveryWeek(tempTable, daysPastDue)
+	let pr3SameDay = calcPrMultiDay(tempTable, daysPastDue)
+
+	$("#daysPastDue").html(daysPastDue)
+	$("#pastProbMass").html(pastProbMass.toFixed(3))
+	$("#prDeliveryToday").html(prDeliveryToday.toFixed(3))
+	$("#prDeliveryWeek").html(prDeliveryWeek.toFixed(3))
+	$("#pr3SameDay").html(pr3SameDay.toFixed(3))
+
+
+	let conditionalScatterData = []
+	for (var i = 0; i < tempTable.length; i++) {
+		let datum = tempTable[i]
+		if(datum['day'] >= -51 && datum['day'] <= 25) {
+			let pr = 0.0
+			if(datum['day'] >= daysPastDue) {
+				pr = datum['probability']
+			}
+			conditionalScatterData.push({
+				'x':datum['day'],
+				'y':pr
+			})
+		}
+	}
+	drawLineGraph("conditionalPMF", conditionalScatterData, 'Days past due date', 'Probability of delivery')
+
+
+}
+
+function calcPrMultiDay(table, daysPastDue) {
+	console.log(table)
+	let prSameDay = 0
+	for(var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		let prDay = datum['probability']
+		prSameDay += prDay ** 3
+	}
+	return prSameDay
+}
+
+function calcPrDeliveryWeek(table, daysPastDue) {
+	let prWeek = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		if(day >= daysPastDue && day <= daysPastDue + 7) {
+			prWeek += datum['probability']
+		}
+	}
+	return prWeek
+}
+
+function calcPrCurrDay(table, daysPastDue) {
+	let pastProbMass = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		if(day == daysPastDue) {
+			return datum['probability']
+		}
+	}
+	return 0.0
+}
+
+function conditionProbabilities(table, pastProbMass){
+	// first, normalize probabilities with the missing mass
+	let denominator = (1 - pastProbMass)
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		datum['probability'] /= denominator
+	}
+
+	// second, we note that babies are induced after 14 days.
+	let prPostInduced = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		if(datum['day'] > 14) {
+			prPostInduced += datum['probability']
+		}
+	}
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		if(datum['day'] == 14) {
+			datum['probability'] += prPostInduced
+		}
+		if(datum['day'] > 14) {
+			datum['probability'] = 0
+		}
+	}
+}
+
+function calcPastProbMass(table, daysPastDue) {
+	let pastProbMass = 0
+	for (var i = 0; i < table.length; i++) {
+		let datum = table[i]
+		let day = datum['day']
+		let prDay = datum['probability']
+		if(day < daysPastDue) {
+			pastProbMass += prDay
+		}
+	}
+	return pastProbMass
+}
+
+function loadCsvTable(allText) {
+	let lines = allText.split("\n");
+	let head = lines[0].split(',')
+	let body = lines.slice(1);
+	let data = []
+	for (var i = 0; i < body.length; i++) {
+		let nextLine = body[i].split(',')
+		data.push(makeNewDatum(head, nextLine))
+	}
+	return data
+}
+
+function makeNewDatum(head, nextLine){
+	let datum = {}
+	for (var i = 0; i < head.length; i++) {
+		let key = head[i]
+		let value = parseFloat(nextLine[i])
+		datum[key] = value
+	}
+	return datum
+}
+
+function drawLineGraph(parentDivId, dataPoints, xLabel = 'x', yLabel = 'y') {
+	console.log('draw graph', parentDivId)
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < dataPoints.length; i++) {
+		let point = dataPoints[i]
+		xValues.push(point['x'])
+		yValues.push(point['y'].toFixed(5))
+	}
+
+	var config = {
+		type: 'bar',
+		lineAtIndex: [51],
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: yLabel,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        // callback: function (value) {
+                        //     return parseFloat(value).toFixed(2)
+                        // }
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myLine = new Chart(ctx, config);
+}
+
+function addVerticalLinePlugin() {
+	const verticalLinePlugin = {
+	  getLinePosition: function (chart, pointIndex) {
+	      const meta = chart.getDatasetMeta(0); // first dataset is used to discover X coordinate of a point
+	      const data = meta.data;
+	      return data[pointIndex]._model.x;
+	  },
+	  renderVerticalLine: function (chartInstance, pointIndex) {
+	      const lineLeftOffset = this.getLinePosition(chartInstance, pointIndex);
+	      const scale = chartInstance.scales['y-axis-0'];
+	      const context = chartInstance.chart.ctx;
+
+	      // render vertical line
+	      context.beginPath();
+	      context.strokeStyle = '#000000';
+	      context.moveTo(lineLeftOffset, scale.top);
+	      context.lineTo(lineLeftOffset, scale.bottom);
+	      context.stroke();
+
+	      // write label
+	      context.fillStyle = "#000000";
+	      context.textAlign = 'center';
+	      context.fillText('Due Date', lineLeftOffset, (scale.bottom - scale.top) *0.05 + scale.top);
+	  },
+
+	  afterDatasetsDraw: function (chart, easing) {
+	      if (chart.config.lineAtIndex) {
+	          chart.config.lineAtIndex.forEach(pointIndex => this.renderVerticalLine(chart, pointIndex));
+	      }
+	  }
+  };
+
+  Chart.plugins.register(verticalLinePlugin);
+}
+	
+</script>
 
 
                         

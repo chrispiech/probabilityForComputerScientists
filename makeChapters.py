@@ -79,6 +79,12 @@ book_outline = {
 			'log_regression':'Logistic Regression',
 			'neural_nets':'Artificial Neural Networks'
 		}
+	},
+	'examples': {
+		'title':'Examples',
+		'sections': {
+			'prob_baby_delivery':'Probability of Baby Delivery'
+		}
 	}
 	# TODO: Mehran to add as he sees fit
 	# 'part6':{

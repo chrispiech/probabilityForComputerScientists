@@ -50,22 +50,22 @@ $$
 
 	<p>At this point we know how to compute the probability of the "or" of events if and only if they have the mutual exclusion property. What if they don't?</p>
 
-<h2>Non-mutually Exclusive Events</h2>
+<h2>$\p(\or)$ for Non-mutually Exclusive Events</h2>
 
 <p>Unfortunately, not all events are mutually exclusive. If you want to calculate $\p(E \or F)$ where the events $E$
 and F are <b><i>not</i></b> mutually exclusive you can <b><i>not</i></b> simply add the probabilities. As a simple sanity check, consider the event $E$: getting heads on a coin flip, where $\p(E) = 0.5$. Now imagine the sample space $S$, getting either a heads or a tails on a coin flip. These events are not mutually exclusive (the outcome heads is in both). If you incorrectly assumed they were mutually exclusive and tried to calculate $\p(E \or S)$ you would get this buggy derivation:
 
 <div class="alert alert-warning">
 	<p><b>Buggy derivation</b>: Incorrectly assuming mutual exclusion</p>
-	<p>Calculate the probability of $E$, getting a heads on a coin flip, or $S$.
+	<p>Calculate the probability of $E$, getting an even number on a dice role (2, 4 or 6), or $F$, getting three or less (1, 2, 3) on the same dice role.
 	$$
 	\begin{align}
-	\p(E \or S) &= \p(E) + \p(S) && \text{Incorrectly assumes mutual exclusion} \\
-	&= 0.5 + 1 && \text{substitute the probabilities of $E$ and $S$} \\
-	&= 1.5 && \text{uh oh!}
+	\p(E \or F) &= \p(E) + \p(F) && \text{Incorrectly assumes mutual exclusion} \\
+	&= 0.5 + 0.5 && \text{substitute the probabilities of $E$ and $S$} \\
+	&= 1.0 && \text{uh oh!}
 	\end{align}
 	$$
-	<p>No probability should be greater than one! We incorrectly assumed mutual exclusion.</p>
+	<p>The probability can't be one since the outcome 5 is neither three or less nor even. The problem is that we double counted the probability of getting a 2, and the fix is to subtract out the probability of that doubly counted case.</p>
 </div>
 
 <p>What went wrong? If two events are not mutually exclusive, simply adding their probabilities double counts the probability of any outcome which is in both events. There is a formula for calculating <b><i>or</i></b> of two non-mutually exclusive events: it is called the "inclusion exclusion" principle.

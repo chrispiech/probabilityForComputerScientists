@@ -1,0 +1,140 @@
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Binomial Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Bin(n, p)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Number of "successes" in $n$ identical, independent experiments each with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$n \in \{0, 1, \dots\}$, the number of experiments.<br/>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{0, 1, \dots, n\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = {n \choose x}p^x(1-p)^{n-x}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = n \cdot p$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = n \cdot p \cdot (1-p)$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $n$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfN" min="1" value="20" step = "1">
+</div>
+<div>
+Parameter $p$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfP" min="0" max="1" value="0.60" step = "0.05">
+</div>
+</div>
+<canvas id="binomialPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawBinomialPmf()
+})
+
+function redrawBinomialPmf() {
+	let parentDivId = 'binomialPmf'
+	let n = Math.round($('#binomialPmfN').val())
+	$('#binomialPmfN').val(n)
+	let p = parseFloat($('#binomialPmfP').val())
+	drawBinomialPmf(parentDivId, n, p)
+}
+
+function drawBinomialPmf(parentDivId, n, p) {
+	if(window.myLine) {
+		window.myLine.destroy()
+	}
+	console.log(n, p)
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i <= n; i++) {
+		let pr_x = binomialPmf(n,p,i).toFixed(5)
+		xValues.push(i)
+		yValues.push(pr_x)
+	}
+	console.log(xValues, yValues)
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'x',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myLine = new Chart(ctx, config);
+}
+</script>
