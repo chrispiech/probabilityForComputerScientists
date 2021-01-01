@@ -4,6 +4,23 @@
 <center><h1>Variance</h1></center>
 <hr/>
 
+<p>
+	<div class="bordered">
+		<p><b><i>Definition</i></b>: Variance of a Random Variable</p>
+
+		<p>The variance is a measure of the "spread" of a random variable around the mean. Variance for a random variable, X, with expected value $\E[X] = µ$ is:
+			$$
+\var(X) = \E[(X–µ)^2]
+$$
+Semantically, this is the average distance of a sample from the distribution to the mean. When computing the variance often we use a different (equivalent) form of the variance equation:
+$$
+\begin{align}
+\var(X) &= \E[X^2] - \E[X]^2
+\end{align}
+$$
+	</div>
+</p>
+
 <!-- <h2>Intuition of variance</h2> -->
 
 <p>In the last section we showed that Expectation was a useful summary of a random variable (it calculates the "weighted average" of the random variable). One of the next most important properties of random variables to understand is variance: the measure of spread.
@@ -22,25 +39,14 @@
 	</p>
 
 <p>
-	Theorists wanted a number to describe spread. They invented variance to be the average of the distance between values that the random variable could take on and the mean of the random variable. There are many reasonable choices for the distance function, probability theorists chose squared deviation:
-</p>
+	Theorists wanted a number to describe spread. They invented variance to be the average of the distance between values that the random variable could take on and the mean of the random variable. There are many reasonable choices for the distance function, probability theorists chose squared deviation from the mean:
 
-<p>
-	<div class="bordered">
-		<p><b><i>Definition</i></b>: Variance of a Random Variable</p>
-
-		<p>The variance is a measure of the "spread" of a random variable around the mean. Variance for a random variable, X, with expected value $\E[X] = µ$ is:
-			$$
+	$$
 \var(X) = \E[(X–µ)^2]
 $$
-Semantically, this is the average distance of a sample from the distribution to the mean. When computing the variance often we use a different (equivalent) form of the variance equation, which we will derive bellow:
-$$
-\begin{align}
-\var(X) &= \E[X^2] - \E[X]^2
-\end{align}
-$$
-	</div>
 </p>
+
+
 
 <p>
 	<div class="purpleBox">

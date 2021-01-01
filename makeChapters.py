@@ -83,7 +83,18 @@ book_outline = {
 	'examples': {
 		'title':'Examples',
 		'sections': {
-			'prob_baby_delivery':'Probability of Baby Delivery'
+			'enigma':'Enigma Machine',
+			'prob_baby_delivery':'Probability of Baby Delivery',
+			'bacteria_evolution':'Bacteria Evolution',
+			'fast_dot_com':'Fast.com',
+			'greenhouse_effect':'Greenhouse Effect',
+			'bridge_distribution':'Bridge Distribution',
+			'curse_of_dimensionality':'Curse of Dimensionality',
+			'period_tracker':'Period Tracker',
+			'fairness':'Fairness',
+			'climate_sensitivity':'Climate Sensitivity',
+			'age_given_names':'Age Given Name',
+			'grades_not_normal':'Grades are Not Normal'
 		}
 	}
 	# TODO: Mehran to add as he sees fit
@@ -95,6 +106,8 @@ book_outline = {
 	# 		'kl_divergence':'KL Divergence',
 	# 	}
 	# }
+
+	# COOL EXTRA Examples Ranked Choice Voting
 }
 
 INDEX_TEMPLATE = '''

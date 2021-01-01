@@ -1,0 +1,124 @@
+
+	<p>Let us start with a humble example: imagine you care about the sort of music that a person likes. Spotify, a popular music application breaks all songs into a set of features. There are 9 different features but for now lets focus on three: Acousticness, Danceability and Popularity. All features are scored in a range 0 to 1, so for example if a song has a danceability rating of 1, it is a straight up bop.</p>
+
+	<p>If you want to understand a person's music taste you could look at the probability distribution over any of those features on their own. For example here is one person's estimated distribution of Danceability after they listened to 10,000 songs (recall each song has a Danceability score):</p>
+
+<canvas id="singleSong" style="max-height: 400px"></canvas>
+
+<script>
+
+$(document).ready(function(){
+	let parentDivId = `singleSong`
+	let data = JSON.parse(`[[0.1, 0.15], [0.2, 0.05], [0.3, 0.05], [0.4, 0.07], [0.5, 0.1], [0.6, 0.5], [0.7, 0.7], [0.8, 0.8], [0.9, 0.4], [1.0, 0.2]]`)
+	let normalize = `True` == 'True'
+
+	// if(window.parentDivId) {
+	// 	window.parentDivId.destroy()
+	// }
+
+	var xValues = []
+	var yValues = []
+	
+	for (var i = 0; i < data.length; i++) {
+		let datum = data[i]
+		xValues.push(datum[0])
+		yValues.push(datum[1])
+	}
+
+	if(normalize) {
+		let total = yValues.reduce((a, b) => a + b, 0)
+		for (var i = 0; i < yValues.length; i++) {
+			yValues[i] /= total;
+			yValues[i] = yValues[i].toFixed(5)
+		}
+	}
+	let xLabel = `Danceability Score`
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'Pr(X=x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	new Chart(ctx, config);
+})
+</script><p>In the <a href="../../part2/pmf#data_to_hist">PMF chapter</a> we covered how you can create a distribution like this from data. This graph of a single variable relating to a person's music taste does not tell the whole picture. </p>
+
+<p>
+	<table id= songJoint class="table table-bordered" style="text-align: center">
+	</table>
+</p>
+
+<script>
+	$(document).ready(function(){
+		let html = ''
+		let data = JSON.parse(`[[0.1, 0.15, 0.99, 0.1, 0.1], [0.5, 0.5, 0.5, 0.1, 0.1], [0.1, 0.9, 0.8, 0.1, 0.1], [0.5, 0.5, 0.5, 0.1, 0.1], [0.1, 0.9, 0.8, 0.1, 0.1]]`)
+		let cols = ['1', '2', '3', '4', '5'];
+		let rows = ['1', '2', '3', '4', '5'];
+
+		console.log(data)
+
+		let headHtml = '<th></th>'
+		for (var i = 0; i < cols.length; i++) {
+			let col = cols[i]
+			headHtml += `<th>${col}</th>`
+		}
+		html += `<tr>${headHtml}</tr>`
+
+		for (var r = 0; r < data.length; r++) {
+			let rowData = data[r]
+			let rowHtml = `<th>${rows[r]}</th>`
+			for (var c = 0; c < rowData.length; c++) {
+				let value = rowData[c]
+				rowHtml += `<td>${value}</td>`
+			}
+			html += `<tr>${rowHtml}</tr>`
+		}
+		$("#songJoint").html(html)
+	})
+</script>

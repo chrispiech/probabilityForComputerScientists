@@ -1,0 +1,85 @@
+<canvas id="{{params['key']}}" style="max-height: {{params['height']}}px"></canvas>
+
+<script>
+
+$(document).ready(function(){
+	let parentDivId = `{{params['key']}}`
+	let data = JSON.parse(`{{params['data']}}`)
+	let normalize = `{{params['normalize']}}` == 'True'
+
+	// if(window.parentDivId) {
+	// 	window.parentDivId.destroy()
+	// }
+
+	var xValues = []
+	var yValues = []
+	
+	for (var i = 0; i < data.length; i++) {
+		let datum = data[i]
+		xValues.push(datum[0])
+		yValues.push(datum[1])
+	}
+
+	if(normalize) {
+		let total = yValues.reduce((a, b) => a + b, 0)
+		for (var i = 0; i < yValues.length; i++) {
+			yValues[i] /= total;
+			yValues[i] = yValues[i].toFixed(5)
+		}
+	}
+	let xLabel = `{{params['xLabel']}}`
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'Pr(X=x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	new Chart(ctx, config);
+})
+</script>

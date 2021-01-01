@@ -1,0 +1,133 @@
+
+% rebase('templates/chapter.html', title="Enigma Machine")
+ 
+<center><h1>Enigma Machine</h1></center>
+<hr/>
+
+<p>One of the very first computers was built to break the Nazi “enigma” codes in WW2. It was a hard problem
+because the “enigma” machine, used to make secret codes, had so many unique configurations. Every day the Nazi's would chose a new configuration and if they Allies could figure out the daily configuration, they could read all enemy messages. One solution was to try all configurations until one produced legible German. This begs the question: How many configurations are there?</p>
+
+<p>
+	<center>
+		<img src="https://qph.fs.quoracdn.net/main-qimg-50c3dc81bbec422f7cef9565c8414f88" class="mainFigureLg"/><br/>
+		<i>The WW2 machine built to search different enigma configurations.</i>
+	</center>
+</p>
+
+<p>The enigma machine has three rotors. Each rotor can be set to one of 26 different positions. How many
+unique configurations are there of the three rotors?</p>
+
+<p>
+	<div class="bordered">
+		Using the <a href="{{pathToLang}}part1/counting">steps rule</a> of counting: $26 \cdot 26 \cdot 26 = 26^3 = 17,576$.
+	</div>
+</p>
+
+<p>Whats more! The machine has a plug board which could swap the electrical signal for letters. On the plug
+board, wires can connect any pair of letters to produce a new configuration. A wire can’t connect a letter to itself. Wires are indistinct. A wire from ‘K’ to ’L’
+is not considered distinct from a wire from ‘L’ to ’K’.  We are going to work up to considering any number of wires.</p>
+
+<p>
+	<center>
+		<img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Enigma-plugboard.jpg" class="mainFigure"/><br/>
+		<i>The engima plugboard. For electical reasons each letter has two jacks and each plug has two prongs. Semantically this is equivalent to one plug location per letter.</i>
+	</center>
+	</p>
+
+<p><b>One wire</b>: How many ways are there to place exactly one wire that connects two letters? </p>
+
+<p>
+	<div class="bordered">
+		Chosing 2 letters from 26 is a combination. Using the <a href="{{pathToLang}}part1/combinatorics">combination formula</a>: ${26 \choose 2} = 325$.
+	</div>
+</p>
+
+<p> <b>Two wires</b>: How many ways are there to place exactly two wires? Recall that wires are not
+considered distinct. Each letter can have at most one wire connected to it, thus you couldn’t have a
+wire connect ‘K’ to ‘L’ and another one connect ‘L’ to ‘X’</p>
+
+<p>
+	<div class="bordered">
+		
+There are ${26 \choose 2}$
+ways to place the first wire and
+${24 \choose 2}$
+ways to place the second wire. However,
+since the wires are indistinct, we have double counted every possibility. Because every possibility is counted twice we should divide by 2:
+$$
+\text{Total} = \frac{ {26 \choose 2} \cdot {24 \choose 2} }{2} = 44,850
+$$ 
+	</div>
+</p>
+
+<p> <b>Three wires</b>: How many ways are there to place <b>exactly</b> three wires? </p>
+
+<p>
+	<div class="bordered">
+		
+There are ${26 \choose 2}$
+ways to place the first wire and
+${24 \choose 2}$
+ways to place the second wire. There are now ${22 \choose 2}$ ways to place the third. However,
+since the wires are indistinct, and our step counting implicitly treats them as distinct, we have overcounted each possibility. How many times is each pairing of three letters overcounted? Its the number of permutations of three distinct objects: 3!
+$$
+\text{Total} = \frac{ {26 \choose 2} \cdot {24 \choose 2} \cdot {22 \choose 2}}{3!} = 3,453,450
+$$ 
+
+There is another way to arrive at the same answer. First we are going to chose the letters to be paired, then we are going to pair them off. There are ${26 \choose 6}$
+ways to select the letters that are
+being wired up. We then need to pair off those letters. One way to think about pairing the
+letters off is to first permute them (6! ways) and then pair up the first two letters, the next two,
+the next two, and so on. For example, if our letters were {A,B,C,D,E,F} and our permutation
+was BADCEF, then this would correspond to wiring B to A and D to C and E to F. We are 
+overcounting by a lot. First, we are overcounting by a factor of 3! since the ordering of the pairs
+doesn’t matter. Second, we are overcounting by a factor of $2 ^ 3$
+since the ordering of the letters
+within each pair doesn’t matter.
+$$
+\text{Total} = {26 \choose 6} \frac{6!}{3! \cdot 2^3} = 3,453,450
+$$
+	</div>
+</p>
+
+<!-- <p><b>Full wires</b>: How many ways are there to place 13 wires, thus connecting each letter to another? Note that this is a very challenging counting task.
+
+<p>
+	<div class="bordered">
+		
+
+
+
+$$
+\text{Total} = \frac{ 26!}{13! \cdot 2^{13} } = 7,905,853,580,625
+$$ 
+	</div>
+</p>  -->
+
+<p><b>Arbitrary wires</b>: How many ways are there to place $k$ wires, thus connecting $2 \cdot k$ letters? 
+
+	<p>
+	<div class="bordered">
+		The set of ways to use exactly $i$ wires is mutually exclusive from the set of ways to user exactly $j$ wires if $i \neq j$ (since no way can use both exactly $i$ and $j$ wires). As such
+$
+\text{Total} = \sum_{k=0}^{13} \text{Total}_k 
+$
+Where Total$_k$ is the number of ways to use exactly $k$ wires. Continuing our logic for ways to used exact number of wires:
+$$
+\text{Total}_k = \frac{\prod_{i=1}^{k} {28 - 2i \choose 2} }{k!} 
+$$
+Bringing it all together:
+$$
+\begin{align}
+\text{Total} &= \sum_{k=0}^{13} \text{Total}_k \\
+&= \sum_{k=0}^{13} \frac{\prod_{i=1}^{k} {28 - 2i \choose 2} }{k!}  \\
+&= 532,985,208,200,576 
+\end{align}
+$$
+	</div>
+</p> 
+
+<p>The actual Enigma used in ww2 had exactly 10 wires connecting 20 letters allowing for 150,738,274,937,250 unique configuration. The enigma machine also chose the three rotors from a set of five adding another factor of ${5 \choose 3} = 60$.
+
+<p>When you combine the number of ways of setting the rotars, with the number of ways you could set the plug board you get the total number of configurations of an enigma machine. Thinking of this as two steps we can multiply the two numbers we earlier calculated: 17,576 · 150,738,274,937,250 · 60  $\approx 159 \cdot 10^{18}$ unique settings. So, Alan Turing and his team at Blechly Park to build a machine which could help test many configurations -- a predecesor to the first computers. 
+</p>

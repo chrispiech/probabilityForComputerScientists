@@ -106,6 +106,11 @@
 
 </head>
 
+<script>
+  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
+  Chart.defaults.global.defaultFontSize = 18;
+</script>
+
 
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
@@ -234,7 +239,18 @@
 <ul class="list-unstyled components">
 <li><p href="{pathToLang}examples">Examples</p></li>
 <li>
+<a id=sidebar-enigma href="../../examples/enigma">Enigma Machine</a>
 <a id=sidebar-prob_baby_delivery href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a>
+<a id=sidebar-bacteria_evolution href="../../examples/bacteria_evolution">Bacteria Evolution</a>
+<a id=sidebar-fast_dot_com href="../../examples/fast_dot_com">Fast.com</a>
+<a id=sidebar-greenhouse_effect href="../../examples/greenhouse_effect">Greenhouse Effect</a>
+<a id=sidebar-bridge_distribution href="../../examples/bridge_distribution">Bridge Distribution</a>
+<a id=sidebar-curse_of_dimensionality href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a>
+<a id=sidebar-period_tracker href="../../examples/period_tracker">Period Tracker</a>
+<a id=sidebar-fairness href="../../examples/fairness">Fairness</a>
+<a id=sidebar-climate_sensitivity href="../../examples/climate_sensitivity">Climate Sensitivity</a>
+<a id=sidebar-age_given_names href="../../examples/age_given_names">Age Given Name</a>
+<a id=sidebar-grades_not_normal href="../../examples/grades_not_normal">Grades are Not Normal</a>
 </li>
 </ul>
 
@@ -285,25 +301,254 @@
 <center><h1>Joint Probability</h1></center>
 <hr/>
 
+<!-- modelling illness, symptoms and tests 
+
+Risk factors
+Age
+Preexisiting conditions
+
+Measurables
+Body temperature
+Pulse rate
+number of breaths in one minute
+Can smell?
+
+https://www.youtube.com/watch?v=aGoYJDZ3fdo
+
+-->
+
 <p>
 	Many interesting problems involve not one random variable, but rather several interacting with one another. In order to create interesting probabilistic <i>models</i> and to reason in real world situations, we are going to need to learn how to consider several random variables jointly.
 </p>
 
-<p>
+<p>In this section we are going to use disease prediction as a working example to introduce you to the concepts involved in probabilistic models. The general question is: a person has a set of observed symptops. Given the symptoms what is the probability over each possible disease? </p>
+
+<p>We have already considered events that co-occur and covered concepts such as independence and conditional probability. What is new about this section is (1) we are going to cover how to handle <i>random variables</i> which co-occur and (2) we are going to talk about how computers can reason under large probabilistic models.</p>
+
+<!-- <p>
 	To give you a sense of some of the things that we are going to be working towards in this section:
-	 How can we model multiple diseases and multiple possible symptoms so that we can predict probability of all diseases given a subset of observed symptops? How can you model the probability of a particular author writing a document full of words, and how could you use such a model to infer which author wrote which documents? How can we reason about what a person knows, say in maths, based on their responses to questions -- and how can we optimally chose a next question to ask them?
+	 How can we model multiple diseases and multiple possible symptoms so that we can predict probability of all diseases given a subset of observed symptoms? How can you model the probability of a particular author writing a document full of words, and how could you use such a model to infer which author wrote which documents? How can we reason about what a person knows, say in maths, based on their responses to questions -- and how can we optimally chose a next question to ask them?
+	</p> -->
+
+	
+
+	<h2>Joint Probability Functions</h2>
+
+    For single random variables, the most important information was the PMF or, if the variable was continuous, the PDF. When dealing with two or more variables, the equivalent function is called the Joint function. For discrete random variables, it is a function which takes in a value for each variable and returns the probability (or probability density for continuous variables) that each variable takes on its value. For example if you had two <i>discrete</i> variables the Joint function is:
+    $$
+    \begin{align}
+    \p(X=x,Y=y) && \text{Joint function for $X$ and $Y$}
+    \end{align}
+    $$
+    You should read the comma as an "and" and as such this is saying the probability that $X=x$ and $Y=y$. Again like for single variables, as shorthand, we often write just the values and it implies that we are talking about the probability of the random variables taking on those values. This notation is convenient because it is shorter, and it makes it explicit that the function is operating over two parameters. It requires to to recall that the event is a <i>random variable</i> taking on the given value.
+    $$
+    \begin{align}
+    \p(x,y) && \text{Shorthand for }\p(X=x,Y=y)
+    \end{align}
+    $$
+    If any of the variables are continuous we use different notation to make it clear that we need a probability density function, something we can integrate over to get a probability. We will cover this in detail:
+    $$
+    \begin{align}
+    f(X=x,Y=y) && \text{Joint density function if $X$ or $Y$ are continuous}
+    \end{align}
+    $$
+    The same idea extends to as many variables as you have in your model. For example if you had three discrete random variables $X$, $Y$, and $Z$, the joint probability function would state the likelihood of an assignment to all three: $\p(X=x,Y=y,Z=z)$.
+
+   
+
+	<h2>Joint Probability Tables</h2>
+
+<!---
+
+how many times you listen to genre A and B
+
+do you have a disease? 
+
+Age vs Length of Mensturation
+
+Weather one day vs weather another day
+
+Deliverty date delta 
+
+Writing several words
+
+Ratings on one product vs ratings on another product
+
+--->
+
+<p>
+	<div class="bordered">
+		<b><i>Definition</i></b>: Joint Probability Table<br/>
+		A joint probability table is a way of specifying the "joint" distribution between multiple random variables. It does so by keeping a multi-dimensional lookup table (one dimension per variable) so that the probability mass of any assignment, eg $\p(X=x,Y=y, \dots$), can be directly looked up.
+	</div>
 	</p>
 
-	<p>We have already considered events that co-occur and covered concepts such as independence and conditional probability. When random variables co-occur many of the same dynamics will apply.</p>
+<p>Let us start with an example. In 2020 the Covid-19 pandemic disrupted lives around the world. Many people were unable to get tested and had to determine whether or not they were sick based on home diagnosis. Lets build a very simple probabilistic model to enable us to make a tool which can predict the probability of having the illness given observed symptoms. To make it clear that this is a pedagogical example, lets consider a made up illness called Determinitis. The two main symptoms are fever and loss of smell.</p>
 
-<!--
+<table class="table">
+	<tr>
+		<th>Variable</th>
+		<th>Symbol</th>
+		<th>Type</th>
+	</tr>
+	<tr>
+		<td>Has Determinitis</td>
+		<td>$D$</td>
+		<td>Bernoulli (1 indicates has Determinitis)</td>
+	</tr>
+	<tr>
+		<td>Fever</td>
+		<td>$F$</td>
+		<td>Categorical (none, low, high)</td>
+	</tr>
+	<tr>
+		<td>Can Smell</td>
+		<td>$S$</td>
+		<td>Bernoulli (1 indicates can smell)</td>
+	</tr>
+</table>
 
-Things that co-occur:
-several diseases
-multiple abilities in math
-several eye variables
+<p>A joint probability table is a brute force way to store the probability mass of a particular assignment of values to our variables. Here is a probabilistic model for our three random variables (aside: the values in this joint are realistic and based on reasearch, but are primarily for teaching. Consult a doctor before making medical decisions).
 
--->
+<!---
+
+Based on a group of people who had been living in Wuhan when the virus started
+https://covid19risk.biosci.gatech.edu/
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7508004/
+
+P(Determinitis) = 0.05
+Pr(Anosmia | Covid) = .3
+Pr(Anosmia | No Covid) = .03
+
+Pr(Fever | Covid) = .50
+Pr(Fever | No Covid) = .20
+
+P(F, S, D) = P(D) P(F | D) P(S | D)
+
+--->
+
+<div class="row sticky-top">
+	<div class="col-12 col-md-6">
+		<center>$D=0$</center>
+<p>
+	<table id= covid class="table table-bordered" style="text-align: center">
+	</table>
+</p>
+
+<script>
+	$(document).ready(function(){
+		let html = ''
+		let data = JSON.parse(`[[0.024, 0.783], [0.003, 0.092], [0.001, 0.046]]`)
+		let cols = ['$S=0$', '$S=1$'];
+		let rows = ['$F = \\text{none}$', '$F=\\text{low}$', '$F=\\text{high}$'];
+
+		console.log(data)
+
+		let headHtml = '<th></th>'
+		for (var i = 0; i < cols.length; i++) {
+			let col = cols[i]
+			headHtml += `<th>${col}</th>`
+		}
+		html += `<tr>${headHtml}</tr>`
+
+		for (var r = 0; r < data.length; r++) {
+			let rowData = data[r]
+			let rowHtml = `<th>${rows[r]}</th>`
+			for (var c = 0; c < rowData.length; c++) {
+				let value = rowData[c]
+				rowHtml += `<td>${value}</td>`
+			}
+			html += `<tr>${rowHtml}</tr>`
+		}
+		$("#covid").html(html)
+	})
+</script>	</div>
+	<div class="col-12 col-md-6">
+		<center>$D=1$</center>
+<p>
+	<table id= noCovid class="table table-bordered" style="text-align: center">
+	</table>
+</p>
+
+<script>
+	$(document).ready(function(){
+		let html = ''
+		let data = JSON.parse(`[[0.006, 0.014], [0.005, 0.011], [0.004, 0.011]]`)
+		let cols = ['$S=0$', '$S=1$'];
+		let rows = ['$F = \\text{none}$', '$F=\\text{low}$', '$F=\\text{high}$'];
+
+		console.log(data)
+
+		let headHtml = '<th></th>'
+		for (var i = 0; i < cols.length; i++) {
+			let col = cols[i]
+			headHtml += `<th>${col}</th>`
+		}
+		html += `<tr>${headHtml}</tr>`
+
+		for (var r = 0; r < data.length; r++) {
+			let rowData = data[r]
+			let rowHtml = `<th>${rows[r]}</th>`
+			for (var c = 0; c < rowData.length; c++) {
+				let value = rowData[c]
+				rowHtml += `<td>${value}</td>`
+			}
+			html += `<tr>${rowHtml}</tr>`
+		}
+		$("#noCovid").html(html)
+	})
+</script></div>
+</div>
+
+<p>
+	A few key observations:
+	<ul>
+		<li>Each cell in this table represents the probability of one assignment of variables. For example the probability that someone cant smell, $S=0$, has a low fever, $F=\text{low}$, and has the illness, $D=1$, can be directly read off the table: $P(D=1,S=0,F=\text{low}) = 0.005$. 
+		<li>These are joint probabilities <i>not</i> conditional probabilities. The value 0.005 is the value of illness, no smell and low fever. It is not the probability of no smell and low fever given illness. A table which stored conditional probabilities would be called a conditional probability table, this is a joint probability table.
+		<li>If you sum over all cells, the total will be 1. Each cell is a mutually exclusive combination of events and the cells are meant to span the entire space of possible outcomes.
+			<li>This table is large! We can count the number of cells using the <a href="../../part1/counting">step rule of counting</a>. If $n_i$ is the number of different values that random variable $i$ can take on, the number of cells in the joint table is $\prod_i n_i$.
+	</ul>
+	</p>
+
+<h2>Properties of Joint Distributions</h2>
+
+<p>There are many properties of a random variable of any random variable some of which we will dive into extensively. Here is a brief summary. Each random variable has:
+
+<p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Notation Example</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	
+	<tr>
+		<td><a href="../../part2/pmf">Distribution Function</a> (PMF or PDF)</td>
+		<td>$\P(X=x,Y=y,\dots)$ or $f(X=x,Y=y,\dots)$</td>
+		<td>A function which maps values the RV can take on to likelihood.</td>
+	</tr>
+	<tr>
+		<td><a href="../../part2/pmf">Cumulative Distribution Function</a> (CDF)</td>
+		<td>$F(X &lt; x,Y &lt; y, \dots)$</td>
+		<td>Probability that each variable is less than its corresponding parameter</td>
+	</tr>
+	
+	<tr>
+		<td><a href="../../part3/covariance">Covariance</a></td>
+		<td>$\sigma_{X,Y}$</td>
+		<td>A measure of how much two random variables vary together.</td>
+	</tr>
+	<tr>
+		<td><a href="../../part2/variance/#standard_deviation">Correlation</td>
+		<td>$\rho_{X,Y}$</td>
+		<td>Normalized co-variance</td>
+	</tr>
+</table>
+</p>
+
+
 
                         
 

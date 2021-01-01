@@ -1,0 +1,33 @@
+<p>
+	<table id= {{key}} class="table table-bordered" style="text-align: center">
+	</table>
+</p>
+
+<script>
+	$(document).ready(function(){
+		let html = ''
+		let data = JSON.parse(`{{data}}`)
+		let cols = {{!cols}};
+		let rows = {{!rows}};
+
+		console.log(data)
+
+		let headHtml = '<th></th>'
+		for (var i = 0; i < cols.length; i++) {
+			let col = cols[i]
+			headHtml += `<th>${col}</th>`
+		}
+		html += `<tr>${headHtml}</tr>`
+
+		for (var r = 0; r < data.length; r++) {
+			let rowData = data[r]
+			let rowHtml = `<th>${rows[r]}</th>`
+			for (var c = 0; c < rowData.length; c++) {
+				let value = rowData[c]
+				rowHtml += `<td>${value}</td>`
+			}
+			html += `<tr>${rowHtml}</tr>`
+		}
+		$("#{{key}}").html(html)
+	})
+</script>

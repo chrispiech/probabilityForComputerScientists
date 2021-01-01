@@ -97,3 +97,72 @@ function permute(inputArr) {
 
   return permuteHelper(inputArr);
 }
+
+
+function drawGraph(charts, parentDivId, data, xLabel = 'x', yLabel='Pr'){
+
+	if(charts[parentDivId]) {
+		charts[parentDivId].destroy()
+	}
+
+	var xValues = []
+	var yValues = []
+	
+	for (var i = 0; i < data.length; i++) {
+		let datum = data[i]
+		xValues.push(datum[0])
+		yValues.push(datum[1])
+	}
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: yLabel,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	charts[parentDivId]= new Chart(ctx, config);
+}

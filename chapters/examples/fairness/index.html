@@ -1,0 +1,91 @@
+
+% rebase('templates/chapter.html', title="Fairness")
+ 
+<center><h1>Fairness in Artificial Intelligence</h1></center>
+<hr/>
+
+<p>Artificial Intelligence often gives the impression that it is objective and "fair". However, algorithms are made by humans and trained by data which may be biased. There are several examples of AI algorithms, deployed, have been shown to make decisions that were biased based on gender, race or other protected demographics --  even when
+there is no intention for it.</p>
+
+<p>These examples have also led to a necessary research into a growing field of algorithmic fairness. How can we demonstrate, or proove, that an algorithm is behaving in a way that we think is appropriate? What is fair? Clearly these are complex questions and are deserving of a complete conversation. This example is simple for the purpose of giving an introduction to the topic.</p> 
+
+<p>An artificial intelligence algorithm is going to be used to make a binary prediction ($G$ for guess) for whether a person will repay a loan.  The question has come up:  is the algorithm "fair" with respect to a binary protected demographic ($D$ for demographic)? To answer this question we are going to analyze predictions the algorithm made on historical data. We are then going to compare the predictions to the true outcome ($T$ for truth). Consider the following joint probability table from the history of the algorithm’s predictions:</p>
+
+<div class="row">
+	<div class="col">
+		<center>$D=0$</center><br/>
+		<table class="table">
+			<tr>
+				<th></th>
+				<th>
+					$G=0$
+				</th>
+				<th>
+					$G=1$
+				</th>
+			</tr>
+			<tr>
+				<th>
+					$T=0$
+				</th>
+				<td>
+					0.21
+				</td>
+				<td>
+					0.32
+				</td>
+			</tr>
+			<tr>
+				<th>
+					$T=1$
+				</th>
+				<td>
+					0.07
+				</td>
+				<td>
+					0.28
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col">
+		<center>$D=1$</center><br/>
+		<table class="table">
+			<tr>
+				<th></th>
+				<th>
+					$G=0$
+				</th>
+				<th>
+					$G=1$
+				</th>
+			</tr>
+			<tr>
+				<th>
+					$T=0$
+				</th>
+				<td>
+					0.01
+				</td>
+				<td>
+					0.01
+				</td>
+			</tr>
+			<tr>
+				<th>
+					$T=1$
+				</th>
+				<td>
+					0.02
+				</td>
+				<td>
+					0.08
+				</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+
+<p>Recall that cell $D=i,G=j,T=k$ contains the probability $\P(D=i,G=j,T=k)$. A joint probability table gives the probability of all combination of events. Recall that since each cell is mutually exclusive, the $\sum_i \sum_j \sum_k \P(D=i,G=j,T=k) = 1$.  </p>
+
+<p>For a deeper treatment of the subject, here is a useful summary of the latest research <a href="https://arxiv.org/pdf/2001.09784.pdf">Pessach et al, Algorithmic Fairness</a>.

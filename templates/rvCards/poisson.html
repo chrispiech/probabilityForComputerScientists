@@ -67,14 +67,15 @@ function drawPoissonPmf(parentDivId, lambda) {
 		window.myLine.destroy()
 	}
 
-
+	console.log('lambda',lambda)
 	var xValues = []
 	var yValues = []
 	var i = 0
 	while(true){
-		let pr_x = jStat.poisson.pdf(lambda, i).toFixed(5)
+		let pr_x = jStat.poisson.pdf(i, lambda).toFixed(5)
 		xValues.push(i)
 		yValues.push(pr_x)
+		console.log(i, pr_x)
 		i += 1
 		if(pr_x < 0.00001 && i > lambda) {
 			break;

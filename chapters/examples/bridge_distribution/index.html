@@ -1,0 +1,151 @@
+
+% rebase('templates/chapter.html', title="Bridge Distribution")
+ 
+<center><h1>Bridge Distribution</h1></center>
+<hr/>
+
+<p>
+	<div class="bordered">
+
+		<p><b><i>Example</i>: Distribution of suit splits</b></p>
+
+<p>
+	Imagine that there are cards split between two equal sized hands. Across the two hands there are a known number of cards of a particular suit (eg spades), and you want to know how many are in one hand and how many are in the other. What is the probability of the split? This problem comes up in the game of <a href="https://en.wikipedia.org/wiki/Contract_bridge">bridge</a> but you could imagine similar logic extending to other card games.
+</p>
+
+<p>
+
+$k$ cards left in each player's hand: <input onchange="redrawGraph()" type="number" class="form-control example-inline-input mb-3" id="k" min="0" max="26" value="13" step = "1">
+
+<br/>
+
+$n$ cards of particular suit outstanding: <input onchange="redrawGraph()" type="number" class="form-control example-inline-input mb-3" id="n" min="0" max="13" value="5" step = "1">
+</p>
+<p>A few notes: If there are $k$ cards in each of the 2 hands there are $2 k$ cards total. At the start of a game of bridge $k=13$. It must be the case that $n \leq 2  k$ because you can't have more cards of the suit left than number of cards! If there are $n$ of a suit, then there are $2k -n$ of other suits. This problem assumes that the cards are properly shuffled.
+
+</p>
+
+<b>Probability of different splits of the suit:</b>
+<p>
+	If we want to think about the probability of a given split, it is sufficient to chose one hand (call it hand1) and think about the probability of the number of the given suit in that hand. Though there are two hands, if I tell you how many of a suit are in one hand, you can automatically figure out how many of the suit are in the other hand: the number of the suit sums to $n$. 
+	</p>
+
+	<p>Let $Y$ be a random variable representing the number of the suit in hand1. We can calculate the probability that $Y$ equals different values $y$ by counting equally likely outcomes.
+$$\p(Y = i) = \frac
+	{ {n \choose i} \cdot {2\cdot k-n \choose k-i} }
+	{ {2\cdot k \choose k}}$$
+<canvas id="bridgeGraphEqual" style="max-height: 500px"></canvas>
+
+<div style="height:20px"></div>
+
+<b>Probability that either hand has at least $j$ cards of suit</b>
+$$\p(X \geq j) = 1 - \sum_{i=n-j+1}^{j - 1}\p(Y= i)$$
+<canvas id="bridgeGraphOver" style="max-height: 500px"></canvas>
+</div>
+</p>
+
+<p>
+	<div class="bordered">
+<canvas id="bridgePoints" style="max-height: 500px"></canvas>
+	</div>
+</p>
+
+<script>
+
+let charts = {}
+
+$(document).ready(function() {
+	console.log(jStat.combination(8, 0))
+	redrawGraph()
+	drawPointsDistribution()
+})
+
+
+
+function redrawGraph() {
+	let n = parseInt($("#n").val())
+	let k = parseInt($("#k").val()) * 2
+
+	let dataEqual = []
+	for(let j = 0; j <= n; j++) {
+		let prEqual = calcPrEqual(k, n, j)
+		// console.log(k, n, j, prEqual)
+		let x = `(${j}, ${n-j})`
+		dataEqual.push([x, prEqual.toFixed(3)])
+	}
+	drawGraph(charts, 'bridgeGraphEqual', dataEqual, 'Split (i, n-i)', 'Pr(split)')
+
+	let dataOver = []
+	for(let j = 0; j <= n; j++) {
+		let prOverJ = calcPrOverJ(k, n, j)
+		dataOver.push([j, prOverJ.toFixed(3)])
+	}
+	drawGraph(charts, 'bridgeGraphOver', dataOver, 'Values of j', 'Pr(Y ≥ j)')
+}
+
+function calcPrOverJ(k, n, j) {
+	let pr = 1;
+	let gapMin = (n - j) + 1
+	let gapMax = j - 1
+	for (var i = gapMin; i <= gapMax; i++) {
+		pr -= calcPrEqual(k, n, i)
+	}
+
+	return pr
+}
+
+function calcPrEqual(k, n, i) {
+
+
+	let denom = jStat.combination(k,k/2)
+	let t1 = jStat.combination(n, i)
+	let t2 = 0
+	if(k/2 - i <= k -n ) {
+		t2 = jStat.combination(k - n, k/2-i)
+	}
+	console.log(t1, t2, denom)
+	return t1 * t2 / denom
+}
+
+function drawPointsDistribution() {
+	let pointsData = [
+		[0,0.003629],
+		[1,0.00786275],
+		[2,0.01351425],
+		[3,0.024557],
+		[4,0.03853875],
+		[5,0.05182025],
+		[6,0.0658735],
+		[7,0.080111],
+		[8,0.08886475],
+		[9,0.093599],
+		[10,0.0940935],
+		[11,0.0895525],
+		[12,0.08019275],
+		[13,0.068997],
+		[14,0.05687775],
+		[15,0.044275],
+		[16,0.03302275],
+		[17,0.0237395],
+		[18,0.01612125],
+		[19,0.01031075],
+		[20,0.00642275],
+		[21,0.0037975],
+		[22,0.0020915],
+		[23,0.0011035],
+		[24,0.0005705],
+		[25,0.0002675],
+		[26,0.0001195],
+		[27,0.00004425],
+		[28,0.0000195],
+		[29,0.00000775],
+		[30,0.0000015],
+		[31,0.00000075],
+		[32,0.0000005],
+		[33,0],
+		[34,0],
+		[35,0]
+	]
+	drawGraph(charts, 'bridgePoints', pointsData, 'x points in your hand', 'Pr(X=x)')
+}
+</script>

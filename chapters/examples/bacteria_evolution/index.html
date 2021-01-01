@@ -1,0 +1,56 @@
+
+% rebase('templates/chapter.html', title="Bacteria Evolution")
+ 
+<center><h1>Bacteria Evolution</h1></center>
+<hr/>
+
+<p>A wonderful property of modern life is that we have anti-biotics to kill bacterial infections. However, we only have a fixed number of anti-biotic medicines, and bacteria are evolving to become resistent to our anti-biotics. In this example we are going to use probability to understand evolution of anti-biotic resistence in bacteria.</p>
+
+
+<p>Imagine you have a population of 1 million infectious bacteria in your gut, 10% of which have a mutation that makes them
+slightly more resistant to anti-biotics. You take a course of anti-biotics. The probability that bacteria with the
+mutation survives is 20%. The probability that bacteria without the mutation survives is 1%.</p>
+
+
+<p>What is the probability that a randomly chosen bacterium
+survives the anti-biotics?</p>
+
+<p>
+<div class="bordered">
+	Let $E$ be the event that our bacterium survives. Let $M$ be the event that a bacteria has the mutataion. By the By <a href="{{pathToLang}}en/part1/law_total">Law of Total Probability</a> (LOTP):
+	$$
+	\begin{align}
+	\p(E) 
+		&= \p(E \and M) + \p(E \and M\c)
+			&& \text{LOTP} \\ 
+		&= \p(E | M)\p(M) + \p(E | M\c)\p(M\c)
+			&& \text{Chain Rule} \\ 	
+		&= 0.20 \cdot 0.10 + 0.01 \cdot 0.90 
+			&& \text{Substituting} \\ 
+		&= 0.029
+	\end{align}
+	$$
+</div>
+</p>
+
+<p>What is the probability that a surviving bacterium has the mutation?</p>
+
+<p>
+<div class="bordered">
+	Using the same events in the last section, this question is asking for $\p(M | E)$. We aren't givin the conditional probability in that direction, instead we know $P(E|M)$. Such situations call for <a href="{{pathToLang}}en/part1/bayes_theorem">Bayes' Theorem</a>:
+	$$
+	\begin{align}
+	\p(M | E) 
+		&=  \frac{\p(E|M)\p(M)}{\p(E)} 
+			&& \text{Bayes} \\
+		&=  \frac{0.20 \cdot 0.10}{\p(E)} 
+			&& \text{Given} \\
+		&=  \frac{0.20 \cdot 0.10}{0.029} 
+			&& \text{Calculated} \\
+		&\approx  0.69
+	\end{align}
+	$$
+</div>
+</p>
+
+<p>After the course of anti-biotics, 69% of bacteria have the mutation, up from 10% before. If this population is allowed to reproduce you will have a much more resistent set of bacteria!
