@@ -18,7 +18,7 @@
   <div class="input-group-prepend">
     <span class="input-group-text" id="dueDateLabel" style="min-width: 120px">Due Date</span>
   </div>
-  <input type="text" class="form-control" placeholder="Due Date" aria-label="Username" aria-describedby="dueDateLabel" id="dueDateInput" disabled value="18/1/2021"></input>
+  <input type="text" class="form-control" placeholder="Due Date" aria-label="Username" aria-describedby="dueDateLabel" id="dueDateInput" disabled value="18/Jan/2021"></input>
 </div>
 
 <hr/>
@@ -80,6 +80,10 @@ Probability of three couples on the same day: <b id="pr3SameDay"></b><br/>
 <p>Acknowledgements: This problem was first posed to me by Chris Gregg.
 
 <script>
+
+const monthNames = ["Jan", "Feb", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 // global singleton
 let table = null
 let dueDate = Date.parse('18 Jan 2021 00:18:00 GMT');
@@ -91,6 +95,7 @@ $(document).ready(function() {
 		onSelect: function(dateText) {
 			let currDate = Date.parse(dateText)
 	        calculateProbabilities(currDate, dueDate)
+	        
 	    }
 	});
 	addVerticalLinePlugin()
@@ -115,7 +120,7 @@ function processData(data) {
 
 function setInputValue(inputId, date) {
 	console.log(date)	
-	let str = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+	let str = `${date.getDate()}/${monthNames[date.getMonth()]}/${date.getFullYear()}`
 	$("#" + inputId).val(str)
 }
 

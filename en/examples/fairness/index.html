@@ -21,10 +21,15 @@
  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 <!-- D3 CDN -->
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+<!-- PDF JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
 
 <!-- Lunr CDN -->
  <script src="https://unpkg.com/lunr/lunr.js"></script>
@@ -137,7 +142,7 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <!-- <div></div> -->
-        <a style="text-align:center" href="../../"><h3><i class="fas fa-book-open"></i><br/> Probability for a <br/>Digital World<br/></h3></a>
+        <a style="text-align:center" href="../../"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
     </div>
 
     <div> 
@@ -152,9 +157,6 @@
 <!-- intro -->
 <ul class="list-unstyled components">
 <li>
-<a id=sidebar-intro href="../../intro/intro">Introduction</a>
-<a id=sidebar-notation href="../../intro/notation">Notation</a>
-<a id=sidebar-prob_code href="../../intro/prob_code">Probability in Code</a>
 </li>
 </ul>
 
@@ -173,6 +175,13 @@
 <a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
 <a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
 <a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+
+<li>
+    <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part1_examples">
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li><li><a href="../../examples/many_flips">Many Coin Flips</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -190,6 +199,13 @@
 <a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
 <a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
 <a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
+
+<li>
+    <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part2_examples">
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -198,14 +214,13 @@
 <li><p href="{pathToLang}part3">Part 3: Probabilistic Models</p></li>
 <li>
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
-<a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-variable_bayes href="../../part3/variable_bayes">Bayes Theorem Revisited</a>
-<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
-<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
-<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
-<a id=sidebar-sampling_revisited href="../../part3/sampling_revisited">Sampling Revisited</a>
-<a id=sidebar-computational_inference href="../../part3/computational_inference">Computational Inference</a>
+
+<li>
+    <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part3_examples">
+        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -218,6 +233,13 @@
 <a id=sidebar-parameters href="../../part4/parameters">Uncertainty in Parameters</a>
 <a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
 <a id=sidebar-bounds href="../../part4/bounds">Probability Bounds</a>
+
+<li>
+    <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part4_examples">
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -232,31 +254,19 @@
 <a id=sidebar-linear_regression href="../../part5/linear_regression">Linear Regression</a>
 <a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
 <a id=sidebar-neural_nets href="../../part5/neural_nets">Artificial Neural Networks</a>
-</li>
-</ul>
 
-<!-- examples -->
-<ul class="list-unstyled components">
-<li><p href="{pathToLang}examples">Examples</p></li>
 <li>
-<a id=sidebar-enigma href="../../examples/enigma">Enigma Machine</a>
-<a id=sidebar-prob_baby_delivery href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a>
-<a id=sidebar-bacteria_evolution href="../../examples/bacteria_evolution">Bacteria Evolution</a>
-<a id=sidebar-fast_dot_com href="../../examples/fast_dot_com">Fast.com</a>
-<a id=sidebar-greenhouse_effect href="../../examples/greenhouse_effect">Greenhouse Effect</a>
-<a id=sidebar-bridge_distribution href="../../examples/bridge_distribution">Bridge Distribution</a>
-<a id=sidebar-curse_of_dimensionality href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a>
-<a id=sidebar-period_tracker href="../../examples/period_tracker">Period Tracker</a>
-<a id=sidebar-fairness href="../../examples/fairness">Fairness</a>
-<a id=sidebar-climate_sensitivity href="../../examples/climate_sensitivity">Climate Sensitivity</a>
-<a id=sidebar-age_given_names href="../../examples/age_given_names">Age Given Name</a>
-<a id=sidebar-grades_not_normal href="../../examples/grades_not_normal">Grades are Not Normal</a>
+    <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part5_examples">
+        <li><a href="../../examples/vision_test">Vision Test</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
 
 
-    <ul class="list-unstyled components">
+    <!-- <ul class="list-unstyled components">
         
          <li>
             <p>Part ?: Misfits</p>
@@ -268,7 +278,7 @@
              <a href="../../">Law of Total Expectation</a>
             
         </li>
-    </ul>
+    </ul> -->
 
 
 
@@ -305,6 +315,13 @@
 there is no intention for it.</p>
 
 <p>These examples have also led to a necessary research into a growing field of algorithmic fairness. How can we demonstrate, or proove, that an algorithm is behaving in a way that we think is appropriate? What is fair? Clearly these are complex questions and are deserving of a complete conversation. This example is simple for the purpose of giving an introduction to the topic.</p> 
+<p>
+<center>
+	<img class="mainFigureLg" src="../../../img/chapters/fairnessHistory.png"/><br/>
+	<i>ML stands for Machine Learning. Solon Barocas and Moritz Hardt, "Fairness in Machine Learning", NeurIPS 2017</i>
+	</center></p>
+
+<h2>What is Fairness?</h2>
 
 <p>An artificial intelligence algorithm is going to be used to make a binary prediction ($G$ for guess) for whether a person will repay a loan.  The question has come up:  is the algorithm "fair" with respect to a binary protected demographic ($D$ for demographic)? To answer this question we are going to analyze predictions the algorithm made on historical data. We are then going to compare the predictions to the true outcome ($T$ for truth). Consider the following joint probability table from the history of the algorithm’s predictions:</p>
 
@@ -383,9 +400,174 @@ there is no intention for it.</p>
 	</div>
 	</div>
 
-<p>Recall that cell $D=i,G=j,T=k$ contains the probability $\P(D=i,G=j,T=k)$. A joint probability table gives the probability of all combination of events. Recall that since each cell is mutually exclusive, the $\sum_i \sum_j \sum_k \P(D=i,G=j,T=k) = 1$.  </p>
+<p>Recall that cell $D=i,G=j,T=k$ contains the probability $\P(D=i,G=j,T=k)$. A joint probability table gives the probability of all combination of events. Recall that since each cell is mutually exclusive, the $\sum_i \sum_j \sum_k \P(D=i,G=j,T=k) = 1$. Note that this assumption of mutual exclusion could be problematic for demographic variables (some people are mixed ethnicity, etc) which gives you a hint that we are just scratching the surface in our conversation about fairness. Lets use this joint probability to learn about some of the common definitions of fairness. </p>
 
-<p>For a deeper treatment of the subject, here is a useful summary of the latest research <a href="https://arxiv.org/pdf/2001.09784.pdf">Pessach et al, Algorithmic Fairness</a>.
+<p><b>Practice with joint marginalization</b><br/>What is $\p(D=0)$? What is $\p(D=1)$? <br/>
+Probabilities with assignments to a subset of the random variables in the joint distribution can be calculated by a process called <i>marginalization</i>: sum the probability from all cells where that assignment is true.</p>
+$$
+\begin{align}
+\p(D=1) &= \sum_{j \in \{0, 1\}} \sum_{k \in \{0, 1\}} \p(D= 1, G= j, T = k)\\
+&= 0.01 + 0.01 + 0.02 + 0.08 = 0.12
+\end{align}
+$$
+
+$$
+\begin{align}
+\p(D=0) &= \sum_{j \in \{0, 1\}} \sum_{k \in \{0, 1\}} \p(D= 0, G= j, T = k)\\
+&= 0.21 + 0.32 + 0.07 + 0.28 = 0.88
+\end{align}
+$$
+
+<p>Note that $\p(D=0) + \p(D=1) = 1$. That implies that the demographics are mututally exclusive.</p>
+
+<p><div class="bordered"><b>Fairness definition #1: Parity</b><br/>An algorithm satisfies “parity” if the probability that the algorithm makes a positive prediction ($G$ = 1) is the same regardless of begin conditioned on demographic variable.</div></p>
+<p>Does this algorithm satisfy parity?</p>
+$$
+\begin{align}
+P(G=1|D=1) 
+    &= \frac{P(G = 1, D = 1)}{P(D=1)}
+    	&& \text{Cond. Prob.}\\
+    &= \frac{P(G = 1, D = 1, T= 0) + P(G=1, D = 1, T=1)}{P(D=1)}
+    	&& \text{Prob or}\\
+    &= \frac{0.01 + 0.08}{0.12} = 0.75
+    	&& \text{From joint}
+\end{align}
+$$
+
+$$
+\begin{align}
+P(G=1|D=0) 
+    &= \frac{P(G = 1, D = 0)}{P(D=0)}
+    	&& \text{Cond. Prob.}\\
+    &= \frac{P(G = 1, D = 0, T= 0) + P(G=1, D = 0, T=1)}{P(D=0)}
+    	&& \text{Prob or}\\
+    &= \frac{0.32 + 0.28}{0.88} \approx 0.68
+    	&& \text{From joint}
+\end{align}
+$$
+<p>No. Since $P(G=1|D=1) \neq P(G=1|D=0)$ this algorithm does not satisfy parity. It is more likely to guess 1 when the demographic indicator is 1.</p> 
+
+<p>
+	<div class="bordered">
+	<b>Fairness definition #2: Calibration</b><br/>
+	An algorithm satisfies “calibration” if the probability that the algorithm is correct ($G=T$) is the same regardless of demographics. </div>
+</p>
+
+<p>Does this algorithm satisfy calibration?</p>
+
+<p>The algorithm satisfies calibration if $P(G = T | D = 0) = P(G = T | D = 1)$ 
+$$
+\begin{align}
+    P(G = T | D = 0)
+    &= P(G = 1, T = 1 | D = 0) + P(G = 0, T = 0 | D = 0)\\
+    &= \frac{0.28 + 0.21}{0.88} \approx 0.56 \\
+     P(G = T | D = 1)
+    &= P(G = 1, T = 1 | D = 1) + P(G = 0, T = 0 | D = 1)\\
+    &= \frac{0.08 + 0.01}{0.12} = 0.75
+\end{align}
+$$
+No: $P(G = T | D = 0) \neq  P(G = T | D = 1)$
+</p>
+
+<p>
+	<div class="bordered">
+	<b>Fairness definition #3: Equality of Odds</b><br/>
+An algorithm satisfies "equality of odds" if the probability that the algorithm <i>predicts a positive outcome</i> ($G=1$) is the same regardless of demographics <i>given</i> that the outcome will occur ($T=1$).</div></p>
+<p> Does this algorithm satisfy equality of odds?</p>
+
+<p>
+The algorithm satisfies equality of odds if $P(G = 1 | D = 0, T = 1) = P(G = 1 | D = 1, T = 1)$ 
+$$
+\begin{align*}
+    P(G = 1 | D = 1, T = 1)
+    &= \frac{P(G = 1 , D = 1, T = 1)}{P(D = 1, T = 1)}\\
+    &= \frac{0.08}{0.08 + 0.02} = 0.8 \\
+    P(G = 1 | D = 0, T = 1)
+    &= \frac{P(G = 1 , D = 0, T = 1)}{P(D = 0, T = 1)}\\
+    &= \frac{0.28}{0.28 + 0.07} = 0.8
+\end{align*}
+$$
+Yes: $P(G = 1 | D = 0, T = 1) = P(G = 1 | D = 1, T = 1)$
+</p>
+
+
+
+<p>Which of these definitions seems right to you? One can prove that you cant satisfy all of the above simultaneously. For a deeper treatment of the subject, here is a useful summary of the latest research <a href="https://arxiv.org/pdf/2001.09784.pdf">Pessach et al. Algorithmic Fairness</a>.
+
+	<h2>Gender Shades</h2>
+
+	<p>
+		In 2018, Joy Buolamwini and Timnit Gebru had a breakthrough result called "gender shades" published in the first conference on Fairness, Accountability and Transparency in ML [1]. They showed that facial recognition algorithms, which had been deployed to be used by Facebook, IBM and Microsoft, were substantially better at making predicitons (in this case classifying gender) when looking at lighter skinned men than darker skinned women. Their work exposed several shortcomings in production AI: biased datasets, optimizing for average accuracy (which means that the majority demographic gets most weight) lack of awarness of intersectionality, and more. Let's take a look at some of their results.
+	</p>
+
+	<p>
+	<center>
+		<img class="mainFigureFull" src="https://miro.medium.com/max/1400/1*Sg81uc_OSuKclyA9-Dtk3w.png"></img><br/>
+		<i>Figure by Joy Buolamwini and Timnit Gebru. Facial recognition algorithms perform very differently depending on who they are looking at.</i> [1]
+	</center>
+	</p>
+
+	<p>Timnit and Joy looked at three classifiers trained to predict gender, and computed several statistics. Lets take a look at one statistic, accuracy, for one of the facial recognition classifiers, IBMs:
+
+	<table class="table" style="text-align: center">
+		<thead class="">
+		<tr>
+			<th></th>
+			<!-- <td>Overall</td> -->
+			<th>Women</th>
+			<th>Men</th>
+			
+			<th>Darker</th>
+			<th>Lighter</th>
+		</tr>
+	</thead>
+		<tr>
+			<td style="text-align: left">Accuracy</td>
+			<!-- <td>87.9</td> -->
+			<td>79.7</td>
+			<td>94.4</td>
+			<td>77.6</td>
+			<td>96.8</td>
+		</tr>
+	</table>
+
+	<p>Using the language of fairness, accuracy measures $\p(G=T)$. The cell in the table above under "Women" says the accuracy when looking at photos of women $\p(G=T|D = \text{Women})$. It is easy to show that these production level systems are terribly "uncalibrated":
+		$$\p(G=T|D = \text{Woman}) \neq \p(G=T|D = \text{Man})$$
+		$$\p(G=T|D = \text{Lighter}) \neq \p(G=T|D = \text{Darker})$$
+
+		<p>Why should we care about callibration and not the other definitions of fairness? In the case the classifier was making a prediction of gender where a positive prediction (say predicting women) doesn't have directly associated reward as in our above example, where we were predicting if someone should receive a loan. As such the most salient idea is: is the algorithm just as accurate for different genders (callibration)?</p>
+
+	<p>The lack of callibration between men/women and lighter/darker skined photos is an issue. What Joy and Timnit showed next was that the problem becomes even worse when you look at intersectional demographics.</p>
+
+	<table class="table" style="text-align: center">
+		<thead class="">
+		<tr>
+			<th></th>
+			<th>Darker Men</th>
+			<th>Darker Women</th>
+			<th>Lighter Men</th>
+			<th>Lighter Women</th>
+		</tr>
+		</thead>
+		<tr>
+			<td style="text-align: left">Accuracy</td>
+			<td>88.0</td>
+			<td class="table-danger">65.3</td>
+			<td class="table-success">99.7</td>
+			<td>92.9</td>
+		</tr>
+	</table>
+
+	<p>
+		If the algorithms were "fair" according to the callibration you would expect the accuracy to be the same regardness of demographics. Instead there is alomst a 34.2 percentage point difference! $\p(G=T|D = \text{Darker Woman})$ = 65.3 compared to $\p(G=T|D = \text{Ligher Man}) = 99.7$
+	</p>
+
+	<p>[1] <a href="http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf"> Buolamwini, Gebru. Gender Shades. 2018</a></p>
+
+<h2>Ways Forward?</h2>
+
+
+<p><a href="http://stanford.edu/~cpiech/bio/papers/fairnessAdversary.pdf">Wadsworth et al. Achieving Fairness through Adversarial Learning</a></p>
 
                         
 

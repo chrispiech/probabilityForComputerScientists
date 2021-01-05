@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Bridge Distribution</title>
+<title>Bridge Card Game</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,10 +21,15 @@
  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 <!-- D3 CDN -->
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+<!-- PDF JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
 
 <!-- Lunr CDN -->
  <script src="https://unpkg.com/lunr/lunr.js"></script>
@@ -137,7 +142,7 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <!-- <div></div> -->
-        <a style="text-align:center" href="../../"><h3><i class="fas fa-book-open"></i><br/> Probability for a <br/>Digital World<br/></h3></a>
+        <a style="text-align:center" href="../../"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
     </div>
 
     <div> 
@@ -152,9 +157,6 @@
 <!-- intro -->
 <ul class="list-unstyled components">
 <li>
-<a id=sidebar-intro href="../../intro/intro">Introduction</a>
-<a id=sidebar-notation href="../../intro/notation">Notation</a>
-<a id=sidebar-prob_code href="../../intro/prob_code">Probability in Code</a>
 </li>
 </ul>
 
@@ -173,6 +175,13 @@
 <a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
 <a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
 <a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+
+<li>
+    <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part1_examples">
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li><li><a href="../../examples/many_flips">Many Coin Flips</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -190,6 +199,13 @@
 <a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
 <a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
 <a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
+
+<li>
+    <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part2_examples">
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -198,14 +214,13 @@
 <li><p href="{pathToLang}part3">Part 3: Probabilistic Models</p></li>
 <li>
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
-<a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-variable_bayes href="../../part3/variable_bayes">Bayes Theorem Revisited</a>
-<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
-<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
-<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
-<a id=sidebar-sampling_revisited href="../../part3/sampling_revisited">Sampling Revisited</a>
-<a id=sidebar-computational_inference href="../../part3/computational_inference">Computational Inference</a>
+
+<li>
+    <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part3_examples">
+        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -218,6 +233,13 @@
 <a id=sidebar-parameters href="../../part4/parameters">Uncertainty in Parameters</a>
 <a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
 <a id=sidebar-bounds href="../../part4/bounds">Probability Bounds</a>
+
+<li>
+    <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part4_examples">
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -232,31 +254,19 @@
 <a id=sidebar-linear_regression href="../../part5/linear_regression">Linear Regression</a>
 <a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
 <a id=sidebar-neural_nets href="../../part5/neural_nets">Artificial Neural Networks</a>
-</li>
-</ul>
 
-<!-- examples -->
-<ul class="list-unstyled components">
-<li><p href="{pathToLang}examples">Examples</p></li>
 <li>
-<a id=sidebar-enigma href="../../examples/enigma">Enigma Machine</a>
-<a id=sidebar-prob_baby_delivery href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a>
-<a id=sidebar-bacteria_evolution href="../../examples/bacteria_evolution">Bacteria Evolution</a>
-<a id=sidebar-fast_dot_com href="../../examples/fast_dot_com">Fast.com</a>
-<a id=sidebar-greenhouse_effect href="../../examples/greenhouse_effect">Greenhouse Effect</a>
-<a id=sidebar-bridge_distribution href="../../examples/bridge_distribution">Bridge Distribution</a>
-<a id=sidebar-curse_of_dimensionality href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a>
-<a id=sidebar-period_tracker href="../../examples/period_tracker">Period Tracker</a>
-<a id=sidebar-fairness href="../../examples/fairness">Fairness</a>
-<a id=sidebar-climate_sensitivity href="../../examples/climate_sensitivity">Climate Sensitivity</a>
-<a id=sidebar-age_given_names href="../../examples/age_given_names">Age Given Name</a>
-<a id=sidebar-grades_not_normal href="../../examples/grades_not_normal">Grades are Not Normal</a>
+    <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part5_examples">
+        <li><a href="../../examples/vision_test">Vision Test</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
 
 
-    <ul class="list-unstyled components">
+    <!-- <ul class="list-unstyled components">
         
          <li>
             <p>Part ?: Misfits</p>
@@ -268,7 +278,7 @@
              <a href="../../">Law of Total Expectation</a>
             
         </li>
-    </ul>
+    </ul> -->
 
 
 
@@ -298,52 +308,72 @@
               
                         
  
-<center><h1>Bridge Distribution</h1></center>
+<center><h1>Bridge Card Game</h1></center>
 <hr/>
 
 <p>
-	<div class="bordered">
+	<div>
 
-		<p><b><i>Example</i>: Distribution of suit splits</b></p>
+		<h2>Distribution of Suit Splits</h2>
+
 
 <p>
-	Imagine that there are cards split between two equal sized hands. Across the two hands there are a known number of cards of a particular suit (eg spades), and you want to know how many are in one hand and how many are in the other. What is the probability of the split? This problem comes up in the game of <a href="https://en.wikipedia.org/wiki/Contract_bridge">bridge</a> but you could imagine similar logic extending to other card games.
+	Imagine that randomly shuffled cards are split between <b>two</b> equal sized <a href="https://en.wikipedia.org/wiki/Glossary_of_card_game_terms">hands</a>. Across the two hands there are a known number of cards of a particular suit (eg spades), and you want to know how many are in one hand and how many are in the other. What is the probability of the split? This problem comes up in the game of <a href="https://en.wikipedia.org/wiki/Contract_bridge">bridge</a>, one of the most popular card games. You do not need to know the rules of bridge to follow this example.
 </p>
 
 <p>
 
-$k$ cards left in each player's hand: <input onchange="redrawGraph()" type="number" class="form-control example-inline-input mb-3" id="k" min="0" max="26" value="13" step = "1">
+$k$, the number of cards in each player's hand: <input onchange="redrawGraph()" type="number" class="form-control example-inline-input mb-1" id="k" min="0" max="26" value="13" step = "1">
 
 <br/>
 
-$n$ cards of particular suit outstanding: <input onchange="redrawGraph()" type="number" class="form-control example-inline-input mb-3" id="n" min="0" max="13" value="5" step = "1">
+$n$, the number of cards of particular suit among the two hands: <input onchange="redrawGraph()" type="number" class="form-control example-inline-input" id="n" min="0" max="13" value="5" step = "1">
 </p>
 <p>A few notes: If there are $k$ cards in each of the 2 hands there are $2 k$ cards total. At the start of a game of bridge $k=13$. It must be the case that $n \leq 2  k$ because you can't have more cards of the suit left than number of cards! If there are $n$ of a suit, then there are $2k -n$ of other suits. This problem assumes that the cards are properly shuffled.
 
 </p>
 
 <b>Probability of different splits of the suit:</b>
-<p>
-	If we want to think about the probability of a given split, it is sufficient to chose one hand (call it hand1) and think about the probability of the number of the given suit in that hand. Though there are two hands, if I tell you how many of a suit are in one hand, you can automatically figure out how many of the suit are in the other hand: the number of the suit sums to $n$. 
-	</p>
 
-	<p>Let $Y$ be a random variable representing the number of the suit in hand1. We can calculate the probability that $Y$ equals different values $y$ by counting equally likely outcomes.
+	<p>Let $Y$ be a random variable representing the number of the suit in hand one. We can calculate the probability that $Y$ equals different values $i$ by counting equally likely outcomes.
 $$\p(Y = i) = \frac
 	{ {n \choose i} \cdot {2\cdot k-n \choose k-i} }
 	{ {2\cdot k \choose k}}$$
 <canvas id="bridgeGraphEqual" style="max-height: 500px"></canvas>
 
+<p>
+	If we want to think about the probability of a given split, it is sufficient to chose one hand (call it "hand one") and think about the probability of the number of the given suit in that hand. Though there are two hands, if I tell you how many of a suit are in one hand, you can automatically figure out how many of the suit are in the other hand: recall that the number of the suit sums to $n$. 
+	</p>
+
+
 <div style="height:20px"></div>
 
 <b>Probability that either hand has at least $j$ cards of suit</b>
+<p>Let $X$ be a random variable representing the highest number of cards of the suit in <i>either</i> hand. We can calculate the probability by using probability of or.
 $$\p(X \geq j) = 1 - \sum_{i=n-j+1}^{j - 1}\p(Y= i)$$
 <canvas id="bridgeGraphOver" style="max-height: 500px"></canvas>
 </div>
 </p>
 
 <p>
-	<div class="bordered">
+	<div class="">
+		<h2>Distribution of Hand Strength</h2>
 <canvas id="bridgePoints" style="max-height: 500px"></canvas>
+<p>You might notice that at first blush this looks a lot like a poisson with rate $\lambda = 10$. First, lets consider why the rate might be 10. Let $X_i$ be the points of a given card $i$.  Since each card value is equally likely $\p(X_i=x) = \frac{1}{13}$. The expectation of points for each card is $\E[X] = \sum_x x \cdot \p(X_i=x) = (1+2+3+4)\frac{1}{13}$. Let $H$ be the value of a hand. The value of a hand is the sum of the value of each card: 
+	$$
+	\begin{align}\E[H] &= \sum_{i\in \{1 \dots 13\}} \E[X_i] \\&= 13 \cdot \E[X_i] \\&= 13 \cdot (1+2+3+4)\frac{1}{13} = 10\end{align}$$
+Saying that $H$ is approximately $\sim \Poi(\lambda=10)$ is an interesting claim. It suggests that points in a hand come at a constant rate, and that the next point in your hand is independent of when you got your last point. Of course this second part of the assumption is mildly violated. There are a fixed set of cards so getting one card changes the probabilities of others. For this reason the poisson is a close, but not perfect approximation.
+
+<p><b>Joint distribution of the score of each of two hands</b></p>
+<p>In most card games it doesn't just matter how strong your hand is, but the relative strength of your hand and another hand. In bridge, you play with a partner. We know that the two hands are not independent of each other. If I tell you that your partner has a strong hand, that means there are fewer "high value" cards that can be in your hand, and as such by belief in your strength has changed. 
+<p>
+	<div style=""id="my_dataviz"></div>
+</p>
+
+
+Your points: <input onchange="redrawCondGraph()" type="number" class="form-control example-inline-input mb-3" id="yourPoints" min="0" max="26" value="13" step = "1">
+<canvas id="partnerPoints" style="max-height: 500px"></canvas>
+
 	</div>
 </p>
 
@@ -352,12 +382,29 @@ $$\p(X \geq j) = 1 - \sum_{i=n-j+1}^{j - 1}\p(Y= i)$$
 let charts = {}
 
 $(document).ready(function() {
-	console.log(jStat.combination(8, 0))
 	redrawGraph()
 	drawPointsDistribution()
+	drawJointPoints()
 })
 
+function redrawCondGraph() {
+	let yourPoints = parseInt($("#yourPoints").val())
 
+	let partnerDist = []
+	let original = BRIDGE_JOINT[yourPoints]
+	for (var i = 0; i < original.length; i++) {
+		partnerDist.push(original[i])
+	}
+	normalize([partnerDist])
+
+	let dataCond = []
+	for(let i = 0; i < partnerDist.length; i++) {
+		let pr = partnerDist[i]
+		dataCond.push([i, pr.toFixed(5)])
+	}
+	drawGraph(charts, 'partnerPoints', dataCond, 'x', 'Pr(Partner = x)')
+
+}
 
 function redrawGraph() {
 	let n = parseInt($("#n").val())
@@ -366,18 +413,17 @@ function redrawGraph() {
 	let dataEqual = []
 	for(let j = 0; j <= n; j++) {
 		let prEqual = calcPrEqual(k, n, j)
-		// console.log(k, n, j, prEqual)
 		let x = `(${j}, ${n-j})`
 		dataEqual.push([x, prEqual.toFixed(3)])
 	}
-	drawGraph(charts, 'bridgeGraphEqual', dataEqual, 'Split (i, n-i)', 'Pr(split)')
+	drawGraph(charts, 'bridgeGraphEqual', dataEqual, 'Split (i, n-i)', 'Pr(Y = i)')
 
 	let dataOver = []
 	for(let j = 0; j <= n; j++) {
 		let prOverJ = calcPrOverJ(k, n, j)
 		dataOver.push([j, prOverJ.toFixed(3)])
 	}
-	drawGraph(charts, 'bridgeGraphOver', dataOver, 'Values of j', 'Pr(Y ≥ j)')
+	drawGraph(charts, 'bridgeGraphOver', dataOver, 'Values of j', 'Pr(X ≥ j)')
 }
 
 function calcPrOverJ(k, n, j) {
@@ -400,8 +446,14 @@ function calcPrEqual(k, n, i) {
 	if(k/2 - i <= k -n ) {
 		t2 = jStat.combination(k - n, k/2-i)
 	}
-	console.log(t1, t2, denom)
 	return t1 * t2 / denom
+}
+
+function drawJointPoints() {
+	let pointsData = BRIDGE_JOINT
+	normalize(pointsData)
+	drawGrid(charts, 'my_dataviz', pointsData)
+	redrawCondGraph()
 }
 
 function drawPointsDistribution() {
@@ -436,15 +488,42 @@ function drawPointsDistribution() {
 		[27,0.00004425],
 		[28,0.0000195],
 		[29,0.00000775],
-		[30,0.0000015],
-		[31,0.00000075],
-		[32,0.0000005],
-		[33,0],
-		[34,0],
-		[35,0]
+		[30,0.0000015]
 	]
 	drawGraph(charts, 'bridgePoints', pointsData, 'x points in your hand', 'Pr(X=x)')
 }
+
+BRIDGE_JOINT = [[4,36,83,187,295,561,956,1372,2014,2548,3122,3640,3880,4044,4042,3610,3119,2837,2112,1658,1214,811,529,315,208,118,50,38,15,5,2],
+[36,96,223,463,974,1549,2455,3557,4786,5815,7065,7919,8526,8760,8334,7592,6587,5573,4334,3257,2464,1567,1029,646,352,202,110,39,22,10,3],
+[83,223,480,1036,1970,3157,4922,6813,8869,11134,12687,14216,14888,14876,13976,12553,11041,8879,6840,5154,3677,2441,1437,910,541,277,181,71,30,10,6],
+[187,463,1036,2238,4172,6499,9700,13568,17255,21259,24614,26642,27036,26554,24772,21865,18403,14792,11079,8307,5660,3769,2300,1320,783,375,188,86,30,14,7],
+[295,974,1970,4172,7484,11402,16962,23385,29576,35056,39710,42755,43233,40967,38116,32856,26954,21252,15810,11069,7596,4873,2911,1639,918,415,223,84,34,8,5],
+[561,1549,3157,6499,11402,17408,24889,34801,42558,49760,55272,58287,57536,54546,48902,41380,33486,26005,18475,13074,8609,5428,3059,1777,888,429,216,82,34,7,2],
+[956,2455,4922,9700,16962,24889,35190,47501,57819,65760,72304,74626,72622,67671,60052,49119,39006,29384,20966,14286,9137,5542,3137,1665,866,397,192,73,29,7,3],
+[1372,3557,6813,13568,23385,34801,47501,62946,75202,85028,91182,92602,88417,80169,69357,55949,43842,31957,22130,14839,9293,5339,2840,1567,706,310,147,47,17,7,0],
+[2014,4786,8869,17255,29576,42558,57819,75202,88946,97770,102889,102988,96137,85596,72411,57169,43796,31017,20891,13594,8288,4604,2458,1256,564,250,99,31,12,2,2],
+[2548,5815,11134,21259,35056,49760,65760,85028,97770,106126,109734,107457,98910,85362,70878,55042,40580,28427,18496,11543,6781,3818,1838,923,437,156,67,16,5,2,0],
+[3122,7065,12687,24614,39710,55272,72304,91182,102889,109734,110988,106614,95617,80768,65595,49582,36154,24555,15583,9358,5319,2758,1382,606,259,78,25,10,0,0,0],
+[3640,7919,14216,26642,42755,58287,74626,92602,102988,107457,106614,100378,87800,73056,57425,42358,29423,19626,11964,6976,3899,1962,844,365,144,50,14,6,0,0,0],
+[3880,8526,14888,27036,43233,57536,72622,88417,96137,98910,95617,87800,74848,60663,46687,33511,22835,14573,8593,4785,2597,1209,509,201,66,28,7,1,0,0,0],
+[4044,8760,14876,26554,40967,54546,67671,80169,85596,85362,80768,73056,60663,48298,36195,25055,16486,10038,5677,3138,1530,673,278,74,39,10,2,1,0,0,0],
+[4042,8334,13976,24772,38116,48902,60052,69357,72411,70878,65595,57425,46687,36195,26012,17508,11135,6684,3596,1842,839,350,134,48,13,3,0,0,0,0,0],
+[3610,7592,12553,21865,32856,41380,49119,55949,57169,55042,49582,42358,33511,25055,17508,10980,6906,3930,2034,1051,442,154,51,12,5,1,0,0,0,0,0],
+[3119,6587,11041,18403,26954,33486,39006,43842,43796,40580,36154,29423,22835,16486,11135,6906,4004,2133,996,451,170,67,20,2,0,0,0,0,0,0,0],
+[2837,5573,8879,14792,21252,26005,29384,31957,31017,28427,24555,19626,14573,10038,6684,3930,2133,1108,502,196,79,28,9,0,0,0,0,0,0,0,0],
+[2112,4334,6840,11079,15810,18475,20966,22130,20891,18496,15583,11964,8593,5677,3596,2034,996,502,180,66,20,9,0,0,0,0,0,0,0,0,0],
+[1658,3257,5154,8307,11069,13074,14286,14839,13594,11543,9358,6976,4785,3138,1842,1051,451,196,66,22,5,0,0,0,0,0,0,0,0,0,0],
+[1214,2464,3677,5660,7596,8609,9137,9293,8288,6781,5319,3899,2597,1530,839,442,170,79,20,5,0,0,0,0,0,0,0,0,0,0,0],
+[811,1567,2441,3769,4873,5428,5542,5339,4604,3818,2758,1962,1209,673,350,154,67,28,9,0,0,0,0,0,0,0,0,0,0,0,0],
+[529,1029,1437,2300,2911,3059,3137,2840,2458,1838,1382,844,509,278,134,51,20,9,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[315,646,910,1320,1639,1777,1665,1567,1256,923,606,365,201,74,48,12,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[208,352,541,783,918,888,866,706,564,437,259,144,66,39,13,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[118,202,277,375,415,429,397,310,250,156,78,50,28,10,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[50,110,181,188,223,216,192,147,99,67,25,14,7,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[38,39,71,86,84,82,73,47,31,16,10,6,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[15,22,30,30,34,34,29,17,12,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[5,10,10,14,8,7,7,7,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[2,3,6,7,5,2,3,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
 </script>
 
                         

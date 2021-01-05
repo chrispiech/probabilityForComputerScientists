@@ -120,6 +120,10 @@ purpleBox:
   max-width: min(500px,100%)
 }
 
+.mainFigureXl {
+  max-width: min(600px,100%)
+}
+
 .mainFigureFull {
   width:100%;
 }
@@ -203,7 +207,7 @@ purpleBox:
     height: 100vh;
     z-index: 9999;
     background: #333;/*#7386D5;*/
-    color: #fff;
+    color: #ccc;
     transition: all 0.3s;
     overflow-y: scroll;
 }
@@ -234,7 +238,7 @@ purpleBox:
 }
 
 #sidebar ul p {
-    color: #fff;
+    color: #eee;
     font-size: 1.1em;
     padding-left: 10px;
     margin:0px;
@@ -248,14 +252,14 @@ purpleBox:
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: #222;
     background: #fff;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #333;
 }
 
 a[data-toggle="collapse"] {
@@ -297,9 +301,9 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-    font-size: 0.9em !important;
+    font-size: 1.0em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #333;
 }
 
 ul.CTAs {

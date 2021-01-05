@@ -1,0 +1,325 @@
+
+% rebase('templates/chapter.html', title="Many Coin Flips")
+ 
+<center><h1>Many Coin Flips</h1></center>
+<hr/>
+
+<p>In this section we are going to consider the number of heads on $n$ coin flips. This thought experiment is going to be a basis for much probability theory! It goes far beyond coin flips.</p>
+
+<p>Say a coin comes up heads with probability $p$. Most coins are fair and as such come up heads with probability $p=0.5$. There are many events for which coin flips are a great analogy that have different values of $p$ so lets leave $p$ as a variable. You can try simulating coins here. Note that <code class="blue">H</code> is short for Heads and <code>T</code> is short for Tails. We think of each coin as distinct:</p>
+
+<p>
+%include('chapters/examples/many_flips/simulator.html')
+</p>
+
+<p>
+	Let's explore a few probability questions in this domain.
+</p>
+
+<h2>Warmups</h2>
+
+<p>
+	<b>What is the probability that all $n$ flips are heads?</b><br/>
+	<div class="bordered">
+
+		Lets say $n=10$ this question is asking what is the probability of getting:
+		<pre class="language-python"><code class="coins">H, H, H, H, H, H, H, H, H, H</code></pre>
+		
+		Each coin flip is independent so we can use the rule for <a href="{{pathToLang}}part1/prob_and">probability of <b>and</b> with independent events</a>. As such, the probability of $n$ heads is  $p$ multiplied by itself $n$ times: $p^n$. If $n=10$ and $p=0.6$ then the probability of $n$ heads is around 0.006.
+	</div>
+</p>
+
+<p>
+	<b>What is the probability that all $n$ flips are tails?</b><br/>
+	<div class="bordered">
+
+		Lets say $n=10$ this question is asking what is the probability of getting:
+		<pre class="language-python"><code class="coins">T, T, T, T, T, T, T, T, T, T</code></pre>
+		
+		Each coin flip is independent. The probability of tails on any coin flip is $1-p$. Again, since the coin flips are independent, the probability of tails $n$ times on $n$ flips is $(1-p)$ multiplied by itself $n$ times: $(1-p)^n$. If $n=10$ and $p=0.6$ then the probability of $n$ tails is around 0.0001.
+	</div>
+</p>
+
+<p>
+	<b>First $k$ heads then $n-k$ tails</b><br/>
+	<div class="bordered">
+
+		Lets say $n=10$ and $k=4$, this question is asking what is the probability of getting:
+		<pre class="language-python"  style="height:50px;"><code class="coins">H, H, H, H, T, T, T, T, T, T</code></pre>
+		
+		The coins are still independent! The first $k$ heads occur with probability $p^k$ the run of $n-k$ tails occurs with probability $(1-p)^{n-k}$. The probability of $k$ heads then $n-k$ tails is the product of those two terms: $p^k \cdot (1-p)^{n-k}$
+	</div>
+</p>
+
+<h2>Exactly $k$ heads</h2>
+
+<p>Next lets try to figure out the probability of exactly $k$ heads in the $n$ flips. Importantly we don't care where in the $n$ flips that we get the heads, as long as there are $k$ of them. Note that this question is different than the question of first $k$ heads and then $n-k$ tails which requires that the $k$ heads come first! That particular result does generate exactly $k$ coin flips, but there are others.</p>
+
+<p>There are many others! In fact any permutation of $k$ heads and $n-k$ tails will satisfy this event. Lets ask the computer to list them all for exactly $k=4$ heads within $n=10$ coin flips. The output region is scrollable:
+
+<pre style="height:400px" class="language-python"><code class="coins">(H, H, H, H, T, T, T, T, T, T)
+(H, H, H, T, H, T, T, T, T, T)
+(H, H, H, T, T, H, T, T, T, T)
+(H, H, H, T, T, T, H, T, T, T)
+(H, H, H, T, T, T, T, H, T, T)
+(H, H, H, T, T, T, T, T, H, T)
+(H, H, H, T, T, T, T, T, T, H)
+(H, H, T, H, H, T, T, T, T, T)
+(H, H, T, H, T, H, T, T, T, T)
+(H, H, T, H, T, T, H, T, T, T)
+(H, H, T, H, T, T, T, H, T, T)
+(H, H, T, H, T, T, T, T, H, T)
+(H, H, T, H, T, T, T, T, T, H)
+(H, H, T, T, H, H, T, T, T, T)
+(H, H, T, T, H, T, H, T, T, T)
+(H, H, T, T, H, T, T, H, T, T)
+(H, H, T, T, H, T, T, T, H, T)
+(H, H, T, T, H, T, T, T, T, H)
+(H, H, T, T, T, H, H, T, T, T)
+(H, H, T, T, T, H, T, H, T, T)
+(H, H, T, T, T, H, T, T, H, T)
+(H, H, T, T, T, H, T, T, T, H)
+(H, H, T, T, T, T, H, H, T, T)
+(H, H, T, T, T, T, H, T, H, T)
+(H, H, T, T, T, T, H, T, T, H)
+(H, H, T, T, T, T, T, H, H, T)
+(H, H, T, T, T, T, T, H, T, H)
+(H, H, T, T, T, T, T, T, H, H)
+(H, T, H, H, H, T, T, T, T, T)
+(H, T, H, H, T, H, T, T, T, T)
+(H, T, H, H, T, T, H, T, T, T)
+(H, T, H, H, T, T, T, H, T, T)
+(H, T, H, H, T, T, T, T, H, T)
+(H, T, H, H, T, T, T, T, T, H)
+(H, T, H, T, H, H, T, T, T, T)
+(H, T, H, T, H, T, H, T, T, T)
+(H, T, H, T, H, T, T, H, T, T)
+(H, T, H, T, H, T, T, T, H, T)
+(H, T, H, T, H, T, T, T, T, H)
+(H, T, H, T, T, H, H, T, T, T)
+(H, T, H, T, T, H, T, H, T, T)
+(H, T, H, T, T, H, T, T, H, T)
+(H, T, H, T, T, H, T, T, T, H)
+(H, T, H, T, T, T, H, H, T, T)
+(H, T, H, T, T, T, H, T, H, T)
+(H, T, H, T, T, T, H, T, T, H)
+(H, T, H, T, T, T, T, H, H, T)
+(H, T, H, T, T, T, T, H, T, H)
+(H, T, H, T, T, T, T, T, H, H)
+(H, T, T, H, H, H, T, T, T, T)
+(H, T, T, H, H, T, H, T, T, T)
+(H, T, T, H, H, T, T, H, T, T)
+(H, T, T, H, H, T, T, T, H, T)
+(H, T, T, H, H, T, T, T, T, H)
+(H, T, T, H, T, H, H, T, T, T)
+(H, T, T, H, T, H, T, H, T, T)
+(H, T, T, H, T, H, T, T, H, T)
+(H, T, T, H, T, H, T, T, T, H)
+(H, T, T, H, T, T, H, H, T, T)
+(H, T, T, H, T, T, H, T, H, T)
+(H, T, T, H, T, T, H, T, T, H)
+(H, T, T, H, T, T, T, H, H, T)
+(H, T, T, H, T, T, T, H, T, H)
+(H, T, T, H, T, T, T, T, H, H)
+(H, T, T, T, H, H, H, T, T, T)
+(H, T, T, T, H, H, T, H, T, T)
+(H, T, T, T, H, H, T, T, H, T)
+(H, T, T, T, H, H, T, T, T, H)
+(H, T, T, T, H, T, H, H, T, T)
+(H, T, T, T, H, T, H, T, H, T)
+(H, T, T, T, H, T, H, T, T, H)
+(H, T, T, T, H, T, T, H, H, T)
+(H, T, T, T, H, T, T, H, T, H)
+(H, T, T, T, H, T, T, T, H, H)
+(H, T, T, T, T, H, H, H, T, T)
+(H, T, T, T, T, H, H, T, H, T)
+(H, T, T, T, T, H, H, T, T, H)
+(H, T, T, T, T, H, T, H, H, T)
+(H, T, T, T, T, H, T, H, T, H)
+(H, T, T, T, T, H, T, T, H, H)
+(H, T, T, T, T, T, H, H, H, T)
+(H, T, T, T, T, T, H, H, T, H)
+(H, T, T, T, T, T, H, T, H, H)
+(H, T, T, T, T, T, T, H, H, H)
+(T, H, H, H, H, T, T, T, T, T)
+(T, H, H, H, T, H, T, T, T, T)
+(T, H, H, H, T, T, H, T, T, T)
+(T, H, H, H, T, T, T, H, T, T)
+(T, H, H, H, T, T, T, T, H, T)
+(T, H, H, H, T, T, T, T, T, H)
+(T, H, H, T, H, H, T, T, T, T)
+(T, H, H, T, H, T, H, T, T, T)
+(T, H, H, T, H, T, T, H, T, T)
+(T, H, H, T, H, T, T, T, H, T)
+(T, H, H, T, H, T, T, T, T, H)
+(T, H, H, T, T, H, H, T, T, T)
+(T, H, H, T, T, H, T, H, T, T)
+(T, H, H, T, T, H, T, T, H, T)
+(T, H, H, T, T, H, T, T, T, H)
+(T, H, H, T, T, T, H, H, T, T)
+(T, H, H, T, T, T, H, T, H, T)
+(T, H, H, T, T, T, H, T, T, H)
+(T, H, H, T, T, T, T, H, H, T)
+(T, H, H, T, T, T, T, H, T, H)
+(T, H, H, T, T, T, T, T, H, H)
+(T, H, T, H, H, H, T, T, T, T)
+(T, H, T, H, H, T, H, T, T, T)
+(T, H, T, H, H, T, T, H, T, T)
+(T, H, T, H, H, T, T, T, H, T)
+(T, H, T, H, H, T, T, T, T, H)
+(T, H, T, H, T, H, H, T, T, T)
+(T, H, T, H, T, H, T, H, T, T)
+(T, H, T, H, T, H, T, T, H, T)
+(T, H, T, H, T, H, T, T, T, H)
+(T, H, T, H, T, T, H, H, T, T)
+(T, H, T, H, T, T, H, T, H, T)
+(T, H, T, H, T, T, H, T, T, H)
+(T, H, T, H, T, T, T, H, H, T)
+(T, H, T, H, T, T, T, H, T, H)
+(T, H, T, H, T, T, T, T, H, H)
+(T, H, T, T, H, H, H, T, T, T)
+(T, H, T, T, H, H, T, H, T, T)
+(T, H, T, T, H, H, T, T, H, T)
+(T, H, T, T, H, H, T, T, T, H)
+(T, H, T, T, H, T, H, H, T, T)
+(T, H, T, T, H, T, H, T, H, T)
+(T, H, T, T, H, T, H, T, T, H)
+(T, H, T, T, H, T, T, H, H, T)
+(T, H, T, T, H, T, T, H, T, H)
+(T, H, T, T, H, T, T, T, H, H)
+(T, H, T, T, T, H, H, H, T, T)
+(T, H, T, T, T, H, H, T, H, T)
+(T, H, T, T, T, H, H, T, T, H)
+(T, H, T, T, T, H, T, H, H, T)
+(T, H, T, T, T, H, T, H, T, H)
+(T, H, T, T, T, H, T, T, H, H)
+(T, H, T, T, T, T, H, H, H, T)
+(T, H, T, T, T, T, H, H, T, H)
+(T, H, T, T, T, T, H, T, H, H)
+(T, H, T, T, T, T, T, H, H, H)
+(T, T, H, H, H, H, T, T, T, T)
+(T, T, H, H, H, T, H, T, T, T)
+(T, T, H, H, H, T, T, H, T, T)
+(T, T, H, H, H, T, T, T, H, T)
+(T, T, H, H, H, T, T, T, T, H)
+(T, T, H, H, T, H, H, T, T, T)
+(T, T, H, H, T, H, T, H, T, T)
+(T, T, H, H, T, H, T, T, H, T)
+(T, T, H, H, T, H, T, T, T, H)
+(T, T, H, H, T, T, H, H, T, T)
+(T, T, H, H, T, T, H, T, H, T)
+(T, T, H, H, T, T, H, T, T, H)
+(T, T, H, H, T, T, T, H, H, T)
+(T, T, H, H, T, T, T, H, T, H)
+(T, T, H, H, T, T, T, T, H, H)
+(T, T, H, T, H, H, H, T, T, T)
+(T, T, H, T, H, H, T, H, T, T)
+(T, T, H, T, H, H, T, T, H, T)
+(T, T, H, T, H, H, T, T, T, H)
+(T, T, H, T, H, T, H, H, T, T)
+(T, T, H, T, H, T, H, T, H, T)
+(T, T, H, T, H, T, H, T, T, H)
+(T, T, H, T, H, T, T, H, H, T)
+(T, T, H, T, H, T, T, H, T, H)
+(T, T, H, T, H, T, T, T, H, H)
+(T, T, H, T, T, H, H, H, T, T)
+(T, T, H, T, T, H, H, T, H, T)
+(T, T, H, T, T, H, H, T, T, H)
+(T, T, H, T, T, H, T, H, H, T)
+(T, T, H, T, T, H, T, H, T, H)
+(T, T, H, T, T, H, T, T, H, H)
+(T, T, H, T, T, T, H, H, H, T)
+(T, T, H, T, T, T, H, H, T, H)
+(T, T, H, T, T, T, H, T, H, H)
+(T, T, H, T, T, T, T, H, H, H)
+(T, T, T, H, H, H, H, T, T, T)
+(T, T, T, H, H, H, T, H, T, T)
+(T, T, T, H, H, H, T, T, H, T)
+(T, T, T, H, H, H, T, T, T, H)
+(T, T, T, H, H, T, H, H, T, T)
+(T, T, T, H, H, T, H, T, H, T)
+(T, T, T, H, H, T, H, T, T, H)
+(T, T, T, H, H, T, T, H, H, T)
+(T, T, T, H, H, T, T, H, T, H)
+(T, T, T, H, H, T, T, T, H, H)
+(T, T, T, H, T, H, H, H, T, T)
+(T, T, T, H, T, H, H, T, H, T)
+(T, T, T, H, T, H, H, T, T, H)
+(T, T, T, H, T, H, T, H, H, T)
+(T, T, T, H, T, H, T, H, T, H)
+(T, T, T, H, T, H, T, T, H, H)
+(T, T, T, H, T, T, H, H, H, T)
+(T, T, T, H, T, T, H, H, T, H)
+(T, T, T, H, T, T, H, T, H, H)
+(T, T, T, H, T, T, T, H, H, H)
+(T, T, T, T, H, H, H, H, T, T)
+(T, T, T, T, H, H, H, T, H, T)
+(T, T, T, T, H, H, H, T, T, H)
+(T, T, T, T, H, H, T, H, H, T)
+(T, T, T, T, H, H, T, H, T, H)
+(T, T, T, T, H, H, T, T, H, H)
+(T, T, T, T, H, T, H, H, H, T)
+(T, T, T, T, H, T, H, H, T, H)
+(T, T, T, T, H, T, H, T, H, H)
+(T, T, T, T, H, T, T, H, H, H)
+(T, T, T, T, T, H, H, H, H, T)
+(T, T, T, T, T, H, H, H, T, H)
+(T, T, T, T, T, H, H, T, H, H)
+(T, T, T, T, T, H, T, H, H, H)
+(T, T, T, T, T, T, H, H, H, H)</code></pre>
+
+<p>Exactly how many outcomes are there with $k=4$ heads in $n=10$ flips? 210. The answer can be calculated using permutations of indistinct objects: $$N = \frac{n!}{k! (n-k)!} = {n \choose k}$$
+
+<p>The probability of exactly $k=4$ heads is the probability of the <b>or</b> of each of these outcomes. Because we consider each coin to be unique, each of these outcomes is "mutually exclusive" and as such if $E_i$ is the outcome from the $i$th row, $$\p(\text{exactly $k$ heads}) = \sum_{i=1}^N \p(E_i)$$</p>
+
+<p>The next question is, what is the probability of each of these outcomes?</p>
+
+<p>Here is a arbitrarily chosen outcome which satisfies the event of exactly $k=4$ heads in $n=10$ coin flips. In fact it is the one on row 128 in the list above:
+
+	<pre class="language-python"  style="height:50px;"><code class="coins">T, H, T, T, H, T, T, H, H, T</code></pre>
+
+<p>What is the probability of getting the exact sequence of heads and tails in the example above? Each coin flip is still independent, so we multiply $p$ for each heads and $1-p$ for each tails. Let $E_{128}$ be the event of this exact outcome:
+	$$\p(E_{128}) = (1-p) \cdot p \cdot (1-p) \cdot (1-p) \cdot p \cdot (1-p) \cdot (1-p) \cdot p \cdot p \cdot (1-p)$$
+If you rearrange these multiplication terms you get:
+	$$
+	\begin{align}
+	\p(E_{128}) &= p \cdot p \cdot p \cdot p \cdot (1-p) \cdot (1-p) \cdot (1-p) \cdot (1-p) \cdot (1-p) \cdot (1-p)\\
+	&= p^4 \cdot (1-p)^{6}
+	\end{align}
+	$$
+There is nothing too special about row 128. If you chose any row, you would get $k$ independent heads and $n-k$ independent tails. For any row $i$, $\p(E_i) = p^n \cdot (1-p)^{k-n}$. Now we are ready to calculate the probability of exactly $k$ heads:
+
+$$
+\begin{align}
+\p(\text{exactly $k$ heads}) 
+	&= \sum_{i=1}^N \p(E_i) && \text{Mutual Exclusion}\\
+	&= \sum_{i=1}^N p^k \cdot (1-p)^{n-k} && \text{Sub in }\p(E_i) \\
+	&= N \cdot p^k \cdot (1-p)^{n-k} && \text{Sum $N$ times}  \\
+	&= {n \choose k} \cdot p^k \cdot (1-p)^{n-k} && \text{Perm of indistinct objects} 
+\end{align}$$
+
+<h2>More than $k$ heads</h2>
+
+<p>
+	You can use the formula for exactly $k$ heads to compute other probabilities. For example the probability of more than $k$ heads is:
+	$$
+\begin{align}
+\p(\text{more than $k$ heads}) 
+	&= \sum_{i=k+1}^n \p(\text{exactly $i$ heads}) && \text{Mutual Exclusion}\\
+	&= \sum_{i=k+1}^n {n \choose i} \cdot p^i \cdot (1-p)^{n-i} && \text{Substitution}\\
+\end{align}$$
+	</p>
+
+<script>
+
+	$(document).ready(function() {
+		let coins = $(".coins")
+		coins.each(function() {
+			let html = $(this).html()
+			html = html.replaceAll('H', '<span class="blue">H</span>')
+			html = html.replaceAll('T', '<span style="color:#D64F8A;font-weight: bolder;">T</span>')
+			console.log(html)
+			$(this).html(html)
+		})
+	})
+</script>

@@ -98,9 +98,19 @@ function permute(inputArr) {
   return permuteHelper(inputArr);
 }
 
+function normalize(data) {
+	let sum = data.reduce(function(a,b) { return a.concat(b) }) // flatten array
+     .reduce(function(a,b) { return a + b });      // sum
+
+    for (var r = 0; r < data.length; r++) {
+    	let row = data[r]
+    	for (var c = 0; c < row.length; c++) {
+    		row[c] = row[c] / sum
+    	}
+    }
+}
 
 function drawGraph(charts, parentDivId, data, xLabel = 'x', yLabel='Pr'){
-
 	if(charts[parentDivId]) {
 		charts[parentDivId].destroy()
 	}
@@ -165,4 +175,153 @@ function drawGraph(charts, parentDivId, data, xLabel = 'x', yLabel='Pr'){
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	charts[parentDivId]= new Chart(ctx, config);
+}
+
+
+function drawGrid(charts, parentDivId, matrix, rowVar, colVar) {
+	let parentDiv = $("#" + parentDivId)
+	var margin = {top: 40, right: 0, bottom: 0, left: 100};
+
+    let rowLabelWidth = 20
+    let width = parentDiv.width() - rowLabelWidth;
+    let height = width - 70;
+    parentDiv.height(parentDiv.width());
+
+var svg = d3.select("#"+parentDivId).append("svg")
+    .attr("width", width + margin.left + margin.right + rowLabelWidth )
+    .attr("height", height + margin.top + margin.bottom)
+    .style("margin-left", -margin.left + "px")
+  .append("g")
+    .attr("transform", "translate(" + (margin.left+rowLabelWidth) + "," + margin.top + ")");
+
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height);
+
+var numrows = matrix.length;
+var numcols = matrix[0].length;
+
+var x = d3.scale.ordinal()
+    .domain(d3.range(numcols))
+    .rangeBands([0, width]);
+
+var y = d3.scale.ordinal()
+    .domain(d3.range(numrows))
+    .rangeBands([0, height]);
+
+var rowLabels = new Array(numrows);
+for (var i = 0; i < numrows; i++) {
+  rowLabels[i] = i;
+}
+
+var columnLabels = new Array(numrows);
+for (var i = 0; i < numcols; i++) {
+  columnLabels[i] = i;
+}
+
+// create a tooltip
+  var tooltip = d3.select("#" + parentDivId)
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "2px")
+    .style("border-radius", "5px")
+    .style("padding", "5px")
+    .style("position", "absolute")
+
+  // Three function that change the tooltip when user hover / move / leave a cell
+  var mouseover = function(d) {
+  	tooltip
+      .style("opacity", 1)
+  }
+  var mousemove = function(d) {
+  	console.log(d)
+  	console.log(d3.mouse(this), d3.event.pageX, d3.event.pageY)
+    tooltip
+      .html(`${d.toFixed(5)}`)
+      .style("left", (d3.mouse(this)[0]+100) + "px")
+      .style("top", d3.event.pageY + "px")
+  }
+  var mouseleave = function(d) {
+    tooltip.style("opacity", 0)
+  }
+
+var colorMap = d3.scale.linear()
+    .domain([0, 0.009])
+    .range(["white", "blue"]);    
+    //.range(["red", "black", "green"]);
+    //.range(["brown", "#ddd", "darkgreen"]);
+
+var row = svg.selectAll(".row")
+    .data(matrix)
+  .enter().append("g")
+    .attr("class", "row")
+    .attr("transform", function(d, i) { return "translate(0," + y(i) + ")"; });
+
+row.selectAll(".cell")
+    .data(function(d) { return d; })
+  .enter().append("rect")
+    .attr("class", "cell")
+    .attr("x", function(d, i) { return x(i); })
+    .attr("y", function(d, i) { return y(d); })
+    .attr("width", x.rangeBand())
+    .attr("height", y.rangeBand())
+    .style("stroke-width", 0)
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+
+row.append("line")
+    .attr("x2", width);
+
+row.append("text")
+    .attr("x", 0)
+    .attr("y", y.rangeBand() / 2)
+    .attr("dy", ".32em")
+    .attr("text-anchor", "end")
+    .text(function(d, i) { return i; });
+
+var column = svg.selectAll(".column")
+    .data(columnLabels)
+  .enter().append("g")
+    .attr("class", "column")
+    .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(-90)"; });
+
+column.append("line")
+    .attr("x1", -width);
+
+column.append("text")
+    .attr("x", 6)
+    .attr("y", y.rangeBand() / 2)
+    .attr("dy", ".32em")
+    .attr("text-anchor", "start")
+    .text(function(d, i) { return d; });
+
+row.selectAll(".cell")
+    .data(function(d, i) { return matrix[i]; })
+    .style("fill", colorMap);
+}
+
+function drawGridTxt(charts, parentDivId, data) {
+	let html = ''
+	let headHtml = '<th></th>'
+	for (var i = 0; i < data[0].length; i++) {
+		let col = i;
+		headHtml += `<th>${col}</th>`
+	}
+	html += `<tr>${headHtml}</tr>`
+
+	for (var r = 0; r < data.length; r++) {
+		let rowData = data[r]
+		let rowHtml = `<th>${r}</th>`
+		for (var c = 0; c < rowData.length; c++) {
+			let value = rowData[c]
+			rowHtml += `<td>${value.toFixed(5)}</td>`
+		}
+		html += `<tr>${rowHtml}</tr>`
+	}
+	$("#"+parentDivId).html(html)
 }

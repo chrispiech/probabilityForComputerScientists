@@ -1,0 +1,45 @@
+<div class="bordered">
+
+	<p><b>Coin Flip Simulator</b></p>
+<div class="row">
+	<div class="col-6 col-sm-4">
+Number of flips $n$: <input  type="number" class="form-control example-inline-input mb-3" id="n" min="1" value="10" step = "1">
+</div>
+<div class="col-6 col-sm-5">
+Probability of heads $p$: <input  type="number" class="form-control example-inline-input mb-3" id="p" min="0" max="1" value="0.60" step = "0.05">
+</div>
+<div class="col-12 col-sm-2 mb-3">
+<button onclick="simulate()" class="btn btn-primary">New simulation</button>
+</div>
+</div>
+Simulator results:
+<pre class="language-python"  style="height:50px;"><code id="results"></code></pre>
+Total number of heads: <span id="nHeads"></span>
+</div>
+
+<script>
+
+$(document).ready(function() {
+	simulate()
+})
+function simulate() {
+	var n = parseInt($("#n").val()) 
+	var p = parseFloat($("#p").val())
+	let results = ''
+	let nHeads = 0
+	for (var i = 0; i < n; i++) {
+		let isHeads = Math.random() < p
+		if(isHeads) {
+			results += '<span class="blue">H</span>'
+			nHeads++;
+		} else {
+			results += '<span style="color:#D64F8A;">T</span>'
+		}
+		if(i < n - 1) {
+			results += ', '
+		}
+	}
+	$("#results").html(results)
+	$("#nHeads").html(nHeads)
+}
+</script>

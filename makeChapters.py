@@ -6,10 +6,10 @@ book_outline = {
 	'intro': {
 		'title':None,
 		'sections': {
-			'intro':'Introduction',
+			# 'intro':'Introduction',
 			# 'free_book':'A Free Online Textbook',
-			'notation': 'Notation',
-			'prob_code': 'Probability in Code'
+			# 'notation': 'Notation',
+			# 'prob_code': 'Probability in Code'
 		}
 	},
 	'part1': {
@@ -27,6 +27,12 @@ book_outline = {
 			'bayes_theorem':"Bayes' Theorem",
 			# 'random_computers':'Randomness in Computers',
 			'log_probabilities':'Log Probabilities'
+		},
+		'examples': {
+			'enigma':'Enigma Machine',
+			'serendipity':'Serendipity',
+			'bacteria_evolution':'Bacteria Evolution',
+			'many_flips':'Many Coin Flips'
 		}
 	},
 	'part2':{
@@ -42,20 +48,27 @@ book_outline = {
 			'continuous':'Continuous Distribution',
 			'normal':'Normal Distribution',
 			'all_distributions':'Random Variable Reference'
+		},
+		'examples': {
+			'prob_baby_delivery':'Probability of Baby Delivery',
 		}
 	},
 	'part3':{
 		'title':'Part 3: Probabilistic Models',
 		'sections': {
 			'joint':'Joint Probability',
-			'independent_vars':'Independence in Variables',
-			'cond_distributions':'Conditional Distributions',
-			'variable_bayes':'Bayes Theorem Revisited',
-			'continuous_joint':'Continuous Joint',
-			'multivariate_gaussian':'Multivariate Gaussian',
-			'bayesian_networks':'Bayesian Networks',
-			'sampling_revisited':'Sampling Revisited',
-			'computational_inference':'Computational Inference',
+			# 'independent_vars':'Independence in Variables',
+			# 'cond_distributions':'Conditional Distributions',
+			# 'variable_bayes':'Bayes Theorem Revisited',
+			# 'continuous_joint':'Continuous Joint',
+			# 'multivariate_gaussian':'Multivariate Gaussian',
+			# 'bayesian_networks':'Bayesian Networks',
+			# 'sampling_revisited':'Sampling Revisited',
+			# 'computational_inference':'Computational Inference',
+		},
+		'examples': {
+			'fairness':'Fairness in AI',
+			'bridge_distribution':'Bridge Distribution',
 		}
 	},
 	'part4':{
@@ -66,6 +79,9 @@ book_outline = {
 			'parameters':'Uncertainty in Parameters',
 			'beta':'Beta Distribution',
 			'bounds':'Probability Bounds'
+		},
+		'examples': {
+			'thompson':'Thompson Sampling'
 		}
 	},
 	'part5':{
@@ -78,25 +94,27 @@ book_outline = {
 			'linear_regression':'Linear Regression',
 			'log_regression':'Logistic Regression',
 			'neural_nets':'Artificial Neural Networks'
+		},
+		'examples': {
+			'vision_test':'Vision Test'
 		}
 	},
-	'examples': {
-		'title':'Examples',
-		'sections': {
-			'enigma':'Enigma Machine',
-			'prob_baby_delivery':'Probability of Baby Delivery',
-			'bacteria_evolution':'Bacteria Evolution',
-			'fast_dot_com':'Fast.com',
-			'greenhouse_effect':'Greenhouse Effect',
-			'bridge_distribution':'Bridge Distribution',
-			'curse_of_dimensionality':'Curse of Dimensionality',
-			'period_tracker':'Period Tracker',
-			'fairness':'Fairness',
-			'climate_sensitivity':'Climate Sensitivity',
-			'age_given_names':'Age Given Name',
-			'grades_not_normal':'Grades are Not Normal'
-		}
-	}
+	# 'examples': {
+	# 	'title':'Examples',
+	# 	'sections': {
+			
+	# 		'prob_baby_delivery':'Probability of Baby Delivery',
+	# 		'fast_dot_com':'Fast.com',
+	# 		'greenhouse_effect':'Greenhouse Effect',
+	# 		'bridge_distribution':'Bridge Distribution',
+	# 		'curse_of_dimensionality':'Curse of Dimensionality',
+	# 		'period_tracker':'Period Tracker',
+	# 		'fairness':'Fairness',
+	# 		'climate_sensitivity':'Climate Sensitivity',
+	# 		'age_given_names':'Age Given Name',
+	# 		'grades_not_normal':'Grades are Not Normal'
+	# 	}
+	# }
 	# TODO: Mehran to add as he sees fit
 	# 'part6':{
 	# 	'title':'Part 6: Intro to Information Theory',
@@ -115,6 +133,15 @@ INDEX_TEMPLATE = '''
  
 <center><h1>{title}</h1></center>
 <hr/>
+'''
+
+EXAMPLE_TEMPLATE = '''
+<li>
+    <a href="#{uid}" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="{uid}">
+        {example_html}
+    </ul>
+</li>
 '''
 
 def main():
@@ -143,6 +170,20 @@ def create_part_html(part_key):
 		section_title = part['sections'][section_key]
 		sidebar_id = 'sidebar-' + section_key
 		html += '<a id={} href="{}">{}</a>\n'.format(sidebar_id, section_path, section_title)
+	
+	if 'examples' in part:
+		example_html = ''
+		for example_key in part['examples']:
+			example_path = '{{pathToLang}}examples' + '/' + example_key
+			example_title = part['examples'][example_key]
+			sidebar_id = 'sidebar-' + example_key
+			example_html += '<li><a href="{}">{}</a></li>'.format(example_path, example_title)
+		
+		example_data = {
+			'uid':part_key+'_examples',
+			'example_html':example_html
+		}
+		html += EXAMPLE_TEMPLATE.format(**example_data)
 	html += '</li>\n'
 	html += '</ul>\n\n'
 	return html
@@ -159,6 +200,13 @@ def create_directories_and_files():
 
 			safe_mkdir(section_path)
 			make_index(section_path, title)
+		if 'examples' in part:
+			for example_key in part['examples']:
+				title = part['examples'][example_key]
+				example_path =  'chapters/examples/' + example_key
+
+				safe_mkdir(example_path)
+				make_index(example_path, title)
 
 def make_index(path, title):
 	index_data = {

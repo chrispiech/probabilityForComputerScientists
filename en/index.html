@@ -21,10 +21,15 @@
  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 <!-- D3 CDN -->
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+<!-- PDF JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
 
 <!-- Lunr CDN -->
  <script src="https://unpkg.com/lunr/lunr.js"></script>
@@ -137,7 +142,7 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <!-- <div></div> -->
-        <a style="text-align:center" href=""><h3><i class="fas fa-book-open"></i><br/> Probability for a <br/>Digital World<br/></h3></a>
+        <a style="text-align:center" href=""><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
     </div>
 
     <div> 
@@ -152,9 +157,6 @@
 <!-- intro -->
 <ul class="list-unstyled components">
 <li>
-<a id=sidebar-intro href="intro/intro">Introduction</a>
-<a id=sidebar-notation href="intro/notation">Notation</a>
-<a id=sidebar-prob_code href="intro/prob_code">Probability in Code</a>
 </li>
 </ul>
 
@@ -173,6 +175,13 @@
 <a id=sidebar-law_total href="part1/law_total">Law of Total Probability</a>
 <a id=sidebar-bayes_theorem href="part1/bayes_theorem">Bayes' Theorem</a>
 <a id=sidebar-log_probabilities href="part1/log_probabilities">Log Probabilities</a>
+
+<li>
+    <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part1_examples">
+        <li><a href="examples/enigma">Enigma Machine</a></li><li><a href="examples/serendipity">Serendipity</a></li><li><a href="examples/bacteria_evolution">Bacteria Evolution</a></li><li><a href="examples/many_flips">Many Coin Flips</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -190,6 +199,13 @@
 <a id=sidebar-continuous href="part2/continuous">Continuous Distribution</a>
 <a id=sidebar-normal href="part2/normal">Normal Distribution</a>
 <a id=sidebar-all_distributions href="part2/all_distributions">Random Variable Reference</a>
+
+<li>
+    <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part2_examples">
+        <li><a href="examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -198,14 +214,13 @@
 <li><p href="{pathToLang}part3">Part 3: Probabilistic Models</p></li>
 <li>
 <a id=sidebar-joint href="part3/joint">Joint Probability</a>
-<a id=sidebar-independent_vars href="part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-variable_bayes href="part3/variable_bayes">Bayes Theorem Revisited</a>
-<a id=sidebar-continuous_joint href="part3/continuous_joint">Continuous Joint</a>
-<a id=sidebar-multivariate_gaussian href="part3/multivariate_gaussian">Multivariate Gaussian</a>
-<a id=sidebar-bayesian_networks href="part3/bayesian_networks">Bayesian Networks</a>
-<a id=sidebar-sampling_revisited href="part3/sampling_revisited">Sampling Revisited</a>
-<a id=sidebar-computational_inference href="part3/computational_inference">Computational Inference</a>
+
+<li>
+    <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part3_examples">
+        <li><a href="examples/fairness">Fairness in AI</a></li><li><a href="examples/bridge_distribution">Bridge Distribution</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -218,6 +233,13 @@
 <a id=sidebar-parameters href="part4/parameters">Uncertainty in Parameters</a>
 <a id=sidebar-beta href="part4/beta">Beta Distribution</a>
 <a id=sidebar-bounds href="part4/bounds">Probability Bounds</a>
+
+<li>
+    <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part4_examples">
+        <li><a href="examples/thompson">Thompson Sampling</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
@@ -232,31 +254,19 @@
 <a id=sidebar-linear_regression href="part5/linear_regression">Linear Regression</a>
 <a id=sidebar-log_regression href="part5/log_regression">Logistic Regression</a>
 <a id=sidebar-neural_nets href="part5/neural_nets">Artificial Neural Networks</a>
-</li>
-</ul>
 
-<!-- examples -->
-<ul class="list-unstyled components">
-<li><p href="{pathToLang}examples">Examples</p></li>
 <li>
-<a id=sidebar-enigma href="examples/enigma">Enigma Machine</a>
-<a id=sidebar-prob_baby_delivery href="examples/prob_baby_delivery">Probability of Baby Delivery</a>
-<a id=sidebar-bacteria_evolution href="examples/bacteria_evolution">Bacteria Evolution</a>
-<a id=sidebar-fast_dot_com href="examples/fast_dot_com">Fast.com</a>
-<a id=sidebar-greenhouse_effect href="examples/greenhouse_effect">Greenhouse Effect</a>
-<a id=sidebar-bridge_distribution href="examples/bridge_distribution">Bridge Distribution</a>
-<a id=sidebar-curse_of_dimensionality href="examples/curse_of_dimensionality">Curse of Dimensionality</a>
-<a id=sidebar-period_tracker href="examples/period_tracker">Period Tracker</a>
-<a id=sidebar-fairness href="examples/fairness">Fairness</a>
-<a id=sidebar-climate_sensitivity href="examples/climate_sensitivity">Climate Sensitivity</a>
-<a id=sidebar-age_given_names href="examples/age_given_names">Age Given Name</a>
-<a id=sidebar-grades_not_normal href="examples/grades_not_normal">Grades are Not Normal</a>
+    <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part5_examples">
+        <li><a href="examples/vision_test">Vision Test</a></li>
+    </ul>
+</li>
 </li>
 </ul>
 
 
 
-    <ul class="list-unstyled components">
+    <!-- <ul class="list-unstyled components">
         
          <li>
             <p>Part ?: Misfits</p>
@@ -268,7 +278,7 @@
              <a href="">Law of Total Expectation</a>
             
         </li>
-    </ul>
+    </ul> -->
 
 
 
@@ -304,19 +314,19 @@ Coding Probability
 Programming Probability
 Probability for Computer Scientists
 -->
-	<h1>Probability for a Digital World</h1>
+	<h1>Course Reader for CS109</h1>
 
 	<img style="max-width:60%"  src="../img/cs109logo.png"></img>
 
 	<p style="padding:20px; text-align: center;">
-  Chris Piech, Mehran Sahami<br> 
+  CS109<br> 
   Department of Computer Science<br>
   Stanford University<br>
   December 2020<br/>
   V 0.1.0.4
   </p>
 
-  <p><i>Acknowledgements: This book was written based on Notes from Chris Piech for Stanford's CS109 course, Probability for Computer scientists. The course was originally designed by Mehran Sahami. The course originally followed the Sheldon Ross book Probability Theory from which we take inspiration. The course has since been taught by Lisa Yan, Jerry Cain and David Varodayan.</i></p>
+  <p><i>Acknowledgements: This book was written based on notes from Chris Piech for Stanford's CS109 course, Probability for Computer scientists using examples from Chris and Mehran Sahami. The course was originally designed by Mehran Sahami and followed the Sheldon Ross book Probability Theory from which we take inspiration. The course has since been taught by Lisa Yan, Jerry Cain and David Varodayan and their ideas and feedback have improved this reader. Special thanks to Robert Moss for drafting a PDF version.</i></p>
 
 	<a class="btn btn-primary btn-lg" href="intro" role="button"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Get Started</a>
 </center>
