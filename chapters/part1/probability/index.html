@@ -97,19 +97,19 @@ of probability, as your number of simulations approaches infinity, the estimate 
 </p>
 
 <div class="purpleBox">
-<p><b><i>Problem:</i></b> Use the definition of probability to approximate the answer to the question: "What is the probability a new-born child is female?" Contrary to popular myth the answer is not ½. Base your answer off a report from the 2017 report from the Australian government which states that 309,142 children were born in Australia of which 149,998 were female [<a href="https://www.aihw.gov.au/getmedia/2a0c22a2-ba27-4ba0-ad47-ebbe51854cd6/aihw-per-100-in-brief.pdf.aspx">citation</a>].</p>
+<p><b><i>Problem:</i></b> Use the definition of probability to approximate the answer to the question: "What is the probability a new-born elephant child is male?" Contrary to what you might think the gender outcomes of a newborn elephant are not equally likely between male and female. You have data from a report in Animal Reproductive Science which states that 3,070 elephants were born in Myanmar of which 2,180 were male [<a href="https://www.sciencedirect.com/science/article/pii/S0378432008004442?casa_token=ZTNldN7tjWQAAAAA:4lqVmht0l5ZWe0IsmUFei9VnYrtMAdQ9v4SAEkNCdOh6BBgFFesmlF6YQytPwVNrfrrPxNjbRoE">1</a>]. Humans also don't have a 50/50 sex ratio at birth [<a href="https://www.aihw.gov.au/getmedia/2a0c22a2-ba27-4ba0-ad47-ebbe51854cd6/aihw-per-100-in-brief.pdf.aspx">2</a>].</p>
 
 <p><b><i>Answer:</i></b>
-	The Experiment is: A single child birth in Australia. <br/>The sample space is the set of possible sexes assigned at birth, {Male, Female, Intersex}. <br/>$E$ is the event that a new-born child is female, which in set notation is the subset {Female} of the sample space.</p>  
+	The Experiment is: A single elephant birth in Myanmar. <br/>The sample space is the set of possible sexes assigned at birth, {Male, Female, Intersex}. <br/>$E$ is the event that a new-born elephan child is male, which in set notation is the subset {Male} of the sample space. The outcomes are not equally likely.</p>  
 
 	<p> By the definition of probability, the ratio of trials that result in the event to the number of trials will tend to our desired probability:</p>
 
-	<p>$$ \begin{aligned} \p(\text{Born Female}) &= \p(E) \\
+	<p>$$ \begin{aligned} \p(\text{Born Male}) &= \p(E) \\
 		&= \lim_{n \rightarrow \infty}\frac{\text{count}(E)}{n} \\
-	    &\approx \frac{149,998}{309,142} \\
-	    &\approx 0.485\end{aligned}$$</p>
+	    &\approx \frac{2,180}{3,070} \\
+	    &\approx 0.710\end{aligned}$$</p>
 
-	    <p>Since 300,000 is quite a bit less than infinity, this is an approximation. It turns out, however, to be a rather good one. In the overall human population it is estimated that there are around 109 male births for every 100 female births (and females tend to live longer).
+	    <p>Since 3,000 is quite a bit less than infinity, this is an approximation. It turns out, however, to be a rather good one. A few important notes: there is no garuntee that our estimate applies to elephants outside Myanmar. Later in the class we will develop language for "how confident we can be in a number like 0.71 after 3,000 trials?" Using tools from later in class we can say that we have 98% confidence that the true probability is within 0.02 of 0.710.
 </div>
 
 <h2>Axioms of Probability</h2>
