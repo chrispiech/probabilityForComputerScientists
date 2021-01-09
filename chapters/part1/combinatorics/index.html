@@ -114,13 +114,50 @@ permutation, there are 3! ways of rearranging the 0’s and 2! ways of rearrangi
 indistinguishable strings). We have over-counted. Using the formula for permutations of indistinct
 objects, we can correct for the over-counting:
 
-<span class="mathLeft">
+<span>
 $$
 \text{Total} = \frac{5!}{3! \cdot 2!} = \frac{120}{6 \cdot 2}
-= 10.
+= 10
 $$
 </span>
 	</div>
+</p>
+
+
+
+<p>
+	<div class="purpleBox">
+		<b>Example:</b> How many <i>distinct</i> orderings of characters are possible for the string "MISSISSIPPI"?
+<hr/>
+
+
+In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings as: $$\frac{11!}{1!4!4!2!} = 34,650$$
+	</div>
+</p>
+
+<p>
+<div class="purpleBox">
+
+<b>Example:</b> Consider the 4-digit passcode iPhone from before. How many distinct passcodes are possible if there are 3 smudges over 3 digits on the screen?</b>
+
+<hr>
+
+<b>Solution:</b> One of 3 digits is repeated, but we don't know which one. We can solve this by making three cases, one for each digit that could be repeated (each with the same number of permutations). Let $A, B, C$ represent the 3 digits, with $C$ repeated twice. We can initially pretend the two $C$'s are distinct $[A,B,C_1,C_2]$. Then each case will have 4! permutations:  
+However, then we need to eliminate the double-counting of the permutations of the identical digits (one $A$, one $B$, and two $C$'s): $$\frac{4!}{2!\cdot 1!\cdot 1!}$$
+Adding up the three cases for the different repeated digits gives
+$$3 \cdot \frac{4!}{2!\cdot 1!\cdot 1!} = 3 \cdot 12 = 36$$
+
+<hr/>
+
+<b>Part B:</b> What if there are 2 smudges over 2 digits on the screen?
+
+<hr/>
+
+<b>Solution:</b> There are two possibilities: 2 digits used twice each, or 1 digit used 3 times, and other digit used once.
+$$
+\frac{4!}{2!\cdot 2!} + 2 \cdot \frac{4!}{3!\cdot 1!} = 6 + (2 \cdot 4) = 6 + 8 = 14
+$$
+</div>
 </p>
 
 <p>
@@ -178,3 +215,153 @@ permute them. The selection remains unchanged.
 	\text{Total} = \frac{n!}{r! \cdot (n-r)!} = {n \choose r}
 	$$
 </span>
+
+
+<p>
+<div class="purpleBox">
+<b>Example:</b> In the Hunger Games, how many ways are there of choosing 2 villagers from district 12, which has a population of 8,000?
+<hr/>
+
+<b>Solution:</b> This is a straightforward combinations problem. ${8000 \choose 2} = $31,996,000.
+</div>
+</p>
+
+<p>
+<div class="purpleBox">
+
+<b>Part A:</b> How many ways are there to select 3 books from a set of 6?
+<b>Solution:</b> If each of the books are distinct, then this is another straightforward combination problem. There are $\binom{6}{3} = \frac{6!}{3!3!} = 20$ ways.
+
+<hr/>
+<b>Part B:</b> How many ways are there to select 3 books if there are two books that should not both be chosen together? For example, if you are choosing 3 out of 6 probability books, don't choose both the 8th and 9th edition of the Ross textbook).
+\paragraph{Solution:} This problem is easier to solve if we split it up into cases. Consider the following three different cases:
+
+<br/>
+Case 1: Select the 8th Ed. and 2 other non-9th Ed.: There are $\binom{4}{2}$ ways of doing so.<br/>
+
+Case 2: Select the 9th Ed. and 2 other non-8th Ed.: There are $\binom{4}{2}$ ways of doing so.<br/>
+
+Case 3: Select 3 from the books that are neither the 8th nor the 8th edition:	There are $\binom{4}{3}$ ways of doing so.<br/>
+
+Using our old friend the Sum Rule of Counting, we can add the cases:
+$$
+\text{Total} = 2 \cdot \binom{4}{2} + \binom{4}{3} = 16
+$$
+
+Alternatively, we could have calculated all the ways of selecting 3 books from 6, and then subtract the "forbidden'' ones (i.e., the selections that break the constraint). 
+
+<br/>
+Forbidden Case: Select 8th edition and 9th edition and 1 other book. There are $\binom{4}{1}$ ways of doing so (which equals 4).
+
+Total = All possibilities - forbidden = 20 - 4 = 16.
+
+
+Two different ways to get the same right answer!
+</div>
+</p>
+
+<h2>Selecting multiple groups of objects</h2>
+<p>
+	<div class="bordered">
+<p><b>Selecting multiple groups of objects:</b></p> If $n$ objects are distinct, then the number of ways of selecting $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
+$$\frac{n!}{n_1!n_2!\cdots n_r!} = \binom{n}{n_1, n_2, \dots, n_r}$$
+
+where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomial coefficient.
+</div>
+</p>
+
+<p>
+This situation is a generalization of the combination, where $\binom{n}{r}$ is defined as a binomial coefficient. One way to see this is that the task of selecting $r$ unordered objects from a set of $n$ distinct objects is analogous to the task of separating $n$ objects into two groups 1 and 2, with respective element counts $n_1 = r$ and $n_2 = n-r$. Therefore it is true that the binomial coefficient $\binom{n}{r} = \binom{n}{r,n-r}$, where the latter is the multinomial coefficient.
+</p>
+
+<p>
+	<div class="purpleBox">
+
+<p><b>Problem:</b></p> Company Camazon has 13 new servers that they would like to assign to 3 datacenters, where Datacenter A, B, and C have 6, 4, and 3 empty server racks, respectively. How many different divisions of the servers are possible?
+
+<hr/>
+
+<p>
+<b>Solution:</b> This is a straightforward application of our multinomial coefficient representation. Setting $n_1 = 6, n_2 = 4, n_3 = 3$, $\binom{13}{6,4,3} = 60,060$.</p>
+
+<p>
+Another way to do this problem would be from first principles of combinations as a multipart experiment. We first select the $6$ servers to be assigned to Datacenter A, in $\binom{13}{6}$ ways. Now out of the $7$ servers remaining, we select the $4$ servers to be assigned to Datacenter B, in $\binom{7}{4}$ ways. Finally, we select the $3$ servers out of the remaining $3$ servers, in $\binom{3}{3}$ ways. By the Product Rule of Counting, the total number of ways to assign all servers would be $\binom{13}{6} \binom{7}{4} \binom{3}{3} = \frac{13!}{6!4!3!} = 60,060$.</p>
+</div>
+</p>
+
+<h2>Bucketing / Group Assignment</h2>
+
+<p>
+In this section we are going to be counting the many different ways that we can think of stuffing elements into containers. (It turns out that Jacob Bernoulli was into voting and ancient Rome. And in ancient Rome they used urns for ballot boxes. For this reason many books introduce this through counting ways to put balls in urns.) This "bucketing" or "group assignment" process is a useful metaphor for many counting problems.</p>
+
+<p>
+<div class="purpleBox">
+
+<b>Problem:</b> Say you want to put $n$ distinguishable balls into $r$ urns. (No! Wait! Don't say that!) Okay, fine. No urns. Say we are going to put $n$ strings into $r$ buckets of a hash table where all outcomes are equally likely. How many possible ways are there of doing this?
+<hr/>
+
+<p><b>Solution:</b> You can think of this as $n$ independent experiments each with $r$ outcomes. Using our friend the General Principle of Counting, this comes out to $r^n$.</p></p>
+</div>
+</p>
+<p>
+
+	While the previous example allowed us to put $n$ distinguishable objects into $r$ distinct groups, the more interesting problem is to work with $n$ indistinguishable objects. This task has a direct analogy to the number of ways to solve the following positive integer equation:
+
+<p>
+<div class="bordered"><p><b>Divider Method:</b></p>
+
+<p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are same (your elements) and $r - 1$ of which are same (the dividers). Thus the total number of outcomes is:</p>
+
+$${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}.$$
+</div>
+</p>
+
+
+<p>
+<div class="purpleBox">
+
+<b>Problem:</b> Say you want to put $n$ distinguishable balls into $r$ urns. (No! Wait! Don't say that!) Okay, fine. No urns. Say we are going to put $n$ strings into $r$ buckets of a hash table where all outcomes are equally likely. How many possible ways are there of doing this?
+<hr/>
+
+<p><b>Solution:</b> You can think of this as $n$ independent experiments each with $r$ outcomes. Using our friend the General Principle of Counting, this comes out to $r^n$.</p></p>
+</div>
+<p>
+
+<p>
+<div class="purpleBox">
+
+<p><b>Part A:</b> Say you are a startup incubator and you have \$10 million to invest in 4 companies (in \$1 million increments). How many ways can you allocate this money?<br/>
+
+<b>Solution:</b> This is just like putting 10 balls into 4 urns. Using the Divider Method we get:
+
+$$
+\text{Total ways}= \binom{10+4-1}{10}  = \binom{13}{10} = 286$.
+$$
+
+This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4 = 10$, where $x_i$ represents the investment in company $i$ such that $x_i \geq 0$ for all $i = 1, 2, 3, 4$.
+<hr/>
+
+<b>Part B:</b> What if you know you want to invest at least \$3 million in Company 1?<br/>
+
+<b>Solution:</b> There is one way to give \$3 million to Company 1. The number of ways of investing the remaining money is the same as putting 7 balls into 4 urns.
+
+$$
+\text{Total Ways} = \binom{7+4-1}{7}  = \binom{10}{7} = 120$.
+$$
+
+This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4 = 10$, where $x_1 \geq 3$ and $x_2, x_3, x_4 \geq 0$. To translate this problem into the integer solution equation that we can solve via the divider method, we need to adjust the bounds on $x_1$ such that the problem becomes $x_1 + x_2 + x_3 + x_4 = 7$, where $x_i$ is defined as in Part A.
+
+<hr/>
+
+<b>Part C:</b>  What if you don't have to invest all \$10 M?  (The economy is tight, say, and you might want to save your money.)<br/>
+
+<b>Solution:</b> Imagine that you have an extra company: yourself. Now you are investing \$10 million in 5 companies. Thus, the answer is the same as putting 10 balls into 5 urns.
+
+$$
+\text{Total}= \binom{10+5-1}{10}  = \binom{14}{10} = 1001$.
+$$
+
+This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4 + x_5 = 10$, such that $x_i \geq 0$ for all $i = 1, 2, 3, 4, 5$.
+</p>
+</div>
+</p>
