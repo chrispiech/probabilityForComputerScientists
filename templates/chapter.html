@@ -69,12 +69,55 @@
     <script>
 
 $(document).ready(function() {
+  addH2Numbers()
+  enableSearch()
+})
+
+function addH2Numbers() {
   $("h2").each(function(i){
     let title = $(this).html()
     title = `${i+1}. ${title}`
     $(this).html(title)
   })
-})
+}
+
+function enableSearch() {
+  $("#probability-for-digital-world-search").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+          let query = $("#probability-for-digital-world-search").val()
+          
+          window.location = `{{pathToLang}}search.html?q=${query}`
+      }
+  });
+  // $.ajax({
+  //     type: "GET",
+  //     url: "{{pathToRoot}}searchIndex.json",
+  //     dataType: "text",
+  //     success: function(data) {addSearchIndexData(data);}
+  //  });
+}
+
+function addSearchIndexData(data) {
+  var idx = lunr(function () {
+    this.ref('name')
+    this.field('text')
+
+    let documents = JSON.parse(data)
+
+    documents.forEach(function (doc) {
+      this.add(doc)
+      console.log(doc)
+    }, this)
+
+    $("#probability-for-digital-world-search").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            let query = $("#probability-for-digital-world-search").val()
+            let results = idx.search(query)
+            console.log(results)
+        }
+    });
+  })
+}
 
     </script>
 

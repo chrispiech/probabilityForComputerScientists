@@ -32,13 +32,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
 
 <!-- Lunr CDN -->
- <script src="https://unpkg.com/lunr/lunr.js"></script>
+ <script src="https://unpkg.com/lunr@2.0.4/lunr.js"></script>
 
 <!-- Firebase CDN -->
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="../../../css/style.css">
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
+
    
 
 <!-- Java Script -->
@@ -142,15 +154,18 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <!-- <div></div> -->
-        <a style="text-align:center" href="../../"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
+        <a style="text-align:center" href="../../index.html"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
     </div>
 
     <div> 
+        <!-- Put a link back to cs109 -->
+    
+
+        <!-- This adds a search bar! -->
         <div class="searchCol" style="font-family: 'Source Sans Pro', sans-serif;">
-            <!-- This adds a search bar! -->
+            
             <input type="text" class="form-control bookSearch" id="probability-for-digital-world-search" aria-describedby="search box" placeholder="🔍 Search book..."/>
         </div>
-        <!-- The magnifying glass icon -->
         
     </div>
 
@@ -323,16 +338,6 @@ Where $e$ is the natural base.
 
                         
 
-<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
-
-  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
-
-  <!-- Add Firebase products that you want to use -->
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
-
 
 <script type="text/javascript">
     // const firebase = require("firebase");
@@ -460,10 +465,7 @@ Where $e$ is the natural base.
         })
     }
 </script>
-
-<script src="sweetalert2.all.min.js"></script>
-<!-- Optional: include a polyfill for ES6 Promises for IE11 -->
-<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>                
+                
                     </div>
                 </div>
             </div>
@@ -473,12 +475,55 @@ Where $e$ is the natural base.
     <script>
 
 $(document).ready(function() {
+  addH2Numbers()
+  enableSearch()
+})
+
+function addH2Numbers() {
   $("h2").each(function(i){
     let title = $(this).html()
     title = `${i+1}. ${title}`
     $(this).html(title)
   })
-})
+}
+
+function enableSearch() {
+  $("#probability-for-digital-world-search").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+          let query = $("#probability-for-digital-world-search").val()
+          
+          window.location = `../../search.html?q=${query}`
+      }
+  });
+  // $.ajax({
+  //     type: "GET",
+  //     url: "../../../searchIndex.json",
+  //     dataType: "text",
+  //     success: function(data) {addSearchIndexData(data);}
+  //  });
+}
+
+function addSearchIndexData(data) {
+  var idx = lunr(function () {
+    this.ref('name')
+    this.field('text')
+
+    let documents = JSON.parse(data)
+
+    documents.forEach(function (doc) {
+      this.add(doc)
+      console.log(doc)
+    }, this)
+
+    $("#probability-for-digital-world-search").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            let query = $("#probability-for-digital-world-search").val()
+            let results = idx.search(query)
+            console.log(results)
+        }
+    });
+  })
+}
 
     </script>
 

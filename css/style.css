@@ -112,6 +112,10 @@ purpleBox:
   border-radius:0.25rem;
 }
 
+.firstPart {
+  padding-top: 0px !important
+}
+
 .mainFigure {
   max-width: min(400px,100%)
 }

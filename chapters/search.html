@@ -1,0 +1,203 @@
+ % rebase('templates/chapter.html', title='Search Results')
+<style>
+	.sp-header {
+		display:flex;
+		padding-top:20px;
+		padding-bottom: 20px;
+	}
+	#sp-search {
+		margin-top:10px;
+		border-radius: 20px;
+	}
+
+	.sp-searchCol {
+		width:460px;
+	}
+
+
+	#sp-results {
+	}
+
+	.sp-searchIcon {
+		font-size: 30px;
+	    color: #1A73E8;
+	    margin-top: 11px;
+	    margin-left: 10px;
+	}
+
+	.sp-result {
+		margin-top:10px;
+	}
+	
+</style>
+
+ <div >
+ 		<center>
+		<h1 class="sp-logo">
+			Search Course Reader:
+		</h1>
+	</center>
+	<div class='d-flex justify-content-center'>
+		<div class="sp-header">
+			<div class="sp-searchCol">
+				<!-- This adds a search bar! -->
+				<input type="text" class="form-control" id="sp-search" aria-describedby="search box">
+			</div>
+			<!-- The magnifying glass icon -->
+			<i class="sp-searchIcon fa fa-search" onclick="search()"></i>
+		</div>
+	</div>
+	<!-- This is the thin grey line -->
+	<hr/>
+	<!-- This is the space for the results -->
+	<div id="sp-results">
+		<div class="d-flex justify-content-center">
+		  <div class="spinner-border" role="status">
+		    <span class="sr-only">Loading...</span>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+var engine;
+
+$(document).ready(function() {
+  let dataUrl = "{{pathToRoot}}searchIndex.json"
+  var urlParams = new URLSearchParams(window.location.search);
+  var query = urlParams.get('q')
+  $("#sp-search").val(query)
+  $.ajax({
+      type: "GET",
+      url: dataUrl,
+      dataType: "text",
+      success: function(data) {
+
+      	new SearchEngine(data)
+      }
+   });
+})
+
+class SearchEngine {
+	constructor(data) {
+		
+		this.buildIndex(data)
+		this.doSearch()
+		$("#sp-search").on('keyup', (e) =>  {
+		  if (e.key === 'Enter' || e.keyCode === 13) {
+	
+		      this.doSearch()
+		  }
+		});
+	}
+
+	doSearch() {
+		let query = $("#sp-search").val()
+		query = query.toLowerCase()
+		console.log('search', query)
+		console.log(this.idx)
+		$("#sp-results").html('')
+		let results = this.idx.search(query)
+		let n = results.length;
+		if(results.length == 0) {
+			$("#sp-results").html('<center><i>No results</i></center>')
+		}
+		for (var i = 0; i < results.length; i++) {
+			// only show top 10...
+			if(i == 10) break
+			let result = results[i]
+			this.addResult(query, result)
+		}
+		try{
+		MathJax.typeset()
+		} catch(e) {
+
+		}
+
+	}
+
+	addResult(query, result) {
+		console.log(result)
+		let doc = this.lookup[result.ref]
+		let docText = doc['text']
+		let metadata = result['matchData']['metadata']
+		let metadataKey = Object.keys(metadata)[0];
+		let pos = metadata[metadataKey]['text']['position']
+		let delta = 100
+	
+		let posStart = pos[0][0]
+		let posLength = pos[0][1]
+		let start = math.max(0, posStart - delta)
+		let end = math.min(docText.length, posStart + posLength + delta)
+		let snippet = docText.slice(start, end)
+
+		if(start != 0){
+			snippet = '...' + snippet
+		}
+		if(end != docText.length) {
+			snippet = snippet + '...'
+		}
+
+		let queryWords = query.split(' ')
+		for (var i = 0; i < queryWords.length; i++) {
+			let word = queryWords[i]
+			snippet = snippet.replaceAll(word, `<span class="blue">${word}</span>`)
+
+			let capWord = word.charAt(0).toUpperCase() + word.slice(1)
+			snippet = snippet.replaceAll(capWord, `<span class="blue">${capWord}</span>`)
+		}
+
+
+		let resultDiv = document.createElement('div');
+
+		let title = doc['title']
+  		let url = doc['url']
+  		let score = result['score']
+
+  		if(score == 0) {
+  			return
+  		}
+  		
+  		// add the result. this is templatized HTML
+  		$(resultDiv).html(`<div class="result card">
+  			<div class="card-body">
+  				<a href="${url}">${title}</a><br/>
+  				${snippet}
+  			</div>
+  		</div>`)
+
+		
+		$("#sp-results").append(resultDiv)
+
+		// appendString += '<li><a href="' + item.url + '"><h3>' + item.pretty + '</h3></a>';
+		// appendString += '<p>' + formatContent(item.content,searchTerm) + '...</p></li>';
+	}
+
+	buildIndex(data) {
+	  let engine = this
+	  let documents = JSON.parse(data)
+	  this.lookup = {}
+	  for (var i = 0; i < documents.length; i++) {
+	  	let doc = documents[i]
+	  	let ref = doc['id']
+	  	console.log('added', ref)
+	    this.lookup[ref] = doc
+	  }
+	  this.idx = lunr(function () {
+	    this.ref('id')
+	    this.field('text')
+	    this.metadataWhitelist = ['position']
+	    
+	    for (var i = 0; i < documents.length; i++) {
+	    	let doc = documents[i]
+
+	      	this.add(doc)
+	    }
+	    console.log('done')
+	  }, this)
+	}
+}
+
+
+</script>
