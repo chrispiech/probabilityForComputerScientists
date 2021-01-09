@@ -260,35 +260,6 @@ Two different ways to get the same right answer!
 </div>
 </p>
 
-<h2>Selecting multiple groups of objects</h2>
-<p>
-	<div class="bordered">
-<p><b>Selecting multiple groups of objects:</b></p> If $n$ objects are distinct, then the number of ways of putting them into $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
-$$\frac{n!}{n_1!n_2!\cdots n_r!} = \binom{n}{n_1, n_2, \dots, n_r}$$
-
-where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomial coefficient.
-</div>
-</p>
-
-<p>
-You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deap parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
-</p>
-
-<p>
-	<div class="purpleBox">
-
-<p><b>Problem:</b></p> Company Camazon has 13 distinct new servers that they would like to assign to 3 datacenters, where Datacenter A, B, and C have 6, 4, and 3 empty server racks, respectively. How many different divisions of the servers are possible?
-
-<hr/>
-
-<p>
-<b>Solution:</b> This is a straightforward application of our multinomial coefficient representation. Setting $n_1 = 6, n_2 = 4, n_3 = 3$, $\binom{13}{6,4,3} = 60,060$.</p>
-
-<p>
-Another way to do this problem would be from first principles of combinations as a multipart experiment. We first select the $6$ servers to be assigned to Datacenter A, in $\binom{13}{6}$ ways. Now out of the $7$ servers remaining, we select the $4$ servers to be assigned to Datacenter B, in $\binom{7}{4}$ ways. Finally, we select the $3$ servers out of the remaining $3$ servers, in $\binom{3}{3}$ ways. By the Product Rule of Counting, the total number of ways to assign all servers would be $\binom{13}{6} \binom{7}{4} \binom{3}{3} = \frac{13!}{6!4!3!} = 60,060$.</p>
-</div>
-</p>
-
 <h2>Bucketing / Group Assignment</h2>
 
 <p>
@@ -363,5 +334,34 @@ $$
 
 This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4 + x_5 = 10$, such that $x_i \geq 0$ for all $i = 1, 2, 3, 4, 5$.
 </p>
+</div>
+</p>
+
+<h2>Selecting multiple groups of objects</h2>
+<p>
+	<div class="bordered">
+<p><b>Selecting multiple groups of objects:</b></p> If $n$ objects are distinct, then the number of ways of putting them into $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
+$$\frac{n!}{n_1!n_2!\cdots n_r!} = \binom{n}{n_1, n_2, \dots, n_r}$$
+
+where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomial coefficient.
+</div>
+</p>
+
+<p>
+You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deap parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
+</p>
+
+<p>
+	<div class="purpleBox">
+
+<p><b>Problem:</b></p> Company Camazon has 13 distinct new servers that they would like to assign to 3 datacenters, where Datacenter A, B, and C have 6, 4, and 3 empty server racks, respectively. How many different divisions of the servers are possible?
+
+<hr/>
+
+<p>
+<b>Solution:</b> This is a straightforward application of our multinomial coefficient representation. Setting $n_1 = 6, n_2 = 4, n_3 = 3$, $\binom{13}{6,4,3} = 60,060$.</p>
+
+<p>
+Another way to do this problem would be from first principles of combinations as a multipart experiment. We first select the $6$ servers to be assigned to Datacenter A, in $\binom{13}{6}$ ways. Now out of the $7$ servers remaining, we select the $4$ servers to be assigned to Datacenter B, in $\binom{7}{4}$ ways. Finally, we select the $3$ servers out of the remaining $3$ servers, in $\binom{3}{3}$ ways. By the Product Rule of Counting, the total number of ways to assign all servers would be $\binom{13}{6} \binom{7}{4} \binom{3}{3} = \frac{13!}{6!4!3!} = 60,060$.</p>
 </div>
 </p>
