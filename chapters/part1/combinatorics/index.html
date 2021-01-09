@@ -263,7 +263,7 @@ Two different ways to get the same right answer!
 <h2>Selecting multiple groups of objects</h2>
 <p>
 	<div class="bordered">
-<p><b>Selecting multiple groups of objects:</b></p> If $n$ objects are distinct, then the number of ways of selecting $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
+<p><b>Selecting multiple groups of objects:</b></p> If $n$ objects are distinct, then the number of ways of putting them into $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
 $$\frac{n!}{n_1!n_2!\cdots n_r!} = \binom{n}{n_1, n_2, \dots, n_r}$$
 
 where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomial coefficient.
@@ -271,7 +271,7 @@ where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomi
 </p>
 
 <p>
-This situation is a generalization of the combination, where $\binom{n}{r}$ is defined as a binomial coefficient. One way to see this is that the task of selecting $r$ unordered objects from a set of $n$ distinct objects is analogous to the task of separating $n$ objects into two groups 1 and 2, with respective element counts $n_1 = r$ and $n_2 = n-r$. Therefore it is true that the binomial coefficient $\binom{n}{r} = \binom{n}{r,n-r}$, where the latter is the multinomial coefficient.
+You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deap parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
 </p>
 
 <p>
