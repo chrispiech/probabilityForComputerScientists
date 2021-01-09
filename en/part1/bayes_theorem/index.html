@@ -874,6 +874,18 @@ If you look closely at the last line, you will notice that we have simply found 
         </div>
     </div>
 
+    <script>
+
+$(document).ready(function() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+})
+
+    </script>
+
 </body>
 
 

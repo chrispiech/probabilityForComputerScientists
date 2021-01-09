@@ -550,6 +550,18 @@ case $\p(E) = \frac{0.4}{1} = 0.4$.</p>
         </div>
     </div>
 
+    <script>
+
+$(document).ready(function() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+})
+
+    </script>
+
 </body>
 
 

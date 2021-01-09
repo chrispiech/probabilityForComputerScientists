@@ -315,18 +315,18 @@
 higher level counting abstractions. When solving problems, if you can find the analogy from these canonical
 examples you can build off of the corresponding combinatorics formulas:</p>
 
-<ul>
-	<li>Permutations of Distinct Objects</li>
-	<li>Permutations with Indistinct Objects</li>
-	<li>Combinations with Distinct Objects</li>
-	<li>Bucketing into Containers</li>
-	<li>Bucketing into Fixed Sized Containers</li>
-</ul>
+<ol>
+	<li><a href="#perm_distinct">Permutations of Distinct Objects</a></li>
+	<li><a href="#perm_indisctinct">Permutations with Indistinct Objects</a></li>
+	<li><a href="#comb_distinct">Combinations with Distinct Objects</a></li>
+	<li><a href="#bucketing">Bucketing into Containers</a></li>
+	<li><a href="#bucketing_fixed">Bucketing into Fixed Sized Containers</a></li>
+</ol>
 
 <p>While these are by no means the only common counting paradigms, it is a helpful set.
 </p>
 
-<h2>Permutations of Distinct Objects</h2>
+<h2 id="perm_distinct">Permutations of Distinct Objects</h2>
 
 <p>
 	<div class="bordered">
@@ -358,7 +358,7 @@ permutation formula: 4! = 24.
 	</div>
 </p>
 
-<h2>Permutations of Indistinct Objects</h2>
+<h2 id="perm_indisctinct">Permutations of Indistinct Objects</h2>
 
 <p>
 	<div class="bordered">
@@ -455,7 +455,7 @@ In the case of the string "MISSISSIPPI", we should separate the characters into 
 <p>
 <div class="purpleBox">
 
-<b>Example:</b> Consider the 4-digit passcode iPhone from before. How many distinct passcodes are possible if there are 3 smudges over 3 digits on the screen?</b>
+<b>Example:</b> Consider the 4-digit passcode smart-phone from before. How many distinct passcodes are possible if there are 3 smudges over 3 digits on the screen?</b>
 
 <hr>
 
@@ -491,7 +491,7 @@ $$
 >>> set(itertools.permutations([1,1,2]))
 {(1, 2, 1), (2, 1, 1), (1, 1, 2)}</code></pre>
 
-<h2>Combinations of Distinct Objects</h2>
+<h2 id="comb_distinct">Combinations of Distinct Objects</h2>
 
 <p>
 	<div class="bordered">
@@ -570,14 +570,14 @@ Alternatively, we could have calculated all the ways of selecting 3 books from 6
 <br/>
 Forbidden Case: Select 8th edition and 9th edition and 1 other book. There are $\binom{4}{1}$ ways of doing so (which equals 4).
 
-Total = All possibilities - forbidden = 20 - 4 = 16.
+Total = All possibilities - forbidden = 20 - 4 = 16
 
 
 Two different ways to get the same right answer!
 </div>
 </p>
 
-<h2>Bucketing / Group Assignment</h2>
+<h2 id="bucketing">Bucketing / Group Assignment</h2>
 
 <p>
 In this section we are going to be counting the many different ways that we can think of stuffing elements into containers. (It turns out that Jacob Bernoulli was into voting and ancient Rome. And in ancient Rome they used urns for ballot boxes. For this reason many books introduce this through counting ways to put balls in urns.) This "bucketing" or "group assignment" process is a useful metaphor for many counting problems.</p>
@@ -600,7 +600,7 @@ In this section we are going to be counting the many different ways that we can 
 
 <p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are same (your elements) and $r - 1$ of which are same (the dividers). Thus the total number of outcomes is:</p>
 
-$${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}.$$
+$${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}$$
 </div>
 </p>
 
@@ -623,7 +623,7 @@ $${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}.$$
 <b>Solution:</b> This is just like putting 10 balls into 4 urns. Using the Divider Method we get:
 
 $$
-\text{Total ways}= \binom{10+4-1}{10}  = \binom{13}{10} = 286$.
+\text{Total ways}= \binom{10+4-1}{10}  = \binom{13}{10} = 286
 $$
 
 This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4 = 10$, where $x_i$ represents the investment in company $i$ such that $x_i \geq 0$ for all $i = 1, 2, 3, 4$.
@@ -634,7 +634,7 @@ This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4
 <b>Solution:</b> There is one way to give \$3 million to Company 1. The number of ways of investing the remaining money is the same as putting 7 balls into 4 urns.
 
 $$
-\text{Total Ways} = \binom{7+4-1}{7}  = \binom{10}{7} = 120$.
+\text{Total Ways} = \binom{7+4-1}{7}  = \binom{10}{7} = 120
 $$
 
 This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4 = 10$, where $x_1 \geq 3$ and $x_2, x_3, x_4 \geq 0$. To translate this problem into the integer solution equation that we can solve via the divider method, we need to adjust the bounds on $x_1$ such that the problem becomes $x_1 + x_2 + x_3 + x_4 = 7$, where $x_i$ is defined as in Part A.
@@ -646,7 +646,7 @@ This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4
 <b>Solution:</b> Imagine that you have an extra company: yourself. Now you are investing \$10 million in 5 companies. Thus, the answer is the same as putting 10 balls into 5 urns.
 
 $$
-\text{Total}= \binom{10+5-1}{10}  = \binom{14}{10} = 1001$.
+\text{Total}= \binom{10+5-1}{10}  = \binom{14}{10} = 1001
 $$
 
 This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4 + x_5 = 10$, such that $x_i \geq 0$ for all $i = 1, 2, 3, 4, 5$.
@@ -654,10 +654,10 @@ This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4
 </div>
 </p>
 
-<h2>Selecting multiple groups of objects</h2>
+<h2 id="bucketing_fixed">Bucketing into Fixed Sized Containers</h2>
 <p>
 	<div class="bordered">
-<p><b>Selecting multiple groups of objects:</b></p> If $n$ objects are distinct, then the number of ways of putting them into $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
+<p><b>Bucketing into Fixed Sized Containers:</b></p> If $n$ objects are distinct, then the number of ways of putting them into $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
 $$\frac{n!}{n_1!n_2!\cdots n_r!} = \binom{n}{n_1, n_2, \dots, n_r}$$
 
 where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomial coefficient.
@@ -832,6 +832,18 @@ Another way to do this problem would be from first principles of combinations as
             </div>
         </div>
     </div>
+
+    <script>
+
+$(document).ready(function() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+})
+
+    </script>
 
 </body>
 

@@ -494,10 +494,9 @@ the receiver must either start with "01" or end with "10". How many such strings
 		The potential bit strings that match the receiver’s criteria can either be the 64 strings that
 start with "01" (since that last 6 bits are left unspecified, allowing for $2^6 = 64$ possibilities) or the 64
 strings that end with "10" (since the first 6 bits are unspecified). Of course, these two sets overlap,
-since strings that start with "01" and end with "10" are in both sets. There are 2
-4 = 16 such strings
+since strings that start with "01" and end with "10" are in both sets. There are $2^4$ = 16 such strings
 (since the middle 4 bits can be arbitrary). Casting this description into corresponding set notation,
-we have: |A| = 64, |B| = 64, and |A ∩ B| = 16, so by the Inclusion-Exclusion Principle, there are
+we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Exclusion Principle, there are
 64 + 64 − 16 = 112 strings that match the specified receiver’s criteria.
 	</div>
 </p>
@@ -652,6 +651,18 @@ we have: |A| = 64, |B| = 64, and |A ∩ B| = 16, so by the Inclusion-Exclusion P
             </div>
         </div>
     </div>
+
+    <script>
+
+$(document).ready(function() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+})
+
+    </script>
 
 </body>
 

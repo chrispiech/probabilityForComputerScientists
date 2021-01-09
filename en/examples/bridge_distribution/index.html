@@ -675,6 +675,18 @@ BRIDGE_JOINT = [[4,36,83,187,295,561,956,1372,2014,2548,3122,3640,3880,4044,4042
         </div>
     </div>
 
+    <script>
+
+$(document).ready(function() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+})
+
+    </script>
+
 </body>
 
 

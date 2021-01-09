@@ -651,6 +651,18 @@ We made no assumption about the value of $\mu$ or the value of $\sigma$ so this 
         </div>
     </div>
 
+    <script>
+
+$(document).ready(function() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+})
+
+    </script>
+
 </body>
 
 
