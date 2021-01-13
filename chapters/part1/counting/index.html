@@ -194,3 +194,149 @@ we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Excl
 	</div>
 </p>
 
+<h2>Overcounting and Correcting</h2>
+
+<p>One strategy for counting is sometimes to overcount a solution and the correct for any duplicates. This is especially common when it is easier to generate all outcomes under some relaxed assumptions, or someone introduces contraints. If you can argue that you have over-counted each element the same multiple number of times, you can simply correct by using division. If you can count exactly how many elements were over-counted you can correct using subtraction.</p>
+
+<p>As a simple example to demonstrate the point, lets revisit the problem of generating all images, but this time lets just have 4 pixels (2x2) and each pixel can only be <b style="color:#3BB9FF">blue</b> or white. How many unique images are there? Generating any image is a four step process where you chose each pixel one at a time. Since each pixel has two choices there are $2^4 = 16$ unique images (they are not exactly Picasso &mdash; but hey its 4 pixels):</p>
+
+<div id="allGrids"></div>
+
+<p>Now lets say we add in new "constraint" that we only want to accept pictures which have an odd number of pixels turned blue. There are two ways of getting to the answer. You could start out with the original 16 and work out that you need to subtract off 8 images that have either 0, 2 or 4 blue pixels (which is easier to work out after the next chapter). Or you could have counted up using Mutually Exclusive Counting: there are 4 ways of making an image with 1 pixel and 4 ways of making an image with 3. Both approaches lead to the same answer, 8.</p>
+
+<div id="allGridsOneThree"></div>
+
+<p>Next lets add a much harder constraint: mirror indistinction. If you can flip any image horizontally to create another, they are no longer considered unique. For example these two both show up in our set of 8 odd-blue pixel images, but they are now considered to be the same (the are indistinct after a horizontal flip): 
+	<div id="rotationExample"></div>
+
+<p>How many images have an odd number of pixels taking into account mirror indistinction? The answer is that for each unique image with odd numbers of blue pixels, under this new constraint, you have counted it twice: itself and its horizonal flip. To convince yourself that each image has been counted <i>exactly</i> twice you can look at all of the example in the set of 8 imagines with odd number of blue pixels. Each image is next to one which is indistinct after a horizontal flip. Since each image was counted exactly twice in the set of 8, we can divide by two to get the updated count. If we list them out we can confirm that there are 8/2=4 images left after this last constraint:</p>
+
+<div id="noFlips"></div>
+
+<p>Applying any math (counting included) to novel contexts can be as much an art as it is a science. In the next chapter we will build a useful toolset from the basic first principles of counting by steps, and counting by "or".
+
+<style>
+	.f {
+		background-color: #3BB9FF
+	}
+
+	.c {
+		width:20px;
+		height:20px;
+		border-style: solid;
+		border-width: 2px;
+
+	}
+
+	#allGrids {
+		width:100%;
+	}
+
+	.gridRow {
+		display: flex;
+		margin-bottom: 10px;
+		justify-content: center;
+	}
+
+	.gridCol {
+		margin-right:10px;
+	}
+
+	
+</style>
+
+
+	
+</div>
+
+<script>
+	$(document).ready(function() {
+		allGridsOneThree()
+		makeAllGrids()
+		makeRotationExample()
+		makeNoFlips()
+	})
+
+	function makeRotationExample() {
+		let parent = $("#rotationExample")
+		let row = $(document.createElement("div"));
+		row.addClass('gridRow')
+		parent.append(row)
+		addGrid(row, 0,1,1,1)
+		addGrid(row, 1,0,1,1)
+	}
+
+	function makeNoFlips() {
+		let parent = $("#noFlips")
+		let row = $(document.createElement("div"));
+		row.addClass('gridRow')
+		parent.append(row)
+		addGrid(row, 1,0,0,0)
+		addGrid(row, 0,0,1,0)
+		addGrid(row, 0,1,1,1)
+		addGrid(row, 1,1,0,1)
+	}
+
+	function makeAllGrids() {
+		let parent = $("#allGrids")
+		let row = $(document.createElement("div"));
+		row.addClass('gridRow')
+		parent.append(row)
+		let n = 0
+		for (var a = 0; a <= 1; a++) {
+			for (var b = 0; b <= 1; b++) {
+				for (var c = 0; c <= 1; c++) {
+					for (var d = 0; d <= 1; d++) {
+						addGrid($(row), d,c,b,a)
+						n += 1
+						if(n % 4 == 0) {
+							row = $(document.createElement("div"))
+							row.addClass('gridRow')
+							parent.append(row)
+						}
+					}
+				}
+			}	
+		}
+	}
+
+	function allGridsOneThree() {
+		let parent = $("#allGridsOneThree")
+		let row = $(document.createElement("div"));
+		row.addClass('gridRow')
+		parent.append(row)
+		let n = 0
+		for (var i = 0; i < 4; i++) {
+			let x = [0, 0, 0, 0]
+			x[i] = 1
+			addGrid(row, x[0],x[1],x[2],x[3])
+		}
+		row = $(document.createElement("div"))
+		row.addClass('gridRow')
+		parent.append(row)
+		for (var i = 0; i < 4; i++) {
+			let x = [1, 1, 1, 1]
+			x[i] = 0
+			addGrid(row, x[0],x[1],x[2],x[3])
+		}
+	}
+
+	function addGrid(parent, a,b,c,d) {
+		parent.append(`
+			<div class="gridCol">
+			<table class="grid">
+				<tr><td class="c ${g(a)}"></td><td class="c ${g(b)}"></tr>
+				<tr><td class="c ${g(c)}"></td><td class="c ${g(d)}"></tr>
+			</table>
+			</div>
+		`)
+	}
+
+	function g(x) {
+		if(x == 1) return 'f';
+		return ''
+	}
+</script>
+
+
+
