@@ -94,7 +94,6 @@ console (aka terminal) */
   border-radius: 5px;
   border-width: 1px;
   padding:10px;
-  overflow-x: scroll;
   overflow-y: hidden;
 }
 
