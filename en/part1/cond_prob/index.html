@@ -323,6 +323,26 @@
               
                         
  
+<style>
+
+	.movie {
+		max-width: 100px;
+		margin-bottom: 10px
+	}
+
+	.movieContainer {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		margin-right: 10px;
+	}
+
+	.green {
+		color:green;
+		font-weight: 600;
+	}
+</style>
+
 <center><h1>Conditional Probability</h1></center>
 <hr/>
 
@@ -371,36 +391,58 @@ $$
 Even though the visual example (with equally likely outcome spaces) is useful for gaining intuition, conditional probability applies regardless of whether the sample space has equally likely outcomes!
 </p>
 
+<h2>Conditional Probability Example</h2>
+
+<p>Let's use a real world example to better understand conditional probability: movie recommendation. Imagine a streaming service like Netflix wants to figure out the probability that a user will watch a movie $E$ (for example, <a href="https://en.wikipedia.org/wiki/Life_Is_Beautiful">Life is Beautiful</a>), based on knowing that they watched a different movie $F$ (say <a href="https://en.wikipedia.org/wiki/Am%C3%A9lie">Amélie</a>). To start lets answer the simpler question, what is the probability that a user watches movie Life is Beautiful, $E$? We can solve this problem using the definition of probability and a dataset of movie watching [<a href="https://www.kaggle.com/netflix-inc/netflix-prize-data">1</a>]:
+	$$
+	\begin{align}
+	\p(E) &= \lim_{n \rightarrow \infty} \frac{\text{count}(E)}{n} \approx \frac{\text{# people who watched movie $E$}}{\text{# people on Netflix}} \\
+	&= \frac{1,234,231}{50,923,123} 
+	\approx 0.02
+	\end{align}
+	$$
+In fact we can do this for many movies $E$:
 
 <p>
-	<div class="bordered">
-
-<b><i>Definition</i></b>: The chain rule.<br/>
-
-<p>The formula in the definition of conditional probability can be re-arranged to derive a general way of calculating the probability of the <b><i>and</i></b> of any two events:
-$$
-\p(E \and F) = \p(E | F) \cdot \p(F)
-$$
-</p>
-<p>Of course there is nothing special about $E$ that says it should go first. Equivalently:
-	$$
-	\p(E \and F) = \p(F \and E) =  \p(F | E) \cdot \p(E)
-	$$
+<div class="d-flex justify-content-between">
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/lifeisbeautiful.png"/>$\p(E) = 0.02$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/3idiots.png"/>$\p(E) = 0.01$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/zootopia.png"/>$\p(E) = 0.05$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/starwars.png"/>$\p(E) = 0.09$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/amelie.png"/>$\p(E) = 0.03$</div>
+</div>
 </p>
 
-<p>We call this formula the "chain rule." Intuitively it states that the probability of observing events $E$ <b><i>and</i></b> $F$ is the
-probability of observing $F$, multiplied by the probability of observing $E$, given that you have observed $F$.
-It generalizes to more than two events:
+<p>Now for a more interesting question. What is the What is the probability that a user will watch the movie
+Life is Beautiful ($E$), given they watched Amelie ($F$)? We can use the definition of conditional probability.
 $$
 \begin{align}
-\p(E_1 \and E_2 \and \dots \and E_n) = &\p(E_1) \cdot \p(E_2|E_1) \cdot \p(E_3 |E_1 \and E_2) \dots  \\  &\p(E_n|E_1 \dots E_{n−1})
-\end{align}
+\p(E|F) &= \frac{\p(E \and F)}{\p(F)} && \text{Def of Conditional Probability}\\
+&\approx \frac{
+	\frac{\text{# of people who watched both $E \and F$}}{\text{# of people on Netflix}}
+}{
+	\frac{\text{# people who watched movie $F$}}{\text{# people on Netflix}}
+} && \text{Definition of Probability}
+ \\
+&\approx \frac{\text{# of people who watched both $E \and F$}}{\text{# of people who watched movie $F$}}
+&& \text{Simplifying}
+\end{align} 
 $$
-	</div>
-	</p>
+If we let $F$ be the event that someone watches the movie Amélie, we can now calculate <i>conditional</i> probabilities that someone watches different movies $E$, $\p(E|F)$:
 
+<p>
+<div class="d-flex justify-content-between">
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/lifeisbeautiful.png"/>$\p(E|F) = 0.09$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/3idiots.png"/>$\p(E|F) = 0.03$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/zootopia.png"/>$\p(E|F) = 0.05$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/starwars.png"/>$\p(E|F) = 0.02$</div>
+	<div class="movieContainer"><img class="movie" src="../../../img/chapters/movies/amelie.png"/><span>$\p(E|F)$ = <span class="green">1.00</span></span></div>
+</div>
+</p>
 
-<h2>Difference between <b>and</b> and conditionals</h2>
+<p>Why do some probabilities go up, some probabilities go down, and some probabilities are unchanged after we observe that the person has watched Amelie ($F$)? If you know someone watched Amelie, they are more likely to watch life is beautiful, and less likely to watch star wars. We have new information on the person!
+
+<!-- <h2>Difference between <b>and</b> and conditionals</h2> -->
 
 	<h2 id="cond_paradigm">The Conditional Paradigm</h2>
 
@@ -445,6 +487,8 @@ an event (in this case $G$):</p>
 
 	</table>
 	</p>
+
+
 
 	<h2>Conditioning on Multiple Events</h2>
 
