@@ -377,7 +377,35 @@ $$
 
 <h2>Dependent Events</h2>
 
-<p>Events which are not independent are called <b><i>dependent</i></b> events. How can you calculate the <b>and</b> of dependent events? If your events are mutually exclusive you might be able to use a technique called DeMorgan's law, which we cover in a latter chapter. For the probability of and in dependent events there is a direct formula called the <a href="conditional">chain rule</a>  which we cover in the next chapter: <a href="conditional">Conditional Probability</a>.</p>
+<p>Events which are not independent are called <b><i>dependent</i></b> events. How can you calculate the <b>and</b> of dependent events? If your events are mutually exclusive you might be able to use a technique called DeMorgan's law, which we cover in a latter chapter. For the probability of and in dependent events there is a direct formula called the chain rule which can be directly derived from the definition of conditional probability:
+
+	<p>
+	<div class="bordered">
+
+<b><i>Definition</i></b>: The chain rule.<br/>
+
+<p>The formula in the definition of conditional probability can be re-arranged to derive a general way of calculating the probability of the <b><i>and</i></b> of any two events:
+$$
+\p(E \and F) = \p(E | F) \cdot \p(F)
+$$
+</p>
+<p>Of course there is nothing special about $E$ that says it should go first. Equivalently:
+	$$
+	\p(E \and F) = \p(F \and E) =  \p(F | E) \cdot \p(E)
+	$$
+</p>
+
+<p>We call this formula the "chain rule." Intuitively it states that the probability of observing events $E$ <b><i>and</i></b> $F$ is the
+probability of observing $F$, multiplied by the probability of observing $E$, given that you have observed $F$.
+It generalizes to more than two events:
+$$
+\begin{align}
+\p(E_1 \and E_2 \and \dots \and E_n) = &\p(E_1) \cdot \p(E_2|E_1) \cdot \p(E_3 |E_1 \and E_2) \dots  \\  &\p(E_n|E_1 \dots E_{n−1})
+\end{align}
+$$
+	</div>
+	</p>
+
 
 </p>
 

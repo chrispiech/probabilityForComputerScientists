@@ -6,7 +6,7 @@
 <p>The equation for calculating the probability of either event E <b><i>or</i></b> event F happening, written  $\p(E \or F)$ or equivalently as $\p(E ∪ F)$, is deeply analogous
 to counting the size of two sets. As in counting, the equation that you can use  depends on whether or not the events are "mutually exclusive". If events are mutually exclusive, it is very straightforward to calculate the probability of either event happening. Otherwise, you need the more complex "inclusion exclusion" formula.</p>
 
-<h2>Mutually Exclusive Events</h2>
+<h2>Mutually exclusive events</h2>
 
 <p>Two events: $E$, $F$ are considered to be mutually exclusive (in set notation $E ∩ F = ∅$) if there are no outcomes that are
 in both events (recall that an event is a set of outcomes which is a subset of the sample
@@ -24,6 +24,8 @@ hexagon. The set of all the fifty hexagons is the full sample space:</p>
 
 <p>Both events $E$ and $F$ are subsets of the same sample space. Visually, we can note that
 the two sets do not overlap. They are mutually exclusive: there is no outcome that is in both sets.</p>
+
+<h2>Prob of <b>or</b> for mutually exclusive events</h2>
 
 <p>
 	<div class="bordered">
@@ -50,7 +52,7 @@ $$
 
 	<p>At this point we know how to compute the probability of the "or" of events if and only if they have the mutual exclusion property. What if they don't?</p>
 
-<h2>$\p(\or)$ for Non-mutually Exclusive Events</h2>
+<h2>Prob of <b>or</b> for non-mutually exclusive events</h2>
 
 <p>Unfortunately, not all events are mutually exclusive. If you want to calculate $\p(E \or F)$ where the events $E$
 and F are <b><i>not</i></b> mutually exclusive you can <b><i>not</i></b> simply add the probabilities. As a simple sanity check, consider the event $E$: getting heads on a coin flip, where $\p(E) = 0.5$. Now imagine the sample space $S$, getting either a heads or a tails on a coin flip. These events are not mutually exclusive (the outcome heads is in both). If you incorrectly assumed they were mutually exclusive and tried to calculate $\p(E \or S)$ you would get this buggy derivation:
