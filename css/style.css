@@ -25,6 +25,28 @@ h2 {
 }
 
 
+h3 {
+  margin-top: 30px;
+}
+
+
+p {
+  text-align: justify;
+}
+
+@media (max-width: 1300px) {
+  p {
+    text-align: left;
+  }
+}
+
+
+pre {
+  background-color: white;
+  font-size: 0.9rem;
+}
+
+
 /****
 Key constants: 
 Side Bar Break Width: 1068;
@@ -109,6 +131,7 @@ purpleBox:
   margin-top:20px;
   margin-bottom: 30px;
   border-radius:0.25rem;
+  overflow-y: auto;
 }
 
 .firstPart {
@@ -419,22 +442,6 @@ a.article:hover {
 
 
 
-p {
-  text-align: justify;
-}
-
-h3 {
-  margin-top: 30px;
-}
-
-pre {
-  background-color: white;
-  font-size: 0.9rem;
-}
-
-li {
-  /*text-align: justify;*/
-}
 
 
 .blue {

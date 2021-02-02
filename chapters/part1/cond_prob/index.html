@@ -29,7 +29,7 @@ already observed some other event $F$". It is a critical idea in machine learnin
 allows us to update our probabilities in the face of new evidence.</p>
 
 <p>When you condition on an event happening you are entering the universe where that event has taken place.
-Mathematically, if you condition on $F$, then $F$ becomes your new sample space. In the universe where $F$ has
+Formally, once you condition on $F$ the only outcomes that are now possible are the ones which are consistent with $F$. In other words your <a href="{{pathToLang}}part1/probability">sample space</a> will now be reduced to $F$. As an aside, in the universe where $F$ has
 taken place, all rules of probability still hold!</p>
 
 <p>
@@ -95,18 +95,18 @@ In fact we can do this for many movies $E$:
 Life is Beautiful ($E$), given they watched Amelie ($F$)? We can use the definition of conditional probability.
 $$
 \begin{align}
-\p(E|F) &= \frac{\p(E \and F)}{\p(F)} && \text{Def of Conditional Probability}\\
+\p(E|F) &= \frac{\p(E \and F)}{\p(F)} && \text{Def of Cond Prob}\\
 &\approx \frac{
-	\frac{\text{# of people who watched both $E \and F$}}{\text{# of people on Netflix}}
+	(\text{# who watched $E \and F$}) / (\text{# of people on Netflix})
 }{
-	\frac{\text{# people who watched movie $F$}}{\text{# people on Netflix}}
-} && \text{Definition of Probability}
+	(\text{# who watched movie $F$}) / (\text{# people on Netflix})
+} && \text{Def of Prob}
  \\
 &\approx \frac{\text{# of people who watched both $E \and F$}}{\text{# of people who watched movie $F$}}
 && \text{Simplifying}
 \end{align} 
 $$
-If we let $F$ be the event that someone watches the movie Amélie, we can now calculate <i>conditional</i> probabilities that someone watches different movies $E$, $\p(E|F)$:
+If we let $F$ be the event that someone watches the movie Amélie, we can now calculate $\p(E|F)$, the <i>conditional</i> probability that someone watches movie $E$:
 
 <p>
 <div class="d-flex justify-content-between">
