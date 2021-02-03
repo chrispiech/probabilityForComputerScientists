@@ -415,8 +415,8 @@ function redrawUniPdf() {
 }
 
 function drawUniPdf(parentDivId, a, b) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myUniformLine) {
+		window.myUniformLine.destroy()
 	}
 
 	var pdfValue = 0
@@ -499,7 +499,7 @@ function drawUniPdf(parentDivId, a, b) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myUniformLine = new Chart(ctx, config);
 }
 </script>
 
