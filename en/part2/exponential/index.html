@@ -401,8 +401,8 @@ function redrawExponentialPdf() {
 }
 
 function drawExponentialPdf(parentDivId, lambda) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myExpLine) {
+		window.myExpLine.destroy()
 	}
 
 	var expectation = 1 / lambda
@@ -475,7 +475,7 @@ function drawExponentialPdf(parentDivId, lambda) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myExpLine = new Chart(ctx, config);
 }
 </script>
 

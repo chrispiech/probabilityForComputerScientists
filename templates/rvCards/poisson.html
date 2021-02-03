@@ -63,8 +63,8 @@ function redrawPoissonPmf() {
 }
 
 function drawPoissonPmf(parentDivId, lambda) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myPoissonLine) {
+		window.myPoissonLine.destroy()
 	}
 
 	console.log('lambda',lambda)
@@ -136,6 +136,6 @@ function drawPoissonPmf(parentDivId, lambda) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myPoissonLine = new Chart(ctx, config);
 }
 </script>

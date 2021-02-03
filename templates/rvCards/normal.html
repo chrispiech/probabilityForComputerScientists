@@ -74,8 +74,8 @@ function redrawNormalPdf() {
 }
 
 function drawNormalPdf(parentDivId, mu, sigma) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myNormalLine) {
+		window.myNormalLine.destroy()
 	}
 	var xValues = []
 	var yValues = []
@@ -157,6 +157,6 @@ function drawNormalPdf(parentDivId, mu, sigma) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myNormalLine = new Chart(ctx, config);
 }
 </script>

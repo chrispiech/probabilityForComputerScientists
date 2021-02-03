@@ -409,8 +409,8 @@ function redrawBernoulliPmf() {
 }
 
 function drawBernoulliPmf(parentDivId, p) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myBernLine) {
+		window.myBernLine.destroy()
 	}
 	var xValues = [0, 1]
 	var q = 1 - p;
@@ -472,7 +472,7 @@ function drawBernoulliPmf(parentDivId, p) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myBernLine = new Chart(ctx, config);
 }
 </script></p>
 

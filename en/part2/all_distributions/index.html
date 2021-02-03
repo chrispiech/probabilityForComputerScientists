@@ -394,8 +394,8 @@ function redrawBernoulliPmf() {
 }
 
 function drawBernoulliPmf(parentDivId, p) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myBernLine) {
+		window.myBernLine.destroy()
 	}
 	var xValues = [0, 1]
 	var q = 1 - p;
@@ -457,7 +457,7 @@ function drawBernoulliPmf(parentDivId, p) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myBernLine = new Chart(ctx, config);
 }
 </script>
 <!-- Template that renders a single random variable card -->
@@ -530,8 +530,8 @@ function redrawBinomialPmf() {
 }
 
 function drawBinomialPmf(parentDivId, n, p) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myBinLine) {
+		window.myBinLine.destroy()
 	}
 	console.log(n, p)
 
@@ -597,7 +597,7 @@ function drawBinomialPmf(parentDivId, n, p) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myBinLine = new Chart(ctx, config);
 }
 </script>
 <!-- Template that renders a single random variable card -->
@@ -665,8 +665,8 @@ function redrawPoissonPmf() {
 }
 
 function drawPoissonPmf(parentDivId, lambda) {
-	if(window.myLine) {
-		window.myLine.destroy()
+	if(window.myPoissonLine) {
+		window.myPoissonLine.destroy()
 	}
 
 	console.log('lambda',lambda)
@@ -738,7 +738,7 @@ function drawPoissonPmf(parentDivId, lambda) {
 		}
 	};
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
+	window.myPoissonLine = new Chart(ctx, config);
 }
 </script>
 <!-- Template that renders a single random variable card -->
