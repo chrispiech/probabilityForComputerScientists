@@ -142,6 +142,7 @@
   $\DeclareMathOperator{\Ber}{Bern}$
   $\DeclareMathOperator{\Bin}{Bin}$
   $\DeclareMathOperator{\Poi}{Poi}$
+  $\DeclareMathOperator{\Uni}{Uni}$
   $\DeclareMathOperator{\Exp}{Exp}$
   $\DeclareMathOperator{\N}{N}$
   $\DeclareMathOperator{\R}{\mathbb{R}}$
@@ -215,6 +216,8 @@
 <a id=sidebar-binomial href="../../part2/binomial">Binomial Distribution</a>
 <a id=sidebar-poisson href="../../part2/poisson">Poisson Distribution</a>
 <a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
+<a id=sidebar-uniform href="../../part2/uniform">Uniform Distribution</a>
+<a id=sidebar-exponential href="../../part2/exponential">Exponential Distribution</a>
 <a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
 <a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
 
@@ -453,154 +456,7 @@ For both continuous and discrete RVs:
     &\text{Var}(aX + b) = a^2 \text{Var}(X)
 \end{align*}
 
-<h2>Exponential Random Variable</h2>
 
-<!-- Template that renders a single random variable card -->
-
-<div class="bordered">
-<p><b>Exponential Random Variable</b></p>
-
-
-<table>
-<tbody class="rvCardBody">
-	<tr>
-		<th style="width:150px">Notation:</td>
-		<td>$X \sim \Exp(\lambda)$</td>
-	</tr>
-	<tr>
-		<th>Description:</td>
-		<td>Time until next events if (a) the events occur with a constant mean rate and (b) they occur independently of time since last event.</td>
-	</tr>
-	<tr>
-		<th>Parameters:</td>
-
-		<td>$\lambda \in \{0, 1, \dots\}$, the constant average rate.</td>
-	</tr>
-	
-	
-	<tr>
-		<th>Support:</td>
-		<td>$x \in \mathbb{R}^+$</td>
-	</tr>
-	<tr>
-		<th>PDF equation:</th>
-		<td class="mathLeft">$$f(x) = \lambda e^{-\lambda x}$$</td>
-	</tr>
-	<tr>
-		<th>CDF equation:</th>
-		<td class="mathLeft">$$F(x) = 1 - e^{-\lambda x}$$</td>
-	</tr>
-	<tr>
-		<th>Expectation:</th>
-		<td>$\E[X] = 1/\lambda$</td>
-	</tr>
-	<tr>
-		<th>Variance:</th>
-		<td>$\var(X) = 1/\lambda^2$</td>
-	</tr>
-	<tr>
-		<th>PDF graph:</th>
-	</tr>
-</tbody>
-</table>
-<div class="d-flex">
-	<div class="mr-2">
-Parameter $\lambda$: <input onchange="redrawExponentialPdf()" type="number" class="form-control example-inline-input mb-3" id="exponentialPdfLambda" min="1" max="130" value="5" step = "1">
-</div>
-</div>
-<canvas id="exponentialPdf" style="max-height: 400px"></canvas>
-</div>
-
-<script>
-
-$(document).ready(function(){
-	redrawExponentialPdf()
-})
-
-function redrawExponentialPdf() {
-	let parentDivId = 'exponentialPdf'
-	let lambda = parseFloat($("#exponentialPdfLambda").val())
-	drawExponentialPdf(parentDivId, lambda)
-}
-
-function drawExponentialPdf(parentDivId, lambda) {
-	if(window.myLine) {
-		window.myLine.destroy()
-	}
-
-	var expectation = 1 / lambda
-	var xValues = []
-	var yValues = []
-	var i = 0
-	while(true){
-		let pr_x = jStat.exponential.pdf(i, lambda).toFixed(5)
-		xValues.push(i.toFixed(3))
-		yValues.push(pr_x)
-		i += expectation / 100
-		if(pr_x < 0.001) {
-			break;
-		}
-	}
-	let xLabel = 'Values that X can take on'
-	let yLabel = 'Probability'
-
-	var config = {
-		type: 'line',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'x',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
-	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myLine = new Chart(ctx, config);
-}
-</script>
 
                         
 

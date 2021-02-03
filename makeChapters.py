@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup
 import os
 import pathlib
+from bottle import SimpleTemplate
+import json
+import hjson
 
 
 INDEX_TEMPLATE = '''
@@ -18,6 +21,8 @@ EXAMPLE_TEMPLATE = '''
     </ul>
 </li>
 '''
+
+book_outline = hjson.load(open('bookOutline.hjson'))
 
 def main():
 	create_directories_and_files()

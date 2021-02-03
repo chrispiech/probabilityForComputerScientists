@@ -1,0 +1,169 @@
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Uniform Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Uni(\alpha, \beta)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A continuous random variable that takes on values, with equal likelihood, between $\alpha$ and $\beta$</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$\alpha \in \R$, the minimum value of the variable.<br/>$\beta \in \R$, $\beta > \alpha$, the maximum value of the variable. </td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in [\alpha, \beta]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \begin{cases}
+\frac{1}{\beta - \alpha} && \text{for }x \in [\alpha, \beta]\\
+0 && \text{else}
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$F(x) = \begin{cases}
+\frac{x - \alpha}{\beta - \alpha} && \text{for }x \in [\alpha, \beta]\\
+0 && \text{for } x < \alpha \\
+1 && \text{for } x > \beta
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{1}{2}(\alpha + \beta)$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{1}{12}(\beta - \alpha)^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\alpha$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniA" value="0" step = "0.05">
+</div>
+<div>
+Parameter $\beta$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniB" value="1" step = "0.05">
+</div>
+</div>
+
+<canvas id="uniPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawUniPdf()
+})
+
+function redrawUniPdf() {
+	let parentDivId = 'uniPdf'
+	let a = parseFloat($("#uniA").val())
+	let b = parseFloat($("#uniB").val())
+	drawUniPdf(parentDivId, a, b)
+}
+
+function drawUniPdf(parentDivId, a, b) {
+	if(window.myLine) {
+		window.myLine.destroy()
+	}
+
+	var pdfValue = 0
+	if(b > a) {
+		pdfValue = 1 / (b - a)
+	} else {
+
+		return
+	}
+	 
+	var xValues = []
+	var yValues = []
+	var step = (b-a)/100
+	
+	for (var i = a - 1; i <= b + 1; i+=step) {
+		xValues.push(i.toFixed(2))
+		if(i >= a && i <= b){
+			yValues.push(pdfValue.toFixed(3))
+
+		} else {
+			yValues.push(0)
+		}
+	}
+
+	
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability Density'
+
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'x',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myLine = new Chart(ctx, config);
+}
+</script>
