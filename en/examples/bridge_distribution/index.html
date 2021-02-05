@@ -363,6 +363,7 @@ $n$, the number of cards of particular suit among the two hands: <input onchange
 $$\p(Y = i) = \frac
 	{ {n \choose i} \cdot {2\cdot k-n \choose k-i} }
 	{ {2\cdot k \choose k}}$$
+	<p>Can you figure out how we came up with that formula? It uses equally likely outcomes where each element in the sample set is a chosen set of $k$ cards  to be dealt to one player (out of $2k$ cards which go to both).</p>
 <canvas id="bridgeGraphEqual" style="max-height: 500px"></canvas>
 
 <p>
@@ -382,18 +383,25 @@ $$\p(X \geq j) = 1 - \sum_{i=n-j+1}^{j - 1}\p(Y= i)$$
 <p>
 	<div class="">
 		<h2>Distribution of Hand Strength</h2>
+
+		<p>The way folks play bridge is that they make a calculation about their "hand strength" and then make decisions based off that number. The strength of your hand is a number which is equal to 4 times the number of "aces", 3 times the number of "kings", 2 times the number of "queens" and 1 times the number of "jacks" in your hand. No other cards contribute to your hand strength. Lets consider your hand strength to be a random variable and compute its distribution. It seems complex to compute by hand -- but perhaps we could run a simulation? Here we simulate a million deals of bridge hands, calculate the hand strengths, and use that to approximate the the distribution of hand strengths:
 <canvas id="bridgePoints" style="max-height: 500px"></canvas>
+
+<p>Here is the pseudo code used to simulate</p>
+<pre class="language-python"><code></code></pre>
+
 <p>You might notice that at first blush this looks a lot like a poisson with rate $\lambda = 10$. First, lets consider why the rate might be 10. Let $X_i$ be the points of a given card $i$.  Since each card value is equally likely $\p(X_i=x) = \frac{1}{13}$. The expectation of points for each card is $\E[X] = \sum_x x \cdot \p(X_i=x) = (1+2+3+4)\frac{1}{13}$. Let $H$ be the value of a hand. The value of a hand is the sum of the value of each card: 
 	$$
 	\begin{align}\E[H] &= \sum_{i\in \{1 \dots 13\}} \E[X_i] \\&= 13 \cdot \E[X_i] \\&= 13 \cdot (1+2+3+4)\frac{1}{13} = 10\end{align}$$
 Saying that $H$ is approximately $\sim \Poi(\lambda=10)$ is an interesting claim. It suggests that points in a hand come at a constant rate, and that the next point in your hand is independent of when you got your last point. Of course this second part of the assumption is mildly violated. There are a fixed set of cards so getting one card changes the probabilities of others. For this reason the poisson is a close, but not perfect approximation.
 
-<p><b>Joint distribution of the score of each of two hands</b></p>
-<p>In most card games it doesn't just matter how strong your hand is, but the relative strength of your hand and another hand. In bridge, you play with a partner. We know that the two hands are not independent of each other. If I tell you that your partner has a strong hand, that means there are fewer "high value" cards that can be in your hand, and as such by belief in your strength has changed. 
+<h2>Joint distribution of hand strength among two hands</h2>
+<p>In most card games it doesn't just matter how strong your hand is, but the relative strength of your hand and another hand. In bridge, you play with a partner. We know that the two hands are not independent of each other. If I tell you that your partner has a strong hand, that means there are fewer "high value" cards that can be in your hand, and as such by belief in your strength has changed.  If you think about each player's hand strength as a random variable, we care about the joint distribution of hand strength.
 <p>
 	<div style=""id="my_dataviz"></div>
 </p>
 
+<p>Finally lets consider the conditional distribution of your partners points given your points:</p>
 
 Your points: <input onchange="redrawCondGraph()" type="number" class="form-control example-inline-input mb-3" id="yourPoints" min="0" max="26" value="13" step = "1">
 <canvas id="partnerPoints" style="max-height: 500px"></canvas>
