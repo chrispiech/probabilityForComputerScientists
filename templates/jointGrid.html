@@ -6,7 +6,7 @@
 <script>
 	$(document).ready(function(){
 		let html = ''
-		let data = JSON.parse(`{{data}}`)
+		let data = JSON.parse(`{{!data}}`)
 		let cols = {{!cols}};
 		let rows = {{!rows}};
 
@@ -29,5 +29,6 @@
 			html += `<tr>${rowHtml}</tr>`
 		}
 		$("#{{key}}").html(html)
+		MathJax.typeset()
 	})
 </script>

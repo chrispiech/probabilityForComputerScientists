@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Linear Regression</title>
+<title>Multinomial</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -332,8 +332,30 @@
               
                         
  
-<center><h1>Linear Regression</h1></center>
+<center><h1>Multinomial</h1></center>
 <hr/>
+
+<p>The multinomial is an example of a <i>parametric</i> distribution for multiple random variables.</p>
+
+<p>Say you perform $n$ independent trials of an experiment where each trial results in one of $m$ outcomes, with respective probabilities: $p_1, p_2, \dots , p_m$ (constrained so that $\sum_i p_i = 1$). Define $X_i$ to be the number of trials with outcome $i$. A multinomial distribution is a closed form function that answers the question: What is the probability that there are $c_i$ trials with outcome $i$. Mathematically:
+\begin{align*}
+P(X_1=c_1,X_2 = c_2, \dots , X_m = c_m) = { {n} \choose {c_1,c_2,\dots , c_m} }\cdot p_1^{c_1} \cdot p_2^{c_2}\dots p_m^{c_m}
+\end{align*}</p>
+
+<p>Often people will use the product notation to write the exact same equation:
+\begin{align*}
+P(X_1=c_1,X_2 = c_2, \dots , X_m = c_m) = { {n} \choose {c_1,c_2,\dots , c_m} }\cdot \prod_i p_i^{c_i} 
+\end{align*}</p>
+
+<div class="purpleBox">
+<b><i>Example:</b></i> A 6-sided die is rolled 7 times. What is the probability that you roll: 1 one, 1 two, 0 threes, 2 fours, 0 fives, 3 sixes (disregarding order).
+\begin{align*}
+P(X_1=1,X_2 = 1&, X_3 = 0,X_4 = 2,X_5 = 0,X_6 = 3) \\&= \frac{7!}{2!3!}\left(\frac{1}{6}\right)^1\left(\frac{1}{6}\right)^1\left(\frac{1}{6}\right)^0\left(\frac{1}{6}\right)^2\left(\frac{1}{6}\right)^0\left(\frac{1}{6}\right)^3\\
+&=420\left(\frac{1}{6}\right)^7
+\end{align*}
+</div>
+
+<p>The multinomial is especially popular because of its use as a model of language. For a full example see the <a href="../../examples/federalist">Federalist Paper Authorship</a> example.</p>
 
 
                         
