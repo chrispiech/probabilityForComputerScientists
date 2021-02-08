@@ -59,7 +59,7 @@
 		"sections": {
 			"joint":"Joint Probability",
 			"multinomial":"Multinomial",
-			# "independent_vars":"Independence in Variables",
+			"independent_vars":"Independence in Variables",
 			# "cond_distributions":"Conditional Distributions",
 			# "variable_bayes":"Bayes Theorem Revisited",
 			# "continuous_joint":"Continuous Joint",
@@ -77,6 +77,7 @@
 	"part4":{
 		"title":"Part 4: Uncertainty Theory",
 		"sections": {
+			"summation_vars":"Adding Random Variables",
 			"clt":"Central Limit Theorem",
 			"bootstrapping":"Bootstrapping",
 			"parameters":"Uncertainty in Parameters",

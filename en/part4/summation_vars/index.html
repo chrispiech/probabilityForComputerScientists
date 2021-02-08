@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Hyper Geometric</title>
+<title>Adding Random Variables</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -334,9 +334,73 @@
               
                         
  
-<center><h1>Hyper Geometric</h1></center>
+<center><h1>Adding Random Variables</h1></center>
 <hr/>
 
+<p>In this section on uncertainty theory we are going to explore some of the great results in probability theory. As a gentle introduction we are going to start with convolution.
+Convolution is a very fancy way of saying "adding" two different random variables together. The name comes from the fact that adding two random varaibles requires you to "convolve" their distribution functions. It is interesting to study in detail because (1) many natural processes can be modelled as the sum of random variables, and (2) because mathemeticians have made great progress on proving convolution theorems. For some particular random variables computing convolution has closed form equations. Importantly convolution is the sum of the random variables themselves, not the addition of the probability density functions (PDF)s that correspond to the random variables.</p>
+
+<h2>Independent Binomials with equal $p$</h2>
+
+<p>For any two Binomial random variables with the same "success" probability: $X ~ \sim \Bin(n_1,p)$ and $Y ~ \sim \Bin(n_2,p)$ the sum of those two random variables is another binomial: $X +Y ~ \sim \Bin(n_1 + n_2,p)$. This does not hold when the two distribution have different parameters $p$. This hopefully makes sense. The convolution is the number of sucesses across $X$ and $Y$. Since each trial has the same probability of success, and there are now $n_1 + n_2$ trials, which are all independent, the convolution is simply a new Binomial.</p>
+
+<h2>Independent Poissons</h2>
+
+<p>For any two Poisson random variables: $X ~ \sim \Poi(\lambda_1)$ and $Y ~ \sim \Poi(\lambda_2)$ the sum of those two random variables is another Poisson: $X +Y ~ \sim \Poi(\lambda_1 + \lambda_2)$. This holds when $\lambda_1$ is not the same as $\lambda_2$.</p>
+
+<p>How could we prove a claim the the one above? Proofs for convolution require an interesting insight. If your random variables are discrete then the probability that $X + Y = n$ is the sum of mutually exclusive cases where $X$ takes on a value and $Y$ takes on a value that allows the two to sum to $n$. Here are a few examples $X = 0 \and Y = n$, $X = 1 \and Y = n - 1$ etc. In fact all of the mutually exclusive cases can be enumerated in a sum:
+	$$
+	\p(X + Y = n) = \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- 1)
+	$$
+If the random variables are independent you can futher decompose the term $\p(X = i, Y = n- 1)$.
+
+<p><div class="bordered">
+<p>Let's go about proving that the sum of two independent Poisson random variables is also Poisson. Let $X\sim\Poi(\lambda_1)$ and $Y\sim\Poi(\lambda_2)$ be two independent random variables, and $Z = X + Y$. What is $P(Z = n)$?
+
+<p>
+\begin{align*}
+P(Z = n) 
+&= P(X + Y = n) \\
+&= \sum_{k=-\infty}^{\infty} \p(X = k, Y = n- k) & \text{(Convolution)}\\
+&= \sum_{k=-\infty}^{\infty} P(X = k) P(Y = n - k) & \text{(Independence)}\\
+&= \sum_{k=0}^n P(X = k) P(Y = n - k) &\text{(Range of }X\text{ and }Y\text{)}\\
+&= \sum_{k=0}^n e^{-{\lambda_1}} \frac{\lambda_1^k}{k!} e^{-{\lambda_2}} \frac{\lambda_2^{n-k}}{(n-k)!} & \text{(Poisson PMF)} \\
+&= e^{-(\lambda_1 + \lambda_2)} \sum_{k=0}^n \frac{\lambda_1^k \lambda_2^{n-k}}{k!(n-k)!} \\
+&= \frac{ e^{-(\lambda_1 + \lambda_2)}}{n!} \sum_{k=0}^n \frac{n!}{k!(n-k)!} \lambda_1^k \lambda_2^{n-k} \\
+&= \frac{ e^{-(\lambda_1 + \lambda_2)}}{n!} (\lambda_1 + \lambda_2)^n & \text{(Binomial theorem)}
+\end{align*}
+
+<p>
+Note that the Binomial Theorem (which we did not cover in this class, but is often used in contexts like expanding polynomials) says that for two numbers $a$ and $b$ and positive integer $n$, $(a+b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$.
+</div>
+
+<h2>Independent Normals</h2>
+
+<p>For any two normal random variables $X ~ \sim \mathcal{N}(\mu_1,\sigma_1^2)$ and $Y ~ \sim \mathcal{N}(\mu_2,\sigma_2^2)$ the sum of those two random variables is another normal: $X +Y ~ \sim \mathcal{N}(\mu_1 + \mu_2,\sigma_1^2 + \sigma_2^2)$.</p>
+
+<h2>General Independent Case</h2>
+
+<p>For two general independent random variables (aka cases of independent random variables that don't fit the above special situations) you can calculate the CDF or the PDF of the sum of two random variables using the following formulas:
+\begin{align*}
+    &F_{X+Y}(a) = P(X + Y \leq a) = \int_{y=-\infty}^{\infty} F_X(a-y)f_Y(y)dy \\
+&f_{X+Y}(a) = \int_{y=-\infty}^{\infty} f_X(a-y)f_Y(y)dy
+\end{align*}
+There are direct analogies in the discrete case where you replace the integrals with sums and change notation for CDF and PDF.</p>
+
+<div class="purpleBox">
+<b><i>Example</i></b>: 
+Calculate the PDF of $X + Y$ for independent uniform random variables $X \sim \Uni(0,1)$ and $Y \sim \Uni(0,1)$? First plug in the equation for general convolution of independent random variables:
+\begin{align*}
+    f_{X+Y}(a) &= \int_{y=0}^{1} f_X(a-y)f_Y(y)dy \\
+     f_{X+Y}(a) &= \int_{y=0}^{1} f_X(a-y)dy && \text{Because } f_Y(y) = 1
+\end{align*}
+It turns out that is not the easiest thing to integrate. By trying a few different values of $a$ in the range $[0,2]$ we can observe that the PDF we are trying to calculate is discontinuous at the point $a=1$ and thus will be easier to think about as two cases: $a < 1$ and $a > 1$. If we calculate $f_{X+Y}$ for both cases and correctly constrain the bounds of the integral we get simple closed forms for each case:
+\begin{align*}
+    f_{X+Y}(a) = \begin{cases} a &\mbox{if } 0 < a \leq 1 \\ 
+2-a & \mbox{if } 1 < a \leq 2 \\
+0 & \mbox{else} \end{cases} 
+\end{align*}
+</div>
 
                         
 

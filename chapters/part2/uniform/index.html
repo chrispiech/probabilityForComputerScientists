@@ -5,6 +5,29 @@
 <hr/>
 
 
+The most basic of all the continuous random variables is the uniform random variable, which is equally likely to take on any value in its range ($\alpha, \beta$). 
+
+$X$ is a <i>uniform random variable</i> ($X \sim \Uni(\alpha, \beta)$) if it has PDF:
+\begin{align*}
+    f(x) = \begin{cases} \frac{1}{\beta - \alpha} &\text{when } \alpha \leq x \leq \beta \\ 
+0 & \text{otherwise} \end{cases} 
+\end{align*}
+<p>
+Notice how the density $1/(\beta - \alpha$) is exactly the same regardless of the value for $x$. That makes the density uniform. So why is the PDF $1/(\beta - \alpha)$ and not 1? That is the constant that makes it such that the integral over all possible inputs evaluates to 1.</p>
+
+
+<p>
 <%
   include('templates/rvCards/uniform.html')
 %>
+</p>
+
+<p>
+
+Let's work through a few key properties of this RV are. We can come up with a closed form for the probability that a uniform random variable $X$ is in the range $a$ to $b$, assuming that $\alpha \leq a \leq b \leq \beta$:
+\begin{align*}
+    \P(a \leq X \leq b) &= \int_a^b f(x) \d x \\
+    &= \int_a^b \frac{1}{\beta - \alpha} \d x \\
+    &= \frac{ b - a }{ \beta - \alpha } 
+\end{align*}
+</p>

@@ -126,7 +126,8 @@ purpleBox:
   /*border-top: 2px solid black;*/
   padding:20px;
   /*border-bottom: 2px solid black;*/
-
+  /*margin-left: -20px;*/
+  /*width: calc(100% + 20px);*/
   background-color: #EFF1FC;
   margin-top:20px;
   margin-bottom: 30px;
