@@ -238,7 +238,11 @@
 <li>
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
+<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
+<a id=sidebar-variable_bayes href="../../part3/variable_bayes">Bayes Theorem Revisited</a>
+<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -337,6 +341,55 @@
 <center><h1>Independence in Variables</h1></center>
 <hr/>
 
+<h2>Discrete</h2>
+Two discrete random variables $X$ and $Y$ are called independent if:
+\begin{align*}
+\P(X=x,Y=y) = \P(X=x)\P(Y=y) \text{ for all } x,y
+\end{align*}
+Intuitively: knowing the value of $X$ tells us nothing about the distribution of $Y$. If two variables are not independent, they are called dependent. This is a similar conceptually to independent events, but we are dealing with multiple <i>variables</i>. Make sure to keep your events and variables distinct.
+
+<h2>Continuous</h2>
+Two continuous random variables $X$ and $Y$ are called independent if:
+\begin{align*}
+\P(X\leq a, Y \leq b) = \P(X \leq a)\P(Y \leq b) \text{ for all } a,b
+\end{align*}
+This can be stated equivalently as:
+\begin{align*}
+&F_{X,Y}(a,b) = F_{X}(a)F_{Y}(b) \text{ for all } a,b \\
+&f_{X,Y}(a,b) = f_{X}(a)f_{Y}(b) \text{ for all } a,b 
+\end{align*}
+More generally, if you can factor the joint density function then your continuous random variable are independent:
+\begin{align*}
+&f_{X,Y}(x,y) = h(x)g(y) \text{ where }-\infty < x,y < \infty 
+\end{align*}
+
+<div class="purpleBox">
+	<b><i>Example</i></b>
+Let $N$ be the # of requests to a web server/day and that $N \sim \Poi(\lambda)$. Each request comes from a human (probability = $p$) or from a "bot" (probability = $(1 – p)$), independently. Define $X$ to be the # of requests from humans/day and $Y$ to be the # of requests from bots/day.
+
+Since requests come in independently, the probability of $X$ conditioned on knowing the number of requests is a Binomial. Specifically:
+\begin{align*}
+(X|N) &\sim \Bin(N,p)\\
+(Y|N) &\sim \Bin(N, 1-p)
+\end{align*}
+Calculate the probability of getting exactly $i$ human requests and $j$ bot requests. Start by expanding using the chain rule:
+\begin{align*}
+    \P(X=i,Y=j) = \P(X = i, Y=j|X+Y = i+j)\P(X + Y = i+j)
+\end{align*}
+We can calculate each term in this expression:
+ \begin{align*}
+   &\P(X = i, Y=j|X+Y = i+j) = { {i + j} \choose i}p^i(1-p)^j \\
+   &\P(X+Y = i + j) = e^{-\lambda}\frac{\lambda^{i+j}}{(i+j)!} 
+\end{align*}
+Now we can put those together and simplify:
+\begin{align*}
+   &\P(X = i, Y=j) = { {i + j} \choose i}p^i(1-p)^j e^{-\lambda}\frac{\lambda^{i+j}}{(i+j)!}
+\end{align*}
+As an exercise you can simplify this expression into two independent Poisson distributions.
+</div>
+
+<h2>Symmetry of Independence</h2>
+Independence is symmetric. That means that if random variables $X$ and $Y$ are independent, $X$ is independent of $Y$ and $Y$ is independent of $X$. This claim may seem meaningless but it can be very useful. Imagine a sequence of events $X_1,X_2, \dots$. Let $A_i$ be the event that $X_i$ is a "record value" (eg it is larger than all previous values). Is $A_{n+1}$ independent of $A_n$? It is easier to answer that $A_n$ is independent of $A_{n+1}$. By symmetry of independence both claims must be true.
 
                         
 

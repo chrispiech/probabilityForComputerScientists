@@ -238,7 +238,11 @@
 <li>
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
+<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
+<a id=sidebar-variable_bayes href="../../part3/variable_bayes">Bayes Theorem Revisited</a>
+<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -336,8 +340,70 @@
  
 <center><h1>Conditional Distributions</h1></center>
 <hr/>
+Before we looked at conditional probabilities for events. Here we formally go over conditional probabilities for random variables. The equations for both the discrete and continuous case are intuitive extensions of our understanding of conditional probability:
 
-<h2>Law of Total Expectation</h2>
+<h2>Discrete</h2>
+The conditional probability mass function (PMF) for the discrete case:
+\begin{align*}
+    \P(X=x|Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)}
+\end{align*}
+In the presence of multiple random variables, it becomes increasingly useful to use shorthand! The above definition is identical to this notation:
+\begin{align*}
+    \P(x|y)=\frac{P(x,y)}{P(y)}
+\end{align*}
+Again where a lowercase symbol such as $x$ is short hand for the event $X=x$. The conditional definition works for any event and as such we can also write conditionals using cumulative density functions (CDFs) for the discrete case:
+\begin{align*}
+    \P(X \leq a | Y=y) 
+    &= \frac{\P(X \leq a, Y=y)}{\p(Y=y)} \\
+    &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} 
+\end{align*}
+
+This last term can be rewritten, by a clever manipulation. We can make the sum extend over the whole fraction:
+
+\begin{align*}
+    \P(X \leq a | Y=y) 
+    &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} \\
+    &= \sum_{x\leq a} \frac{\P(X=x,Y=y)}{\P(Y=y)} \\
+    &= \sum_{x\leq a} \P(X=x|Y=y) 
+\end{align*}
+
+
+<h2>Continuous</h2>
+The conditional probability density function (PDF) for the continuous case:
+\begin{align*}
+    f(x|y) = \frac{f(x,y)}{f(y)}
+\end{align*}
+The conditional cumulative density function (CDF) for the continuous case:
+\begin{align*}
+    P(X \leq a | Y=y) = \int_{-\infty}^{a} f(X=x|Y=y)\d x
+\end{align*}
+
+<h2>Mixing Discrete and Continuous</h2>
+ These equations are straightforward once you have your head around the notation for probability density functions, $f(X=x)$, and probability mass functions, $\P(X=x)$.
+
+Let $X$ be continuous random variable and let $N$ be a discrete random variable. The conditional probabilities of $X$ given $N$ and $N$ given $X$ respectively are:
+\begin{align*}
+    f(X=x|N=n) =  \frac{\P(N=n|X=x)f(X=x)}{\p(N=n)} &&
+\end{align*}
+\begin{align*}
+    \p(N=n|X=x) =  \frac{f(X=x|N=n)\p(N=n)}{f(X=x)} 
+\end{align*}
+
+
+
+<!-- \subsection*{Example 2}
+Let's say we have two independent random Poisson variables for requests received at a web server in a day: $X$ = \# requests from humans/day, $X \sim Poi(\lambda_1)$ and $Y$ = \# requests from bots/day, $Y \sim Poi(\lambda_2)$. Since the convolution of Poisson random variables is also a Poisson we know that the total number of requests $(X+Y)$ is also a Poisson $(X+Y) \sim Poi(\lambda_1 + \lambda_2)$. What is the probability of having $k$ human requests on a particular day given that there were $n$ total requests?
+\begin{align*}
+    P(X=k|X+Y=n) &= \frac{P(X=k,Y=n-k)}{P(X+Y=n)} = \frac{P(X=k)P(Y=n-k)}{P(X+Y=n)} \\
+    &= \frac{e^{-\lambda_1}\lambda_1^k}{k!} \cdot \frac{e^{-\lambda_2}\lambda_2^{n-k}}{(n-k)!} \cdot 
+    \frac{n!}{e^{1(\lambda_1+\lambda_2)}(\lambda_1+\lambda_2)^n}\\
+    &={n \choose k}\left(\frac{\lambda_1}{\lambda_1 + \lambda_2}\right)^k
+    \left(\frac{\lambda_2}{\lambda_1 + \lambda_2}\right)^{n-k} \\
+    &\sim Bin\left(n, \frac{\lambda_2}{\lambda_1 + \lambda_2}\right)
+\end{align*} -->
+
+
+
 
                         
 

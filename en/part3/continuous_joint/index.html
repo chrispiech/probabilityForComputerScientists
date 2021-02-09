@@ -238,7 +238,11 @@
 <li>
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
+<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
+<a id=sidebar-variable_bayes href="../../part3/variable_bayes">Bayes Theorem Revisited</a>
+<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -337,6 +341,20 @@
 <center><h1>Continuous Joint</h1></center>
 <hr/>
 
+Random variables $X$ and $Y$ are Jointly Continuous if there exists a joint Probability Density Function (PDF) $f$ such that:
+\begin{align*}
+    P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = \int_{a_1}^{a_2} \int_{b_1}^{b_2} f(X=x,Y=y)\d y \text{ } \d x
+\end{align*}
+Using the PDF we can compute marginal probability densities:
+\begin{align*}
+    f(X=a) &= \int_{-\infty}^{\infty}f(X=a,Y=y)\d y \\
+    f(Y=b) &= \int_{-\infty}^{\infty}f(X=x,Y=b)\d x 
+\end{align*}
+
+Let $F(x,y)$ be the Cumulative Density Function (CDF):
+\begin{align*}
+    P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = F(a_2,b_2) - F(a_1,b_2) + F(a_1,b_1) - F(a_2,b_1)
+\end{align*}
 
                         
 
