@@ -144,9 +144,11 @@
   $\DeclareMathOperator{\Bin}{Bin}$
   $\DeclareMathOperator{\Poi}{Poi}$
   $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Beta}{Beta}$
   $\DeclareMathOperator{\Exp}{Exp}$
   $\DeclareMathOperator{\N}{N}$
   $\DeclareMathOperator{\R}{\mathbb{R}}$
+  $\DeclareMathOperator{\argmax}{argmax}$
   $\newcommand{\d}{\, d}$
   
 </div>
@@ -258,10 +260,9 @@
 <li>
 <a id=sidebar-summation_vars href="../../part4/summation_vars">Adding Random Variables</a>
 <a id=sidebar-clt href="../../part4/clt">Central Limit Theorem</a>
+<a id=sidebar-samples href="../../part4/samples">Sampling</a>
 <a id=sidebar-bootstrapping href="../../part4/bootstrapping">Bootstrapping</a>
-<a id=sidebar-parameters href="../../part4/parameters">Uncertainty in Parameters</a>
 <a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
-<a id=sidebar-bounds href="../../part4/bounds">Probability Bounds</a>
 
 <li>
     <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -276,18 +277,17 @@
 <ul class="list-unstyled components">
 <li><p href="{pathToLang}part5">Part 5: Machine Learning</p></li>
 <li>
+<a id=sidebar-parameter_estimation href="../../part5/parameter_estimation">Parameter Estimation</a>
 <a id=sidebar-mle href="../../part5/mle">Maximum Likelihood Estimation</a>
 <a id=sidebar-map href="../../part5/map">Maximum A Posteriori</a>
+<a id=sidebar-machine_learning href="../../part5/machine_learning">Machine Learning</a>
 <a id=sidebar-naive_bayes href="../../part5/naive_bayes">Naïve Bayes</a>
-<a id=sidebar-optimization href="../../part5/optimization">Gradient Ascent Optimization</a>
-<a id=sidebar-linear_regression href="../../part5/linear_regression">Linear Regression</a>
 <a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
-<a id=sidebar-neural_nets href="../../part5/neural_nets">Artificial Neural Networks</a>
 
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/vision_test">Vision Test</a></li>
+        
     </ul>
 </li>
 </li>
@@ -340,6 +340,63 @@
 <center><h1>Maximum A Posteriori</h1></center>
 <hr/>
 
+<p>MLE is great, but it is not the only way to estimate parameters! This section introduces an alternate algorithm, Maximum A Posteriori (MAP).The paradigm of MAP is that we should chose the value for our parameters that is the most likely given the data. At first blush this might seem the same as MLE, however notice that MLE chooses the value of parameters that makes the \emph{data} most likely. Formally, for IID random variables $X_1, \dots, X_n$:
+\begin{align*}
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } f(\theta | X_1, X_2, \dots X_n) 
+\end{align*}
+In the equation above we trying to calculate the conditional probability of unobserved random variables given observed random variables. When that is the case, think Bayes Theorem! Expand the function $f$ using the continuous version of Bayes Theorem.
+\begin{align*}
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } f(\theta | X_1, X_2, \dots X_n) && \text{Now apply Bayes Theorem}\\
+=& \underset{\theta}{\operatorname{argmax }} \text{ } \frac{f(X_1, X_2, \dots, X_n | \theta) g(\theta)}{h(X_1, X_2, \dots X_n)} && \text{Ahh much better}
+\end{align*}
+Note that $f, g$ and $h$ are all probability densities. I used different symbols to make it explicit that they may have different functions. Now we are going to leverage two observations. First, the data is assumed to be IID so we can decompose the density of the data given $\theta$. Second, the denominator is a constant with respect to $\theta$. As such its value does not affect the argmax and we can drop that term. Mathematically:
+\begin{align*}
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } \frac{\prod_{i=1}^n f(X_i | \theta) g(\theta)}{h(X_1, X_2, \dots X_n)} && \text{Since the samples are IID}\\
+=& \underset{\theta}{\operatorname{argmax }} \text{ } \prod_{i=1}^n f(X_i | \theta) g(\theta) && \text{Since $h$ is constant with respect to $\theta$}
+\end{align*}
+As before, it will be more convenient to find the argmax of the log of the MAP function, which gives us the final form for MAP estimation of parameters.
+\begin{align*}
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } \left( \log (g(\theta)) + \sum_{i=1}^n \log(f(X_i | \theta)) \right)
+\end{align*}
+Using Bayesian terminology, the MAP estimate is the mode of the "posterior" distribution for $\theta$. If you look at this equation side by side with the MLE equation you will notice that MAP is the argmax of the exact same function \emph{plus} a term for the log of the prior.
+
+<h2>Parameter Priors</h2>
+<p>In order to get ready for the world of MAP estimation, we are going to need to brush up on our distributions. We will need reasonable distributions for each of our different parameters. For example, if you are predicting a Poisson distribution, what is the right random variable type for the prior of $\lambda$? 
+
+<p>A desiderata for prior distributions is that the resulting posterior distribution has the same functional form. We call these "conjugate" priors. In the case where you are updating your belief many times, conjugate priors makes programming in the math equations much easier.
+
+<p>Here is a list of different parameters and the distributions most often used for their priors:
+\begin{align*}
+&\text{Parameter }&& \text{Distribution}\\
+&\text{Bernoulli } p && \text{Beta}\\
+&\text{Binomial } p && \text{Beta}\\
+&\text{Poisson } \lambda && \text{Gamma}\\
+&\text{Exponential } \lambda && \text{Gamma}\\
+&\text{Multinomial } p_i && \text{Dirichlet}\\
+&\text{Normal } \mu && \text{Normal}\\
+&\text{Normal } \sigma^2 && \text{Inverse Gamma}
+\end{align*}
+You are only expected to know the new distributions on a high level. You do not need to know Inverse Gamma. I included it for completeness.
+
+<p>The distributions used to represent your "prior" belief about a random variable will often have their own parameters. For example, a Beta distribution is defined using two parameters $(a, b)$. Do we have to use parameter estimation to evaluate $a$ and $b$ too? No. Those parameters are called "hyperparameters". That is a term we reserve for parameters in our model that we fix before running parameter estimate. Before you run MAP you decide on the values of $(a, b)$. 
+
+<h2>Dirichlet</h2>
+<p>The Dirichlet distribution generalizes Beta in same way Multinomial generalizes Bernoulli. A random variable $X$ that is Dirichlet is parametrized as $X \sim \text{Dirichlet}(a_1, a_2, \dots, a_m)$. The PDF of the distribution is:
+\begin{align*}
+f(X_1 = x_1, X_2 = x_2, \dots, X_m = x_m) = K \prod_{i=1}^m x_i^{a_i - 1}
+\end{align*}
+Where $K$ is a normalizing constant.
+
+<p>You can intuitively understand the hyperparameters of a Dirichlet distribution: imagine you have seen $\sum_{i=1}^m a_i - m$ imaginary trials. In those trials you had $(a_i - 1)$ outcomes of value $i$. As an example consider estimating the probability of getting different numbers on a six-sided Skewed Dice (where each side is a different shape). We will estimate the probabilities of rolling each side of this dice by repeatedly rolling the dice $n$ times. This will produce $n$ IID samples. For the MAP paradigm, we are going to need a prior on our belief of each of the parameters $p_1 \dots p_6$. We want to express that we lightly believe that each roll is equally likely. 
+
+<p>Before you roll, let's imagine you had rolled the dice six times and had gotten one of each possible values. Thus the "prior" distribution would be Dirichlet($2, 2, 2, 2, 2, 2$). After observing $n_1 + n_2 + \dots + n_6$ new trials with $n_i$ results of outcome $i$, the "posterior" distribution is Dirichlet($2 + n_1, \dots 2 + n_6$). Using a prior which represents one imagined observation of each outcome is called "Laplace smoothing" and it guarantees that none of your probabilities are 0 or 1.
+
+<h2>Gamma</h2>
+<p>The Gamma($k, \theta$) distribution is the conjugate prior for the $\lambda$ parameter of the Poisson distribution (It is also the conjugate for Exponential, but we won't delve into that). 
+
+<p>The hyperparameters can be interpreted as: you saw $k$ total imaginary events during $\theta$ imaginary time periods. After observing $n$ events during the next $t$ time periods the posterior distribution is Gamma($k + n, \theta + t$).
+
+<p>For example Gamma(10, 5) would represent having seen 10 imaginary events in 5 time periods. It is like imagining a rate of 2 with some degree of confidence. If we start with that Gamma as a prior and then see 11 events in the next 2 time periods our posterior is Gamma(21,7) which is equivalent to an updated rate of 3. 
 
                         
 

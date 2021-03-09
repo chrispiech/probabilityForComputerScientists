@@ -144,9 +144,11 @@
   $\DeclareMathOperator{\Bin}{Bin}$
   $\DeclareMathOperator{\Poi}{Poi}$
   $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Beta}{Beta}$
   $\DeclareMathOperator{\Exp}{Exp}$
   $\DeclareMathOperator{\N}{N}$
   $\DeclareMathOperator{\R}{\mathbb{R}}$
+  $\DeclareMathOperator{\argmax}{argmax}$
   $\newcommand{\d}{\, d}$
   
 </div>
@@ -258,10 +260,9 @@
 <li>
 <a id=sidebar-summation_vars href="../../part4/summation_vars">Adding Random Variables</a>
 <a id=sidebar-clt href="../../part4/clt">Central Limit Theorem</a>
+<a id=sidebar-samples href="../../part4/samples">Sampling</a>
 <a id=sidebar-bootstrapping href="../../part4/bootstrapping">Bootstrapping</a>
-<a id=sidebar-parameters href="../../part4/parameters">Uncertainty in Parameters</a>
 <a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
-<a id=sidebar-bounds href="../../part4/bounds">Probability Bounds</a>
 
 <li>
     <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -276,18 +277,17 @@
 <ul class="list-unstyled components">
 <li><p href="{pathToLang}part5">Part 5: Machine Learning</p></li>
 <li>
+<a id=sidebar-parameter_estimation href="../../part5/parameter_estimation">Parameter Estimation</a>
 <a id=sidebar-mle href="../../part5/mle">Maximum Likelihood Estimation</a>
 <a id=sidebar-map href="../../part5/map">Maximum A Posteriori</a>
+<a id=sidebar-machine_learning href="../../part5/machine_learning">Machine Learning</a>
 <a id=sidebar-naive_bayes href="../../part5/naive_bayes">Naïve Bayes</a>
-<a id=sidebar-optimization href="../../part5/optimization">Gradient Ascent Optimization</a>
-<a id=sidebar-linear_regression href="../../part5/linear_regression">Linear Regression</a>
 <a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
-<a id=sidebar-neural_nets href="../../part5/neural_nets">Artificial Neural Networks</a>
 
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/vision_test">Vision Test</a></li>
+        
     </ul>
 </li>
 </li>
@@ -340,6 +340,60 @@
 <center><h1>Bootstrapping</h1></center>
 <hr/>
 
+<p>The bootstrap is a newly invented statistical technique for both understanding distributions of statistics and for calculating $p$-values (a $p$-value is a the probability that a scientific claim is incorrect). It was invented here at Stanford in 1979 when mathematicians were just starting to understand how computers, and computer simulations, could be used to better understand probabilities.
+
+<p>The first key insight is that: if we had access to the underlying distribution ($F$) then answering almost any question we might have as to how accurate our statistics are becomes straightforward. For example, in the previous section we gave a formula for how you could calculate the sample variance from a sample of size $n$. We know that in expectation our sample variance is equal to the true variance. But what if we want to know the probability that the true variance is within a certain range of the number we calculated? That question might sound dry, but it is critical to evaluating scientific claims! If you knew the underlying distribution, $F$, you could simply repeat the experiment of drawing a sample of size $n$ from $F$, calculate the sample variance from our new sample and test what portion fell within a certain range. 
+
+<p>The next insight behind bootstrapping is that the best estimate that we can get for $F$ is from our sample itself! The simplest way to estimate $F$ (and the one we will use in this class) is to assume that the $P(X=k)$ is simply the fraction of times that $k$ showed up in the sample. Note that this defines the probability mass function of our estimate $\hat{F}$ of $F$.
+
+
+
+<pre ><code>def bootstrap(sample):
+   N = number of elements in sample
+   pmf = estimate the underlying pmf from the sample
+   stats = []
+   repeat 10,000 times:
+      resample = draw N new samples from the pmf
+      stat = calculate your stat on the resample
+      stats.append(stat)
+   stats can now be used to estimate the distribution of the stat</code></pre>
+
+<p>Bootstrapping is a reasonable thing to do because the sample you have is the best and only information you have about what the underlying population distribution actually looks like. Moreover most samples will, if they're randomly chosen, look quite like the population they came from. 
+
+<p>To calculate $\text{Var}(S^2)$ we could calculate $S_i^2$ for each resample $i$ and after 10,000 iterations, we could calculate the sample variance of all the $S_i^2$s. You might be wondering why the resample is the same size as the original sample ($n$). The answer is that the variation of the variation of stat that you are calculating could depend on the size of the sample (or the resample). To accurately estimate the distribution of the stat we must use resamples of the same size.
+
+<p>The bootstrap has strong theoretic grantees, and is accepted by the scientific community. It breaks down when the underlying distribution has a ``long tail" or if the samples are not I.I.D.
+
+
+
+<h2>Example of p-value calculation</h2>
+
+<p>We are trying to figure out if people are happier in Bhutan or in Nepal. We sample $n_1 = 200$ individuals in Bhutan and $n_2 = 300$ individuals in Nepal and ask them to rate their happiness on a scale from 1 to 10. We measure the sample means for the two samples and observe that people in Nepal are slightly happier--the difference between the Nepal sample mean and the Bhutan sample mean is 0.5 points on the happiness scale. 
+
+<p>If you want to make this claim scientific you should calculate a $p$-value. A p-value is the probability that, when the null hypothesis is true, the statistic measured would be equal to, or more extreme than, than the value you are reporting. The null hypothesis is the hypothesis that there is no relationship between two measured phenomena or no difference between two groups.
+
+<p>In the case of comparing Nepal to Bhutan, the null hypothesis is that there is no difference between the distribution of happiness in Bhutan and Nepal. The null hypothesis argument is: there is no difference in the distribution of happiness between Nepal and Bhutan. When you drew samples, Nepal had a mean that 0.5 points larger than Bhutan by chance.
+
+<p>We can use bootstrapping to calculate the p-value. First, we estimate the underlying distribution of the null hypothesis underlying distribution, by making a probability mass function from all of our samples from Nepal and all of our samples from Bhutan.
+
+
+<pre class="language-python"><code>def pvalueBootstrap(bhutanSample, nepalSample):
+   N = size of the bhutanSample
+   M = size of the nepalSample
+   universalSample = combine bhutanSamples and nepalSamples
+   universalPmf = estimate the underlying pmf of the universalSample
+   count = 0
+   repeat 10,000 times:
+      bhutanResample = draw N new samples from the universalPmf
+      nepalResample = draw M new samples from the universalPmf
+      muBhutan = sample mean of the bhutanResample
+      muNepal = sample mean of the nepalResample
+      meanDifference = |muNepal - muBhutan|
+      if meanDifference > observedDifference:
+         count += 1
+   pValue = count / 10,000</code></pre>
+
+<p>This is particularly nice because nowhere did we have to make an assumption about a parametric distribution that our samples came from (ie we never had to claim that happiness is gaussian). You might have heard of a t-test. That is another way of calculating p-values, but it makes the assumption that both samples are gaussian and that they both have the same variance. In the modern context where we have reasonable computer power, bootstrapping is a more correct and versatile tool.
 
                         
 

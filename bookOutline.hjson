@@ -79,10 +79,11 @@
 		"sections": {
 			"summation_vars":"Adding Random Variables",
 			"clt":"Central Limit Theorem",
+			"samples":"Sampling",
 			"bootstrapping":"Bootstrapping",
-			"parameters":"Uncertainty in Parameters",
+			#"parameters":"Uncertainty in Parameters",
 			"beta":"Beta Distribution",
-			"bounds":"Probability Bounds"
+			#"bounds":"Probability Bounds"
 		},
 		"examples": {
 			"thompson":"Thompson Sampling"
@@ -91,16 +92,14 @@
 	"part5":{
 		"title":"Part 5: Machine Learning",
 		"sections": {
+			"parameter_estimation":"Parameter Estimation",
 			"mle":"Maximum Likelihood Estimation",
 			"map":"Maximum A Posteriori",
+			"machine_learning":"Machine Learning",
 			"naive_bayes":"Naïve Bayes",
-			"optimization":"Gradient Ascent Optimization",
-			"linear_regression":"Linear Regression",
-			"log_regression":"Logistic Regression",
-			"neural_nets":"Artificial Neural Networks"
+			"log_regression":"Logistic Regression"
 		},
 		"examples": {
-			"vision_test":"Vision Test"
 		}
 	},
 	# "examples": {

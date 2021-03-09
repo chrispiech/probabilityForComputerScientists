@@ -144,9 +144,11 @@
   $\DeclareMathOperator{\Bin}{Bin}$
   $\DeclareMathOperator{\Poi}{Poi}$
   $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Beta}{Beta}$
   $\DeclareMathOperator{\Exp}{Exp}$
   $\DeclareMathOperator{\N}{N}$
   $\DeclareMathOperator{\R}{\mathbb{R}}$
+  $\DeclareMathOperator{\argmax}{argmax}$
   $\newcommand{\d}{\, d}$
   
 </div>
@@ -258,10 +260,9 @@
 <li>
 <a id=sidebar-summation_vars href="../../part4/summation_vars">Adding Random Variables</a>
 <a id=sidebar-clt href="../../part4/clt">Central Limit Theorem</a>
+<a id=sidebar-samples href="../../part4/samples">Sampling</a>
 <a id=sidebar-bootstrapping href="../../part4/bootstrapping">Bootstrapping</a>
-<a id=sidebar-parameters href="../../part4/parameters">Uncertainty in Parameters</a>
 <a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
-<a id=sidebar-bounds href="../../part4/bounds">Probability Bounds</a>
 
 <li>
     <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -276,18 +277,17 @@
 <ul class="list-unstyled components">
 <li><p href="{pathToLang}part5">Part 5: Machine Learning</p></li>
 <li>
+<a id=sidebar-parameter_estimation href="../../part5/parameter_estimation">Parameter Estimation</a>
 <a id=sidebar-mle href="../../part5/mle">Maximum Likelihood Estimation</a>
 <a id=sidebar-map href="../../part5/map">Maximum A Posteriori</a>
+<a id=sidebar-machine_learning href="../../part5/machine_learning">Machine Learning</a>
 <a id=sidebar-naive_bayes href="../../part5/naive_bayes">Naïve Bayes</a>
-<a id=sidebar-optimization href="../../part5/optimization">Gradient Ascent Optimization</a>
-<a id=sidebar-linear_regression href="../../part5/linear_regression">Linear Regression</a>
 <a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
-<a id=sidebar-neural_nets href="../../part5/neural_nets">Artificial Neural Networks</a>
 
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/vision_test">Vision Test</a></li>
+        
     </ul>
 </li>
 </li>
@@ -339,6 +339,72 @@
  
 <center><h1>Central Limit Theorem</h1></center>
 <hr/>
+
+<p>The central limit theorem proves that the average of equally sized samples from <i>any</i> distribution themselves be normally distributed. Consider IID random variables  $X_1, X_2 \dots$ such that $E[X_i] = \mu$ and $\text{Var}(X_i) = \sigma^2$. Let 
+\begin{align*}
+\bar{X} = \frac{1}{n} \sum_{i = 1}^n X_i
+\end{align*}
+Mathematically, the central limit theorem states:
+\begin{align*}
+&\bar{X} \sim N(\mu, \frac{\sigma^2}{n}) && \text{ as } n \rightarrow \infty
+\end{align*}
+It is often expressed in terms of the standard normal, $Z$:
+\begin{align*}
+& Z = \frac{\left(  \sum_{i=1}^n  X_i  \right) - n\mu}{\sigma \sqrt{n}} && \text{ as } n \rightarrow \infty
+\end{align*}
+
+<p>At this point you probably think that the central limit theorem is awesome. But it gets even better. With some algebraic manipulation we can show that if the sample mean of IID random variables is normal, it follows that the sum of equally weighted IID random variables must also be normal. Let's call the sum of IID random variables $\bar{Y}$:
+\begin{align*}
+ \bar{Y} &= \sum_{i=1}^n X_i = n \cdot \bar{X} && \text{If we define $ \bar{Y}$ to be the sum of our variables } \\
+ &\sim N(n \mu, n^2  \frac{\sigma^2}{n}) && \text{Since $\bar{X}$ is a normal and $n$ is a constant.} \\
+  &\sim N(n \mu, n  \sigma^2) && \text{By simplifying.}
+\end{align*}
+In summary, the central limit theorem explains that both the sample mean of IID variables is normal (regardless of what distribution the IID variables came from) and that the sum of equally weighted IID random variables is normal (again, regardless of the underlying distribution).
+
+<div class="purpleBox">
+	<p><b><i>Example:</i></b></p>
+<p>Say you have a new algorithm and you want to test its running time. You have an idea of the variance of the algorithm's run time: $\sigma^2 = 4\text{sec}^2$ but you want to estimate the mean: $\mu = t$sec. You can run the algorithm repeatedly (IID trials). How many trials do you have to run so that your estimated runtime = $t \pm 0.5$ with 95\% certainty? Let$X_i$ be the run time of the $i$-th run (for $1 \leq i \leq n$).
+\begin{align*}
+0.95 = P(-0.5 \leq \frac{\sum_{i=1}^nX_i}{n} - t \leq 0.5)
+\end{align*}
+By the central limit theorem, the standard normal $Z$ must be equal to:
+\begin{align*}
+Z &= \frac{\left(\sum_{i=1}^n X_i\right) - n\mu}{\sigma \sqrt{n}} \\
+&=  \frac{\left(\sum_{i=1}^n X_i\right) - nt}{2 \sqrt{n}}
+\end{align*}
+Now we rewrite our probability inequality so that the central term is $Z$:
+\begin{align*}
+0.95&= P(-0.5 \leq \frac{\sum_{i=1}^nX_i}{n} - t \leq 0.5)=P(\frac{-0.5\sqrt{n}}{2} \leq \frac{\sum_{i=1}^nX_i}{n} - t \leq \frac{0.5\sqrt{n}}{2})\\
+&=P(\frac{-0.5\sqrt{n}}{2} \leq \frac{\sqrt{n}}{2}\frac{\sum_{i=1}^nX_i}{n} - \frac{\sqrt{n}}{2}t \leq \frac{0.5\sqrt{n}}{2})=P(\frac{-0.5\sqrt{n}}{2} \leq \frac{\sum_{i=1}^nX_i}{2\sqrt{n}} - \frac{\sqrt{n}}{\sqrt{n}}\frac{\sqrt{n}t}{2} \leq \frac{0.5\sqrt{n}}{2})\\
+&=P(\frac{-0.5\sqrt{n}}{2} \leq \frac{\sum_{i=1}^nX_i - nt}{2\sqrt{n}}  \leq \frac{0.5\sqrt{n}}{2})\\
+&=P(\frac{-0.5\sqrt{n}}{2} \leq Z  \leq \frac{0.5\sqrt{n}}{2})
+\end{align*}
+And now we can find the value of $n$ that makes this equation hold.
+\begin{align*}
+0.95&= \phi(\frac{\sqrt{n}}{4}) - \phi(-\frac{\sqrt{n}}{4}) = \phi(\frac{\sqrt{n}}{4}) - (1- \phi(\frac{\sqrt{n}}{4})) \\
+ &= 2\phi(\frac{\sqrt{n}}{4}) - 1\\
+0.975 &= \phi(\frac{\sqrt{n}}{4})\\
+\phi^{-1}(0.975) &= \frac{\sqrt{n}}{4} \\
+1.96 &= \frac{\sqrt{n}}{4}\\
+n &= 61.4
+\end{align*}
+Thus it takes 62 runs. If you are interested in how this extends to cases where the variance is unknown, look into variations of the students' t-test.
+</div>
+
+<div class="purpleBox">
+	<p><b><i>Example:</i></b></p>
+<p>You will roll a 6 sided dice 10 times. Let $X$ be the total value of all 10 dice = $X_1 + X_2 + \dots + X_10$. You win the game if $X \leq 25$ or $X \geq 45$. Use the central limit theorem to calculate the probability that you win.
+
+<p>Recall that $E[X_i] = 3.5$ and $\text{Var}(X_i) = \frac{35}{12}$.
+
+\begin{align*}
+P(X \leq 25 \text{ or } X \geq 45) &= 1 -  P(25.5 \leq X \leq 44.5) \\
+&= 1 - P(\frac{25.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
+\leq \frac{X - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
+\leq \frac{44.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}} \\
+&\approx 1 - (2\phi(1.76) - 1) \approx 2(1- 0.9608) = 0.0784
+\end{align*}
+</div>
 
 
                         

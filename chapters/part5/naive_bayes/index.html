@@ -3,3 +3,66 @@
  
 <center><h1>Naïve Bayes</h1></center>
 <hr/>
+
+Here is the Naïve Bayes algorithm. After presenting the algorithm I am going to show the theory behind it.
+ 
+
+ 
+<h2>Training</h2>
+ <p>The objective in training is to estimate the probabilities $P(Y)$ and $P(X_i | Y)$ for all $0 < i \leq m$ features. 
+ 
+ <p>Using an MLE estimate:
+ \begin{align*}
+     \hat{p}(X_i = x_i | Y = y) = \frac{ (\text{# training examples where $X_i = x_i$ and $Y = y$})}{(\text{# training examples where $Y = y$})}
+ \end{align*}
+ 
+ <p>Using a Laplace MAP estimate:
+ \begin{align*}
+     \hat{p}(X_i = x_i | Y = y) = \frac{ (\text{# training examples where $X_i = x_i$ and $Y = y$}) + 1 }{(\text{# training examples where $Y = y$}) + 2}
+ \end{align*}
+ 
+ <p>The prior probability of $Y$ trained using an MLE estimate:
+  \begin{align*}
+     \hat{p}(Y = y) = \frac{ (\text{# training examples where $Y = y$) }}{(\text{# training examples)}}
+ \end{align*}
+ 
+<h2>Prediction</h2>
+<p>For an example with $\mathbf{x} = [x_1, x_2, \dots , x_m]$, estimate the value of $y$ as:
+ \begin{align*}
+     \hat{y} &= g(\mathbf{x})  
+     = \argmax_{y = \{0, 1\}} \text{ }
+        \log \hat{p}(Y = y) +
+        \sum_{i=1}^m \log \hat{p}(X_i = x_i | Y = y) 
+ \end{align*}
+ Note that for small enough datasets you may not need to use the log version of the argmax.
+ 
+<h2>Theory</h2>
+<p>In the world of classification when we make a prediction we want to chose the value of $y$ that maximizes $P(Y=y|\mathbf{X})$.
+\begin{align*}
+    \hat{y} &= g(\mathbf{x}) 
+    =\argmax_{y = \{0, 1\}} P(Y = y|\mathbf{X} = \mathbf{X}) 
+        && \text{Our objective}\\
+    &= \argmax_{y = \{0, 1\}}  \frac{P(Y=y)P(\mathbf{X} =\mathbf{x}| Y = y)}{P(\mathbf{X} =\mathbf{x})} 
+        && \text{By bayes theorem}\\
+    &= \argmax_{y = \{0, 1\}} P(Y=y)P(\mathbf{X} =\mathbf{x}| Y = y)) 
+        && \text{Since $P(\mathbf{X} =\mathbf{x})$ is constant with respect to $Y$}
+\end{align*}
+<p>Using our training data we could interpret the joint distribution of $\mathbf{X}$ and $Y$ as one giant multinomial with a different parameter for every combination of $\mathbf{X}=\mathbf{x}$ and $Y=y$. If for example, the input vectors are only length one. In other words $|\mathbf{x}| = 1$ and the number of values that $x$ and $y$ can take on are small, say binary, this is a totally reasonable approach. We could estimate the multinomial using MLE or MAP estimators and then calculate argmax over a few lookups in our table.
+
+<p>The bad times hit when the number of features becomes large. Recall that our multinomial needs to estimate a parameter for every unique combination of assignments to the vector $\mathbf{x}$ and the value $y$. If there are $|\mathbf{x}| = n$ binary features then this strategy is going to take order $\mathcal{O}(2^n)$ space and there will likely be many parameters that are estimated without any training data that matches the corresponding assignment.
+
+<h2>Naïve Bayes Assumption</h2>
+<p>The Naïve Bayes Assumption is that each feature of $\mathbf{x}$ is independent of one another given $y$. That assumption is wrong, but useful. This assumption allows us to make predictions using space and data which is linear with respect to the size of the features: $\mathcal{O}(n)$ if $|\mathbf{x}| = n$. That allows us to train and make predictions for huge feature spaces such as one which has an indicator for every word on the internet. Using this assumption the prediction algorithm can be simplified.
+\begin{align*}
+    \hat{y} = \text{g}(\mathbf{x}) 
+    &= \argmax_{y = \{0, 1\}} \text{ }P(Y = y)P(\mathbf{X} = \mathbf{x}| Y = y) 
+        && \text{As we last left off}\\
+    &= \argmax_{y = \{0, 1\}} \text{ } P(Y= y)\prod_i P(X_i = x_i| Y = y) 
+        &&\text{Using the naïve bayes assumption}\\
+    &= \argmax_{y = \{0, 1\}} \text{ } \log P(Y = y)  + \sum_i \log P(X_i = x_i| Y = y)  
+        && \text{Log version for numerical stability}\\
+\end{align*}
+<p>This algorithm is both fast and stable both when training and making predictions. If we think of each $X_i,y$ pair as a multinomial we can find MLE and MAP estimations for the values. See the "algorithm" section for the optimal values of each $p$ in the multinomial.
+
+<p>Naïve Bayes is a simple form of a field of machine learning called Probabilistic Graphical Models. In that field you make a graph of how your variables are related to one another and you come up with conditional independence assumptions that make it computationally tractable to estimate the joint distribution.
+ 
