@@ -1,17 +1,22 @@
 
 % rebase('templates/chapter.html', title="Likelihood Functions")
- 
+
 <center><h1>Probability Mass Functions</h1></center>
 <hr/>
 
-<p>For a random variable, the most important thing to know is: how likely is each outcome? For a discrete random variable, this information is called the  "<b>probability mass function</b>". The probability mass function (or PMF for short) provides the "mass" (aka amount) of "probability" for each possible assignment of the random variable. </p>
+<!--
+I noticed that when I use the "Search book..." feature of the course reader, that certain chapters are hard to find.
+For example, the chapter on PMFs cannot be found easily when querying with "Probability Mass Functions" or "pmf".
 
-<p>Formally, the probability mass function (PMF) is a mapping between the values that the random variable could take on and the probability of the random variable taking on said value. In mathematics,
-we call associations functions. There are many different ways of representing functions: you can write an equation, you can make a graph, you can even store many samples in a list. Lets start by looking at PMFs as graphs where the x-axis is the values
-that the random variable could take on and the y-axis is the probability of the random variable taking on said
-value.</p>
+Also, there is a small graphical bug when displaying math formulas in the search results text preview. To replicate,
+use the query "Independence in Variables".
+-->
 
-<p>In the following example, on the left we show a PMF, as a graph, for the random variable: $X$ = the value of a six sided die roll. On the right we show a constrasting example of a PMF for the ranom variable $X$ = value of the sum of two dice rolls:</p>
+<p>For a random variable, the most important thing to know is: how likely is each outcome? For a discrete random variable, this information is called the "<b>probability mass function</b>". The probability mass function (PMF) provides the "mass" (i.e. amount) of "probability" for each possible assignment of the random variable. </p>
+
+<p>Formally, the probability mass function is a mapping between the values that the random variable could take on and the probability of the random variable taking on said value. In mathematics, we call these associations functions. There are many different ways of representing functions: you can write an equation, you can make a graph, you can even store many samples in a list. Let's start by looking at PMFs as graphs where the $x$-axis is the values that the random variable could take on and the $y$-axis is the probability of the random variable taking on said value.</p>
+
+<p>In the following example, on the left we show a PMF, as a graph, for the random variable: $X$ = the value of a six-sided die roll. On the right we show a contrasting example of a PMF for the random variable $X$ = value of the sum of two dice rolls:</p>
 
 <p>
 <div class="row">
@@ -22,28 +27,28 @@ value.</p>
 		<img style="max-width:100%" src="{{pathToRoot}}img/chapters/diceSumPmf.png"></img>
 	</div>
 </div>
-<center><i>Left: the PMF of a single 6 sided die roll. Right: the PMF of the sum of two dice rolls.</i></center>
+<center><i>Left: the PMF of a single six-sided die roll. Right: the PMF of the sum of two dice rolls.</i></center>
 </p>
 
 <p>
-	The <a href="{{pathToLang}}part1/equally_likely/#sum_dice">sum of two dice example</a> in the equally likely probability section.  Again, the information that is provided in these graphs is the likelihood of a random variable taking on different values. In the graph on the right, the value "$6$" on the x-axis is associated with the prbability 5/36 on the y-axis. This x-axis refers to the event "the sum of two dice is 6", or $Y=6$. The y-axis is saying that the probability of that event is $5/36$. In full: $\p(Y=6) = 5/36$. The value "$2$" is associated with "1/36" which tells you that, $\p(Y=2) = 1/36$, the probability that two dice sum to 2 is 1/36. There is no value associated with "$1$" because the sum of two dice can not be 1. If you find this notation confusing, revisit the <a href="{{pathToLang}}part2/rvs/#rv_vs_event">random variables</a> section.
+	The <a href="{{pathToLang}}part1/equally_likely/#sum_dice">sum of two dice example</a> in the equally likely probability section.  Again, the information that is provided in these graphs is the likelihood of a random variable taking on different values. In the graph on the right, the value "$6$" on the $x$-axis is associated with the probability $\frac{5}{36}$ on the $y$-axis. This $x$-axis refers to the event "the sum of two dice is 6" or $Y=6$. The $y$-axis tells us that the probability of that event is $\frac{5}{36}$. In full: $\p(Y=6) = \frac{5}{36}$. The value "$2$" is associated with "$\frac{1}{36}$" which tells us that, $\p(Y=2) = \frac{1}{36}$, the probability that two dice sum to 2 is $\frac{1}{36}$. There is no value associated with "$1$" because the sum of two dice can not be 1. If you find this notation confusing, revisit the <a href="{{pathToLang}}part2/rvs/#rv_vs_event">random variables</a> section.
 	</p>
 
 	<p>
-		Here is the exact same information in equation form.  :
+		Here is the exact same information in equation form:
 		<div class="d-flex justify-content-around align-items-center">
 			<div>
 				$$
 				\begin{align}
-				\p(X=x) = ⅙ && \text{if } 1 \leq x \leq 6
+				\p(X=x) = \frac{1}{6} && \text{ if } 1 \leq x \leq 6
 				\end{align}
 				$$
 			</div>
 			<div>
 				$$
 				\p(Y=y) = \begin{cases}
-					(y-1)/36 && \text{if } 1 \leq y \leq 7\\
-					(13-y)/36 && \text{if } 8 \leq y \leq 12 
+					\frac{(y-1)}{36} && \text{ if } 1 \leq y \leq 7\\
+					\frac{(13-y)}{36} && \text{ if } 8 \leq y \leq 12
 				\end{cases}
 				$$
 			</div>
@@ -51,7 +56,7 @@ value.</p>
 	</p>
 
 	<p>
-		As a final example, here is the PMF for $Y$, the sum of two dice, in python code:
+		As a final example, here is the PMF for $Y$, the sum of two dice, in Python code:
 		<pre class="language-python"><code>def pmf_sum_two_dice(y):
     # Returns the probability that the sum of two dice is y
     if y < 2 or y > 12:
@@ -62,7 +67,9 @@ value.</p>
         return (13-y) / 36</code></pre></p>
 
 <h2>Notation</h2>
-<p>$\p(Y=y)$ might feel like redundant notation. In probability research papers, and higher level work, mathemeticians often use the shorthand with only the value. They would often write $\p(y)$ in place of $\p(Y=y)$. This shorthand assumes that the random variable referred to is the capital version of the value, and that the probability event is that the random variable equals the value $y$. In this book we will often use the full form of the event $\P(Y=y)$ but will occasionally use the shorthand $\p(y)$.</p>
+
+
+<p>You may feel that $\p(Y=y)$ is redundant notation. In probability research papers and higher-level work, mathematicians often use the shorthand $\p(y)$ to mean $\p(Y=y)$. This shorthand assumes that the lowercase value (e.g. $y$) has a capital letter counterpart (e.g. $Y$) that represents a random variable even though it's not written explicitly. In this book, we will often use the full form of the event $\P(Y=y)$, but we will occasionally use the shorthand $\p(y)$.</p>
 
 <h2>Probabilities Must Sum to 1</h2>
 
@@ -70,13 +77,13 @@ For a variable (call it $X$) to be a proper random variable it must be the case 
 $$
 \sum_{k} \p(X = k) = 1
 $$
-For further undertanding lets derive why this is the case. A random variable taking on a value is an event (for example $X = 2$). Each of those events are mutually exclusive because a random variable will take on exactly one value.
+For further understanding, let's derive why this is the case. A random variable taking on a value is an event (for example $X = 2$). Each of those events is mutually exclusive because a random variable will take on exactly one value.
 
 
 
 <h2 id="data_to_hist">Data to Histograms to Probability Mass Functions</h2>
 
-<p>One suprising way to store a likelihood function (recall that a PMF is the name of the likelihood function for <i>discrete</i> random variables) is simply a list of data. We simulated summing two die 10,000 times to make this example dataset:</p>
+<p>One surprising way to store a likelihood function (recall that a PMF is the name of the likelihood function for <i>discrete</i> random variables) is simply a list of data. We simulated summing two die 10,000 times to make this example dataset:</p>
 
 % include('chapters/part2/pmf/sumDiceList.html')
 
@@ -88,7 +95,7 @@ For further undertanding lets derive why this is the case. A random variable tak
 </center>
 </p>
 
-<p>A normalized histogram (where each value is divided by the length of your data list) is an approximation of the PMF. For a dataset of discrete numbers, a histogram shows the count of each value (in this case $y$). By the definition of probability, if you divide this count by the number of experiments run, you arrive at a approximation of the probability of the event $\p(Y=y)$. In our example, we have 10,000 elements in our dataset. The count of times that 3 occurs is 552. Note that:
+<p>A normalized histogram (where each value is divided by the length of your data list) is an approximation of the PMF. For a dataset of discrete numbers, a histogram shows the count of each value (in this case $y$). By the definition of probability, if you divide this count by the number of experiments run, you arrive at an approximation of the probability of the event $\p(Y=y)$. In our example, we have 10,000 elements in our dataset. The count of times that 3 occurs is 552. Note that:
 	$$\begin{align}
 	\frac{\text{count}(Y=5)}{n} &= \frac{552}{10000} = 0.0552 \\
 	\p(Y=5) &= \frac{4}{36} = 0.0555
@@ -96,8 +103,6 @@ For further undertanding lets derive why this is the case. A random variable tak
 	$$
 </p>
 
-<p>In this case, since we ran 10,000 trials, the histogram is a very good approximation of the PMF.
-
-	We use sum of dice as an example because it is easy to understand. Datasets in the real world often represent more exciting events. 
+<p>In this case, since we ran 10,000 trials, the histogram is a very good approximation of the PMF. We use the sum of dice as an example because it is easy to understand. Datasets in the real world often represent more exciting events. <!-- perhaps enumerate some examples -->
 
 
