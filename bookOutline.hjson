@@ -52,6 +52,7 @@
 		},
 		"examples": {
 			"prob_baby_delivery":"Probability of Baby Delivery",
+			"jury":"Jury Selection"
 		}
 	},
 	"part3":{

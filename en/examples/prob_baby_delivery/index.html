@@ -230,7 +230,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li>
     </ul>
 </li>
 </li>
@@ -343,13 +343,17 @@
 <center><h1>Probability and Babies</h1></center>
 <hr/>
 
+<div class="alert alert-primary">
+	This demo used to be live. We now know that the delivery happened on Jan 23rd. Lets go back in time to Jan 1st and see what the probability looked like at that point.
+</div>
+
 <p>What is the probability that Laura gives birth today (given that she hasn't given birth up until today)?</p>
 
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text" onchange="todayDateChange()" id="todaysDateLabel" style="min-width: 120px">Today's Date</span>
   </div>
-  <input type="text" class="form-control" placeholder="Today's Date" aria-label="Username" aria-describedby="todaysDateLabel" id="todaysDateInput">
+  <input type="text" class="form-control"  aria-label="Username" aria-describedby="todaysDateLabel" disabled id="todaysDateInput" value="1/Jan/2021">
 </div>
 
 <div class="input-group mb-3">
@@ -448,9 +452,9 @@ $(document).ready(function() {
 
 function processData(data) {
 	table = loadCsvTable(data)
-	let currDate = new Date()//Date.parse('15 Jan 2021 00:18:00 GMT');
+	let currDate = Date.parse('1 Jan 2021 00:18:00 GMT');
 	
-	setInputValue('todaysDateInput', currDate)
+	// setInputValue('todaysDateInput', currDate)
 	// $("#todaysDateInput").val(currDate)
 	// $("#dueDateInput").val(dueDate)
 	calculateProbabilities(currDate, dueDate)
@@ -458,7 +462,7 @@ function processData(data) {
 
 function setInputValue(inputId, date) {
 	console.log(date)	
-	let str = `${date.getDate()}/${monthNames[date.getMonth()]}/${date.getFullYear()}`
+	let str = `${date}/${monthNames[date.getMonth()]}/${date.getFullYear()}`
 	$("#" + inputId).val(str)
 }
 

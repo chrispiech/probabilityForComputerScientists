@@ -1,0 +1,117 @@
+% rebase('templates/chapter.html', title="Jury Selection")
+
+ 
+<center><h1>Jury Selection</h1></center>
+<hr/>
+
+<p>
+					In the Supreme Court case: Berghuis v. Smith, the Supreme Court (of the US) discussed the question: "If a group is underrepresented in a jury pool, how do you tell?"
+</p>
+<p>
+	
+	Justice Breyer [Stanford Alum] opened the questioning by invoking the binomial theorem.  He hypothesized a scenario involving “an urn with a thousand balls, and sixty are red, and nine hundred forty are green, and then you select them at random… twelve at a time.”  According to Justice Breyer and the binomial theorem, if the red balls were black jurors then “you would expect… something like a third to a half of juries would have at least one black person” on them. 
+
+				</p>
+
+				<p>
+					Note: What is missing in this conversation is the power of diverse backgrounds when making difficult decisions.
+				</p>
+
+	
+				<hr/>
+				<button type="button" class="btn btn-primary" onclick="simulate();">Simulate</button>
+				<div class="row">
+					<div class="col-sm-12">
+						<h2>Simulation:</h2>
+						<canvas style="width:770px; height:100px;" id="simCanvas"></canvas>
+					</div>
+
+				</div>
+				<hr/>
+				<h2>Explination:</h2>
+				<p>
+					Technically, since jurors are selected without replacement, you should represent the number of under-representative jurors as being a Hyper Geometric Random Variable (a random variable we don't look at explicitely in CS109) st 
+				</p>
+				<p>
+					\begin{align*}X \sim \text{HypGeo}(n=12, N = 1000, m = 60)\end{align*}
+				</p>
+				<p>
+					\begin{align*} 
+						P(X \geq 1) &= 1 - P(X = 0) \\
+									&= 1 - \frac{ {60 \choose 0}{940 \choose 12} }{1000 \choose 12} \\
+									&\approx 0.5261
+					\end{align*} 
+
+				</p>
+
+				<p>However Justic Breyer made his case by citing a Binomial distribution. This isn't a perfect use of binomial, because the binomial assumes that each experiment has equal likelihood ($p$) of success. Because the jurors are selected without replacement, the probability of getting a minority juror changes slightly after each selection (and depending on what the selection was). However, as we will see, because the probabilities don't change too much the binomial distribution is not too far off.
+				</p>
+
+				<p>
+					\begin{align*}
+					X \sim \text{Binomial}(n=12, p = 60/1000)
+					\end{align*}
+				</p>
+				<p>
+					\begin{align*} 
+						P(X \geq 1) &= 1 - P(X = 0) \\
+									&= 1 - {60 \choose 0}(1- 0.06)^{12} \\
+									&\approx 0.5241
+					\end{align*} 
+
+				</p>
+
+		
+		
+		
+		
+				
+		<script>
+
+			var i = 0
+			var ctx = null;
+
+		    function simulate() {
+		    	CANVAS_WIDTH = 770
+		    	CANVAS_HEIGHT = 100
+			    var canvas = document.getElementById("simCanvas");
+			    canvas.width = CANVAS_WIDTH;
+				canvas.height = CANVAS_HEIGHT;
+				ctx=canvas.getContext("2d");
+
+				i = 0;
+				setTimeout(simulateSingle, 1000);
+
+				
+				
+
+			}
+
+			function simulateSingle() {
+				console.log(i)
+				if(i < 12) {
+					var color = "purple"
+					if(Math.random() < (60/1000)) {
+						color = "blue"
+					}
+					var r = 20
+					var x = 60*i + r + 5
+					var y = r + 5
+					drawCircle(x, y, r, color)
+					i += 1
+					setTimeout(simulateSingle, 1000);
+				}
+			}
+
+			function drawCircle(cx, cy, r, color) {
+				ctx.beginPath();
+				ctx.arc(cx, cy, r, 0, 2 * Math.PI, false);
+				ctx.fillStyle = color;
+				ctx.fill();
+			}
+
+			
+		    
+
+			
+		</script>
