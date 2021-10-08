@@ -144,6 +144,8 @@
   $\DeclareMathOperator{\Bin}{Bin}$
   $\DeclareMathOperator{\Poi}{Poi}$
   $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Geo}{Geo}$
+  $\DeclareMathOperator{\NegBin}{NegBin}$
   $\DeclareMathOperator{\Beta}{Beta}$
   $\DeclareMathOperator{\Exp}{Exp}$
   $\DeclareMathOperator{\N}{N}$
@@ -340,6 +342,7 @@
 <center><h1>Random Variable Reference</h1></center>
 <hr/>
 
+<h2>Discrete Random Variables</h2>
 <p>
 <!-- Template that renders a single random variable card -->
 
@@ -754,6 +757,308 @@ function drawPoissonPmf(parentDivId, lambda) {
 	window.myPoissonLine = new Chart(ctx, config);
 }
 </script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Geometric Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Geo(p)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Number of experiments until a success. Assumes independent experiments each with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{1, \dots, \infty\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = (1-p)^{x-1} p$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{1}{p}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{1-p}{p^2}$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	
+<div>
+Parameter $p$: <input onchange="redrawGeometricPmf()" type="number" class="form-control example-inline-input mb-3" id="geometricPmfP" min="0" max="1" value="0.20" step = "0.05">
+</div>
+</div>
+<canvas id="geometricPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawGeometricPmf()
+})
+
+function redrawGeometricPmf() {
+	let parentDivId = 'geometricPmf'
+	let p = parseFloat($('#geometricPmfP').val())
+	drawGeometricPmf(parentDivId, p)
+}
+
+function drawGeometricPmf(parentDivId, p) {
+	if(window.myGeoLine) {
+		window.myGeoLine.destroy()
+	}
+	console.log(p)
+
+	var xValues = []
+	var yValues = []
+	var curr_prob = p
+	var curr_x = 0
+	while(curr_prob > 0.001) {
+		if(curr_x == 0) {
+			xValues.push(0)
+			yValues.push(0)
+		} else {
+			let pr_x = curr_prob.toFixed(5)
+			xValues.push(curr_x)
+			yValues.push(pr_x)
+			curr_prob *= (1 - p)
+		}
+
+		
+		curr_x++
+	}
+	console.log(xValues, yValues)
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'P(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myGeoLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Negative Binomial Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \NegBin(r, p)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Number of experiments until $r$ successes. Assumes each experiment is independent with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$r > 0$, the number of success we are waiting for.<br/>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{r, \dots, \infty\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = {x - 1 \choose r - 1}p^r(1-p)^{x-r}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{r}{p}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{r \cdot (1-p)}{p^2}$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $r$: <input onchange="redrawNegBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="negBinomialPmfR" min="1" value="3" step = "1">
+</div>
+<div>
+Parameter $p$: <input onchange="redrawNegBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="negBinomialPmfP" min="0" max="1" value="0.20" step = "0.05">
+</div>
+</div>
+<canvas id="negBinomialPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawNegBinomialPmf()
+})
+
+function redrawNegBinomialPmf() {
+	let parentDivId = 'negBinomialPmf'
+	let r = Math.round($('#negBinomialPmfR').val())
+	$('#negBinomialPmfR').val(r)
+	let p = parseFloat($('#negBinomialPmfP').val())
+	drawNegBinomialPmf(parentDivId, r, p)
+}
+
+function drawNegBinomialPmf(parentDivId, r, p) {
+	if(window.myNegBinLine) {
+		window.myNegBinLine.destroy()
+	}
+	console.log(r, p)
+
+	var xValues = []
+	var yValues = []
+	var curr_prob = 1
+	var i = 0
+	while(curr_prob > 0.001) {
+		if(i < r){
+			xValues.push(i)
+			yValues.push(0)
+		} else {
+			let pr_x = jStat.negbin.pdf(i, r, p ).toFixed(5)
+			xValues.push(i)
+			yValues.push(pr_x)
+			curr_prob = pr_x
+		}
+		i += 1
+	}
+	console.log(xValues, yValues)
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'P(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myNegBinLine = new Chart(ctx, config);
+}
+</script></p>
+
+<h2>Continuous Random Variables</h2>
 
 <p>
 <!-- Template that renders a single random variable card -->
