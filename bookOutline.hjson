@@ -52,7 +52,8 @@
 		},
 		"examples": {
 			"prob_baby_delivery":"Probability of Baby Delivery",
-			"jury":"Jury Selection"
+			"jury":"Jury Selection",
+			"norm_cdf_calculator":"Gaussian CDF Calculator"
 		}
 	},
 	"part3":{

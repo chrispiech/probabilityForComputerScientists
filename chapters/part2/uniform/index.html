@@ -22,12 +22,30 @@ Notice how the density $1/(\beta - \alpha$) is exactly the same regardless of th
 %>
 </p>
 
+<div class="purpleBox">
+<p><b>Example:</b> You are running to the bus stop. You don’t know exactly when the bus arrives. You believe all times between 2 and 2:30 are equally likely. You show up at 2:15pm. What is P(wait < 5 minutes)?
+</p>
+
+Let $T$ be the time, in minutes after 2p that the bus arrives. Because we think that all times are equally likely in this range, $T \sim \Uni(\alpha = 0, \beta = 30)$. The probability that you wait 5 minutes is equal to the probability that the bus shows up between 2:15 and 2:20. In other words $\p(15 < T < 20)$:
+\begin{align*}
+    \p(\text{Wait under 5 mins}) &= \p(15 < T < 20) \\
+    &= \int_{15}^{20} f_T(x) \partial x \\
+    &= \int_{15}^{20} \frac{1}{\beta - \alpha} \partial x \\ \\
+    &= \frac{1}{30} \partial x \\ \\
+    &= \frac{x}{30}\bigg\rvert_{15}^{20} \\
+    &= \frac{20}{30} - \frac{15}{30}  = \frac{5}{30}
+\end{align*}
+
+
+</div>
+
 <p>
 
-Let's work through a few key properties of this RV are. We can come up with a closed form for the probability that a uniform random variable $X$ is in the range $a$ to $b$, assuming that $\alpha \leq a \leq b \leq \beta$:
+We can come up with a closed form for the probability that a uniform random variable $X$ is in the range $a$ to $b$, assuming that $\alpha \leq a \leq b \leq \beta$:
 \begin{align*}
     \P(a \leq X \leq b) &= \int_a^b f(x) \d x \\
     &= \int_a^b \frac{1}{\beta - \alpha} \d x \\
     &= \frac{ b - a }{ \beta - \alpha } 
 \end{align*}
 </p>
+

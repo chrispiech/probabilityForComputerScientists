@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Multivariate Gaussian</title>
+<title>Gaussian CDF Calculator</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -338,54 +338,304 @@
                     <div class="col handout" >
               
                         
- 
-<center><h1>Multivariate Gaussian</h1>
+<h1>
+						Gaussian CDF Calculator
+					</h1>
+					
+				<hr/>
 
-<hr/>
-<p style="color:grey">By Lisa Yan and Chris</p></center>
+				<p>
+					To calculate the Cumulative Density Function (CDF) for a normal (aka Gaussian) random variable at a value $x$, also writen as $F(x)$, you can transform your distribution to the "standard normal" and look up the corresponding value in the standard normal CDF. However, most programming libraries will provide a normal cdf funciton. This tool replicates said functionality.
+				</p>
 
-<p>
-Many times, we talk about multiple Normal (Gaussian) random variables, otherwise known as Multivariate Normal (Gaussian) distributions. Here, we talk about the two-dimensional case, called a Bivariate Normal Distribution. $X_1$ and $X_2$ follow a bivariate
- normal distribution if their joint PDF is 
- 
-\[ f(x_1, x_2) = \frac{1}{2\pi \sigma_1 \sigma_2 \sqrt{1 - \rho^2}} e^{-\dfrac{1}{2(1-\rho^2)} \left( \dfrac{(x_1 - \mu_1)^2}{\sigma_1^2} - \dfrac{2\rho(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1 \sigma_2} + \dfrac{(x_2 - \mu_2)^2}{\sigma_2^2} \right)}\]
-</p>
-<p>
-This is a specific form of probabilistic model which is parametric. In fact a bivariate nrmal distribution has five parameters: $\mu_1, \mu_2, \sigma_1^2, \sigma_2^2, \rho$. We often write the distribution of the vector $\mathbf{X} = (X_1, X_2)$ as $\mathbf{X}\sim \mathcal{N}(\vec{\mu}, \vec{\Sigma})$, where $\vec{\mu} = (\mu_1, \mu_2)$ is a mean vector and $\vec{\Sigma} = \begin{bmatrix} \sigma_1^2 & \rho \sigma_1 \sigma_2 \\ \rho \sigma_1 \sigma_2 & \sigma_2^2 \end{bmatrix}$ is a covariance matrix.
+				<h2> Calculator</h2>
+				<form class="form-inline mb-3">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">x: &nbsp;&nbsp;</label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputX" value="0.25">
+				    </div>
+				  </div>
+				 </form>
+				  <form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-2 control-label">mu: </label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputMu" value="1">
+				    </div>
+				  </div>
+				  </form>
+				  <form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-2 control-label">std: </label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputStd" value="2">
+				    </div>
+				  </div>
+				 </form>
+				 <p>
+				  <button class="btn btn-primary mt-3" onclick="calculate()" style="font-family:monospace">norm.cdf(x, mu, std)</button>
+				</p>
+				<p style="font-family:monospace" id="numResult">
+				</p>
+				
 
-</p>
-<p>
+				<div >
+					<h2>Explanation</h2>
+					<p>This function calculates the cumulative density function of a Normal random variable. It is very important in CS109 to understand the difference between a probability density function (PDF), and a cumulative density function (CDF). The CDF of a random variable at point little $x$ is equal to the probability that the random variable takes on a value less than or equal to $x$. If the random variable is called big $X$, the CDF can be written as $P(X < x)$ or as $F_X(x)$.
+					<p> The CDF function of a Normal is calculated by translating the random variable to the Standard Normal, and then looking up a value from the precalculated "Phi" function ($\Phi$), which is the cumulative density function of the standard normal. The Standard Normal, often written $Z$, is a Normal with mean 0 and variance 1. Thus, $Z \sim N(\mu = 0, \sigma^2 = 1)$.
+					</p>
+					<div id="resultDiv">
+					</div>
+					<p>Try different calculations to see different translations to the standard normal!
+					
+							<!-- <h2>Standard Normal PDF</h2>
+							<p>The normal transform means that the probability that you are calculating is identical to the integral over the PDF of the Standard Normal from negative infinity to $x$. This picture shows that integral: 
+							<p>
+							<div style="width:470px; height:370px;" id="pdfDiv"></div> -->
+				</div>
+				
 
-Note that $\rho$ is the correlation between $X_1$ and $X_2$, and $\sigma_1, \sigma_2 > 0$. We defer to Ross Chapter 6, Example 5d, for the full proof, but it can be shown that the marginal distributions of $X_1$ and $X_2$ are $X_1\sim\mathcal{N}(\mu_1, \sigma_1^2)$ and $X_2\sim\mathcal{N}(\mu_2, \sigma_2^2)$, respectively.
+			</div>
+		</div>
 
-<p>
-<h2>Independent Normal RVs</h2>
-<p>
-Let $\mathbf{X}=(X_1, X_2)\sim\mathcal{N}(\vec{\mu}, \vec{\Sigma})$, where $\vec{\mu} = (\mu_1, \mu_2)$ and $\vec{\Sigma} =  \begin{bmatrix} \sigma_1^2 & 0 \\ 0 & \sigma_2^2 \end{bmatrix}$, a diagonal covariance matrix.
+		
+		
+		
+		
+				
+		<script>
 
-<p>
-Noting that the correlation between $X_1$ and $X_2$ is $\rho = 0$:
-\begin{align*}
-f(x_1, x_2) &= \frac{1}{2\pi \sigma_1 \sigma_2 } e^{-\dfrac{1}{2} \left( \dfrac{(x_1 - \mu_1)^2}{\sigma_1^2}  + \dfrac{(x_2 - \mu_2)^2}{\sigma_2^2} \right)} \\
-&= \frac{1}{\sigma_1 \sqrt{2\pi}} e^{-(x_1 - \mu_1)^2/(2 \sigma_1^2)}   \frac{1}{\sigma_2 \sqrt{2\pi}} e^{-(x_2 - \mu_2)^2/(2 \sigma_2^2)}\\
-&= f(x_1) \cdot f(x_2) && \text{}
-\end{align*}
+			$( document ).ready(function(){
+				calculate()
+			});
 
-<p>
-Since the two distributions factorize for Bivariate Normal RVs, if $\text{Cov}(X_1, X_2) = 0$, then $X_1$ and $X_2$ are independent. Wild! More generally, you can model a collection of continuous joint random variables $\vec{X} = (X_1  \dots X_n)$ as being a composition of independent normals with means $\vec{mu} = (\mu_1 \dots \mu_n)$ and standard deviations $\vec{\sigma} = (\sigma_1 \dots \sigma_n)$. If you do so the PDF is:
-\begin{align*}
-f(\vec{x}) 
-&= \prod_{i=1}^n f(x_i) \\
-&= \prod_{i=1}^n \frac{1}{\sigma_i \sqrt{2\pi} } e ^{\frac{-(x-\mu_i)^2}{2\sigma_i^2}}
-\end{align*}
+			function calculate() {
+				var x = $("#inputX").val()
+				var mu = $("#inputMu").val()
+				var std = $("#inputStd").val()
+				var dist = gaussian(mu, std * std);
+				var result = dist.cdf(x).toFixed(4);
+				console.log(result)
 
-And the CDF is
-\begin{align*}
-F(\vec{x}) 
-&= \prod_{i=1}^n F(x_i) \\
-&= \prod_{i=1}^n \Phi(\frac{x_i-\mu_i}{\sigma_i})
-\end{align*}
+				var part1 = "<p>For your normal $X \\sim \\mathcal{N}(\\mu = " + mu + ", \\sigma = " + std + ")$</p>"
 
+				var part2 = "<p>$P(X < " + x + ") = P(\\frac{X - \\mu}{\\sigma} < \\frac{"+x+"-\\mu}{\\sigma}) = P(Z < \\frac{"+x+" - "+mu+"}{"+std+"}) = \\Phi\\left(\\frac{"+x+" - "+mu+"}{"+std+"}\\right) = " + result +"$</p>"
+
+				$("#resultDiv").html(part1 + part2)
+				$("#numResult").html("= " + result)
+
+				standarNormal = gaussian(0, 1)
+				$("#pdfDiv").html("")
+				drawNormalPDF(pdfDiv, standarNormal, "x", (x - mu)/std);
+
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub, "resultDiv"]);
+				$("#hidden").show()
+
+
+			}
+
+			function drawNormalPDF(parentDivId, normal, xAxisName, x) {
+				var xMin = -5
+				var xMax = 5
+				var xStep = 1
+		    	//setting up empty data array
+				var data = [];
+				var dataUnderCurve = []
+				var maxP = 0;
+				var parentDiv = $(parentDivId)
+				getData(); // popuate data 
+				getDataUnderCurve(x);
+		    	// line chart based on http://bl.ocks.org/mbostock/3883245
+				var margin = {
+			        top: 10,
+			        right: 10,
+			        bottom: 50,
+			        left: 70
+			    };
+		    	width = parentDiv.width() - margin.left - margin.right,
+			    height = parentDiv.height() - margin.bottom - margin.top;
+
+				var x = d3.scale.linear()
+				    .range([0, width]);
+
+				var y = d3.scale.linear()
+				    .range([height, 0]);
+
+				var xAxis = d3.svg.axis()
+				    .scale(x)
+				    .orient("bottom")
+				    .tickValues(range(xMin, xMax, 1))
+				    
+				var yTicks = range(0, maxP * 1.2, maxP/9)
+				var yAxis = d3.svg.axis()
+				    .scale(y)
+				    .orient("left")
+				    .tickValues(yTicks);
+
+				var line = d3.svg.line()
+				    .x(function(d) {
+				        return x(d.q);
+				    })
+				    .y(function(d) {
+				        return y(d.p);
+				    });
+
+				var svg = d3.select(parentDivId).append("svg")
+				    .attr("width", width + margin.left + margin.right)
+				    .attr("height", height + margin.top + margin.bottom)
+				    .append("g")
+				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+				var area = d3.svg.area()
+				    .x(function(d) {
+				        return x(d.q);
+				    })
+				    .y(function(d) {
+				        return y(d.p);
+				    });
+
+
+				x.domain(d3.extent(data, function(d) {
+				    return d.q;
+				}));
+				y.domain(d3.extent(yTicks, function(d) {
+				    return d;
+				}));
+
+				
+
+
+				svg.append("g")
+				    .attr("class", "x axis")
+				    .attr("transform", "translate(0," + height + ")")
+				    .call(xAxis);
+
+				
+				svg.append("g")
+				    .attr("class", "y axis")
+				    .call(yAxis);
+
+				// text label for the x axis
+				svg.append("text")      
+			        .attr("x", width / 2 )
+			        .attr("y",  height + 40 )
+			        .style("text-anchor", "middle")
+			        .text(xAxisName);
+
+			    // text label for the y axis
+			 	var padding = 9 -margin.left
+				svg.append("text")
+		            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+		            .attr("transform", "translate("+ padding +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+		            .text("Probability Density");
+
+				svg.append("path")
+				    .datum(data)
+				    .attr("class", "line")
+				    .attr("d", line);
+
+				svg.append("path")
+		        .datum(dataUnderCurve)
+		        .attr("class", "area")
+		        .attr("d", line);
+
+				function getData() {
+					// loop to populate data array with 
+					// probabily - quantile pairs
+					maxP = 0
+					for (var i = xMin; i < xMax; i+= xStep/10.) {
+						var x = i;
+					    var p = normal.pdf(x) // calc prob of rand draw
+					    el = {
+					        "q": x,
+					        "p": p
+					    }
+					    if(p > maxP) maxP = p;
+					    data.push(el)
+					};
+
+					// need to sort for plotting
+					//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+					data.sort(function(x, y) {
+					    return x.q - y.q;
+					});	
+				}
+
+		    function getDataUnderCurve(limit) {
+				// loop to populate data array with 
+				// probabily - quantile pairs
+				for (var i = xMin; i < limit; i+= xStep/10.) {
+					 var x = i;
+				    var p = normal.pdf(x) // calc prob of rand draw
+				    el = {
+				        "q": x,
+				        "p": p
+				    }
+				    dataUnderCurve.push(el)
+				};
+				dataUnderCurve.push({"q" : limit, "p": 0})
+
+				// need to sort for plotting
+				//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+				dataUnderCurve.sort(function(x, y) {
+				    return x.q - y.q;
+				});	
+			}
+		    function range(start, end, step) {
+			    var range = [];
+			    var typeofStart = typeof start;
+			    var typeofEnd = typeof end;
+
+			    if (step === 0) {
+			        throw TypeError("Step cannot be zero.");
+			    }
+
+			    if (typeofStart == "undefined" || typeofEnd == "undefined") {
+			        throw TypeError("Must pass start and end arguments.");
+			    } else if (typeofStart != typeofEnd) {
+			        throw TypeError("Start and end arguments must be of same type.");
+			    }
+
+			    typeof step == "undefined" && (step = 1);
+
+			    if (end < start) {
+			        step = -step;
+			    }
+
+			    if (typeofStart == "number") {
+
+			        while (step > 0 ? end >= start : end <= start) {
+			            range.push(start);
+			            start += step;
+			        }
+
+			    } else if (typeofStart == "string") {
+
+			        if (start.length != 1 || end.length != 1) {
+			            throw TypeError("Only strings with one character are supported.");
+			        }
+
+			        start = start.charCodeAt(0);
+			        end = end.charCodeAt(0);
+
+			        while (step > 0 ? end >= start : end <= start) {
+			            range.push(String.fromCharCode(start));
+			            start += step;
+			        }
+
+			    } else {
+			        throw TypeError("Only string and number types are supported");
+			    }
+
+			    return range;
+
+			}
+		}
+		    
+
+			
+		</script>
 
                         
 
