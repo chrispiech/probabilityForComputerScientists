@@ -71,6 +71,7 @@
 			# "computational_inference":"Computational Inference",
 		},
 		"examples": {
+			"dart_logo":"CS109 Logo",
 			"fairness":"Fairness in AI",
 			"federalist":"Federalist Paper Authorship",
 			"bridge_distribution":"Bridge Distribution",

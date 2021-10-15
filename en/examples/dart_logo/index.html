@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Continuous Joint</title>
+<title>CS109 Logo</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -337,25 +337,311 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
               
-                        
- 
-<center><h1>Continuous Joint</h1></center>
-<hr/>
+                         
 
-Random variables $X$ and $Y$ are Jointly Continuous if there exists a joint Probability Density Function (PDF) $f$ such that:
-\begin{align*}
-    P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = \int_{a_1}^{a_2} \int_{b_1}^{b_2} f(X=x,Y=y)\d y \text{ } \d x
-\end{align*}
-Using the PDF we can compute marginal probability densities:
-\begin{align*}
-    f(X=a) &= \int_{-\infty}^{\infty}f(X=a,Y=y)\d y \\
-    f(Y=b) &= \int_{-\infty}^{\infty}f(X=x,Y=b)\d x 
-\end{align*}
+<h1>
+						CS109 Logo
+					</h1>
+				<hr/>
+				<p>
+					To generate the CS109 logo, we are going to throw half a million darts at a picture of the Stanford seal. We only keep the pixels that are hit by at least one dart. Each dart has it's x-pixel and y-pixel chosen at random from gaussian distributions. Let $X$ be a random variable which represent the x-pixel, $Y$ be a random variable which represents the y-pixel and $S$ be a constant that equals the size of the logo (its width is equal to its height). $X \sim \mathcal{N}\left(\frac{S}{2}, \frac{S}{2}\right)$ and $Y \sim \mathcal{N}\left(\frac{S}{3},\frac{S}{5}\right)$
+				</p>
 
-Let $F(x,y)$ be the Cumulative Density Function (CDF):
-\begin{align*}
-    P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = F(a_2,b_2) - F(a_1,b_2) + F(a_1,b_1) - F(a_2,b_1)
-\end{align*}
+		<div class="row">
+			<div class="col-sm-12">
+				<h3>Darts thrown: <span id="dartNum">0</span></h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<h2>Dart Results</h2>
+				<canvas style="width:370px; height:370px;" id="imgCanvas"></canvas>
+			</div>
+
+			<div class="col-sm-6">
+				<h2>Dart Probability Density</h2>
+				<canvas style="width:370px; height:370px;" id="distCanvas"></canvas>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<h2>X Distribution</h2>
+				<div style="width:370px; height:370px;" id="xDist"></div>
+			</div>
+
+			<div class="col-sm-6">
+				<h2>Y Distribution</h2>
+				<div style="width:370px; height:370px;" id="yDist"></div>
+			</div>
+		</div>
+
+		
+		
+		
+				
+		<script>
+			function stdToVar(std) {
+				return std * std;
+			}
+
+			var LOGO_SIZE = 900;
+			var DARTS = 500000;
+			var TIMEOUT_START = 50;
+			var TIMEOUT_END = 1;
+			var TIMEOUT_SWITCH = 50000;
+
+			var xDist = gaussian(LOGO_SIZE/2, stdToVar(LOGO_SIZE/2));
+			var yDist = gaussian(LOGO_SIZE/3, stdToVar(LOGO_SIZE/5));
+			function getProbability(x, y) {
+		    	var xProb = xDist.pdf(x);
+		    	var yProb = yDist.pdf(y);
+		    	return xProb * yProb;
+		    }
+
+		    function drawDistribution() {
+			    var canvas = document.getElementById("distCanvas");
+			    canvas.width = LOGO_SIZE;
+				canvas.height = LOGO_SIZE;
+				var ctx=canvas.getContext("2d");
+				var imgData=ctx.createImageData(LOGO_SIZE,LOGO_SIZE);
+				var data = imgData.data;
+				var maxP = 0;
+				for (var r = 0; r < LOGO_SIZE; r++) {
+			    	for(var c = 0; c < LOGO_SIZE; c++) {
+			    		var p = getProbability(c, r);
+			    		maxP = Math.max(maxP, p);
+			    	}
+			    }
+			    console.log(maxP)
+				for (var r = 0; r < LOGO_SIZE; r++) {
+			    	for(var c = 0; c < LOGO_SIZE; c++) {
+						var i = (r * LOGO_SIZE + c) * 4;
+						
+						var p = getProbability(c, r);
+						var value = (1- p/maxP) * 256;
+						data[i + 0] = value; // red
+						data[i + 1] = value; // green
+						data[i + 2] = value; // blue
+						data[i + 3] = 255; // alpha
+			    	}
+			    }
+				ctx.putImageData(imgData,0,0);
+			}
+
+			function drawLogo() {
+				var canvas = document.getElementById('imgCanvas');
+				canvas.width = LOGO_SIZE;
+				canvas.height = LOGO_SIZE;
+				var ctx = canvas.getContext('2d');
+				logo = new Image();
+				logo.onload = function(){
+				    ctx.drawImage(logo, 0, 0, logo.width, logo.height, 0, 0, LOGO_SIZE, LOGO_SIZE);
+				    var imageData = ctx.getImageData(0, 0, LOGO_SIZE, LOGO_SIZE);
+				    var data = imageData.data;
+				    for (var r = 0; r < LOGO_SIZE; r++) {
+				    	for(var c = 0; c < LOGO_SIZE; c++) {
+				    		var i = (r * LOGO_SIZE + c) * 4;
+				    		data[i + 3] = 0; // alpha
+				    	}
+				    }
+
+
+				    var dartsThrown = 0;
+
+				    function throwDart() {
+				    	if(dartsThrown < DARTS) {
+				    		var delta = 500;
+				    		for(var j = 0; j < delta; j++) {
+						    	var col = Math.round(xDist.ppf(Math.random()));
+						    	var row = Math.round(yDist.ppf(Math.random()));
+						    	var index = (row * LOGO_SIZE + col) * 4;
+						    	data[index + 3] = 256; // alpha 
+						    }
+					    	ctx.putImageData(imageData, 0, 0);
+					    	dartsThrown += delta;
+					    	$("#dartNum").html(dartsThrown);
+					    	var timeout = TIMEOUT_START
+					    	if(dartsThrown > TIMEOUT_SWITCH) {
+					    		timeout = TIMEOUT_END
+					    	}
+					    	setTimeout(throwDart, timeout);
+					    }
+				    }
+				    throwDart();
+				    
+				}
+				logo.src = '../../../img/logo.gif';
+			}
+
+			window.onload = function() {
+				drawDistribution();
+				drawLogo();
+			}
+
+		    drawNormalPDF("#xDist", xDist, "pixel x");
+		    drawNormalPDF("#yDist", yDist, "pixel y");
+
+		    function drawNormalPDF(parentDivId, normal, xAxisName) {
+		    	//setting up empty data array
+				var data = [];
+				var maxP = 0;
+				var parentDiv = $(parentDivId)
+				getData(); // popuate data 
+		    	// line chart based on http://bl.ocks.org/mbostock/3883245
+				var margin = {
+			        top: 10,
+			        right: 10,
+			        bottom: 50,
+			        left: 70
+			    };
+		    	width = parentDiv.width() - margin.left - margin.right,
+			    height = parentDiv.height() - margin.bottom - margin.top;
+
+				var x = d3.scale.linear()
+				    .range([0, width]);
+
+				var y = d3.scale.linear()
+				    .range([height, 0]);
+
+				var xAxis = d3.svg.axis()
+				    .scale(x)
+				    .orient("bottom")
+				    .tickValues(range(0, LOGO_SIZE, 100))
+				    
+				var yTicks = range(0, maxP, maxP/9)
+				var yAxis = d3.svg.axis()
+				    .scale(y)
+				    .orient("left")
+				    .tickValues(yTicks);
+
+				var line = d3.svg.line()
+				    .x(function(d) {
+				        return x(d.q);
+				    })
+				    .y(function(d) {
+				        return y(d.p);
+				    });
+
+				var svg = d3.select(parentDivId).append("svg")
+				    .attr("width", width + margin.left + margin.right)
+				    .attr("height", height + margin.top + margin.bottom)
+				    .append("g")
+				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+				x.domain(d3.extent(data, function(d) {
+				    return d.q;
+				}));
+				y.domain(d3.extent(yTicks, function(d) {
+				    return d;
+				}));
+				console.log("here")
+
+				svg.append("g")
+				    .attr("class", "x axis")
+				    .attr("transform", "translate(0," + height + ")")
+				    .call(xAxis);
+
+				
+				svg.append("g")
+				    .attr("class", "y axis")
+				    .call(yAxis);
+
+				// text label for the x axis
+				svg.append("text")      
+			        .attr("x", width / 2 )
+			        .attr("y",  height + 40 )
+			        .style("text-anchor", "middle")
+			        .text(xAxisName);
+
+			    // text label for the y axis
+			 	var padding = 9 -margin.left
+				svg.append("text")
+		            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+		            .attr("transform", "translate("+ padding +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+		            .text("Probability Density");
+
+				svg.append("path")
+				    .datum(data)
+				    .attr("class", "line")
+				    .attr("d", line);
+
+				function getData() {
+					// loop to populate data array with 
+					// probabily - quantile pairs
+					maxP = 0
+					for (var i = 0; i < LOGO_SIZE; i++) {
+						var x = i;
+					    var p = normal.pdf(x) // calc prob of rand draw
+					    el = {
+					        "q": x,
+					        "p": p
+					    }
+					    if(p > maxP) maxP = p;
+					    data.push(el)
+					};
+
+					// need to sort for plotting
+					//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+					data.sort(function(x, y) {
+					    return x.q - y.q;
+					});	
+				}
+		    }
+		    function range(start, end, step) {
+			    var range = [];
+			    var typeofStart = typeof start;
+			    var typeofEnd = typeof end;
+
+			    if (step === 0) {
+			        throw TypeError("Step cannot be zero.");
+			    }
+
+			    if (typeofStart == "undefined" || typeofEnd == "undefined") {
+			        throw TypeError("Must pass start and end arguments.");
+			    } else if (typeofStart != typeofEnd) {
+			        throw TypeError("Start and end arguments must be of same type.");
+			    }
+
+			    typeof step == "undefined" && (step = 1);
+
+			    if (end < start) {
+			        step = -step;
+			    }
+
+			    if (typeofStart == "number") {
+
+			        while (step > 0 ? end >= start : end <= start) {
+			            range.push(start);
+			            start += step;
+			        }
+
+			    } else if (typeofStart == "string") {
+
+			        if (start.length != 1 || end.length != 1) {
+			            throw TypeError("Only strings with one character are supported.");
+			        }
+
+			        start = start.charCodeAt(0);
+			        end = end.charCodeAt(0);
+
+			        while (step > 0 ? end >= start : end <= start) {
+			            range.push(String.fromCharCode(start));
+			            start += step;
+			        }
+
+			    } else {
+			        throw TypeError("Only string and number types are supported");
+			    }
+
+			    return range;
+
+			}
+		    
+
+			
+		</script>
 
                         
 

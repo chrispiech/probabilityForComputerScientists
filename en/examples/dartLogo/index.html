@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Continuous Joint</title>
+<title>CS109 Logo</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -250,7 +250,7 @@
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+        <li><a href="../../examples/dartLogo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
     </ul>
 </li>
 </li>
@@ -339,23 +339,9 @@
               
                         
  
-<center><h1>Continuous Joint</h1></center>
+<center><h1>CS109 Logo</h1></center>
 <hr/>
 
-Random variables $X$ and $Y$ are Jointly Continuous if there exists a joint Probability Density Function (PDF) $f$ such that:
-\begin{align*}
-    P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = \int_{a_1}^{a_2} \int_{b_1}^{b_2} f(X=x,Y=y)\d y \text{ } \d x
-\end{align*}
-Using the PDF we can compute marginal probability densities:
-\begin{align*}
-    f(X=a) &= \int_{-\infty}^{\infty}f(X=a,Y=y)\d y \\
-    f(Y=b) &= \int_{-\infty}^{\infty}f(X=x,Y=b)\d x 
-\end{align*}
-
-Let $F(x,y)$ be the Cumulative Density Function (CDF):
-\begin{align*}
-    P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = F(a_2,b_2) - F(a_1,b_2) + F(a_1,b_1) - F(a_2,b_1)
-\end{align*}
 
                         
 
