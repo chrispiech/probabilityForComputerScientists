@@ -987,7 +987,7 @@ function drawNegBinomialPmf(parentDivId, r, p) {
 	var yValues = []
 	var curr_prob = 1
 	var i = 0
-	while(curr_prob > 0.001) {
+	while(curr_prob > 0.001 || i < r + 10) {
 		if(i < r){
 			xValues.push(i)
 			yValues.push(0)
