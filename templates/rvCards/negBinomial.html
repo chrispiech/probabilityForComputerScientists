@@ -82,7 +82,10 @@ function drawNegBinomialPmf(parentDivId, r, p) {
 			xValues.push(i)
 			yValues.push(0)
 		} else {
-			let pr_x = jStat.negbin.pdf(i, r, p ).toFixed(5)
+			var pr_x = jStat.combination(i-1, r-1)
+			pr_x *= p ** r
+			pr_x *= (1- p) ** (i - r)
+			pr_x = pr_x.toFixed(5)
 			xValues.push(i)
 			yValues.push(pr_x)
 			curr_prob = pr_x
