@@ -4,7 +4,7 @@
 # > python -m pip install bottle
 # I used version bottle-0.12.19
 from bottle import SimpleTemplate
-
+from makeChapters import make_chapters
 import os.path
 import sys
 
@@ -25,6 +25,7 @@ class Compiler(object):
     # from the templates dir into the current folder. Folder
     # hierarchy is preserved
     def run(self):
+        make_chapters()
         templateFilePaths = self.getTemplateFilePaths('')
         for templateFilePath in templateFilePaths:
             self.compileTemplate(templateFilePath)

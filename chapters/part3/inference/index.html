@@ -1,0 +1,76 @@
+
+% rebase('templates/chapter.html', title="Inference")
+ 
+<center><h1>Inference</h1></center>
+<hr/>
+So far we have set the foundation for how we can represent probabilistic models with multiple random variables. These models are especially useful because they let us perform a task called "inference" where we update our belief about one random variable in the model, conditioned on new information about another. Inference in general is hard! In fact, it has been proven that in the worst case, the inference task, can be NP-Hard where $n$ is the number of random variables [<a href="https://www.sciencedirect.com/science/article/pii/000437029090060D">1</a>]. 
+
+<p>In this reader we are going to approach inference strategically. First we are going to practice it with two random variables (in this section). Then, later in this unit we are going to talk about inference in the general case, with many random variables. 
+
+    <p>Earlier we looked at conditional probabilities for events. The first task in inference is to understand how to combine  conditional probabilities and random variables. The equations for both the discrete and continuous case are intuitive extensions of our understanding of conditional probability:
+
+<h2>The Discrete Conditional</h2>
+<p>The discrete case, where every random variable in your model is discrete, is a straightforward combination of what you know about conditional probability (which you learned in the context of events). Recall that every relational operator applied to a random variable <a href="{{pathToLang}}part2/rvs/#rv_vs_event">defines an event</a>. As such the rules for conditional probability directly apply: 
+The conditional probability mass function (PMF) for the discrete case:
+\begin{align*}
+    \P(X=x|Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)}
+\end{align*}
+In the presence of multiple random variables, it becomes increasingly useful to use shorthand! The above definition is identical to this notation where a lowercase symbol such as $x$ is short hand for the event $X=x$. :
+\begin{align*}
+    \P(x|y)=\frac{P(x,y)}{P(y)}
+\end{align*}
+The conditional definition works for any event and as such we can also write conditionals using cumulative density functions (CDFs) for the discrete case:
+\begin{align*}
+    \P(X \leq a | Y=y) 
+    &= \frac{\P(X \leq a, Y=y)}{\p(Y=y)} \\
+    &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} 
+\end{align*}
+
+Here is a neat result: this last term can be rewritten, by a clever manipulation. We can make the sum extend over the whole fraction:
+
+\begin{align*}
+    \P(X \leq a | Y=y) 
+    &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} \\
+    &= \sum_{x\leq a} \frac{\P(X=x,Y=y)}{\P(Y=y)} \\
+    &= \sum_{x\leq a} \P(X=x|Y=y) 
+\end{align*}
+
+
+
+<h2>Mixing Discrete and Continuous</h2>
+
+
+Let $X$ be continuous random variable and let $N$ be a discrete random variable. The conditional probabilities of $X$ given $N$ and $N$ given $X$ respectively are:
+\begin{align*}
+    f(X=x|N=n) =  \frac{\P(N=n|X=x)f(X=x)}{\p(N=n)} &&
+\end{align*}
+\begin{align*}
+    \p(N=n|X=x) =  \frac{f(X=x|N=n)\p(N=n)}{f(X=x)} 
+\end{align*}
+
+<h2>Probability Rules with Continuous Random Variables</h2>
+
+What happens when we want to reason about <i>continuous</i> random variables using our rules of probability (such as Bayes theoreom, law of total probability, chain rule, etc)? There is a simple practical answer: the rules still apply, but we have to replace probability terminology with probability <i>density</i> functions. As a concrete example here is the definition of conditional probability when $X$ and $Y$ are two continuous random variables:
+
+\begin{align*}
+    f(X=x|Y=y) = \frac{f(X=x,Y=y)}{f(Y=y)}
+\end{align*}
+<!--The conditional cumulative density function (CDF) for the continuous case:
+\begin{align*}
+    P(X \leq a | Y=y) = \int_{-\infty}^{a} f(X=x|Y=y)\d x
+\end{align*} -->
+
+
+
+<!-- \subsection*{Example 2}
+Let's say we have two independent random Poisson variables for requests received at a web server in a day: $X$ = \# requests from humans/day, $X \sim Poi(\lambda_1)$ and $Y$ = \# requests from bots/day, $Y \sim Poi(\lambda_2)$. Since the convolution of Poisson random variables is also a Poisson we know that the total number of requests $(X+Y)$ is also a Poisson $(X+Y) \sim Poi(\lambda_1 + \lambda_2)$. What is the probability of having $k$ human requests on a particular day given that there were $n$ total requests?
+\begin{align*}
+    P(X=k|X+Y=n) &= \frac{P(X=k,Y=n-k)}{P(X+Y=n)} = \frac{P(X=k)P(Y=n-k)}{P(X+Y=n)} \\
+    &= \frac{e^{-\lambda_1}\lambda_1^k}{k!} \cdot \frac{e^{-\lambda_2}\lambda_2^{n-k}}{(n-k)!} \cdot 
+    \frac{n!}{e^{1(\lambda_1+\lambda_2)}(\lambda_1+\lambda_2)^n}\\
+    &={n \choose k}\left(\frac{\lambda_1}{\lambda_1 + \lambda_2}\right)^k
+    \left(\frac{\lambda_2}{\lambda_1 + \lambda_2}\right)^{n-k} \\
+    &\sim Bin\left(n, \frac{\lambda_2}{\lambda_1 + \lambda_2}\right)
+\end{align*} -->
+
+

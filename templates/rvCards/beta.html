@@ -1,0 +1,145 @@
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Beta Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Beta(\alpha, \beta)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A belief distribution for an unknown probability. Captures confidence.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$\alpha > 0$, number of imagined successes +1<br/>$\beta > 0$, number of imagined failures +1</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in [0,1]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = K 
+		\cdot x ^{\alpha - 1} \cdot (1-x)^{\beta - 1}$$</td>
+	</tr>
+	
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{\alpha}{\alpha+\beta}$</td>
+	</tr>
+
+
+	<tr>
+		<th>Mode:</th>
+		<td>$\text{Mode}(X) = \frac{\alpha - 1}{\alpha+\beta - 2}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{\alpha\beta}{(\alpha + \beta)^2 (\alpha + \beta + 1)}$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\alpha$: <input onchange="redrawBeta()" type="number" class="form-control example-inline-input mb-3" id="betaAlpha" min="0" value="3" step = "1">
+</div>
+<div>
+Parameter $\beta$: <input onchange="redrawBeta()" type="number" class="form-control example-inline-input mb-3" id="betaBeta" min="0"  value="3" step = "1">
+</div>
+</div>
+<canvas id="betaPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawBeta()
+})
+
+function redrawBeta() {
+	let parentDivId = 'betaPdf'
+	let alpha = parseFloat($("#betaAlpha").val())
+	let beta = parseFloat($("#betaBeta").val())
+	drawBetaPdf(parentDivId, lambda)
+}
+
+function drawBetaPdf(parentDivId, lambda) {
+	if(window.myBetaLine) {
+		window.myBetaLine.destroy()
+	}
+
+	var x = 0
+	for(var i = 0; i <= 200; i++) {
+		x += 1/200
+	}
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'f(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myBetaLine = new Chart(ctx, config);
+}
+</script>
