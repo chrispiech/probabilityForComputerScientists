@@ -64,7 +64,8 @@
 			"continuous_joint":"Continuous Joint",
 			# "multivariate_gaussian":"Multivariate Gaussian",
 			"inference":"Inference",
-			# "bayesian_networks":"Bayesian Networks",
+			"bayesian_networks":"Bayesian Networks",
+			"correlation":"Correlation"
 			#"independent_vars":"Independence in Variables",
 			# "sampling_revisited":"Sampling Revisited",
 			# "computational_inference":"Computational Inference",
