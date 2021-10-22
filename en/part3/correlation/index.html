@@ -355,14 +355,30 @@ That is a little hard to wrap your mind around (but worth pushing on a bit). The
 \begin{align*}
  \text{Cov}(X,Y) = E[XY] - E[Y]E[X]
 \end{align*}
+
+<div class="bordered">
+	<b><i>Lemma: Product of Expectation for Independent Random Variables</i></b>:
+\begin{align*}
+ &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{ if and only if $X$ and $Y$ are independent} 
+\end{align*}
+	</div>
+
+	<div class="bordered">
+	<b><i>Lemma: Correlation of Independent Random Variables</i></b>:
+If two random variables $X$ and $Y$ are independent, than their covariance must be 0.
+
+\begin{align*}
+ \text{Cov}(X,Y) &= E[XY] - E[Y]E[X] && \text{ Def of Cov} \\
+ &= E[X]E[Y] - E[Y]E[X] && \text{ Lemma Product of Expectation} \\
+ &= 0
+\end{align*}
+Note that the reverse claim is not true. Covariance of 0 does not prove independence.
+	</div>
 Using this equation (and the product lemma) is it easy to see that if two random variables are independent their covariance is 0. The reverse is \emph{not} true in general.
 
 
 <h2>Product of Expectations Lemma</h2>
-Here is a lovely little lemma to get us started:
-\begin{align*}
- &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{ if and only if $X$ and $Y$ are independent} 
-\end{align*}
+
 
 <h2>Properties of Covariance</h2>
 
