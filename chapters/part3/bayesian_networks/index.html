@@ -30,7 +30,7 @@ Consider the WebMd Symptom Checker. WebMD have built a probabilistic model with 
 \end{align*}
 
 <p>Let's put this in programming terms. All that we need to do in order to code up a Bayesian network is to define a function:
-<code>getProbXi(i, k, parents)</code> which returns the probability that $X_i$ (the random var with index <code>i</code>) takes on the value <code>k</code>  given a value for each of the parents of $X_i$ encoded by \code{parents}: $P(X_i = x_i | \text{Parents}(X_i) \text{ take on specified values})$
+<code>getProbXi(i, k, parents)</code> which returns the probability that $X_i$ (the random var with index <code>i</code>) takes on the value <code>k</code>  given a value for each of the parents of $X_i$ encoded by the list <code>parents</code>: $P(X_i = x_i | \text{Parents}(X_i) \text{ take on specified values})$
 
 <div class="bordered">
 <b><i>Deeper understanding</i></b>: The reason that a Bayes Net is so useful is that the "joint" probability can be expressed in exponentially less space as the product of the probabilities of each random variable conditioned on its parents! Without loss of generality, let $X_i$ refer to the $i$th random variable (such that if $X_i$ is a parent of $X_j$ then $i < j$):
