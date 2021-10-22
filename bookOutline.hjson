@@ -68,7 +68,7 @@
 			"correlation":"Correlation"
 			"independent_vars":"Independence in Variables",
 			# "sampling_revisited":"Sampling Revisited",
-			# "computational_inference":"Computational Inference",
+			"computational_inference":"General Inference",
 		},
 		"examples": {
 			"dart_logo":"CS109 Logo",
