@@ -246,11 +246,12 @@
 <a id=sidebar-inference href="../../part3/inference">Inference</a>
 <a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
 <a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
+<a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -344,11 +345,17 @@
 <p>
 	<div>
 
+		
+		<p> <a href="https://en.wikipedia.org/wiki/Contract_bridge">Bridge</a> is one of the most popular collaborative card games. It is played with four players in two teams. A few interesting probability problems come up in this game. You do not need to know the rules of bridge to follow this example.
+
 		<h2>Distribution of Suit Splits</h2>
 
 
+
 <p>
-	Imagine that randomly shuffled cards are split between <b>two</b> equal sized <a href="https://en.wikipedia.org/wiki/Glossary_of_card_game_terms">hands</a>. Across the two hands there are a known number of cards of a particular suit (eg spades), and you want to know how many are in one hand and how many are in the other. What is the probability of the split? This problem comes up in the game of <a href="https://en.wikipedia.org/wiki/Contract_bridge">bridge</a>, one of the most popular card games. You do not need to know the rules of bridge to follow this example.
+	When playing the game there are many times when one player will know <i>exactly</i> how many cards there are of a certain suit between  their two opponents hands (call the opponents A and B). However, the player won't know the "split": how many of that particular suit are in opponent A's hand and how many cards of that suit are in opponent B's hand.</p>
+
+	<p>Both opponents have equal sized <a href="https://en.wikipedia.org/wiki/Glossary_of_card_game_terms">hands</a> with $k$ cards left. Across the two hands there are a known number of cards of a particular suit (eg spades) $n$, and you want to know how many are in one hand and how many are in the other. A split is represented as a tuple. For example $(0, 5)$ would mean 0 cards of the suit in opponent A's hands and 5 in opponent B's. Feel free to chose specific values for $k$ and $n$:
 </p>
 
 <p>
@@ -365,11 +372,11 @@ $n$, the number of cards of particular suit among the two hands: <input onchange
 
 <b>Probability of different splits of the suit:</b>
 
-	<p>Let $Y$ be a random variable representing the number of the suit in hand one. We can calculate the probability that $Y$ equals different values $i$ by counting equally likely outcomes.
+	<p>Let $Y$ be a random variable representing the number of the suit in opponent A's hand. We can calculate the probability that $Y$ equals different values $i$ by counting equally likely outcomes.
 $$\p(Y = i) = \frac
 	{ {n \choose i} \cdot {2\cdot k-n \choose k-i} }
 	{ {2\cdot k \choose k}}$$
-	<p>Can you figure out how we came up with that formula? It uses equally likely outcomes where each element in the sample set is a chosen set of $k$ cards  to be dealt to one player (out of $2k$ cards which go to both).</p>
+	<p>Can you figure out how we came up with that formula? It uses equally likely outcomes where each element in the sample set is a chosen set of $k$ cards  to be dealt to one player (out of $2k$ cards which go to both). For $k = $<span class="valueK">13</span> and $n = $<span class="valueN">5</span> here is the PMF over splits:</p>
 <canvas id="bridgeGraphEqual" style="max-height: 500px"></canvas>
 
 <p>
@@ -393,8 +400,8 @@ $$\p(X \geq j) = 1 - \sum_{i=n-j+1}^{j - 1}\p(Y= i)$$
 		<p>The way folks play bridge is that they make a calculation about their "hand strength" and then make decisions based off that number. The strength of your hand is a number which is equal to 4 times the number of "aces", 3 times the number of "kings", 2 times the number of "queens" and 1 times the number of "jacks" in your hand. No other cards contribute to your hand strength. Lets consider your hand strength to be a random variable and compute its distribution. It seems complex to compute by hand -- but perhaps we could run a simulation? Here we simulate a million deals of bridge hands, calculate the hand strengths, and use that to approximate the the distribution of hand strengths:
 <canvas id="bridgePoints" style="max-height: 500px"></canvas>
 
-<p>Here is the pseudo code used to simulate</p>
-<pre class="language-python"><code></code></pre>
+<!-- <p>Here is the pseudo code used to simulate</p>
+<pre class="language-python"><code></code></pre> -->
 
 <p>You might notice that at first blush this looks a lot like a poisson with rate $\lambda = 10$. First, lets consider why the rate might be 10. Let $X_i$ be the points of a given card $i$.  Since each card value is equally likely $\p(X_i=x) = \frac{1}{13}$. The expectation of points for each card is $\E[X] = \sum_x x \cdot \p(X_i=x) = (1+2+3+4)\frac{1}{13}$. Let $H$ be the value of a hand. The value of a hand is the sum of the value of each card: 
 	$$

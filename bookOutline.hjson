@@ -66,7 +66,7 @@
 			"inference":"Inference",
 			"bayesian_networks":"Bayesian Networks",
 			"correlation":"Correlation"
-			#"independent_vars":"Independence in Variables",
+			"independent_vars":"Independence in Variables",
 			# "sampling_revisited":"Sampling Revisited",
 			# "computational_inference":"Computational Inference",
 		},
@@ -75,6 +75,7 @@
 			"fairness":"Fairness in AI",
 			"federalist":"Federalist Paper Authorship",
 			"bridge_distribution":"Bridge Distribution",
+			"tracking_in_2D":"Tracking in 2D"
 		}
 	},
 	"part4":{
