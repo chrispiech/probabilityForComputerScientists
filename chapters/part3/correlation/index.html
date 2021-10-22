@@ -18,10 +18,12 @@ That is a little hard to wrap your mind around (but worth pushing on a bit). The
 \end{align*}
 
 <div class="bordered">
-	<b><i>Lemma: Product of Expectation for Independent Random Variables</i></b>:
+	<b><i>Lemma: Product of Expectation for Independent Random Variables</i></b>:<br/>
+	If two random variables $X$ and $Y$ are independent, the expectation of their product of their expectations is the product of the individual expectations.
 \begin{align*}
  &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{ if and only if $X$ and $Y$ are independent} 
 \end{align*}
+Note that this assumes that $X$ and $Y$ are independent. Contrast this to the sum version of this rule (expectation of sum of random variables, is the sum of individual expectations) which does <b>not</b> require the random variables to be independent.
 	</div>
 
 	<div class="bordered">
