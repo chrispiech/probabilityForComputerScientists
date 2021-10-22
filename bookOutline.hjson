@@ -62,7 +62,7 @@
 			"joint":"Joint Probability",
 			"multinomial":"Multinomial",
 			"continuous_joint":"Continuous Joint",
-			"multivariate_gaussian":"Multivariate Gaussian",
+			# "multivariate_gaussian":"Multivariate Gaussian",
 			"inference":"Inference",
 			# "bayesian_networks":"Bayesian Networks",
 			#"independent_vars":"Independence in Variables",

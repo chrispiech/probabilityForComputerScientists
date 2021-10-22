@@ -51,3 +51,74 @@ Let $F(x,y)$ be the Cumulative Density Function (CDF):
     
 
 <p>Just like in the single random variable case, we are now represending our belief in the continuous random variables as <i>densities</i> rather than probabilities. Recall that a density represents a relative belief. If the density of $f(X = 1.1, Y = 0.9)$ is twice as high as the density that  $f(X = 1.1, Y = 1.1)$ the function is expressing that it is twice as likely to find the particular combination of $X = 1.1$ and $Y=0.9$.
+
+<h2>Multivariate Gaussian</h2>
+
+
+<p>The density that is depicted in this example happens to be a particular of joint continuous distribution called Multivariate Gaussian. In fact it is a special case where all of the constituent variables are independent.</p>
+
+<div class="bordered">
+
+
+<b><i>Def: Independent Multivariate Gaussian
+</i></b>. An Independent Multivariate Gaussian can model a collection of continuous joint random variables $\vec{X} = (X_1  \dots X_n)$ as being a composition of independent normals with means $\vec{\mu} = (\mu_1 \dots \mu_n)$ and standard deviations $\vec{\sigma} = (\sigma_1 \dots \sigma_n)$. Notice how we now have variables in vectors (similar to a list in python).
+
+The notation for the multivariate uses vector notation:
+\begin{align*}
+\vec{X} \sim \vec{\N}(\vec{\mu}, \vec{\sigma})
+\end{align*}
+
+ The joint PDF is:
+\begin{align*}
+f(\vec{x}) 
+&= \prod_{i=1}^n f(x_i) \\
+&= \prod_{i=1}^n \frac{1}{\sigma_i \sqrt{2\pi} } e ^{\frac{-(x-\mu_i)^2}{2\sigma_i^2}}
+\end{align*}
+
+And the joint CDF is
+\begin{align*}
+F(\vec{x}) 
+&= \prod_{i=1}^n F(x_i) \\
+&= \prod_{i=1}^n \Phi(\frac{x_i-\mu_i}{\sigma_i})
+\end{align*}
+</div>
+
+<div class="purpleBox">
+<p><b><i>Example: Gaussian Blur</i></b><br/>In the same way that many single random variables are assumed to be gaussian, many joint random variables may be assumed to be Multivariate Gaussian. Consider this example of Gaussian Blur:
+
+
+    <p>In image processing, a Gaussian blur is the result of blurring an image by a Gaussian function. It is a widely used effect in graphics software, typically to reduce image noise. A Gaussian blur works by convolving an image with a 2D independent multivariate gaussian (with means of 0 and equal valued standard deviations). </p>
+
+    <p><div class="row">
+        <div class="col-12 col-md-4"><img style="width: 100%" src="{{pathToRoot}}img/chapters/gb1.png"></img></div>
+        <div class="col-12 col-md-4"><img style="width: 100%" src="{{pathToRoot}}img/chapters/gb2.png"></img></div>
+        <div class="col-12 col-md-4"><img style="width: 100%" src="{{pathToRoot}}img/chapters/gb3.png"></img></div>
+
+    </div></p>
+
+    <p>In order to use a Gaussian blur, you need to be able to compute the probability mass of that 2D gaussian in the space of pixels. Each pixel is given a weight equal to the probability that X and Y are both within the pixel bounds. The center pixel covers the area where 
+   $-0.5 ≤ x ≤ 0.5$ and $-0.5 ≤ y ≤ 0.5$. Let's do one step in computing the Gaussian function discretized over image space. What is the weight of the center pixel for gaussian blur with a multivariate gaussian which has means of 0 and standard deviation of 3?
+
+<p>Let $\vec{B}$ be the multivariate gaussian, $\vec{B} \sim \N(\vec{\mu} = [0,0], \vec{\sigma} = [3,3])$. Let's compute the CDF of this multivariate gaussian $F(x_1,x_2)$:
+\begin{align*}
+   F(x_1,x_2) 
+&= \prod_{i=1}^n \Phi(\frac{x_i-\mu_i}{\sigma_i}) \\
+&= \Phi(\frac{x_1-\mu_1}{\sigma_1}) \cdot \Phi(\frac{x_2-\mu_2}{\sigma_2}) \\
+&= \Phi(\frac{x_1}{3}) \cdot \Phi(\frac{x_2}{3})
+\end{align*}
+
+</p>
+
+<p>Now we are ready to calculate the weight of the center pixel:
+    \begin{align*}
+    \P&(-0.5 < X_1 \leq 0.5,-0.5 < X_2 \leq 0.5) \\
+    &= F(0.5,0.5) - F(-0.5,0.5) + F(-0.5,-0.5) - F(0.5,-0.5) \\
+    &=\Phi(\frac{0.5}{3}) \cdot \Phi(\frac{0.5}{3}) 
+      - \Phi(\frac{-0.5}{3}) \cdot \Phi(\frac{0.5}{3}) 
+      + \Phi(\frac{-0.5}{3}) \cdot \Phi(\frac{-0.5}{3})
+      - \Phi(\frac{0.5}{3}) \cdot \Phi(\frac{-0.5}{3})\\
+    &\approx 0.026
+    \end{align*}
+
+    <p>How can this 2D gaussian blur the image? Wikipedia explains: "Since the Fourier transform of a Gaussian is another Gaussian, applying a Gaussian blur has the effect of reducing the image's high-frequency components; a Gaussian blur is a low pass filter" [<a href="https://en.wikipedia.org/wiki/Gaussian_blur">2</a>].
+</div>

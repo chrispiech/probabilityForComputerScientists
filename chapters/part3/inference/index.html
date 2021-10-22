@@ -12,9 +12,17 @@
 <h2>The Discrete Conditional</h2>
 <p>The discrete case, where every random variable in your model is discrete, is a straightforward combination of what you know about conditional probability (which you learned in the context of events). Recall that every relational operator applied to a random variable <a href="{{pathToLang}}part2/rvs/#rv_vs_event">defines an event</a>. As such the rules for conditional probability directly apply: 
 The conditional probability mass function (PMF) for the discrete case:
+
+<div class="bordered">
+    <p><b><i>Def:</i></b> Bayes' Theorem with discrete random variables.</p>
+
+
+Let $X$ and $Y$ be discrete random variables.
 \begin{align*}
     \P(X=x|Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)}
 \end{align*}
+</div>
+
 In the presence of multiple random variables, it becomes increasingly useful to use shorthand! The above definition is identical to this notation where a lowercase symbol such as $x$ is short hand for the event $X=x$. :
 \begin{align*}
     \P(x|y)=\frac{P(x,y)}{P(y)}
@@ -40,7 +48,12 @@ Here is a neat result: this last term can be rewritten, by a clever manipulation
 
 <h2>Mixing Discrete and Continuous</h2>
 
-What happens when we want to reason about <i>continuous</i> random variables using our rules of probability (such as Bayes theoreom, law of total probability, chain rule, etc)? There is a simple practical answer: the rules still apply, but we have to replace probability terminology with probability <i>density</i> functions. As a concrete example let's look at Bayes' Theorem with one continuous random variable.
+<p>What happens when we want to reason about <i>continuous</i> random variables using our rules of probability (such as Bayes theoreom, law of total probability, chain rule, etc)? There is a simple practical answer: the rules still apply, but we have to replace probability terminology with probability <i>density</i> functions. As a concrete example let's look at Bayes' Theorem with one continuous random variable.</p>
+
+
+<div class="bordered">
+    <p><b><i>Def:</i></b> Bayes' Theorem with mixed discrete and continuous.</p>
+
 Let $X$ be continuous random variable and let $N$ be a discrete random variable. The conditional probabilities of $X$ given $N$ and $N$ given $X$ respectively are:
 \begin{align*}
     f(X=x|N=n) =  \frac{\P(N=n|X=x)f(X=x)}{\p(N=n)} &&
@@ -48,32 +61,83 @@ Let $X$ be continuous random variable and let $N$ be a discrete random variable.
 \begin{align*}
     \p(N=n|X=x) =  \frac{f(X=x|N=n)\p(N=n)}{f(X=x)} 
 \end{align*}
+</div>
 
-<p>These equations might seem complicated since they mix probability densities and probabilities. First, observe that anytime the random variable on the left hand side of the conditional is continuous, we use a density, whenever it is discrete, we use a probability.
+<p>These equations might seem complicated since they mix probability densities and probabilities. Why should we believe that they are correct? First, observe that anytime the random variable on the left hand side of the conditional is continuous, we use a density, whenever it is discrete, we use a probability. This result can be derived by making the observation:
+    $$
+    \P(X = x) = f(X=x) \cdot \epsilon_x
+    $$
+In the limit as $\epsilon_x \rightarrow 0$. In order to obtain a probability from a density function is to integrate under the function. If you wanted to approximate the probability that $X = x$ you could consider the area created by a rectangle which has height $FX=x$ and some very small width. As that width gets smaller, your answer becomes more accurate:
 
+    <center><img class="mainFigureFull" src="{{pathToRoot}}img/chapters/densitytopr.png"></img></center>
+
+    <p>A value of $\epsilon_x$ is problematic if it is left in a formula. However, if we can get them to cancel, we can arrive at a working equation. This is the key insight used to derive the rules of probability in the context of one or more continuous random variables. Again, let $X$ be continuous random variable and let $N$ be a discrete random variable:
+
+
+\begin{align*}
+    \p(N=n|X=x) &=  \frac{P(X=x|N=n)\p(N=n)}{P(X=x)}  &&\text{Bayes' Theorem}\\
+     &=  \frac{f(X=x|N=n) \cdot \epsilon_x \cdot \p(N=n)}{f(X=x) \cdot \epsilon_x}  &&\P(X = x) = f(X=x) \cdot \epsilon_x \\
+     &=  \frac{f(X=x|N=n)  \cdot \p(N=n)}{f(X=x)}  &&\text{Cancel } \epsilon_x \\
+\end{align*}
+
+<p>This strategy applies beyond Bayes' Theorem. For example here is a version of the Law of Total Probability when $X$ is continuous and $N$ is discrete:
+
+\begin{align*}
+    f(X=x) &=  \sum_{n \in N} f(X=x | N = n) \p(N = n)
+\end{align*}
 <h2>Probability Rules with Continuous Random Variables</h2>
 
+<p>The strategy used in the above section can be used to derive the rules of probability in the presence of continuous random variables. The strategy also works when there are multiple continuous random variables. For example here is Bayes' Theorem with two continuous random variables.</p>
+<div class="bordered">
+    <p><b><i>Def:</i></b> Bayes' Theorem with continuous random variables.</p>
 
 
+Let $X$ and $Y$ be continuous random variables.
 \begin{align*}
     f(X=x|Y=y) = \frac{f(X=x,Y=y)}{f(Y=y)}
 \end{align*}
-<!--The conditional cumulative density function (CDF) for the continuous case:
+</div>
+
+<h2>Example: Inference with a Continuous Variable</h2>
+
+<p>Consider the following question:</p>
+
+<div class="purpleBox">
+
+<b><i>Question:</i></b> At birth, girl elephant weights are distributed as a Gaussian with mean 160kg, and standard deviation 7kg. At birth, boy elephant weights are distributed as a Gaussian with mean 165kg, and standard deviation of 3kg. All you know about a newborn elephant is that it is 163kg. What is the probability that it is a girl? 
+
+<p><img class="mainFigureFull" src="{{pathToRoot}}img/chapters/elephant.jpg"></img></p>
+
+    <b><i>Answer:</i></b> Let $G$ be an indicator that the elephant is a girl. $G$ is Bern(p = 0.5)
+Let $X$ be the distribution of weight of the elephant. <br/>
+$X | G = 1$ is  $N(μ = 160, σ^2 = 7^2)$<br/>
+$X | G = 0$ is $N(μ = 165, σ^2 = 3^2)$</p>
+
 \begin{align*}
-    P(X \leq a | Y=y) = \int_{-\infty}^{a} f(X=x|Y=y)\d x
-\end{align*} -->
+\p(G = 1 | X = 163) &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} && \text{Bayes} 
+\end{align*}
 
+If we can solve this equation we will have our answer. What is $f(X = 163 | G = 1)$? It is the <a href="{{pathToLang}}part2/normal/">probability density function of a gaussian</a> $X$ which has $\mu=160, \sigma^2 = 7^2$ at the point $x$ is 163:
 
-
-<!-- \subsection*{Example 2}
-Let's say we have two independent random Poisson variables for requests received at a web server in a day: $X$ = \# requests from humans/day, $X \sim Poi(\lambda_1)$ and $Y$ = \# requests from bots/day, $Y \sim Poi(\lambda_2)$. Since the convolution of Poisson random variables is also a Poisson we know that the total number of requests $(X+Y)$ is also a Poisson $(X+Y) \sim Poi(\lambda_1 + \lambda_2)$. What is the probability of having $k$ human requests on a particular day given that there were $n$ total requests?
 \begin{align*}
-    P(X=k|X+Y=n) &= \frac{P(X=k,Y=n-k)}{P(X+Y=n)} = \frac{P(X=k)P(Y=n-k)}{P(X+Y=n)} \\
-    &= \frac{e^{-\lambda_1}\lambda_1^k}{k!} \cdot \frac{e^{-\lambda_2}\lambda_2^{n-k}}{(n-k)!} \cdot 
-    \frac{n!}{e^{1(\lambda_1+\lambda_2)}(\lambda_1+\lambda_2)^n}\\
-    &={n \choose k}\left(\frac{\lambda_1}{\lambda_1 + \lambda_2}\right)^k
-    \left(\frac{\lambda_2}{\lambda_1 + \lambda_2}\right)^{n-k} \\
-    &\sim Bin\left(n, \frac{\lambda_2}{\lambda_1 + \lambda_2}\right)
-\end{align*} -->
+f(X = 163 | G = 1)  &= \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)^2} && \text{PDF Gauss} \\
+&= \frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)^2}  && \text{PDF } X \text{ at } 163
+\end{align*}
 
+
+Next we note that $\P(G = 0) = \P(G = 1) = \frac{1}{2}$. Putting this all together, and using the law of total probability to compute the denominator we get:
+
+\begin{align*}
+\p&(G = 1 | X = 163) \\
+&=  \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} \\
+
+&=  \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163 | G = 1) \P(G = 1) + f(X = 163 | G = 0) \P(G = 0)}\\
+
+&=  \frac{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)^2} \cdot \frac{1}{2}}{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)^2} \cdot \frac{1}{2} + \frac{1}{3 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-165}{3}\Big)^2} \cdot \frac{1}{2}} \\
+
+&=  \frac
+{\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)} }
+{\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)}  + \frac{1}{3} e^{-\frac{1}{2}\Big(\frac{4}{9}\Big)^2} }\\
+&\approx 0.328
+\end{align*}
 
