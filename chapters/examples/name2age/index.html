@@ -1,0 +1,43 @@
+
+% rebase('templates/chapter.html', title="Name to Age")
+ 
+<center><h1>Name to Age</h1></center>
+<hr/>
+
+<p>
+Because of shifting patterns in name popularity, a person's age is a hint as to their age. The United States publishes a census which contains counts of how many US residents were born with a given name in a given year. We can use inference to compute the reverse probability distribution: an updated belief in a person's age, given their name. As a reminder, if I know the year someone was born, I can calculate their age.
+
+<center><img class="mainFigureLg" src="{{pathToRoot}}img/chapters/name2age.png"></img></center>
+
+<p> The US census data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
+	$$
+	P(B = b,N = n) \approx \frac{\text{count}(b, n)}{\sum\limits_{n \in \text{names}} \sum\limits_{b \in \text{years}} \text{count(b,n)}}
+	$$
+
+<p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary? We can get started by applying Bayes' Theorem for random variables:
+
+	<div class="purpleBox">
+		\begin{align*}
+		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} | B = 1950) \P(B = 1950)}{\P(N = \text{Gary})}
+		\end{align*}
+	</div> 
+But this leaves three terms to compute: $\P(N = \text{Gary} | B = 1950)$, $\P(B = 1950)$, $\P(N = \text{Gary})$. The terms $\P(B = 1950)$ and $\P(N = \text{Gary})$ can be computed using marginalization:
+
+\begin{align*}
+\P( B = 1950) &= \sum_{n \in \text{names}} P(B = 1950,N = n)\\
+\P( N = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})
+\end{align*}
+
+
+
+<p>We can also use census data to estimate the probability that a resident in America is named "Gary" given that they were born in 1950:
+
+		\begin{align*}
+		P(N = \text{Gary} | B = 1950) &\approx 
+		\frac{\text{# Babies named Gary born in 1950}}{\text{# Babies born in 1950}}\\
+		&\approx \frac{\text{count}(1950, \text{Gary})}{\sum_{n \in \text{names}}\text{count}(1950, n)}
+		\end{align*}
+
+
+
+<p>Provide a full probability distribution over age, given name:

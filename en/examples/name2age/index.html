@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Beta Distribution</title>
+<title>Name to Age</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -339,51 +339,47 @@
               
                         
  
-<center><h1>Beta Distribution</h1></center>
+<center><h1>Name to Age</h1></center>
 <hr/>
 
-<p>In this section we are going to have a very meta discussion about how we represent probabilities. Until now probabilities have just been numbers in the range 0 to 1. However, if we have uncertainty about our probability, it would make sense to represent our probabilities as random variables (and thus articulate the relative likelihood of our belief).
+<p>
+Because of shifting patterns in name popularity, a person's age is a hint as to their age. The United States publishes a census which contains counts of how many US residents were born with a given name in a given year. We can use inference to compute the reverse probability distribution: an updated belief in a person's age, given their name. As a reminder, if I know the year someone was born, I can calculate their age.
 
-<h2>Estimating Probabilities</h2>
-<p>Imagine we have a coin and we would like to know its probability of coming up heads ($p$). We flip the coin $(n+m)$ times and it comes up head $n$ times. One way to calculate the probability is to assume that it is exactly $p = \frac{n}{n+m}$. That number, however, is a coarse estimate, especially if $n+m$ is small. Intuitively it doesn't capture our uncertainty about the value of $p$. Just like with other random variables, it often makes sense to hold a distributed belief about the value of $p$. 
+<center><img class="mainFigureLg" src="../../../img/chapters/name2age.png"></img></center>
 
-<p>To formalize the idea that we want a distribution for $p$ we are going to use a random variable $X$ to represent the probability of the coin coming up heads. Before flipping the coin, we could say that our belief about the coin's success probability is uniform: $X \sim \Uni(0, 1)$.
+<p> The US census data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
+	$$
+	P(B = b,N = n) \approx \frac{\text{count}(b, n)}{\sum\limits_{n \in \text{names}} \sum\limits_{b \in \text{years}} \text{count(b,n)}}
+	$$
 
-<p>If we let $N$ be the number of heads that came up, given that the coin flips are independent, $(N|X) \sim Bin(n + m, x)$. We want to calculate the probability density function for $X|N$. We can start by applying Bayes Theorem:
+<p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary? We can get started by applying Bayes' Theorem for random variables:
+
+	<div class="purpleBox">
+		\begin{align*}
+		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} | B = 1950) \P(B = 1950)}{\P(N = \text{Gary})}
+		\end{align*}
+	</div> 
+But this leaves three terms to compute: $\P(N = \text{Gary} | B = 1950)$, $\P(B = 1950)$, $\P(N = \text{Gary})$. The terms $\P(B = 1950)$ and $\P(N = \text{Gary})$ can be computed using marginalization:
+
 \begin{align*}
-    f(X = x|N =n) &=  \frac{P(N=n|X=x)f(X=x)}{P(N=n)} && \text{Bayes Theorem}\\
-&= \frac{ { {n+m} \choose n} x^n(1-x)^m}{P(N=n)} && \text{Binomial PMF, Uniform PDF}\\
-&= \frac{ { {n+m} \choose n}}{P(N=n)}x^n(1-x)^m && \text{Moving terms around}\\
-&= \frac{1}{c} \cdot x^n(1-x)^m && \text{where } c = \int_0^1 x^n(1-x)^mdx
+\P( B = 1950) &= \sum_{n \in \text{names}} P(B = 1950,N = n)\\
+\P( N = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})
 \end{align*}
 
-<h2>Beta Distribution</h2>
-
-<p>The equation that we arrived at when using a Bayesian approach to estimating our probability defines a probability density function and thus a random variable. The random variable is called a Beta distribution, and it is defined as follows:
-
-<p>The Probability Density Function (PDF) for a Beta $X \sim \Beta(a,b)$ is:
-\begin{align*}
-    f(X=x) = 
-    \begin{cases} 
-    \frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1} &\mbox{if } 0 < x < 1 \\ 
-    0 & \mbox{otherwise} 
-    \end{cases}  
-   &&\mbox{where } B(a,b) = \int_0^1x^{a-1}(1-x)^{b-1}dx
-\end{align*}
-A Beta distribution has $E[X] = \frac{a}{a + b}$ and $Var(X) = \frac{ab}{(a+b)^2(a+b+1)}$. All modern programming languages have a package for calculating Beta CDFs. You will not be expected to compute the CDF by hand in CS109.
-
-<p>To model our estimate of the probability of a coin coming up heads as a beta set $a = n + 1$ and $b = m + 1$. Beta is used as a random variable to represent a belief distribution of probabilities in contexts beyond estimating coin flips. It has many desirable properties: it has a support range that is exactly $(0, 1)$, matching the values that probabilities can take on and it has the expressive capacity to capture many different forms of belief distributions. 
-
-<p>Let's imagine that we had observed $n=4$ heads and $m=2$ tails. The probability density function for $X \sim \text{Beta}(5, 3)$ is:
-<p><center><img class="mainFigure" src="../../../img/chapters/beta.png"></img></center>
-<p>Notice how the most likely belief for the probability of our coin is when the random variable, which represents the probability of getting a heads, is $4/6$, the fraction of heads observed. This distribution shows that we hold a non-zero belief that the probability could be something other than $4/6$. It is unlikely that the probability is 0.01 or 0.09, but reasonably likely that it could be 0.5.
-
-<p>It works out that $\Beta(1,1) = \Uni(0,1)$. As a result the distribution of our belief about $p$ before (``prior") and after (``posterior") can both be represented using a Beta distribution. When that happens we call Beta a ``conjugate" distribution. Practically conjugate means easy update.
 
 
-<h2>Beta as a Prior</h2>
+<p>We can also use census data to estimate the probability that a resident in America is named "Gary" given that they were born in 1950:
 
-<p>You can set $X \sim \Beta(a, b)$ as a prior to reflect how biased you think the coin is apriori to flipping it. This is a subjective judgment that represent $a+b- 2$ ``imaginary" trials with $a-1$ heads and $b-1$ tails. If you then observe $n + m$ real trials with $n$ heads you can update your belief. Your new belief would be, $X|(n \text{ heads in }n + m\text{ trials}) \sim \Beta(a+n, b+m)$. Using the prior $\Beta(1,1) = \Uni(0, 1)$ is the same as saying we haven't seen any ``imaginary" trials, so apriori we know nothing about the coin. This form of thinking about probabilities is representative of the ``Bayesian" field of thought where computer scientists explicitly represent probabilities as distributions (with prior beliefs). That school of thought is separate from the ``Frequentest" school which tries to calculate probabilities as single numbers evaluated by the ratio of successes to experiments.
+		\begin{align*}
+		P(N = \text{Gary} | B = 1950) &\approx 
+		\frac{\text{# Babies named Gary born in 1950}}{\text{# Babies born in 1950}}\\
+		&\approx \frac{\text{count}(1950, \text{Gary})}{\sum_{n \in \text{names}}\text{count}(1950, n)}
+		\end{align*}
+
+
+
+<p>Provide a full probability distribution over age, given name:
+
 
                         
 
