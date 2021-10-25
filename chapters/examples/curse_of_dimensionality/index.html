@@ -3,3 +3,33 @@
  
 <center><h1>Curse of Dimensionality</h1></center>
 <hr/>
+
+
+<p>In machine learning, like many fields of computer science, often involves high dimensional points, and high dimension spaces have some surprising probabilistic properties. 
+
+<p>A random \underline{value} $X_i$ is a Uni(0, 1).<br/>
+A random \underline{point} of dimension $d$ is a list of $d$ random values: $[X_1 \dots X_d]$.
+
+
+<center>
+	<img class="mainFigureLg" src="{{pathToRoot}}img/chapters/curseOfDimensionality.png"></img>
+</center>
+
+
+<p> A random <i>value</i> $X_i$ is close to an edge if $X_i$ is less than 0.01 \emph{or} $X_i$ is greater than 0.99. What is the probability that a random value is close to an edge?</p>
+<p><div class="bordered">Let $E$ be the event that a random value is close to an edge.
+ $P(E) = P(X_i < 0.01) + P(X_i > 0.99) = 0.02$
+</div></p>
+
+<p>A random <i>point</i> $[X_1, X_2, X_3]$ of dimension $3$ is close to an edge if <i>any</i> of it's values are close to an edge. What is the probability that a $3$ dimensional point is close to an edge?</p>
+
+<p><div class="bordered">The event is equivalent to the complement of none of the dimensions of the 
+ point is close to an edge, which is: 
+ $1 - (1 - P(E))^3 = 1 - 0.98^3 \approx 0.058$
+</div></p>
+
+<p>A random <i>point</i> $[X_1, \dots X_{100}]$ of dimension $100$ is close to an edge if <i>any</i> of it's values are close to an edge. What is the probability that a 100 dimensional point is close to an edge?</p>
+
+<p><div class="bordered">Similarly, it is: 
+ $1 - (1 - P(E))^{100} = 1 - 0.98^{100} \approx 0.867$
+</div>

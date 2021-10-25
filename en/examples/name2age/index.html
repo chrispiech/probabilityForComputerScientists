@@ -131,8 +131,8 @@
 
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
-  $\DeclareMathOperator{\p}{Pr}$
-  $\DeclareMathOperator{\P}{Pr}$
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
@@ -230,7 +230,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li>
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li>
     </ul>
 </li>
 </li>
@@ -243,14 +243,16 @@
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
 <a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -327,11 +329,10 @@
     <i class="fas fa-align-left"></i>
     <span></span>
 </button>
-            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
               <span style="font-size:150%">I'm Curious</span>
-              <!-- <i class="fas fa-question-circle" style="font-size:200%"></i> -->
               <span></span>
-          </button>
+          </button> -->
             
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
@@ -349,36 +350,78 @@ Because of shifting patterns in name popularity, a person's age is a hint as to 
 
 <p> The US census data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
 	$$
-	P(B = b,N = n) \approx \frac{\text{count}(b, n)}{\sum\limits_{n \in \text{names}} \sum\limits_{b \in \text{years}} \text{count(b,n)}}
+	P(B = b,N = n) \approx 
+	\frac{\text{count}(b, n)}
+	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
 	$$
 
-<p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary? We can get started by applying Bayes' Theorem for random variables:
+<p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary? We can get started by applying the definition of conditional probability for random variables:
 
-	<div class="purpleBox">
 		\begin{align*}
-		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} | B = 1950) \P(B = 1950)}{\P(N = \text{Gary})}
+		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})}
 		\end{align*}
-	</div> 
-But this leaves three terms to compute: $\P(N = \text{Gary} | B = 1950)$, $\P(B = 1950)$, $\P(N = \text{Gary})$. The terms $\P(B = 1950)$ and $\P(N = \text{Gary})$ can be computed using marginalization:
+But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute using marginalization:
 
 \begin{align*}
-\P( B = 1950) &= \sum_{n \in \text{names}} P(B = 1950,N = n)\\
-\P( N = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})
+\P( N = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})\\
+&\approx \frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
 \end{align*}
 
 
 
-<p>We can also use census data to estimate the probability that a resident in America is named "Gary" given that they were born in 1950:
+<p>Putting this all together we have:
 
-		\begin{align*}
-		P(N = \text{Gary} | B = 1950) &\approx 
-		\frac{\text{# Babies named Gary born in 1950}}{\text{# Babies born in 1950}}\\
-		&\approx \frac{\text{count}(1950, \text{Gary})}{\sum_{n \in \text{names}}\text{count}(1950, n)}
-		\end{align*}
+\begin{align*}
+\P( B = 1950 | N = \text{Gary} ) 
+&= \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})} \\
+&\approx 
+\frac
+{
+	\Big(
+	\frac{\text{count}(1950, \text{Gary})}
+	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	\Big)
+}
+{
+	\Big(
+	\frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	\Big)
+} \\
+&\approx
+\frac
+{
+	\text{count}(1950, \text{Gary})
+}
+{
+	\sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})
+}
+\end{align*}
 
 
+<p>More generally, for any name, we can compute the conditional probability mass function over birth year $B$:
 
-<p>Provide a full probability distribution over age, given name:
+	\begin{align*}
+\P( B = b | N = n ) 
+&\approx 
+\frac
+{
+	\text{count}(b, n)
+}
+{
+	\sum\limits_{y \in \text{years}} \text{count}(y, n)
+}
+\end{align*}
+
+<h3>Assumptions</h3>
+
+This problem makes many assumptions which are worth highlighting. In fact, any time we make generalizations (especially about demographics) based on sparse information we should tread lightly. Here are the assumptions that I can think of:
+
+<ol>
+	<li>We assume that people don't change their first names. Obviously this is wrong. It is especially wrong for the trans community, thus introducing a systematic error.</li>
+	<li>This algorithm doesn't take into account the distribution over who could plaussibly be alive at the time the name was recorded. For example, lets say the name was recorded from a user in 2021. That user likely wasn't born in 1800.</li>
+	<li>The US census is not perfect. It does not capture all people, and there are demographics which are underrepresented. This will also skew our results</li>
+</ol>
+
 
 
                         

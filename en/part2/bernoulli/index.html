@@ -131,8 +131,8 @@
 
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
-  $\DeclareMathOperator{\p}{Pr}$
-  $\DeclareMathOperator{\P}{Pr}$
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
@@ -230,7 +230,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li>
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li>
     </ul>
 </li>
 </li>
@@ -243,14 +243,16 @@
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
 <a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -327,35 +329,43 @@
     <i class="fas fa-align-left"></i>
     <span></span>
 </button>
-            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
               <span style="font-size:150%">I'm Curious</span>
-              <!-- <i class="fas fa-question-circle" style="font-size:200%"></i> -->
               <span></span>
-          </button>
+          </button> -->
             
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
               
                         
- 
 <center><h1>Bernoulli Distribution</h1></center>
 <hr/>
 
 <h2>Parametric Random Variables</h2>
 
-<p>There are some classic random variable abstractions that show up in many problems. At this point in the class you will learn about several of the most significant parametic discrete distributions. When solving problems, if you are able to recognize that a random variable fits one of these formats, then you can use its precalculated probability mass function (PMF), expectation, variance, and other properties. Random variables of this sort are called <b>parametric</b> random variables. If you can argue that a random variable falls under one of the studied parametric types, you simply need to provide parameters. A good analogy is a <code>class</code> in programming. Creating a parametric random variable is very similar to calling a constructor with input parameters.</p>
+<p>There are many classic and commonly-seen random variable abstractions that show up in the world of probability. At
+    this point in the class, you will learn about several of the most significant parametric discrete distributions.
+    When solving problems, if you can recognize that a random variable fits one of these formats, then you can
+    use its pre-derived probability mass function (PMF), expectation, variance, and other properties. Random variables
+    of this sort are called <b>parametric</b> random variables. If you can argue that a random variable falls under one
+    of the studied parametric types, you simply need to provide parameters. A good analogy is a <code>class</code> in
+    programming. Creating a parametric random variable is very similar to calling a constructor with input parameters.
+</p>
 
-<h2>Bernoulli Random Variable</h2>
+<h2>Bernoulli Random Variables</h2>
 
 <p>
-	A Bernoulli random variable (also called a <i>boolean</i> or <i>indicator</i> random variable) is the simplest kind of parametric random variable. It can take on
-two values, 1 and 0. It takes on a 1 if an experiment with probability $p$ resulted
-in success and a 0 otherwise. Some example uses include a coinflip, a random binary digit, whether a disk drive crashed, and whether someone likes a Netflix movie.  Here $p$ is the parameter, different instances of Bernoulli random variables might have different values of $p$.
-	</p>
+    A Bernoulli random variable (also called a <i>boolean</i> or <i>indicator</i> random variable) is the simplest kind
+    of parametric random variable. It can take on two values, 1 and 0. It takes on a 1 if an experiment with probability
+    $p$ resulted in success and a 0 otherwise. Some example uses include a coin flip, a random binary digit, whether a
+    disk drive crashed, and whether someone likes a Netflix movie. Here $p$ is the parameter, but different instances of
+    Bernoulli random variables might have different values of $p$.
+</p>
 
 <p>
-	Here is a full description of the key properties of a Bernoulli random variable. If $X$ is declared to be a Bernoulli random variable with parameter $p$, denoted $X ∼ \Ber(p)$:
+    Here is a full description of the key properties of a Bernoulli random variable. If $X$ is declared to be a
+    Bernoulli random variable with parameter $p$, denoted $X ∼ \Ber(p)$:
 
 <!-- Template that renders a single random variable card -->
 
@@ -486,41 +496,54 @@ function drawBernoulliPmf(parentDivId, p) {
 }
 </script></p>
 
-<p>Because Bernoulli is a parametric random variable, as soon as you declare a random variable to be of type Bernoulli you automatically can know all of these pre-derived properties! Some of the properties are straightforward to prove for a Bernoulli. For example you could have solved for expectation:
+<p>Because Bernoulli distributed random variables are parametric, as soon as you declare a random variable to be of type
+    Bernoulli you automatically can know all of these pre-derived properties! Some of these properties are straightforward to
+    prove for a Bernoulli. For example, you could have solved for expectation:
 
-	<p>
-		<div class="purpleBox">
-			<p><b>Proof</b>: Expectation of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
-		
+<p>
+<div class="purpleBox">
+    <p><b>Proof</b>: Expectation of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
 
-	$$
-	\begin{align} \E[X] &= \sum_x x \cdot \p(X=x) && \text{Definition of expectation} \\&= 1 \cdot p + 0 \cdot (1-p) && X \text{ can take on values 0 and 1}\\&= p  && \text{Remove the 0 term} \end{align}$$
+
+    $$
+    \begin{align}
+    \E[X] &= \sum_x x \cdot \p(X=x) && \text{Definition of expectation} \\
+    &= 1 \cdot p + 0 \cdot (1-p) &&
+    X \text{ can take on values 0 and 1} \\
+    &= p && \text{Remove the 0 term}
+    \end{align}
+    $$
 </div>
 </p>
 
 <p>
-		<div class="purpleBox">
-			<p><b>Proof</b>: Variance of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
-	To compute variance, first compute $E[X^2]$:
-		$$
-		\begin{align}
-		E[X^2] 
-		&= \sum_x x^2 \cdot \p(X=x) &&\text{LOTUS}\\
-		&= 0^2 \cdot p + 1^2 \cdot p\\
-		&= p
-		\end{align}
-		$$
-	$$
-	\begin{align} 
-	\var(X) 
-		&= E[X^2] - E[X]^2&& \text{Def of variance} \\
-		&= p - p^2 && \text{Substitute }E[X^2]=p, E[X] = p \\
-		&= p (1-p) && \text{Factor out }p
-	\end{align}$$
+<div class="purpleBox">
+    <p><b>Proof</b>: Variance of a Bernoulli. If $X$ is a Bernoulli with parameter $p$, $X \sim \Ber(p)$:</p>
+    To compute variance, first compute $E[X^2]$:
+    $$
+    \begin{align}
+    E[X^2]
+    &= \sum_x x^2 \cdot \p(X=x) &&\text{LOTUS}\\
+    &= 0^2 \cdot p + 1^2 \cdot p\\
+    &= p
+    \end{align}
+    $$
+    $$
+    \begin{align}
+    \var(X)
+    &= E[X^2] - E[X]^2&& \text{Def of variance} \\
+    &= p - p^2 && \text{Substitute }E[X^2]=p, E[X] = p \\
+    &= p (1-p) && \text{Factor out }p
+    \end{align}$$
 </div>
 </p>
 
-	<p>Bernoulli random variables and indicator variables are two aspects of the same concept. A random variable $I$ is an indicator variable for an event $A$ if $I = 1$ when $A$ occurs and $I = 0$ if $A$ does not occur. $\P(I=1)=\P(A)$ and $\E[I]=\P(A)$. Indicator random variables are Bernoulli random variables, with $p=\P(A)$.</p>
+<h2>Indicator</h2>
+
+<p>Bernoulli random variables and indicator variables are two aspects of the same concept. A random variable $I$ is an
+    indicator variable for an event $A$ if $I = 1$ when $A$ occurs and $I = 0$ if $A$ does not occur. $\P(I=1)=\P(A)$
+    and $\E[I]=\P(A)$. Indicator random variables are Bernoulli random variables, with $p=\P(A)$.</p>
+
 
                         
 

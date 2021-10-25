@@ -24,7 +24,8 @@ EXAMPLE_TEMPLATE = '''
 
 book_outline = hjson.load(open('bookOutline.hjson'))
 
-def main():
+def make_chapters():
+
 	create_directories_and_files()
 	create_sidebar()
 

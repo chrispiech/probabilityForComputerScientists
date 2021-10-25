@@ -131,8 +131,8 @@
 
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
-  $\DeclareMathOperator{\p}{Pr}$
-  $\DeclareMathOperator{\P}{Pr}$
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
@@ -230,7 +230,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li>
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li>
     </ul>
 </li>
 </li>
@@ -243,14 +243,16 @@
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
 <a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -327,11 +329,10 @@
     <i class="fas fa-align-left"></i>
     <span></span>
 </button>
-            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
               <span style="font-size:150%">I'm Curious</span>
-              <!-- <i class="fas fa-question-circle" style="font-size:200%"></i> -->
               <span></span>
-          </button>
+          </button> -->
             
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
@@ -341,6 +342,64 @@
  
 <center><h1>Grades are Not Normal</h1></center>
 <hr/>
+
+<p>Sometimes you just feel like squashing normals:
+<div class="bordered">
+<b>Logit Normal</b><br/>
+The logit normal is the continuous distribution that results from applying a special "squashing" function to a  Normally distributed random variable. The squashing function maps all values the normal could take on onto the range 0 to 1. If $X \sim \text{LogitNormal}(\mu, \sigma^2)$ it has:
+\begin{align*}
+    \text{PDF:}&& &f_X(x) = \begin{cases}
+    \frac{1}{\sigma(\sqrt{2\pi})x(1 - x)}e^{-\frac{(\text{logit}(x) - \mu)^2}{2\sigma^2}} & \text{if } 0 < x < 1\\
+    0 & \text{otherwise}
+    \end{cases} \\
+    \text{CDF:} && &F_X(x) = \Phi\Big(\frac{\text{logit}(x) - \mu}{\sigma}\Big)\\
+    \text{Where:} && &\text{logit}(x) = \text{log}\Big(\frac{x}{1-x}\Big)
+\end{align*}
+</div>
+
+<p>A new theory shows that the Logit Normal better fits exam score distributions than the traditionally used Normal. Let's test it out! We have some set of exam scores for a test with min possible score 0 and max possible score 1, and we are trying to decide between two hypotheses:
+
+<p>$H_1$: our grade scores are distributed according to $X\sim \text{Normal}(\mu = 0.7, \sigma^2 = 0.2^2)$. <br/>
+$H_2$: our grade scores are distributed according to $X\sim \text{LogitNormal}(\mu = 1.0, \sigma^2 = 0.9^2)$.
+
+
+<center>
+	<img class="mainFigureLg" src="../../../img/chapters/gradesNotNormal.png"></img>
+</center>
+
+
+<p>Under the normal assumption, $H_1$, what is $P(0.9 < X < 1.0)$? Provide a numerical answer to two decimal places.
+<div class="bordered">
+	$$P(0.9 < X < 1.0) = \Phi\left(\frac{1.0 - 0.7}{0.2}\right) - \Phi\left(\frac{0.9 - 0.7}{0.2}\right) = \Phi(1.5) - \Phi(1.0) = 0.9332 - 0.8413 = 0.09$$
+</div>
+
+	
+
+<p>Under the logit-normal assumption, $H_2$, what is $P(0.9 < X < 1.0)$?
+
+<div class="bordered">
+		$$F_X(1.0) - F_X(0.9) = \Phi\Big(\frac{\text{logit}(1.0) - 1.0}{0.9}\Big) - \Phi\Big(\frac{\text{logit}(0.9) - 1.0}{0.9}\Big)$$
+
+Which we can solve for numerically:
+$$\Phi\Big(\frac{\text{logit}(1.0) - 1.0}{0.9}\Big) - \Phi\Big(\frac{\text{logit}(0.9) - 1.0}{0.9}\Big) = 1 - \Phi(1.33) 
+\approx 0.91$$
+	</div>
+
+<p>Under the normal assumption, $H_1$, what is the maximum value that $X$ can take on?
+
+	<div class="bordered">
+	$$\infty$$
+</div>
+
+<p>Before observing any test scores, you assume that (a) one of your two hypotheses is correct and (b) that initially, each hypothesis is equally likely to be correct, $P(H_1)=P(H_2)=\frac{1}{2}$. You then observe a single test score, $X = 0.9$. What is your updated probability that the Logit-Normal hypothesis is correct? 
+	<div class="bordered">
+	\begin{align*}
+P(H_2|X = 0.9) &= \frac{f(X = 0.9|H_2)P(H_2)}{f(X = 0.9|H_2)P(H_2) + f(X = 0.9|H_1)P(H_1)}\\
+&= \frac{f(X = 0.9|H_2)}{f(X = 0.9|H_2) + f(X = 0.9|H_1)}\\
+&= \frac{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9) - 1.0)^2}{2*0.9^2}}}{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9) - 1.0)^2}{2*0.9^2}} + \frac{1}{0.2\sqrt{2\pi}}e^{-\frac{(0.9 - 0.7)^2}{2*0.2^2}}}
+\end{align*}
+</div>
+
 
 
                         

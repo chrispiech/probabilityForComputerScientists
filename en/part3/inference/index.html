@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+
+<title>Inference</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+ <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<!-- D3 CDN -->
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- Chart CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+<!-- PDF JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
+
+<!-- Lunr CDN -->
+ <script src="https://unpkg.com/lunr@2.0.4/lunr.js"></script>
+
+<!-- Firebase CDN -->
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
+
+   
+
+<!-- Java Script -->
+<script src="../../../plugins/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- Probability Packages -->
+<script src="../../../js/probabilityUtils.js"></script>
+<script src="../../../plugins/probability/gaussian.js"></script>
+<script src="../../../plugins/color.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js'></script>
+
+
+<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<!-- Stanford -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+
+<!-- Math Jax -->
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script> -->
+<script type="text/javascript">
+  MathJax = {
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "action.js"]
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+	"fast-preview": {
+	  disabled: true
+	}
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<script src="../../../plugins/math.min.js"></script>
+
+
+
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+ <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script src="../../../plugins/jquery.mCustomScrollbar.js"></script>
+
+</head>
+
+<script>
+  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
+  Chart.defaults.global.defaultFontSize = 18;
+</script>
+
+
+<!-- I declare a few math operators I often use in equations -->
+<div style="display:none">
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
+  $\DeclareMathOperator{\c}{^C}$
+  $\DeclareMathOperator{\or}{  or}$
+  $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\var}{Var}$
+  $\DeclareMathOperator{\Var}{Var}$
+  $\DeclareMathOperator{\E}{E}$
+  $\DeclareMathOperator{\std}{Std}$
+  $\DeclareMathOperator{\Ber}{Bern}$
+  $\DeclareMathOperator{\Bin}{Bin}$
+  $\DeclareMathOperator{\Poi}{Poi}$
+  $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Geo}{Geo}$
+  $\DeclareMathOperator{\NegBin}{NegBin}$
+  $\DeclareMathOperator{\Beta}{Beta}$
+  $\DeclareMathOperator{\Exp}{Exp}$
+  $\DeclareMathOperator{\N}{N}$
+  $\DeclareMathOperator{\R}{\mathbb{R}}$
+  $\DeclareMathOperator{\argmax}{argmax}$
+  $\newcommand{\d}{\, d}$
+  
+</div>
+
+<body class="greyBackground">
+
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!-- <div></div> -->
+        <a style="text-align:center" href="../../index.html"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
+    </div>
+
+    <div> 
+        <!-- Put a link back to cs109 -->
+    
+
+        <!-- This adds a search bar! -->
+        <div class="searchCol" style="font-family: 'Source Sans Pro', sans-serif;">
+            
+            <input type="text" class="form-control bookSearch" id="probability-for-digital-world-search" aria-describedby="search box" placeholder="🔍 Search book..."/>
+        </div>
+        
+    </div>
+
+<!-- intro -->
+<ul class="list-unstyled components">
+<li>
+</li>
+</ul>
+
+<!-- part1 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part1">Part 1: Core Probability</p></li>
+<li>
+<a id=sidebar-counting href="../../part1/counting">Counting</a>
+<a id=sidebar-combinatorics href="../../part1/combinatorics">Combinatorics</a>
+<a id=sidebar-probability href="../../part1/probability">Definition of Probability</a>
+<a id=sidebar-equally_likely href="../../part1/equally_likely">Equally Likely Outcomes</a>
+<a id=sidebar-prob_or href="../../part1/prob_or">Probability of <b>or</b></a>
+<a id=sidebar-cond_prob href="../../part1/cond_prob">Conditional Probability</a>
+<a id=sidebar-independence href="../../part1/independence">Independence</a>
+<a id=sidebar-prob_and href="../../part1/prob_and">Probability of <b>and</b></a>
+<a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
+<a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
+<a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+
+<li>
+    <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part1_examples">
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li><li><a href="../../examples/many_flips">Many Coin Flips</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part2 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
+<li>
+<a id=sidebar-rvs href="../../part2/rvs">Random Variables</a>
+<a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
+<a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
+<a id=sidebar-variance href="../../part2/variance">Variance</a>
+<a id=sidebar-bernoulli href="../../part2/bernoulli">Bernoulli Distribution</a>
+<a id=sidebar-binomial href="../../part2/binomial">Binomial Distribution</a>
+<a id=sidebar-poisson href="../../part2/poisson">Poisson Distribution</a>
+<a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
+<a id=sidebar-uniform href="../../part2/uniform">Uniform Distribution</a>
+<a id=sidebar-exponential href="../../part2/exponential">Exponential Distribution</a>
+<a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
+<a id=sidebar-binomial_approx href="../../part2/binomial_approx">Binomial Approximation</a>
+<a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
+
+<li>
+    <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part2_examples">
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part3 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part3">Part 3: Probabilistic Models</p></li>
+<li>
+<a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
+<a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
+<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
+<a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
+
+<li>
+    <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part3_examples">
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part4 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part4">Part 4: Uncertainty Theory</p></li>
+<li>
+<a id=sidebar-summation_vars href="../../part4/summation_vars">Adding Random Variables</a>
+<a id=sidebar-clt href="../../part4/clt">Central Limit Theorem</a>
+<a id=sidebar-samples href="../../part4/samples">Sampling</a>
+<a id=sidebar-bootstrapping href="../../part4/bootstrapping">Bootstrapping</a>
+<a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
+
+<li>
+    <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part4_examples">
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part5 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part5">Part 5: Machine Learning</p></li>
+<li>
+<a id=sidebar-parameter_estimation href="../../part5/parameter_estimation">Parameter Estimation</a>
+<a id=sidebar-mle href="../../part5/mle">Maximum Likelihood Estimation</a>
+<a id=sidebar-map href="../../part5/map">Maximum A Posteriori</a>
+<a id=sidebar-machine_learning href="../../part5/machine_learning">Machine Learning</a>
+<a id=sidebar-naive_bayes href="../../part5/naive_bayes">Naïve Bayes</a>
+<a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
+
+<li>
+    <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part5_examples">
+        
+    </ul>
+</li>
+</li>
+</ul>
+
+
+
+    <!-- <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part ?: Misfits</p>
+        </li>
+        <li>
+             <a href="../../examples/probBabies.html">Probability and babies</a>
+            
+             <a href="../../">Sampling from a likelihood function</a>
+             <a href="../../">Law of Total Expectation</a>
+            
+        </li>
+    </ul> -->
+
+
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            Ⓒ Chris Piech, Stanford University
+            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
+        </li>
+    </ul>
+</nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+<button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
+    <i class="fas fa-align-left"></i>
+    <span></span>
+</button>
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+              <span style="font-size:150%">I'm Curious</span>
+              <span></span>
+          </button> -->
+            
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col handout" >
+              
+                        
+ 
+<center><h1>Inference</h1></center>
+<hr/>
+<p>So far we have set the foundation for how we can represent probabilistic models with multiple random variables. These models are especially useful because they let us perform a task called "inference" where we update our belief about one random variable in the model, conditioned on new information about another. Inference in general is hard! In fact, it has been proven that in the worst case, the inference task, can be NP-Hard where $n$ is the number of random variables [<a href="https://www.sciencedirect.com/science/article/pii/000437029090060D">1</a>]. 
+
+<p>First we are going to practice it with two random variables (in this section). Then, later in this unit we are going to talk about inference in the general case, with many random variables. 
+
+    <p>Earlier we looked at conditional probabilities for events. The first task in inference is to understand how to combine  conditional probabilities and random variables. The equations for both the discrete and continuous case are intuitive extensions of our understanding of conditional probability:
+
+<h2>The Discrete Conditional</h2>
+<p>The discrete case, where every random variable in your model is discrete, is a straightforward combination of what you know about conditional probability (which you learned in the context of events). Recall that every relational operator applied to a random variable <a href="../../part2/rvs/#rv_vs_event">defines an event</a>. As such the rules for conditional probability directly apply: 
+The conditional probability mass function (PMF) for the discrete case:
+
+<div class="bordered">
+    Let $X$ and $Y$ be discrete random variables.
+    <p><b><i>Def:</i></b> Conditional definition with discrete random variables.</p>
+
+
+
+\begin{align*}
+    \P(X=x|Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)}
+\end{align*}
+
+<p><b><i>Def:</i></b> Bayes' theorem with discrete random variables.</p>
+
+\begin{align*}
+    \P(X=x|Y=y)=\frac{P(Y=y|X=x)P(X=x)}{P(Y=y)}
+\end{align*}
+</div>
+
+In the presence of multiple random variables, it becomes increasingly useful to use shorthand! The above definition is identical to this notation where a lowercase symbol such as $x$ is short hand for the event $X=x$. :
+\begin{align*}
+    \P(x|y)=\frac{P(x,y)}{P(y)}
+\end{align*}
+The conditional definition works for any event and as such we can also write conditionals using cumulative density functions (CDFs) for the discrete case:
+\begin{align*}
+    \P(X \leq a | Y=y) 
+    &= \frac{\P(X \leq a, Y=y)}{\p(Y=y)} \\
+    &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} 
+\end{align*}
+
+Here is a neat result: this last term can be rewritten, by a clever manipulation. We can make the sum extend over the whole fraction:
+
+\begin{align*}
+    \P(X \leq a | Y=y) 
+    &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} \\
+    &= \sum_{x\leq a} \frac{\P(X=x,Y=y)}{\P(Y=y)} \\
+    &= \sum_{x\leq a} \P(X=x|Y=y) 
+\end{align*}
+
+<p>In fact it becomes straight forward to translate the rules of probability (such as bayes theorem, law of total probability, etc) to the language of discrete random variables: we simply need to recall that every relational operator applied to a random variable <a href="../../part2/rvs/#rv_vs_event">defines an event</a>.
+
+
+<h2>Mixing Discrete and Continuous</h2>
+
+<p>What happens when we want to reason about <i>continuous</i> random variables using our rules of probability (such as Bayes theoreom, law of total probability, chain rule, etc)? There is a simple practical answer: the rules still apply, but we have to replace probability terminology with probability <i>density</i> functions. As a concrete example let's look at Bayes' Theorem with one continuous random variable.</p>
+
+
+<div class="bordered">
+    <p><b><i>Def:</i></b> Bayes' Theorem with mixed discrete and continuous.</p>
+
+Let $X$ be continuous random variable and let $N$ be a discrete random variable. The conditional probabilities of $X$ given $N$ and $N$ given $X$ respectively are:
+\begin{align*}
+    f(X=x|N=n) =  \frac{\P(N=n|X=x)f(X=x)}{\p(N=n)} &&
+\end{align*}
+\begin{align*}
+    \p(N=n|X=x) =  \frac{f(X=x|N=n)\p(N=n)}{f(X=x)} 
+\end{align*}
+</div>
+
+<p>These equations might seem complicated since they mix probability densities and probabilities. Why should we believe that they are correct? First, observe that anytime the random variable on the left hand side of the conditional is continuous, we use a density, whenever it is discrete, we use a probability. This result can be derived by making the observation:
+    $$
+    \P(X = x) = f(X=x) \cdot \epsilon_x
+    $$
+In the limit as $\epsilon_x \rightarrow 0$. In order to obtain a probability from a density function is to integrate under the function. If you wanted to approximate the probability that $X = x$ you could consider the area created by a rectangle which has height $FX=x$ and some very small width. As that width gets smaller, your answer becomes more accurate:
+
+    <center><img class="mainFigureFull" src="../../../img/chapters/densitytopr.png"></img></center>
+
+    <p>A value of $\epsilon_x$ is problematic if it is left in a formula. However, if we can get them to cancel, we can arrive at a working equation. This is the key insight used to derive the rules of probability in the context of one or more continuous random variables. Again, let $X$ be continuous random variable and let $N$ be a discrete random variable:
+
+
+\begin{align*}
+    \p(N=n|X=x) &=  \frac{P(X=x|N=n)\p(N=n)}{P(X=x)}  &&\text{Bayes' Theorem}\\
+     &=  \frac{f(X=x|N=n) \cdot \epsilon_x \cdot \p(N=n)}{f(X=x) \cdot \epsilon_x}  &&\P(X = x) = f(X=x) \cdot \epsilon_x \\
+     &=  \frac{f(X=x|N=n)  \cdot \p(N=n)}{f(X=x)}  &&\text{Cancel } \epsilon_x \\
+\end{align*}
+
+<p>This strategy applies beyond Bayes' Theorem. For example here is a version of the Law of Total Probability when $X$ is continuous and $N$ is discrete:
+
+\begin{align*}
+    f(X=x) &=  \sum_{n \in N} f(X=x | N = n) \p(N = n)
+\end{align*}
+<h2>Probability Rules with Continuous Random Variables</h2>
+
+<p>The strategy used in the above section can be used to derive the rules of probability in the presence of continuous random variables. The strategy also works when there are multiple continuous random variables. For example here is Bayes' Theorem with two continuous random variables.</p>
+<div class="bordered">
+    <p><b><i>Def:</i></b> Bayes' Theorem with continuous random variables.</p>
+
+
+Let $X$ and $Y$ be continuous random variables.
+\begin{align*}
+    f(X=x|Y=y) = \frac{f(X=x,Y=y)}{f(Y=y)}
+\end{align*}
+</div>
+
+<h2>Example: Inference with a Continuous Variable</h2>
+
+<p>Consider the following question:</p>
+
+<div class="purpleBox">
+
+<b><i>Question:</i></b> At birth, girl elephant weights are distributed as a Gaussian with mean 160kg, and standard deviation 7kg. At birth, boy elephant weights are distributed as a Gaussian with mean 165kg, and standard deviation of 3kg. All you know about a newborn elephant is that it is 163kg. What is the probability that it is a girl? 
+
+<p><img class="mainFigureFull" src="../../../img/chapters/elephant.jpg"></img></p>
+
+    <b><i>Answer:</i></b> Let $G$ be an indicator that the elephant is a girl. $G$ is Bern(p = 0.5)
+Let $X$ be the distribution of weight of the elephant. <br/>
+$X | G = 1$ is  $N(μ = 160, σ^2 = 7^2)$<br/>
+$X | G = 0$ is $N(μ = 165, σ^2 = 3^2)$</p>
+
+\begin{align*}
+\p(G = 1 | X = 163) &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} && \text{Bayes} 
+\end{align*}
+
+If we can solve this equation we will have our answer. What is $f(X = 163 | G = 1)$? It is the <a href="../../part2/normal/">probability density function of a gaussian</a> $X$ which has $\mu=160, \sigma^2 = 7^2$ at the point $x$ is 163:
+
+\begin{align*}
+f(X = 163 | G = 1)  &= \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)^2} && \text{PDF Gauss} \\
+&= \frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)^2}  && \text{PDF } X \text{ at } 163
+\end{align*}
+
+
+Next we note that $\P(G = 0) = \P(G = 1) = \frac{1}{2}$. Putting this all together, and using the law of total probability to compute the denominator we get:
+
+\begin{align*}
+\p&(G = 1 | X = 163) \\
+&=  \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} \\
+
+&=  \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163 | G = 1) \P(G = 1) + f(X = 163 | G = 0) \P(G = 0)}\\
+
+&=  \frac{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)^2} \cdot \frac{1}{2}}{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)^2} \cdot \frac{1}{2} + \frac{1}{3 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-165}{3}\Big)^2} \cdot \frac{1}{2}} \\
+
+&=  \frac
+{\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)} }
+{\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)}  + \frac{1}{3} e^{-\frac{1}{2}\Big(\frac{4}{9}\Big)^2} }\\
+&\approx 0.328
+\end{align*}
+
+
+
+                        
+
+
+<script type="text/javascript">
+    // const firebase = require("firebase");
+    // Required for side-effects
+    // require("firebase/firestore");
+
+    $(document).ready(function () {
+        console.log('ready')
+        const scrollTop = getScrollTop()
+        console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
+        // $("#sidebar").mCustomScrollbar({
+        //     theme: "minimal",
+        //     mouseWheel: {preventDefault: true},
+        //     advanced:{
+        //      autoScrollOnFocus: false,
+        //      updateOnContentResize: true
+        //     },
+        //     scrollInertia:0,
+        //     contentTouchScroll:1,
+        //     mouseWheel: {
+        //         scrollAmount:1000
+        //     },
+        //     setTop:scrollTop + 'px',
+        //     callbacks:{
+        //         onScroll:function(){
+        //             if(hasStorage) {
+
+        //                 localStorage.scrollTop = this.mcs.top;
+        //                 console.log(localStorage.scrollTop)
+        //             }
+        //         }
+        //     } 
+        // });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+        
+        let lastPart = getUrlKey()
+
+        // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
+        //     scrollInertia:0
+        // });
+
+        // addExampleToFirebase()
+    });
+
+    function getScrollTop() {
+        console.log('here')
+        if(typeof(Storage) !== "undefined") {
+            return Number(localStorage.scrollTop)
+        }
+        return 0;
+    }
+
+    function getUrlKey() {
+        var pathname = window.location.pathname;
+        
+        let parts = pathname.split('/')
+        var currIndex = parts.length - 1
+        while(currIndex >= 0) {
+            let nextPart = parts[currIndex]
+            if(nextPart) {
+                return nextPart
+            }
+            currIndex -= 1
+        }
+        return ''
+    }
+
+    function submitQuestion() {
+        firebase.initializeApp({
+          apiKey: "AIzaSyBqZVV7Qrp0DT3aBCCTCTMUCrPJO0pb3tY",
+          authDomain: "probability-digital-world.firebaseapp.com",
+          projectId: "probability-digital-world"
+        });
+
+        var db = firebase.firestore();
+
+        db.collection("questions").add({
+            email: $("#question-email").val(),
+            question: "Lovelace",
+            page: getUrlKey()
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            alert('success')
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+        // // // Generate a new push ID for the new post
+        // var questionListRef = db.child("questions")
+        // var newQuestionRef = questionListRef.push();
+        // newQuestionRef.set({
+        //     'title':'test'
+        // });
+        
+    }
+
+    function onCuriosity() {
+        Swal.fire({
+          title: 'Curious?',
+          position: 'bottom-end',
+          allowOutsideClick:false,
+          backdrop:false,
+          confirmButtonText: 'Submit',
+          input: 'textarea',
+          html:
+            '<p>We are trying to make this book better. Let us know if you find something confusing. If you ask a question we will try to answer it. If you find a mistake we will fix it. </p>' +
+            '<input placeholder="Your email (optional)..." id="question-email" class="swal2-input">',
+          inputPlaceholder: 'Type your question or message here...',
+          inputAttributes: {
+            'aria-label': 'Type your question or message here'
+          },
+          showCancelButton: true,
+          preConfirm: () => submitQuestion()
+        })
+    }
+</script>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+$(document).ready(function() {
+  addH2Numbers()
+  enableSearch()
+})
+
+function addH2Numbers() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+}
+
+function enableSearch() {
+  $("#probability-for-digital-world-search").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+          let query = $("#probability-for-digital-world-search").val()
+          
+          window.location = `../../search.html?q=${query}`
+      }
+  });
+  // $.ajax({
+  //     type: "GET",
+  //     url: "../../../searchIndex.json",
+  //     dataType: "text",
+  //     success: function(data) {addSearchIndexData(data);}
+  //  });
+}
+
+function addSearchIndexData(data) {
+  var idx = lunr(function () {
+    this.ref('name')
+    this.field('text')
+
+    let documents = JSON.parse(data)
+
+    documents.forEach(function (doc) {
+      this.add(doc)
+      console.log(doc)
+    }, this)
+
+    $("#probability-for-digital-world-search").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            let query = $("#probability-for-digital-world-search").val()
+            let results = idx.search(query)
+            console.log(results)
+        }
+    });
+  })
+}
+
+    </script>
+
+</body>
+
+
+
+
+</html>

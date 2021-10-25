@@ -53,7 +53,9 @@
 		"examples": {
 			"prob_baby_delivery":"Probability of Baby Delivery",
 			"jury":"Jury Selection",
-			"norm_cdf_calculator":"Gaussian CDF Calculator"
+			"norm_cdf_calculator":"Gaussian CDF Calculator",
+			"grades_not_normal":"Grades are Not Normal",
+			"curse_of_dimensionality":"Curse of Dimensionality"
 		}
 	},
 	"part3":{
@@ -62,13 +64,13 @@
 			"joint":"Joint Probability",
 			"multinomial":"Multinomial",
 			"continuous_joint":"Continuous Joint",
+			# "multivariate_gaussian":"Multivariate Gaussian",
+			"inference":"Inference",
+			"bayesian_networks":"Bayesian Networks",
+			"correlation":"Correlation"
 			"independent_vars":"Independence in Variables",
-			"cond_distributions":"Conditional Distributions",
-			#"variable_bayes":"Bayes Theorem Revisited",
-			"multivariate_gaussian":"Multivariate Gaussian",
-			# "bayesian_networks":"Bayesian Networks",
 			# "sampling_revisited":"Sampling Revisited",
-			# "computational_inference":"Computational Inference",
+			"computational_inference":"General Inference",
 		},
 		"examples": {
 			"dart_logo":"CS109 Logo",
@@ -76,6 +78,7 @@
 			"federalist":"Federalist Paper Authorship",
 			"name2age":"Name to Age",
 			"bridge_distribution":"Bridge Distribution",
+			"tracking_in_2D":"Tracking in 2D"
 		}
 	},
 	"part4":{

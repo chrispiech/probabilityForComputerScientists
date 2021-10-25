@@ -131,8 +131,8 @@
 
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
-  $\DeclareMathOperator{\p}{Pr}$
-  $\DeclareMathOperator{\P}{Pr}$
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
@@ -230,7 +230,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li>
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li>
     </ul>
 </li>
 </li>
@@ -243,14 +243,16 @@
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
 <a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -327,37 +329,39 @@
     <i class="fas fa-align-left"></i>
     <span></span>
 </button>
-            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
               <span style="font-size:150%">I'm Curious</span>
-              <!-- <i class="fas fa-question-circle" style="font-size:200%"></i> -->
               <span></span>
-          </button>
+          </button> -->
             
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
               
                         
- 
 <center><h1>Binomial Distribution</h1></center>
 <hr/>
 
-<p>Consider $n$ independent trials of an experiment, where each trial is a "success" probability $p$. Let $X$ be number of successes in $n$ trials. This situation is truly common in the natural world, and as such there has been a lot of research into such phenomena. The name for random variables like $X$ is a Binomial Random variable. If you can identify that a process fits this discription, you can inherit many already proved properties, such as the PMF formula, expectation and variance!
+<p>In this section, we will discuss the binomial distribution. To start, imagine the following example. Consider $n$
+    independent trials of an experiment where each trial is a "success" probability $p$. Let $X$ be the
+    number of successes in $n$ trials. This situation is truly common in the natural world, and as such, there has been
+    a lot of research into such phenomena. Random variables like $X$ are called binomial random variables. If you
+    can identify that a process fits this description, you can inherit many already proved properties such as the PMF
+    formula, expectation, and variance!
 </p>
 
 
 <p>
 <center>
-<img src="../../../img/chapters/binEquation.png" class="mainFigure"></img>
+    <img src="../../../img/chapters/binEquation.png" class="mainFigure"></img>
 </center>
 </p>
 
-<p>Here are a few examples of Binomial random variables:
+<p>Here are a few examples of binomial random variables:
 <ul>
-	<li># of heads in $n$ coin flips
-<li># of 1’s in randomly generated length $n$ bit string
-<li># of disk drives crashed in 1000 computer cluster, assuming disks crash independently
-
+    <li># of heads in $n$ coin flips
+    <li># of 1’s in randomly generated length $n$ bit string
+    <li># of disk drives crashed in 1000 computer cluster, assuming disks crash independently
 </ul>
 
 
@@ -502,46 +506,59 @@ function drawBinomialPmf(parentDivId, n, p) {
 }
 </script><div style="height: 20px"></div>
 
-<p>One way to think of the Binomial is as the sum of $n$ <a href="../../part2/bernoulli">Bernoilli</a> variables. Say that $Y_i \sim \Ber(p)$ is an indicator bernoulli variable which is 1 if experiment $i$ is a success. Then if $X$ is the total number of successes in $n$ experiments, $X \sim \Bin(n, p)$:
-	$$
-	X = \sum_{i=1}^n Y_i
-	$$
-<p>Recall that $Y_i$ will be 1 or 0 and as such one way to think of $X$ is the sum of those 1s and 0s.
+<!--What is an indicator r.v.?-->
+<p>One way to think of the binomial is as the sum of $n$ <a href="../../part2/bernoulli">Bernoulli</a>
+    variables. Say that $Y_i \sim \Ber(p)$ is an indicator Bernoulli random variable which is 1 if experiment $i$ is a
+    success. Then if $X$ is the total number of successes in $n$ experiments, $X \sim \Bin(n, p)$:
+    $$
+    X = \sum_{i=1}^n Y_i
+    $$
+<p>Recall that the outcome of $Y_i$ will be 1 or 0, so one way to think of $X$ is as the sum of those 1s and 0s.
 <h2>Binomial PMF</h2>
-<p>The most important property to know about a Binomial is its <a href="../../part2/pmf">PMF function</a>:
+<p>The most important property to know about a binomial is its <a href="../../part2/pmf">PMF function</a>:
 <p>
 <center>
-<img src="../../../img/chapters/binEquation2.png" class="mainFigure"></img>
+    <img src="../../../img/chapters/binEquation2.png" class="mainFigure"></img>
 </center>
 </p>
 
-<p>The full derivation of this formula is in fact something which we went over in part 1. There is a compelte example on the probability of $k$ heads in $n$ coin flips, where each flip is heads with probability $0.5$: <a href="../../examples/many_flips">Many Coin Flips</a>. Briefly, if you think of each experiment as being distinct, then there are ${n \choose k}$ ways of permuting $k$ successes from $n$ experiments. For any of the mututally exclusive permutations, the probability of that permutation is $p^k \cdot (1-p)^{n-k}$.</p>
+<p>Recall, we derived this formula in Part 1. There is a complete example on the probability of $k$ heads in $n$ coin
+    flips, where each flip is heads with probability $0.5$: <a
+            href="../../examples/many_flips">Many Coin Flips</a>. To briefly review, if you think of each
+    experiment as
+    being distinct, then there are ${n \choose k}$ ways of permuting $k$ successes from $n$ experiments. For any of the
+    mutually exclusive permutations, the probability of that permutation is $p^k \cdot (1-p)^{n-k}$.</p>
 
+<!--
+Perhaps include a small explanation or link to the wiki that explains why this term is related to coefficients at all.
+ -->
 <p>The name binomial comes from the term ${n \choose k}$ which is formally called the binomial coefficient.</p>
 
 <h2>Expectation of Binomial</h2>
 
-<p>There is an easy way to calculate the expectation of a binomial, and a hard way. 
+<p>There is an easy way to calculate the expectation of a binomial and a hard way.
 
-The easy way is to leverage the fact that a Binomial is the sum of Bernoulli random variables. $X = \sum_{i=1}^{n} Y_i$ where $Y_i \sim \Ber(p)$. Since the <a href="../../part2/expectation">expectation of the sum</a> of random variables is the sum of expectations we can add the expectation, $\E[Y_i] = p$, of each of the Bernoulli's :
-$$
-\begin{align}
-\E[X] &= \E\Big[\sum_{i=1}^{n} Y_i\Big] && \text{Since }X = \sum_{i=1}^{n} Y_i \\
-&=  \sum_{i=1}^{n}\E[ Y_i] && \text{Expectation of sum} \\
-&=  \sum_{i=1}^{n}p && \text{Expectation of Bernoulli} \\
-&=  n \cdot p && \text{Sum $n$ times}
-\end{align}
-$$
+    The easy way is to leverage the fact that a binomial is the sum of Bernoulli random variables. $X = \sum_{i=1}^{n}
+    Y_i$ where $Y_i \sim \Ber(p)$. Since the <a href="../../part2/expectation">expectation of the sum</a> of
+    random variables is the sum of expectations, we can add the expectation, $\E[Y_i] = p$, of each of the Bernoulli's:
+    $$
+    \begin{align}
+    \E[X] &= \E\Big[\sum_{i=1}^{n} Y_i\Big] && \text{Since }X = \sum_{i=1}^{n} Y_i \\
+    &= \sum_{i=1}^{n}\E[ Y_i] && \text{Expectation of sum} \\
+    &= \sum_{i=1}^{n}p && \text{Expectation of Bernoulli} \\
+    &= n \cdot p && \text{Sum $n$ times}
+    \end{align}
+    $$
 
-	The hard way is to use the definition of expectation:
-	$$
-	\begin{align}
-	\E[X] &= \sum_{i=0}^n i \cdot \p(X = i) && \text{Def of expectation} \\
-	&= \sum_{i=0}^n i \cdot {n \choose i} p^i(1-p)^{n-i} && \text{Sub in PMF} \\
-	& \cdots && \text{Many steps later} \\
-	&= n \cdot p
-	\end{align}
-	$$
+    The hard way is to use the definition of expectation:
+    $$
+    \begin{align}
+    \E[X] &= \sum_{i=0}^n i \cdot \p(X = i) && \text{Def of expectation} \\
+    &= \sum_{i=0}^n i \cdot {n \choose i} p^i(1-p)^{n-i} && \text{Sub in PMF} \\
+    & \cdots && \text{Many steps later} \\
+    &= n \cdot p
+    \end{align}
+    $$
 
 
 

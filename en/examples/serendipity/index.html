@@ -131,8 +131,8 @@
 
 <!-- I declare a few math operators I often use in equations -->
 <div style="display:none">
-  $\DeclareMathOperator{\p}{Pr}$
-  $\DeclareMathOperator{\P}{Pr}$
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
   $\DeclareMathOperator{\c}{^C}$
   $\DeclareMathOperator{\or}{  or}$
   $\DeclareMathOperator{\and}{  and}$
@@ -230,7 +230,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li>
+        <li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li>
     </ul>
 </li>
 </li>
@@ -243,14 +243,16 @@
 <a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
 <a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
 <a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
-<a id=sidebar-cond_distributions href="../../part3/cond_distributions">Conditional Distributions</a>
-<a id=sidebar-multivariate_gaussian href="../../part3/multivariate_gaussian">Multivariate Gaussian</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
 
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li>
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -327,11 +329,10 @@
     <i class="fas fa-align-left"></i>
     <span></span>
 </button>
-            <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
               <span style="font-size:150%">I'm Curious</span>
-              <!-- <i class="fas fa-question-circle" style="font-size:200%"></i> -->
               <span></span>
-          </button>
+          </button> -->
             
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
@@ -359,7 +360,7 @@
 				</p>
 				</center>
 			</p>
-				<h2>Problem</h2>
+				<h3>Problem</h3>
 				<p>
 					What is the probability of a seredipitous encounter with a friend? Imagine you are live in an area with a large general population (eg Stanford with 17,000 students). A small subset of the population are friends. What are the chances that you run into at least one friend if you see a handful of people from the population? Assume that seeing each person from the population is equally likely.
 				</p>
@@ -385,14 +386,14 @@
 
 				  <hr/>
 
-				  <h2>Answer</h2>
+				  <h3>Answer</h3>
 				  <p>
 				  	The probability that you see at least one friend is: <span class="ansValue"></span>
 				  </p>
 				 
 				  <div id="explination" style="display:none">
 				  	 
-					  <h2>Terms</h2>
+					  <h3>Terms</h3>
 					  <div id="answer">
 					  	<p>
 					  		First lets define some useful terms:<br/>
@@ -401,7 +402,7 @@
 					  		$f$ = num friends = <span id="friendsValue"></span>
 					  	</p>
 					  	<hr/>
-					  	<h2>Approach</h2>
+					  	<h3>Approach</h3>
 					  	<p>
 					  		Since each way of seing $s$ people is equally likely, we can use the "<a href="//web.stanford.edu/class/cs109/pdfs/HO06 Probability.pdf">Equally Likely Events</a>" probability calculation: 
 					  	</p>
@@ -416,7 +417,7 @@
 						</p>
 
 						<hr/>
-						<h2>Prob that you don't see friends</h2>
+						<h3>Prob that you don't see friends</h3>
 						<p>
 							Let the sample space ($S$) be the set of ways that you could see $s$ people. The size of the sample space is: the total population choose the number of people seen. 
 						</p>
@@ -433,7 +434,7 @@
 						</p>
 
 						<hr/>
-						<h2>Prob that you see friends</h2>
+						<h3>Prob that you see friends</h3>
 						<p>
 							Now the probability that you see at least one friend is 1 minus the probability that you see no friends.
 						</p>
@@ -445,7 +446,7 @@
 
 						</p>
 						<hr/>
-						<h2>Isn't that suprising?</h2>
+						<h3>Isn't that suprising?</h3>
 					</div>
 				
 				</div>
