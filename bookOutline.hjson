@@ -65,12 +65,10 @@
 			"joint":"Joint Probability",
 			"multinomial":"Multinomial",
 			"continuous_joint":"Continuous Joint",
-			# "multivariate_gaussian":"Multivariate Gaussian",
 			"inference":"Inference",
 			"bayesian_networks":"Bayesian Networks",
-			"correlation":"Correlation"
 			"independent_vars":"Independence in Variables",
-			# "sampling_revisited":"Sampling Revisited",
+			"correlation":"Correlation",
 			"computational_inference":"General Inference",
 		},
 		"examples": {

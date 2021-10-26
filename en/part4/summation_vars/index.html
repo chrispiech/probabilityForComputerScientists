@@ -247,8 +247,8 @@
 <a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
 <a id=sidebar-inference href="../../part3/inference">Inference</a>
 <a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
-<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
 <a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
 <a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
 
 <li>
@@ -347,14 +347,23 @@
 
 <p>In this section on uncertainty theory we are going to explore some of the great results in probability theory. As a gentle introduction we are going to start with convolution.
 Convolution is a very fancy way of saying "adding" two different random variables together. The name comes from the fact that adding two random varaibles requires you to "convolve" their distribution functions. It is interesting to study in detail because (1) many natural processes can be modelled as the sum of random variables, and (2) because mathemeticians have made great progress on proving convolution theorems. For some particular random variables computing convolution has closed form equations. Importantly convolution is the sum of the random variables themselves, not the addition of the probability density functions (PDF)s that correspond to the random variables.</p>
+<ol>
+	<li><a href="#general">Adding Two Random Variables</a></li>
+	<li><a href="#poissons">Sum of Independent Poissons</a></li>
+	<li><a href="#binomials">Sum of Independent Binomials</a></li>
+	<li><a href="#normals">Sum of Independent Normals</a></li>
+	<li><a href="#uniforms">Sum of Independent Uniforms</a></li>
+</ol>
 
-<h2>Adding Two Random Variables</h2>
+<h2 id="general" >Adding Two Random Variables</h2>
 
-Deriving an expression for the likelihood for the sum of two random variables requires an interesting insight. If your random variables are discrete then the probability that $X + Y = n$ is the sum of mutually exclusive cases where $X$ takes on a values in the range $[0, n]$ and $Y$ takes on a value that allows the two to sum to $n$. Here are a few examples $X = 0 \and Y = n$, $X = 1 \and Y = n - 1$ etc. In fact all of the mutually exclusive cases can be enumerated in a sum:
-	$$
-	\p(X + Y = n) = \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- 1)
-	$$
-If the random variables are independent you can futher decompose the term $\p(X = i, Y = n- 1)$. Let's expand on some of the mutually exclusive cases where $X+Y=n$:
+<p>Deriving an expression for the likelihood for the sum of two random variables requires an interesting insight. If your random variables are discrete then the probability that $X + Y = n$ is the sum of mutually exclusive cases where $X$ takes on a values in the range $[0, n]$ and $Y$ takes on a value that allows the two to sum to $n$. Here are a few examples $X = 0 \and Y = n$, $X = 1 \and Y = n - 1$ etc. In fact all of the mutually exclusive cases can be enumerated in a sum:</p>
+
+<p><div class="bordered">
+	<b><i>Def: General Rule for the Convolution of Discrete Variables </i></b> 
+	$$\p(X + Y = n) = \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- i)$$
+</div></p>
+<p>If the random variables are independent you can futher decompose the term $\p(X = i, Y = n- i)$. Let's expand on some of the mutually exclusive cases where $X+Y=n$:
 
 <table class="table">
 	<tr>	
@@ -366,32 +375,65 @@ If the random variables are independent you can futher decompose the term $\p(X 
 	<tr>
 		<td>0</td>
 		<td>0</td>
-		<td>n</td>
+		<td>$n$</td>
 		<td>$\P(X=0,Y=n)$</td>
 	</tr>
 	<tr>
 		<td>1</td>
 		<td>1</td>
-		<td>n-1</td>
+		<td>$n-1$</td>
 		<td>$\P(X=1,Y=n-1)$</td>
 	</tr>
 	<tr>
 		<td>2</td>
 		<td>2</td>
-		<td>n-2</td>
+		<td>$n-2$</td>
 		<td>$\P(X=2,Y=n-2)$</td>
 	</tr>
 	<tr>
-		<td span=4>...</td>
+		<td></td>
+		<td colspan=3>...</td>
+	</tr>
+	<tr>
+		<td>$n$</td>
+		<td>$n$</td>
+		<td>0</td>
+		<td>$\P(X=n,Y=0)$</td>
 	</tr>
 	
 </table>
 
-<h2>Independent Binomials with equal $p$</h2>
+<p>Consider the sum of two independent dice. Let $X$ and $Y$ be the outcome of each dice. Here is the probability mass function for the sum $X + Y$:</p>
 
-<p>For any two Binomial random variables with the same "success" probability: $X ~ \sim \Bin(n_1,p)$ and $Y ~ \sim \Bin(n_2,p)$ the sum of those two random variables is another binomial: $X +Y ~ \sim \Bin(n_1 + n_2,p)$. This does not hold when the two distribution have different parameters $p$. This hopefully makes sense. The convolution is the number of sucesses across $X$ and $Y$. Since each trial has the same probability of success, and there are now $n_1 + n_2$ trials, which are all independent, the convolution is simply a new Binomial.</p>
+<center>
+	<img class="mainFigureLg" src="../../../img/chapters/sum2die.png"></img>
+</center>
 
-<h2>Independent Poissons</h2>
+Let's use this context to practice deriving the sum of two variables, starting with the General Rule for the Convolution of Discrete  Random Variables:
+\begin{align*}
+	\p&(X + Y = n) \\
+	&= \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- i) \\
+	&= \sum_{i=0}^n \p(X = i, Y = n- i) \\
+	&= \sum_{i=0}^n \frac{1}{36}\\
+	&= \frac{n+1}{36}
+\end{align*}
+
+<p>Note that $\p(X = i, Y = n- i) = \frac{1}{36}$ if $n <12$ and $i < n$. </p>
+
+<p><!-- For two general independent random variables (aka cases of independent random variables that don't fit the above special situations) you can calculate the CDF or the PDF of the sum of two random variables using the following formulas: -->
+	This derivation for a general rule has a continuous equivalent:
+\begin{align*}
+&f(X+Y = n) = \int_{i=-\infty}^{\infty} f(X = n-i, Y=i) \d i
+\end{align*}
+<!-- Another way to derive the distribution for the sum of random variables is via the CDF:
+\begin{align*} 
+&F_{X+Y}(a) = \P(X + Y \leq a) = \int_{y=-\infty}^{\infty} \P(X < a-y)f(Y=y)dy 
+\end{align*} -->
+</p>
+
+
+
+<h2 id="poissons">Sum of Independent Poissons</h2>
 
 <p>For any two Poisson random variables: $X ~ \sim \Poi(\lambda_1)$ and $Y ~ \sim \Poi(\lambda_2)$ the sum of those two random variables is another Poisson: $X +Y ~ \sim \Poi(\lambda_1 + \lambda_2)$. This holds when $\lambda_1$ is not the same as $\lambda_2$.</p>
 
@@ -417,30 +459,34 @@ P(Z = n)
 Note that the Binomial Theorem (which we did not cover in this class, but is often used in contexts like expanding polynomials) says that for two numbers $a$ and $b$ and positive integer $n$, $(a+b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$.
 </div>
 
-<h2>Independent Normals</h2>
+<h2 id="binomials">Sum of Independent Binomials with equal $p$</h2>
 
-<p>For any two normal random variables $X ~ \sim \mathcal{N}(\mu_1,\sigma_1^2)$ and $Y ~ \sim \mathcal{N}(\mu_2,\sigma_2^2)$ the sum of those two random variables is another normal: $X +Y ~ \sim \mathcal{N}(\mu_1 + \mu_2,\sigma_1^2 + \sigma_2^2)$.</p>
+<p>For any two Binomial random variables with the same "success" probability: $X ~ \sim \Bin(n_1,p)$ and $Y ~ \sim \Bin(n_2,p)$ the sum of those two random variables is another binomial: $X +Y ~ \sim \Bin(n_1 + n_2,p)$. This does not hold when the two distribution have different parameters $p$. This hopefully makes sense. The convolution is the number of sucesses across $X$ and $Y$. Since each trial has the same probability of success, and there are now $n_1 + n_2$ trials, which are all independent, the convolution is simply a new Binomial.</p>
 
-<h2>General Independent Case</h2>
+<h2 id="normals">Sum of Independent Normals</h2>
 
-<p>For two general independent random variables (aka cases of independent random variables that don't fit the above special situations) you can calculate the CDF or the PDF of the sum of two random variables using the following formulas:
-\begin{align*}
-    &F_{X+Y}(a) = P(X + Y \leq a) = \int_{y=-\infty}^{\infty} F_X(a-y)f_Y(y)dy \\
-&f_{X+Y}(a) = \int_{y=-\infty}^{\infty} f_X(a-y)f_Y(y)dy
-\end{align*}
-There are direct analogies in the discrete case where you replace the integrals with sums and change notation for CDF and PDF.</p>
+<p>For any two independent normal random variables $X ~ \sim \mathcal{N}(\mu_1,\sigma_1^2)$ and $Y ~ \sim \mathcal{N}(\mu_2,\sigma_2^2)$ the sum of those two random variables is another normal: $X +Y ~ \sim \mathcal{N}(\mu_1 + \mu_2,\sigma_1^2 + \sigma_2^2)$.</p>
+
+
+
+
+
+
+<h2 id="uniforms">Sum of Independent Uniforms</h2>
 
 <div class="purpleBox">
 <b><i>Example</i></b>: 
 Calculate the PDF of $X + Y$ for independent uniform random variables $X \sim \Uni(0,1)$ and $Y \sim \Uni(0,1)$? First plug in the equation for general convolution of independent random variables:
 \begin{align*}
-    f_{X+Y}(a) &= \int_{y=0}^{1} f_X(a-y)f_Y(y)dy \\
-     f_{X+Y}(a) &= \int_{y=0}^{1} f_X(a-y)dy && \text{Because } f_Y(y) = 1
+    f(X+Y=n) 
+    &= \int_{i=0}^{1} f(X=n-i, Y=i)di\\
+    &= \int_{i=0}^{1} f(X=n-i)f(Y=i)di && \text{Independence}\\
+     &= \int_{i=0}^{1} f(X=n-i)di && \text{Because } f(Y=y) = 1
 \end{align*}
-It turns out that is not the easiest thing to integrate. By trying a few different values of $a$ in the range $[0,2]$ we can observe that the PDF we are trying to calculate is discontinuous at the point $a=1$ and thus will be easier to think about as two cases: $a < 1$ and $a > 1$. If we calculate $f_{X+Y}$ for both cases and correctly constrain the bounds of the integral we get simple closed forms for each case:
+It turns out that is not the easiest thing to integrate. By trying a few different values of $n$ in the range $[0,2]$ we can observe that the PDF we are trying to calculate is discontinuous at the point $n=1$ and thus will be easier to think about as two cases: $n < 1$ and $n > 1$. If we calculate $f(X+Y=n)$ for both cases and correctly constrain the bounds of the integral we get simple closed forms for each case:
 \begin{align*}
-    f_{X+Y}(a) = \begin{cases} a &\mbox{if } 0 < a \leq 1 \\ 
-2-a & \mbox{if } 1 < a \leq 2 \\
+    f(X+Y=n) = \begin{cases} n &\mbox{if } 0 < n \leq 1 \\ 
+2-n & \mbox{if } 1 < n \leq 2 \\
 0 & \mbox{else} \end{cases} 
 \end{align*}
 </div>

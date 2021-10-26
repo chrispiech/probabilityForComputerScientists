@@ -53,3 +53,14 @@ As an exercise you can simplify this expression into two independent Poisson dis
 
 <h2>Symmetry of Independence</h2>
 Independence is symmetric. That means that if random variables $X$ and $Y$ are independent, $X$ is independent of $Y$ and $Y$ is independent of $X$. This claim may seem meaningless but it can be very useful. Imagine a sequence of events $X_1,X_2, \dots$. Let $A_i$ be the event that $X_i$ is a "record value" (eg it is larger than all previous values). Is $A_{n+1}$ independent of $A_n$? It is easier to answer that $A_n$ is independent of $A_{n+1}$. By symmetry of independence both claims must be true.
+
+<h2>Expectation of Products</h2>
+
+<div class="bordered">
+	<b><i>Lemma: Product of Expectation for Independent Random Variables</i></b>:<br/>
+	If two random variables $X$ and $Y$ are independent, the expectation of their product of their expectations is the product of the individual expectations.
+\begin{align*}
+ &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{ if and only if $X$ and $Y$ are independent} 
+\end{align*}
+Note that this assumes that $X$ and $Y$ are independent. Contrast this to the sum version of this rule (expectation of sum of random variables, is the sum of individual expectations) which does <b>not</b> require the random variables to be independent.
+	</div>
