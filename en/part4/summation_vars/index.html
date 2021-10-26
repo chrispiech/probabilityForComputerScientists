@@ -350,6 +350,12 @@ Convolution is a very fancy way of saying "adding" two different random variable
 
 <h2>Adding Two Random Variables</h2>
 
+Deriving an expression for the likelihood for the sum of two random variables requires an interesting insight. If your random variables are discrete then the probability that $X + Y = n$ is the sum of mutually exclusive cases where $X$ takes on a values in the range $[0, n]$ and $Y$ takes on a value that allows the two to sum to $n$. Here are a few examples $X = 0 \and Y = n$, $X = 1 \and Y = n - 1$ etc. In fact all of the mutually exclusive cases can be enumerated in a sum:
+	$$
+	\p(X + Y = n) = \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- 1)
+	$$
+If the random variables are independent you can futher decompose the term $\p(X = i, Y = n- 1)$. Let's expand on some of the mutually exclusive cases where $X+Y=n$:
+
 <table class="table">
 	<tr>	
 		<th>$i$</th>
@@ -376,11 +382,7 @@ Convolution is a very fancy way of saying "adding" two different random variable
 
 <p>For any two Poisson random variables: $X ~ \sim \Poi(\lambda_1)$ and $Y ~ \sim \Poi(\lambda_2)$ the sum of those two random variables is another Poisson: $X +Y ~ \sim \Poi(\lambda_1 + \lambda_2)$. This holds when $\lambda_1$ is not the same as $\lambda_2$.</p>
 
-<p>How could we prove a claim the the one above? Proofs for convolution require an interesting insight. If your random variables are discrete then the probability that $X + Y = n$ is the sum of mutually exclusive cases where $X$ takes on a value and $Y$ takes on a value that allows the two to sum to $n$. Here are a few examples $X = 0 \and Y = n$, $X = 1 \and Y = n - 1$ etc. In fact all of the mutually exclusive cases can be enumerated in a sum:
-	$$
-	\p(X + Y = n) = \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- 1)
-	$$
-If the random variables are independent you can futher decompose the term $\p(X = i, Y = n- 1)$.
+<p>How could we prove a claim the the one above?
 
 <p><div class="purpleBox">
 <p>Let's go about proving that the sum of two independent Poisson random variables is also Poisson. Let $X\sim\Poi(\lambda_1)$ and $Y\sim\Poi(\lambda_2)$ be two independent random variables, and $Z = X + Y$. What is $P(Z = n)$?
