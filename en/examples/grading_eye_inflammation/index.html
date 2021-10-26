@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Name to Age</title>
+<title>Grading Eye Inflamation</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -340,87 +340,126 @@
               
                         
  
-<center><h1>Name to Age</h1></center>
+<center><h1>Grading Eye Inflamation</h1></center>
 <hr/>
 
-<p>
-Because of shifting patterns in name popularity, a person's age is a hint as to their age. The United States publishes a census which contains counts of how many US residents were born with a given name in a given year. We can use inference to compute the reverse probability distribution: an updated belief in a person's age, given their name. As a reminder, if I know the year someone was born, I can calculate their age.
+<p>When a patient has eye inflammation, eye doctors "grade" the inflammation. When "grading" inflammation they randomly look at a single 1 millimeter by 1 millimeter square in the patient's eye and count how many "cells" they see. 
 
-<center><img class="mainFigureLg" src="../../../img/chapters/name2age.png"></img></center>
+<p>There is uncertainty in these counts. If the true average number of cells for a given patient's eye is 6, the doctor could get a different count (say 4, or 5, or 7) just by chance. As of 2021, modern eye medicine does not have a sense of uncertainty for their inflammation grades! In this problem we are going to change that. At the same time we are going to learn about \Poisson distributions over space.
 
-<p> The US census data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
-	$$
-	P(B = b,N = n) \approx 
-	\frac{\text{count}(b, n)}
-	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
-	$$
+<center>
+	<img class="mainFigureLg" src="../../../img/chapters/gradingInflammation/eye.png"></img>
+</center>
 
-<p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary? We can get started by applying the definition of conditional probability for random variables:
+<p>Why is the number of cells observed in a 1x1 square governed by a \Poisson process?
 
-		\begin{align*}
-		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})}
-		\end{align*}
-But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute using marginalization:
+        <p>We can approximate a distribution for the count by discretizing the square into a fixed number of equal sized buckets. Each bucket either has a cell or not. Therefore, the count of cells in the 1x1 square is a sum of Bernoulli random variables with equal $p$, and as such can be modeled as a binomial random variable. This is an approximation because it doesn't allow for two cells in one bucket. Just like with time, if we make the size of each bucket infinitely small, this limitation goes away and we converge on the true distribution of counts. The binomial in the limit, i.e. a binomial as $n \rightarrow \infty$, is truly represented by a \Poisson random variable. In this context, $\lambda$ represents the average number of cells per 1$\times$1  sample. See Figure 2.
+    
+  
+  <p><center>
+	<img class="mainFigureFull" src="../../../img/chapters/gradingInflammation/poissoneye.png"></img>
+</center></p>  
+   
+
+<p> For a given patient the true average rate of cells is 5 cells per 1x1 sample. What is the probability that in a single 1x1 sample the doctor counts 4 cells?</p>
+
+<p><div class="bordered">
+
+    Let $X$ denote the number of cells in the 1x1 sample. We note that $X \sim \Poi(5)$. We want to find $P(X=4)$.
+    \[P(X=4) = \frac{5^4 e^{-5}}{4!} \approx 0.175\]
+
+   
+</div></p>
+
+<p><div class="alert alert-warning"><b>Warning</b>: We are going beyond the material covered in Part 2. Carry on if you want to start exploring some of the concepts which we will cover in Part 3 and Part 4. </div></p>
+    
+
+
+<hr/>
+
+<h3>Multiple Observations</h3>
+
+<p> For a given patient the true average rate of cells is 5 cells per 1mm by 1mm sample. In an attempt to be more precise, the doctor counts cells in <b>two</b> different, larger <b>2mm by 2mm</b> samples. Assume that the occurrences of cells in one 2mm by 2mm samples are independent of the occurrences in any other 2mm by 2mm samples. What is the probability that she counts 20 cells in the first samples and 20 cells in the second?
+
+<div class="bordered">
+Let $Y_1$ and $Y_2$ denote the number of cells in each of the 2x2 samples. Since there are 5 cells in a 1x1 sample, there are 20 samples in a 2x2 sample since the area quadrupled, so we have that $Y_1 \sim \Poi(20)$ and $Y_2 \sim \Poi(20)$. We want to find $P(Y_1 = 20 \land Y_2 = 20)$. Since the number of cells in the two samples are independent, this is equivalent to finding $\P(Y_1 = 20) \P(Y_2=20)$.
+</div>
+
+
+
+<h3>Estimating Lambda</h3>
+
+<p><div class="purpleBox">
+<b>Inflammation prior</b>: Based on millions of historical patients, doctors have learned that the prior probability density function of true rate of cells is:
+\begin{align*}
+    f(\lambda) = K \cdot \lambda \cdot e ^{-\frac{\lambda}{2}}
+\end{align*}
+Where $K$ is a normalization constant and $\lambda$ must be greater than 0.
+</div></p>
+
+<p> A doctor takes a single sample and counts 4 cells. Give an equation for the updated probability density of $\lambda$. Use the "Inflammation prior" as the prior probability density over values of $\lambda$. Your probability density may have a constant term.</p>
+
+	<p><div class="bordered">
+
+    
+    Let $\theta$ be the random variable for true rate. Let $X$ be the random variable for the count
+    \begin{align*}
+        f(\theta = \lambda | X = 4)  
+        &= \frac{P(X=4|\theta = \lambda) f(\theta = \lambda)}{P(X = 4)} \\
+        &= K \cdot \lambda^4 e^{-\lambda} \lambda e ^{-\frac{\lambda}{2}}  \\
+        &= K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}
+     \end{align*}
+      </div>
+
+   <p>A doctor takes a single  sample and counts 4 cells. What is the Maximum Likelihood estimate of $\lambda$?</p>
+
+<p><div class="bordered">
+    
+    Maximize the likelihood of the parameter given the data:
+    
+    \begin{align*}
+        \argmax_\lambda K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}   &=
+             \argmax_\lambda \log K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}  \\
+             &= \argmax_\lambda \log K + 5 \log \lambda -\frac{3}{2}\lambda
+    \end{align*}
+    Calculate the derivative 
+    \begin{align*}
+       \frac{\partial}{\partial \lambda} f(\theta = \lambda | X = 4) 
+       &=\frac{\partial}{\partial \lambda} \log K + 5 \log \lambda -\frac{3}{2}\lambda   \\
+        &= \frac{5}{\lambda} -\frac{3}{2}
+    \end{align*}
+    Set it equal to 0
+    \begin{align*}
+      \frac{5}{\lambda} -\frac{3}{2} = 0\\
+       \frac{5}{\lambda} = \frac{3}{2}\\
+      \lambda = \frac{10}{3}
+    \end{align*}
+ </div>
+
+<p>Explain, in words, the difference between the two estimates of lambda in the two previous parts. </p>
+
+<p><div class="bordered">
+	The estimate in the first part is a ``distribution" (also called a soft estimate) whereas the estimate in the second part is a single value (also called a \Point estimate). The former contains information about confidence.
+</div>
+
+<p>A patient comes on two separate days. The first day the doctor counts 5 cells, the second day the doctor counts 4 cells. Based only on this observation, and treating the true rates on the two days as independent, what is the probability that the patient's inflammation has gotten better (in other words, that their $\lambda$ has decreased)? </p>
+
+<p><div class="bordered">
+	Let $\theta_1$ be the random variable for lambda on the first day and $\theta_2$ be the random variable for lambda on the second day.
 
 \begin{align*}
-\P( N = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})\\
-&\approx \frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+     f(\theta_1 = \lambda | X = 5) &= K_1 \cdot \lambda^6 e^{-\frac{3}{2}\lambda}  \\
+     f(\theta_2 = \lambda | X = 4) &= K_2 \cdot \lambda^5 e^{-\frac{3}{2}\lambda} 
 \end{align*}
 
-
-
-<p>Putting this all together we have:
-
+The question is asking what is $P(\theta_1 > \theta_2)$? There are a few ways to calculate this exactly:
 \begin{align*}
-\P( B = 1950 | N = \text{Gary} ) 
-&= \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})} \\
-&\approx 
-\frac
-{
-	\Big(
-	\frac{\text{count}(1950, \text{Gary})}
-	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
-	\Big)
-}
-{
-	\Big(
-	\frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
-	\Big)
-} \\
-&\approx
-\frac
-{
-	\text{count}(1950, \text{Gary})
-}
-{
-	\sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})
-}
-\end{align*}
+& \int_{\lambda_1=0}^\infty \int_{\lambda_2=0}^{\lambda_1} f(\theta_1 = \lambda_1, \theta_2 = \lambda_2) \\
+&= \int_{\lambda_1=0}^\infty \int_{\lambda_2=0}^{\lambda_1} f(\theta_1 = \lambda_1) \cdot f(\theta_2 = \lambda_2) \\
+&= \int_{\lambda_1=0}^\infty f(\theta_1 = \lambda_1) \int_{\lambda_2=0}^{\lambda_1}   f(\theta_2 = \lambda_2) \\
+&= \int_{\lambda_1=0}^\infty K_1 \cdot \lambda^6 e^{-\frac{3}{2}\lambda} \int_{\lambda_2=0}^{\lambda_1}   K_2 \cdot \lambda^5 e^{-\frac{3}{2}\lambda}
+\end{align*}</div>
 
-
-<p>More generally, for any name, we can compute the conditional probability mass function over birth year $B$:
-
-	\begin{align*}
-\P( B = b | N = n ) 
-&\approx 
-\frac
-{
-	\text{count}(b, n)
-}
-{
-	\sum\limits_{y \in \text{years}} \text{count}(y, n)
-}
-\end{align*}
-
-<h3>Assumptions</h3>
-
-This problem makes many assumptions which are worth highlighting. In fact, any time we make generalizations (especially about demographics) based on sparse information we should tread lightly. Here are the assumptions that I can think of:
-
-<ol>
-	<li>We assume that people don't change their first names. Obviously this is wrong. It is especially wrong for the trans community, thus introducing a systematic error.</li>
-	<li>This algorithm doesn't take into account the distribution over who could plaussibly be alive at the time the name was recorded. For example, lets say the name was recorded from a user in 2021. That user likely wasn't born in 1800.</li>
-	<li>The US census is not perfect. It does not capture all people, and there are demographics which are underrepresented. This will also skew our results</li>
-</ol>
 
 
 

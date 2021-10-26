@@ -53,6 +53,7 @@
 		"examples": {
 			"prob_baby_delivery":"Probability of Baby Delivery",
 			"jury":"Jury Selection",
+			"grading_eye_inflammation":"Grading Eye Inflamation"
 			"norm_cdf_calculator":"Gaussian CDF Calculator",
 			"grades_not_normal":"Grades are Not Normal",
 			"curse_of_dimensionality":"Curse of Dimensionality"
