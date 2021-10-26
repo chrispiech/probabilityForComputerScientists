@@ -7,6 +7,26 @@
 <p>In this section on uncertainty theory we are going to explore some of the great results in probability theory. As a gentle introduction we are going to start with convolution.
 Convolution is a very fancy way of saying "adding" two different random variables together. The name comes from the fact that adding two random varaibles requires you to "convolve" their distribution functions. It is interesting to study in detail because (1) many natural processes can be modelled as the sum of random variables, and (2) because mathemeticians have made great progress on proving convolution theorems. For some particular random variables computing convolution has closed form equations. Importantly convolution is the sum of the random variables themselves, not the addition of the probability density functions (PDF)s that correspond to the random variables.</p>
 
+<h2>Adding Two Random Variables</h2>
+
+<table class="table">
+	<tr>	
+		<th>$i$</th>
+		<th>$X$</th>
+		<th>$Y$</th>
+		<th></th>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td>0</td>
+		<td>n</td>
+		<td>$\P(X=0,Y=n)$</td>
+
+	</tr>
+
+	
+</table>
+
 <h2>Independent Binomials with equal $p$</h2>
 
 <p>For any two Binomial random variables with the same "success" probability: $X ~ \sim \Bin(n_1,p)$ and $Y ~ \sim \Bin(n_2,p)$ the sum of those two random variables is another binomial: $X +Y ~ \sim \Bin(n_1 + n_2,p)$. This does not hold when the two distribution have different parameters $p$. This hopefully makes sense. The convolution is the number of sucesses across $X$ and $Y$. Since each trial has the same probability of success, and there are now $n_1 + n_2$ trials, which are all independent, the convolution is simply a new Binomial.</p>
