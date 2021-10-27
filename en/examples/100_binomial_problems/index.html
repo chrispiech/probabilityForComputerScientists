@@ -1,0 +1,2302 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+
+<title>100 Binomial Problems</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+ <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<!-- D3 CDN -->
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- Chart CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+<!-- PDF JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
+
+<!-- Lunr CDN -->
+ <script src="https://unpkg.com/lunr@2.0.4/lunr.js"></script>
+
+<!-- Firebase CDN -->
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
+
+   
+
+<!-- Java Script -->
+<script src="../../../plugins/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- Probability Packages -->
+<script src="../../../js/probabilityUtils.js"></script>
+<script src="../../../plugins/probability/gaussian.js"></script>
+<script src="../../../plugins/color.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js'></script>
+
+
+<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<!-- Stanford -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+
+<!-- Math Jax -->
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script> -->
+<script type="text/javascript">
+  MathJax = {
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "action.js"]
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+	"fast-preview": {
+	  disabled: true
+	}
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<script src="../../../plugins/math.min.js"></script>
+
+
+
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+ <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script src="../../../plugins/jquery.mCustomScrollbar.js"></script>
+
+</head>
+
+<script>
+  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
+  Chart.defaults.global.defaultFontSize = 18;
+</script>
+
+
+<!-- I declare a few math operators I often use in equations -->
+<div style="display:none">
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
+  $\DeclareMathOperator{\c}{^C}$
+  $\DeclareMathOperator{\or}{  or}$
+  $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\var}{Var}$
+  $\DeclareMathOperator{\Var}{Var}$
+  $\DeclareMathOperator{\Std}{Std}$
+  $\DeclareMathOperator{\E}{E}$
+  $\DeclareMathOperator{\std}{Std}$
+  $\DeclareMathOperator{\Ber}{Bern}$
+  $\DeclareMathOperator{\Bin}{Bin}$
+  $\DeclareMathOperator{\Poi}{Poi}$
+  $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Geo}{Geo}$
+  $\DeclareMathOperator{\NegBin}{NegBin}$
+  $\DeclareMathOperator{\Beta}{Beta}$
+  $\DeclareMathOperator{\Exp}{Exp}$
+  $\DeclareMathOperator{\N}{N}$
+  $\DeclareMathOperator{\R}{\mathbb{R}}$
+  $\DeclareMathOperator{\argmax}{argmax}$
+  $\newcommand{\d}{\, d}$
+  
+</div>
+
+<body class="greyBackground">
+
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!-- <div></div> -->
+        <a style="text-align:center" href="../../index.html"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
+    </div>
+
+    <div> 
+        <!-- Put a link back to cs109 -->
+    
+
+        <!-- This adds a search bar! -->
+        <div class="searchCol" style="font-family: 'Source Sans Pro', sans-serif;">
+            
+            <input type="text" class="form-control bookSearch" id="probability-for-digital-world-search" aria-describedby="search box" placeholder="🔍 Search book..."/>
+        </div>
+        
+    </div>
+
+<!-- intro -->
+<ul class="list-unstyled components">
+<li>
+</li>
+</ul>
+
+<!-- part1 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part1">Part 1: Core Probability</p></li>
+<li>
+<a id=sidebar-counting href="../../part1/counting">Counting</a>
+<a id=sidebar-combinatorics href="../../part1/combinatorics">Combinatorics</a>
+<a id=sidebar-probability href="../../part1/probability">Definition of Probability</a>
+<a id=sidebar-equally_likely href="../../part1/equally_likely">Equally Likely Outcomes</a>
+<a id=sidebar-prob_or href="../../part1/prob_or">Probability of <b>or</b></a>
+<a id=sidebar-cond_prob href="../../part1/cond_prob">Conditional Probability</a>
+<a id=sidebar-independence href="../../part1/independence">Independence</a>
+<a id=sidebar-prob_and href="../../part1/prob_and">Probability of <b>and</b></a>
+<a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
+<a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
+<a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+
+<li>
+    <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part1_examples">
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li><li><a href="../../examples/many_flips">Many Coin Flips</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part2 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
+<li>
+<a id=sidebar-rvs href="../../part2/rvs">Random Variables</a>
+<a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
+<a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
+<a id=sidebar-variance href="../../part2/variance">Variance</a>
+<a id=sidebar-bernoulli href="../../part2/bernoulli">Bernoulli Distribution</a>
+<a id=sidebar-binomial href="../../part2/binomial">Binomial Distribution</a>
+<a id=sidebar-poisson href="../../part2/poisson">Poisson Distribution</a>
+<a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
+<a id=sidebar-uniform href="../../part2/uniform">Uniform Distribution</a>
+<a id=sidebar-exponential href="../../part2/exponential">Exponential Distribution</a>
+<a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
+<a id=sidebar-binomial_approx href="../../part2/binomial_approx">Binomial Approximation</a>
+<a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
+
+<li>
+    <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part2_examples">
+        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part3 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part3">Part 3: Probabilistic Models</p></li>
+<li>
+<a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
+<a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
+<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
+
+<li>
+    <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part3_examples">
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part4 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part4">Part 4: Uncertainty Theory</p></li>
+<li>
+<a id=sidebar-summation_vars href="../../part4/summation_vars">Adding Random Variables</a>
+<a id=sidebar-clt href="../../part4/clt">Central Limit Theorem</a>
+<a id=sidebar-samples href="../../part4/samples">Sampling</a>
+<a id=sidebar-bootstrapping href="../../part4/bootstrapping">Bootstrapping</a>
+<a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
+
+<li>
+    <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part4_examples">
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part5 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part5">Part 5: Machine Learning</p></li>
+<li>
+<a id=sidebar-parameter_estimation href="../../part5/parameter_estimation">Parameter Estimation</a>
+<a id=sidebar-mle href="../../part5/mle">Maximum Likelihood Estimation</a>
+<a id=sidebar-map href="../../part5/map">Maximum A Posteriori</a>
+<a id=sidebar-machine_learning href="../../part5/machine_learning">Machine Learning</a>
+<a id=sidebar-naive_bayes href="../../part5/naive_bayes">Naïve Bayes</a>
+<a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
+
+<li>
+    <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part5_examples">
+        
+    </ul>
+</li>
+</li>
+</ul>
+
+
+
+    <!-- <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part ?: Misfits</p>
+        </li>
+        <li>
+             <a href="../../examples/probBabies.html">Probability and babies</a>
+            
+             <a href="../../">Sampling from a likelihood function</a>
+             <a href="../../">Law of Total Expectation</a>
+            
+        </li>
+    </ul> -->
+
+
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            Ⓒ Chris Piech, Stanford University
+            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
+        </li>
+    </ul>
+</nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+<button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
+    <i class="fas fa-align-left"></i>
+    <span></span>
+</button>
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+              <span style="font-size:150%">I'm Curious</span>
+              <span></span>
+          </button> -->
+            
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col handout" >
+              
+                        
+ 
+
+<center><h1>100 Binomial Problems</h1></center>
+<hr/>
+
+Just for fun (and to give you a lot of practice) I wrote a generative probabilistic program which could sample binomial distribution problems. Here are 100 binomial questions:
+
+<h3>Questions</h3>
+<p>
+<b><i>Question 1:</i></b> 
+Laura is running a server cluster with 50 computers. The probability of a crash on a given server is 0.5. What is the standard deviation of crashes? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 1:</i></b><br/>
+Let $X$ be the number of crashes.
+$X \sim \Bin(n = 50, p = 0.5)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{50 \cdot 0.5 \cdot (1 - 0.5)}\\ &= 3.54
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 2:</i></b> 
+You are showing an online-ad to 30 people. The probability of an ad ignore on each ad shown is 2/3. What is the expected number of ad clicks? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 2:</i></b><br/>
+Let $X$ be the number of ad clicks.
+$X \sim \Bin(n = 30, p = 1/3)$
+\begin{align*}
+\E[X] &= np \\ &= 30 \cdot 1/3 \\ &= 10
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 3:</i></b> 
+A machine learning algorithm makes binary predictions. The machine learning algorithm makes 50 guesses where the probability of a incorrect prediction on a given guess is 19/25. What is the probability that the number of correct predictions is greater than 0? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 3:</i></b><br/>
+Let $X$ be the number of correct predictions.
+$X \sim \Bin(n = 50, p = 6/25)$
+\begin{align*}
+\P(X > 0) &=  1 - \P(0 <= X <= 0)\\
+ &= 1 - {n \choose 0} p^0 (1 - p)^{n - 0}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 4:</i></b> 
+Wind blows independently across 50 locations. The probability of no wind at a given location is 0.5. What is the expected number of locations that have wind? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 4:</i></b><br/>
+Let $X$ be the number of locations that have wind.
+$X \sim \Bin(n = 50, p = 0.5)$
+\begin{align*}
+\E[X] &= np \\ &= 50 \cdot 0.5 \\ &= 25.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 5:</i></b> 
+Wind blows independently across 30 locations. What is the standard deviation of locations that have wind? the probability of wind at each location is 0.6. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 5:</i></b><br/>
+Let $X$ be the number of locations that have wind.
+$X \sim \Bin(n = 30, p = 0.6)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{30 \cdot 0.6 \cdot (1 - 0.6)}\\ &= 2.68
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 6:</i></b> 
+You are trying to mine bitcoins. There are 50 independent attempts where the probability of a mining a bitcoin on a given attempt is 0.6. What is the expectation of bitcoins mined? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 6:</i></b><br/>
+Let $X$ be the number of bitcoins mined.
+$X \sim \Bin(n = 50, p = 0.6)$
+\begin{align*}
+\E[X] &= np \\ &= 50 \cdot 0.6 \\ &= 30.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 7:</i></b> 
+You are testing a new medicine on 40 patients. What is P(X is exactly 38)? The number of cured patients can be represented by a random variable X. X ~ Bin(40, 3/10). 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 7:</i></b><br/>
+Let $X$ be the number of cured patients.
+$X \sim \Bin(n = 40, p = 3/10)$
+\begin{align*}
+\P(X = 38) &= 
+      {n \choose 38 } p^{ 38 } (1 - p)^{n - 38 } \\
+      &= { 40 \choose 38 } 3/10^{ 38 } (1 - 3/10)^{40 - 38 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 8:</i></b> 
+You are manufacturing chips and are testing for defects. There are 50 independent tests and 0.5 is the probability of a defect on each test. What is the standard deviation of defects? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 8:</i></b><br/>
+Let $X$ be the number of defects.
+$X \sim \Bin(n = 50, p = 0.5)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{50 \cdot 0.5 \cdot (1 - 0.5)}\\ &= 3.54
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 9:</i></b> 
+Laura is flipping a coin 12 times. The probability of a tail on a given coin-flip is 5/12. What is the probability that the number of tails is greater than or equal to 2? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 9:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 12, p = 5/12)$
+\begin{align*}
+\P(X >= 2) &=  1 - \P(0 <= X <= 1)\\
+ &= 1 - \sum_{i = 0}^{1} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 10:</i></b> 
+You are asking a survey question where responses are "like" or "dislike". There are 30 responses. You can assume each response is independent where the probability of a dislike on a given response is 1/6. What is the probability that the number of likes is greater than 28? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 10:</i></b><br/>
+Let $X$ be the number of likes.
+$X \sim \Bin(n = 30, p = 5/6)$
+\begin{align*}
+\P(X > 28) &= P(29 <= X <= 30)\\ 
+ &= \sum_{i = 29}^{30} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 11:</i></b> 
+A ball hits a series of 50 pins where it can bounce either right or left. The probability of a left on a given pin hit is 0.4. What is the standard deviation of rights? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 11:</i></b><br/>
+Let $X$ be the number of rights.
+$X \sim \Bin(n = 50, p = 3/5)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{50 \cdot 3/5 \cdot (1 - 3/5)}\\ &= 3.46
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 12:</i></b> 
+You are sending a stream of 30 bits to space. The probability of a no corruption on a given bit is 1/3. What is the probability that the number of corruptions is 10? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 12:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 30, p = 2/3)$
+\begin{align*}
+\P(X = 10) &= 
+      {n \choose 10 } p^{ 10 } (1 - p)^{n - 10 } \\
+      &= { 30 \choose 10 } 2/3^{ 10 } (1 - 2/3)^{30 - 10 } \\
+      &= 0.00015
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 13:</i></b> 
+Wind blows independently across locations. The probability of wind at a given location is 0.9. The number of independent locations is 20. What is the probability that the number of locations that have wind is not less than 19? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 13:</i></b><br/>
+Let $X$ be the number of locations that have wind.
+$X \sim \Bin(n = 20, p = 0.9)$
+\begin{align*}
+\P(X >= 19) &= P(19 <= X <= 20)\\ 
+ &= \sum_{i = 19}^{20} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 14:</i></b> 
+You are sending a stream of bits to space. There are 30 independent bits where 5/6 is the probability of a no corruption on each bit. What is the probability that the number of corruptions is 21? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 14:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 30, p = 1/6)$
+\begin{align*}
+\P(X = 21) &= 
+      {n \choose 21 } p^{ 21 } (1 - p)^{n - 21 } \\
+      &= { 30 \choose 21 } 1/6^{ 21 } (1 - 1/6)^{30 - 21 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 15:</i></b> 
+Cody generates random bit strings. There are 20 independent bits. Each bit has a 1/4 probability of resulting in a 1. What is the probability that the number of 1s is 11? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 15:</i></b><br/>
+Let $X$ be the number of 1s.
+$X \sim \Bin(n = 20, p = 1/4)$
+\begin{align*}
+\P(X = 11) &= 
+      {n \choose 11 } p^{ 11 } (1 - p)^{n - 11 } \\
+      &= { 20 \choose 11 } 1/4^{ 11 } (1 - 1/4)^{20 - 11 } \\
+      &= 0.00301
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 16:</i></b> 
+In a restaurant some customers ask for a water with their meal. A random sample of 40 customers is selected where the probability of a water requested by a given customer is 9/20. What is the probability that the number of waters requested is 16? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 16:</i></b><br/>
+Let $X$ be the number of waters requested.
+$X \sim \Bin(n = 40, p = 9/20)$
+\begin{align*}
+\P(X = 16) &= 
+      {n \choose 16 } p^{ 16 } (1 - p)^{n - 16 } \\
+      &= { 40 \choose 16 } 9/20^{ 16 } (1 - 9/20)^{40 - 16 } \\
+      &= 0.10433
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 17:</i></b> 
+A student is guessing randomly on an exam with 12 questions. What is the expected number of correct answers? the probability of a correct answer on a given question is 5/12. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 17:</i></b><br/>
+Let $X$ be the number of correct answers.
+$X \sim \Bin(n = 12, p = 5/12)$
+\begin{align*}
+\E[X] &= np \\ &= 12 \cdot 5/12 \\ &= 5
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 18:</i></b> 
+Laura is trying to mine bitcoins. The number of bitcoins mined can be represented by a random variable X. X ~ Bin(n = 100, p = 1/2). What is P(X is equal to 53)? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 18:</i></b><br/>
+Let $X$ be the number of bitcoins mined.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\P(X = 53) &= 
+      {n \choose 53 } p^{ 53 } (1 - p)^{n - 53 } \\
+      &= { 100 \choose 53 } 1/2^{ 53 } (1 - 1/2)^{100 - 53 } \\
+      &= 0.06659
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 19:</i></b> 
+You are showing an online-ad to customers. The add is shown to 100 people. The probability of an ad ignore on a given ad shown is 1/2. What is the standard deviation of ad clicks? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 19:</i></b><br/>
+Let $X$ be the number of ad clicks.
+$X \sim \Bin(n = 100, p = 0.5)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{100 \cdot 0.5 \cdot (1 - 0.5)}\\ &= 5.00
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 20:</i></b> 
+You are running a server cluster with 40 computers. 5/8 is the probability of a computer continuing to work on each server. What is the expected number of crashes? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 20:</i></b><br/>
+Let $X$ be the number of crashes.
+$X \sim \Bin(n = 40, p = 3/8)$
+\begin{align*}
+\E[X] &= np \\ &= 40 \cdot 3/8 \\ &= 15
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 21:</i></b> 
+You are hashing 100 strings into a hashtable. The probability of a hash to the first bucket on a given string hash is 3/20. What is the probability that the number of hashes to the first bucket is greater than or equal to 97? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 21:</i></b><br/>
+Let $X$ be the number of hashes to the first bucket.
+$X \sim \Bin(n = 100, p = 3/20)$
+\begin{align*}
+\P(X >= 97) &= P(97 <= X <= 100)\\ 
+ &= \sum_{i = 97}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 22:</i></b> 
+You are running in an election with 50 voters. 6/25 is the probability of a vote for you on each vote. What is the probability that the number of votes for you is less than 2? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 22:</i></b><br/>
+Let $X$ be the number of votes for you.
+$X \sim \Bin(n = 50, p = 6/25)$
+\begin{align*}
+\P(X < 2) &= P(0 <= X <= 1)\\ 
+ &= \sum_{i = 0}^{1} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 23:</i></b> 
+Irina is sending a stream of 40 bits to space. The probability of a corruption on each bit is 3/4. What is the probability that the number of corruptions is 22? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 23:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 40, p = 3/4)$
+\begin{align*}
+\P(X = 22) &= 
+      {n \choose 22 } p^{ 22 } (1 - p)^{n - 22 } \\
+      &= { 40 \choose 22 } 3/4^{ 22 } (1 - 3/4)^{40 - 22 } \\
+      &= 0.00294
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 24:</i></b> 
+You are hashing 100 strings into a hashtable. The probability of a hash to the first bucket on a given string hash is 9/50. What is the probability that the number of hashes to the first bucket is greater than 97? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 24:</i></b><br/>
+Let $X$ be the number of hashes to the first bucket.
+$X \sim \Bin(n = 100, p = 9/50)$
+\begin{align*}
+\P(X > 97) &= P(98 <= X <= 100)\\ 
+ &= \sum_{i = 98}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 25:</i></b> 
+You generate random bit strings. There are 100 independent bits. The probability of a 1 at a given bit is 3/25. What is the probability that the number of 1s is less than 97? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 25:</i></b><br/>
+Let $X$ be the number of 1s.
+$X \sim \Bin(n = 100, p = 3/25)$
+\begin{align*}
+\P(X < 97) &=  1 - \P(97 <= X <= 100)\\
+ &= 1 - \sum_{i = 97}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 26:</i></b> 
+You are manufacturing toys and are testing for defects. What is the probability that the number of defects is greater than 1? the probability of a non-defect on a given test is 16/25 and you test 50 objects. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 26:</i></b><br/>
+Let $X$ be the number of defects.
+$X \sim \Bin(n = 50, p = 9/25)$
+\begin{align*}
+\P(X > 1) &=  1 - \P(0 <= X <= 1)\\
+ &= 1 - \sum_{i = 0}^{1} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 27:</i></b> 
+Laura is sending a stream of 40 bits to space. The number of corruptions can be represented by a random variable X. X is a Binomial with n = 40 and p = 3/4. What is P(X = 25)? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 27:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 40, p = 3/4)$
+\begin{align*}
+\P(X = 25) &= 
+      {n \choose 25 } p^{ 25 } (1 - p)^{n - 25 } \\
+      &= { 40 \choose 25 } 3/4^{ 25 } (1 - 3/4)^{40 - 25 } \\
+      &= 0.02819
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 28:</i></b> 
+100 trials are run. What is the probability that the number of successes is 78? 1/2 is the probability of a success on each trial. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 28:</i></b><br/>
+Let $X$ be the number of successes.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\P(X = 78) &= 
+      {n \choose 78 } p^{ 78 } (1 - p)^{n - 78 } \\
+      &= { 100 \choose 78 } 1/2^{ 78 } (1 - 1/2)^{100 - 78 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 29:</i></b> 
+You are flipping a coin. You flip the coin 20 times. The probability of a tail on a given coin-flip is 1/10. What is the standard deviation of heads? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 29:</i></b><br/>
+Let $X$ be the number of heads.
+$X \sim \Bin(n = 20, p = 0.9)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{20 \cdot 0.9 \cdot (1 - 0.9)}\\ &= 1.34
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 30:</i></b> 
+Irina is showing an online-ad to 12 people. 5/12 is the probability of an ad click on each ad shown. What is the probability that the number of ad clicks is less than or equal to 11? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 30:</i></b><br/>
+Let $X$ be the number of ad clicks.
+$X \sim \Bin(n = 12, p = 5/12)$
+\begin{align*}
+\P(X <= 11) &=  1 - \P(12 <= X <= 12)\\
+ &= 1 - {n \choose 12} p^12 (1 - p)^{n - 12}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 31:</i></b> 
+You are flipping a coin 50 times. 19/25 is the probability of a head on each coin-flip. What is the standard deviation of tails? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 31:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 50, p = 6/25)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{50 \cdot 6/25 \cdot (1 - 6/25)}\\ &= 3.02
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 32:</i></b> 
+You are running in an election with 100 voters. The probability of a vote for you on each vote is 1/4. What is the probability that the number of votes for you is less than or equal to 97? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 32:</i></b><br/>
+Let $X$ be the number of votes for you.
+$X \sim \Bin(n = 100, p = 1/4)$
+\begin{align*}
+\P(X <= 97) &=  1 - \P(98 <= X <= 100)\\
+ &= 1 - \sum_{i = 98}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 33:</i></b> 
+You are running a server cluster with 40 computers. What is the probability that the number of crashes is less than or equal to 39? 3/4 is the probability of a computer continuing to work on each server. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 33:</i></b><br/>
+Let $X$ be the number of crashes.
+$X \sim \Bin(n = 40, p = 1/4)$
+\begin{align*}
+\P(X <= 39) &=  1 - \P(40 <= X <= 40)\\
+ &= 1 - {n \choose 40} p^40 (1 - p)^{n - 40}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 34:</i></b> 
+Waddie is sending a stream of bits to space. Waddie sends 100 bits. The probability of a corruption on each bit is 1/2. What is the standard deviation of corruptions? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 34:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{100 \cdot 1/2 \cdot (1 - 1/2)}\\ &= 5.00
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 35:</i></b> 
+A student is guessing randomly on an exam with 100 questions. Each question has a 0.5 probability of resulting in a incorrect answer. What is the probability that the number of correct answers is greater than 97? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 35:</i></b><br/>
+Let $X$ be the number of correct answers.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\P(X > 97) &= P(98 <= X <= 100)\\ 
+ &= \sum_{i = 98}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 36:</i></b> 
+You are testing a new medicine on patients. 0.5 is the probability of a cured patient on each trial. There are 10 independent trials. What is the expected number of cured patients? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 36:</i></b><br/>
+Let $X$ be the number of cured patients.
+$X \sim \Bin(n = 10, p = 0.5)$
+\begin{align*}
+\E[X] &= np \\ &= 10 \cdot 0.5 \\ &= 5.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 37:</i></b> 
+A ball hits a series of pins where it can either go right or left. The number of independent pin hits is 100. The probability of a right on each pin hit is 0.5. What is the standard deviation of rights? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 37:</i></b><br/>
+Let $X$ be the number of rights.
+$X \sim \Bin(n = 100, p = 0.5)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{100 \cdot 0.5 \cdot (1 - 0.5)}\\ &= 5.00
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 38:</i></b> 
+You are flipping a coin 40 times. The probability of a head on a given coin-flip is 1/2. What is the probability that the number of heads is 38? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 38:</i></b><br/>
+Let $X$ be the number of heads.
+$X \sim \Bin(n = 40, p = 1/2)$
+\begin{align*}
+\P(X = 38) &= 
+      {n \choose 38 } p^{ 38 } (1 - p)^{n - 38 } \\
+      &= { 40 \choose 38 } 1/2^{ 38 } (1 - 1/2)^{40 - 38 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 39:</i></b> 
+100 trials are run and the probability of a success on a given trial is 1/2. What is the standard deviation of successes? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 39:</i></b><br/>
+Let $X$ be the number of successes.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{100 \cdot 1/2 \cdot (1 - 1/2)}\\ &= 5.00
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 40:</i></b> 
+You are trying to mine bitcoins. There are 40 independent attempts. The probability of a mining a bitcoin on each attempt is 3/10. What is the probability that the number of bitcoins mined is 19? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 40:</i></b><br/>
+Let $X$ be the number of bitcoins mined.
+$X \sim \Bin(n = 40, p = 3/10)$
+\begin{align*}
+\P(X = 19) &= 
+      {n \choose 19 } p^{ 19 } (1 - p)^{n - 19 } \\
+      &= { 40 \choose 19 } 3/10^{ 19 } (1 - 3/10)^{40 - 19 } \\
+      &= 0.00852
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 41:</i></b> 
+20 trials are run. 0.5 is the probability of a failure on each trial. What is the probability that the number of successes is 6? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 41:</i></b><br/>
+Let $X$ be the number of successes.
+$X \sim \Bin(n = 20, p = 0.5)$
+\begin{align*}
+\P(X = 6) &= 
+      {n \choose 6 } p^{ 6 } (1 - p)^{n - 6 } \\
+      &= { 20 \choose 6 } 0.5^{ 6 } (1 - 0.5)^{20 - 6 } \\
+      &= 0.03696
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 42:</i></b> 
+You are flipping a coin. What is the probability that the number of tails is 0? there are 30 independent coin-flips where the probability of a head on a given coin-flip is 5/6. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 42:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 30, p = 1/6)$
+\begin{align*}
+\P(X = 0) &= 
+      {n \choose 0 } p^{ 0 } (1 - p)^{n - 0 } \\
+      &= { 30 \choose 0 } 1/6^{ 0 } (1 - 1/6)^{30 - 0 } \\
+      &= 0.00421
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 43:</i></b> 
+In a restaurant some customers ask for a water with their meal. A random sample of 20 customers is selected and each customer has a 1/4 probability of resulting in a water not requested. What is the probability that the number of waters requested is 14? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 43:</i></b><br/>
+Let $X$ be the number of waters requested.
+$X \sim \Bin(n = 20, p = 3/4)$
+\begin{align*}
+\P(X = 14) &= 
+      {n \choose 14 } p^{ 14 } (1 - p)^{n - 14 } \\
+      &= { 20 \choose 14 } 3/4^{ 14 } (1 - 3/4)^{20 - 14 } \\
+      &= 0.16861
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 44:</i></b> 
+A student is guessing randomly on an exam. 3/8 is the probability of a incorrect answer on each question. The number of independent questions is 40. What is the probability that the number of correct answers is less than or equal to 37? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 44:</i></b><br/>
+Let $X$ be the number of correct answers.
+$X \sim \Bin(n = 40, p = 5/8)$
+\begin{align*}
+\P(X <= 37) &=  1 - \P(38 <= X <= 40)\\
+ &= 1 - \sum_{i = 38}^{40} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 45:</i></b> 
+You are running in an election with 30 voters. 3/5 is the probability of a vote for you on each vote. What is the standard deviation of votes for you? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 45:</i></b><br/>
+Let $X$ be the number of votes for you.
+$X \sim \Bin(n = 30, p = 3/5)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{30 \cdot 3/5 \cdot (1 - 3/5)}\\ &= 2.68
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 46:</i></b> 
+Charlotte is flipping a coin 100 times. The probability of a tail on each coin-flip is 0.5. What is the probability that the number of tails is greater than 2? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 46:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 100, p = 0.5)$
+\begin{align*}
+\P(X > 2) &=  1 - \P(0 <= X <= 2)\\
+ &= 1 - \sum_{i = 0}^{2} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 47:</i></b> 
+You are trying to mine bitcoins. You try 50 times. 3/5 is the probability of a not mining a bitcoin on each attempt. What is the probability that the number of bitcoins mined is 14? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 47:</i></b><br/>
+Let $X$ be the number of bitcoins mined.
+$X \sim \Bin(n = 50, p = 2/5)$
+\begin{align*}
+\P(X = 14) &= 
+      {n \choose 14 } p^{ 14 } (1 - p)^{n - 14 } \\
+      &= { 50 \choose 14 } 2/5^{ 14 } (1 - 2/5)^{50 - 14 } \\
+      &= 0.02597
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 48:</i></b> 
+You are testing a new medicine on 100 patients. The probability of a cured patient on a given trial is 3/25. What is the probability that the number of cured patients is not less than 97? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 48:</i></b><br/>
+Let $X$ be the number of cured patients.
+$X \sim \Bin(n = 100, p = 3/25)$
+\begin{align*}
+\P(X >= 97) &= P(97 <= X <= 100)\\ 
+ &= \sum_{i = 97}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 49:</i></b> 
+Wind blows independently across 40 locations. What is the probability that the number of locations that have wind is 40? 11/20 is the probability of no wind at each location. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 49:</i></b><br/>
+Let $X$ be the number of locations that have wind.
+$X \sim \Bin(n = 40, p = 9/20)$
+\begin{align*}
+\P(X = 40) &= 
+      {n \choose 40 } p^{ 40 } (1 - p)^{n - 40 } \\
+      &= { 40 \choose 40 } 9/20^{ 40 } (1 - 9/20)^{40 - 40 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 50:</i></b> 
+You are showing an online-ad to 30 people. 1/6 is the probability of an ad click on each ad shown. What is the probability that the number of ad clicks is less than or equal to 28? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 50:</i></b><br/>
+Let $X$ be the number of ad clicks.
+$X \sim \Bin(n = 30, p = 1/6)$
+\begin{align*}
+\P(X <= 28) &=  1 - \P(29 <= X <= 30)\\
+ &= 1 - \sum_{i = 29}^{30} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 51:</i></b> 
+You are flipping a coin. You flip the coin 40 times and 7/8 is the probability of a head on each coin-flip. What is the standard deviation of tails? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 51:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 40, p = 1/8)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{40 \cdot 1/8 \cdot (1 - 1/8)}\\ &= 2.09
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 52:</i></b> 
+Cody is sending a stream of bits to space. 2/5 is the probability of a no corruption on each bit and there are 20 independent bits. What is the expectation of corruptions? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 52:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 20, p = 3/5)$
+\begin{align*}
+\E[X] &= np \\ &= 20 \cdot 3/5 \\ &= 12
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 53:</i></b> 
+You are running in an election. There are 12 independent votes and 5/6 is the probability of a vote for you on each vote. What is the probability that the number of votes for you is greater than or equal to 9? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 53:</i></b><br/>
+Let $X$ be the number of votes for you.
+$X \sim \Bin(n = 12, p = 5/6)$
+\begin{align*}
+\P(X >= 9) &= P(9 <= X <= 12)\\ 
+ &= \sum_{i = 9}^{12} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 54:</i></b> 
+You are flipping a coin. The number of tails can be represented by a random variable X. X is a Bin(n = 30, p = 5/6). What is the probability that X = 1? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 54:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 30, p = 5/6)$
+\begin{align*}
+\P(X = 1) &= 
+      {n \choose 1 } p^{ 1 } (1 - p)^{n - 1 } \\
+      &= { 30 \choose 1 } 5/6^{ 1 } (1 - 5/6)^{30 - 1 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 55:</i></b> 
+In a restaurant some customers ask for a water with their meal. A random sample of 100 customers is selected where 0.3 is the probability of a water requested by each customer. What is the expected number of waters requested? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 55:</i></b><br/>
+Let $X$ be the number of waters requested.
+$X \sim \Bin(n = 100, p = 0.3)$
+\begin{align*}
+\E[X] &= np \\ &= 100 \cdot 0.3 \\ &= 30.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 56:</i></b> 
+You are hashing strings into a hashtable. 30 strings are hashed. The probability of a hash to the first bucket on each string hash is 1/6. What is the expected number of hashes to the first bucket? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 56:</i></b><br/>
+Let $X$ be the number of hashes to the first bucket.
+$X \sim \Bin(n = 30, p = 1/6)$
+\begin{align*}
+\E[X] &= np \\ &= 30 \cdot 1/6 \\ &= 5
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 57:</i></b> 
+You are flipping a coin 100 times. What is the probability that the number of tails is greater than or equal to 98? 19/20 is the probability of a head on each coin-flip. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 57:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 100, p = 1/20)$
+\begin{align*}
+\P(X >= 98) &= P(98 <= X <= 100)\\ 
+ &= \sum_{i = 98}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 58:</i></b> 
+Irina is running a server cluster. What is the probability that the number of crashes is less than 99? the server has 100 computers which crash independently and the probability of a computer continuing to work on a given server is 22/25. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 58:</i></b><br/>
+Let $X$ be the number of crashes.
+$X \sim \Bin(n = 100, p = 3/25)$
+\begin{align*}
+\P(X < 99) &=  1 - \P(99 <= X <= 100)\\
+ &= 1 - \sum_{i = 99}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 59:</i></b> 
+You are manufacturing chairs and are testing for defects. You test 100 objects. 1/2 is the probability of a non-defect on each test. What is the probability that the number of defects is not greater than 97? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 59:</i></b><br/>
+Let $X$ be the number of defects.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\P(X <= 97) &=  1 - \P(98 <= X <= 100)\\
+ &= 1 - \sum_{i = 98}^{100} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 60:</i></b> 
+In a restaurant some customers ask for a water with their meal. There are 50 customers. You can assume each customer is independent. 0.2 is the probability of a water requested by each customer. What is the expected number of waters requested? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 60:</i></b><br/>
+Let $X$ be the number of waters requested.
+$X \sim \Bin(n = 50, p = 0.2)$
+\begin{align*}
+\E[X] &= np \\ &= 50 \cdot 0.2 \\ &= 10.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 61:</i></b> 
+You are showing an online-ad to 40 people. 1/4 is the probability of an ad ignore on each ad shown. What is the probability that the number of ad clicks is 9? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 61:</i></b><br/>
+Let $X$ be the number of ad clicks.
+$X \sim \Bin(n = 40, p = 3/4)$
+\begin{align*}
+\P(X = 9) &= 
+      {n \choose 9 } p^{ 9 } (1 - p)^{n - 9 } \\
+      &= { 40 \choose 9 } 3/4^{ 9 } (1 - 3/4)^{40 - 9 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 62:</i></b> 
+100 trials are run. Each trial has a 22/25 probability of resulting in a failure. What is the standard deviation of successes? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 62:</i></b><br/>
+Let $X$ be the number of successes.
+$X \sim \Bin(n = 100, p = 3/25)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{100 \cdot 3/25 \cdot (1 - 3/25)}\\ &= 3.25
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 63:</i></b> 
+A machine learning algorithm makes binary predictions. There are 12 independent guesses where the probability of a incorrect prediction on a given guess is 1/6. What is the expected number of correct predictions? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 63:</i></b><br/>
+Let $X$ be the number of correct predictions.
+$X \sim \Bin(n = 12, p = 5/6)$
+\begin{align*}
+\E[X] &= np \\ &= 12 \cdot 5/6 \\ &= 10
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 64:</i></b> 
+Waddie is showing an online-ad to customers. 1/2 is the probability of an ad click on each ad shown. The add is shown to 100 people. What is the average number of ad clicks? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 64:</i></b><br/>
+Let $X$ be the number of ad clicks.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\E[X] &= np \\ &= 100 \cdot 1/2 \\ &= 50
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 65:</i></b> 
+Charlotte is testing a new medicine on 50 patients. The probability of a cured patient on a given trial is 1/5. What is the probability that the number of cured patients is 12? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 65:</i></b><br/>
+Let $X$ be the number of cured patients.
+$X \sim \Bin(n = 50, p = 1/5)$
+\begin{align*}
+\P(X = 12) &= 
+      {n \choose 12 } p^{ 12 } (1 - p)^{n - 12 } \\
+      &= { 50 \choose 12 } 1/5^{ 12 } (1 - 1/5)^{50 - 12 } \\
+      &= 0.10328
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 66:</i></b> 
+You are running in an election. The number of votes for you can be represented by a random variable X. X is a Bin(n = 50, p = 0.4). What is P(X is exactly 8)? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 66:</i></b><br/>
+Let $X$ be the number of votes for you.
+$X \sim \Bin(n = 50, p = 0.4)$
+\begin{align*}
+\P(X = 8) &= 
+      {n \choose 8 } p^{ 8 } (1 - p)^{n - 8 } \\
+      &= { 50 \choose 8 } 0.4^{ 8 } (1 - 0.4)^{50 - 8 } \\
+      &= 0.00017
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 67:</i></b> 
+Irina is flipping a coin 100 times. The probability of a head on a given coin-flip is 1/2. What is the probability that the number of tails is less than or equal to 99? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 67:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 100, p = 0.5)$
+\begin{align*}
+\P(X <= 99) &=  1 - \P(100 <= X <= 100)\\
+ &= 1 - {n \choose 100} p^100 (1 - p)^{n - 100}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 68:</i></b> 
+You are manufacturing airplanes and are testing for defects. You test 30 objects and the probability of a defect on a given test is 5/6. What is the probability that the number of defects is 14? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 68:</i></b><br/>
+Let $X$ be the number of defects.
+$X \sim \Bin(n = 30, p = 5/6)$
+\begin{align*}
+\P(X = 14) &= 
+      {n \choose 14 } p^{ 14 } (1 - p)^{n - 14 } \\
+      &= { 30 \choose 14 } 5/6^{ 14 } (1 - 5/6)^{30 - 14 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 69:</i></b> 
+You are flipping a coin 20 times. The number of heads can be represented by a random variable X. X is a Binomial with 20 trials. Each trial is a success, independently, with probability 1/4. What is the standard deviation of X? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 69:</i></b><br/>
+Let $X$ be the number of heads.
+$X \sim \Bin(n = 20, p = 1/4)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{20 \cdot 1/4 \cdot (1 - 1/4)}\\ &= 1.94
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 70:</i></b> 
+You are giving a survey question where responses are "like" or "dislike" to 100 people. What is the probability that X is equal to 4? The number of likes can be represented by a random variable X. X is a Bin(100, 0.5). 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 70:</i></b><br/>
+Let $X$ be the number of likes.
+$X \sim \Bin(n = 100, p = 0.5)$
+\begin{align*}
+\P(X = 4) &= 
+      {n \choose 4 } p^{ 4 } (1 - p)^{n - 4 } \\
+      &= { 100 \choose 4 } 0.5^{ 4 } (1 - 0.5)^{100 - 4 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 71:</i></b> 
+You are flipping a coin. There are 20 independent coin-flips where the probability of a tail on a given coin-flip is 0.9. What is the standard deviation of tails? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 71:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 20, p = 0.9)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{20 \cdot 0.9 \cdot (1 - 0.9)}\\ &= 1.34
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 72:</i></b> 
+You are flipping a coin. There are 50 independent coin-flips. The probability of a tail on a given coin-flip is 4/5. What is the expectation of heads? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 72:</i></b><br/>
+Let $X$ be the number of heads.
+$X \sim \Bin(n = 50, p = 1/5)$
+\begin{align*}
+\E[X] &= np \\ &= 50 \cdot 1/5 \\ &= 10
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 73:</i></b> 
+You are giving a survey question where responses are "like" or "dislike" to 100 people. What is the standard deviation of likes? the probability of a dislike on each response is 41/50. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 73:</i></b><br/>
+Let $X$ be the number of likes.
+$X \sim \Bin(n = 100, p = 9/50)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{100 \cdot 9/50 \cdot (1 - 9/50)}\\ &= 3.84
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 74:</i></b> 
+In a restaurant some customers ask for a water with their meal. 0.6 is the probability of a water requested by each customer and there are 30 independent customers. What is the expected number of waters requested? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 74:</i></b><br/>
+Let $X$ be the number of waters requested.
+$X \sim \Bin(n = 30, p = 0.6)$
+\begin{align*}
+\E[X] &= np \\ &= 30 \cdot 0.6 \\ &= 18.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 75:</i></b> 
+There are 40 independent trials and 0.5 is the probability of a failure on each trial. What is the expectation of successes? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 75:</i></b><br/>
+Let $X$ be the number of successes.
+$X \sim \Bin(n = 40, p = 1/2)$
+\begin{align*}
+\E[X] &= np \\ &= 40 \cdot 1/2 \\ &= 20
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 76:</i></b> 
+Imran is showing an online-ad to 30 people. 5/6 is the probability of an ad click on each ad shown. What is the standard deviation of ad clicks? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 76:</i></b><br/>
+Let $X$ be the number of ad clicks.
+$X \sim \Bin(n = 30, p = 5/6)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{30 \cdot 5/6 \cdot (1 - 5/6)}\\ &= 2.04
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 77:</i></b> 
+You are running a server cluster. What is the probability that the number of crashes is 1? the server has 30 computers which crash independently and each server has a 1/3 probability of resulting in a crash. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 77:</i></b><br/>
+Let $X$ be the number of crashes.
+$X \sim \Bin(n = 30, p = 1/3)$
+\begin{align*}
+\P(X = 1) &= 
+      {n \choose 1 } p^{ 1 } (1 - p)^{n - 1 } \\
+      &= { 30 \choose 1 } 1/3^{ 1 } (1 - 1/3)^{30 - 1 } \\
+      &= 0.00008
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 78:</i></b> 
+Cody is running a server cluster with 40 computers. What is P(X <= 39)? The number of crashes can be represented by a random variable X. X is a Bin(n = 40, p = 3/4). 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 78:</i></b><br/>
+Let $X$ be the number of crashes.
+$X \sim \Bin(n = 40, p = 3/4)$
+\begin{align*}
+\P(X <= 39) &=  1 - \P(40 <= X <= 40)\\
+ &= 1 - {n \choose 40} p^40 (1 - p)^{n - 40}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 79:</i></b> 
+You are hashing strings into a hashtable. 5/6 is the probability of a hash to the first bucket on each string hash. There are 30 independent string hashes. What is the probability that the number of hashes to the first bucket is greater than or equal to 29? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 79:</i></b><br/>
+Let $X$ be the number of hashes to the first bucket.
+$X \sim \Bin(n = 30, p = 5/6)$
+\begin{align*}
+\P(X >= 29) &= P(29 <= X <= 30)\\ 
+ &= \sum_{i = 29}^{30} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 80:</i></b> 
+Irina is flipping a coin. Irina flips the coin 30 times and the probability of a head on each coin-flip is 0.4. What is the probability that the number of tails is 19? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 80:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 30, p = 0.6)$
+\begin{align*}
+\P(X = 19) &= 
+      {n \choose 19 } p^{ 19 } (1 - p)^{n - 19 } \\
+      &= { 30 \choose 19 } 0.6^{ 19 } (1 - 0.6)^{30 - 19 } \\
+      &= 0.13962
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 81:</i></b> 
+You are asking a survey question where responses are "like" or "dislike". The probability of a like on a given response is 1/2. You give the survey to 100 people. What is the probability that the number of likes is not less than 2? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 81:</i></b><br/>
+Let $X$ be the number of likes.
+$X \sim \Bin(n = 100, p = 1/2)$
+\begin{align*}
+\P(X >= 2) &=  1 - \P(0 <= X <= 1)\\
+ &= 1 - \sum_{i = 0}^{1} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 82:</i></b> 
+Wind blows independently across locations. The number of independent locations is 100. The probability of wind at a given location is 3/20. What is the probability that the number of locations that have wind is 93? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 82:</i></b><br/>
+Let $X$ be the number of locations that have wind.
+$X \sim \Bin(n = 100, p = 3/20)$
+\begin{align*}
+\P(X = 93) &= 
+      {n \choose 93 } p^{ 93 } (1 - p)^{n - 93 } \\
+      &= { 100 \choose 93 } 3/20^{ 93 } (1 - 3/20)^{100 - 93 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 83:</i></b> 
+You are flipping a coin. 0.9 is the probability of a tail on each coin-flip. You flip the coin 50 times. What is the expected number of heads? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 83:</i></b><br/>
+Let $X$ be the number of heads.
+$X \sim \Bin(n = 50, p = 0.1)$
+\begin{align*}
+\E[X] &= np \\ &= 50 \cdot 0.1 \\ &= 5.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 84:</i></b> 
+A machine learning algorithm makes binary predictions. What is the probability that the number of correct predictions is less than or equal to 0? the probability of a incorrect prediction on a given guess is 1/4. The number of independent guesses is 40. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 84:</i></b><br/>
+Let $X$ be the number of correct predictions.
+$X \sim \Bin(n = 40, p = 3/4)$
+\begin{align*}
+\P(X <= 0) &= P(0 <= X <= 0)\\ 
+ &= {n \choose 0} p^0 (1 - p)^{n - 0}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 85:</i></b> 
+Wind blows independently across 20 locations. 1/2 is the probability of wind at each location. What is the standard deviation of locations that have wind? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 85:</i></b><br/>
+Let $X$ be the number of locations that have wind.
+$X \sim \Bin(n = 20, p = 1/2)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{20 \cdot 1/2 \cdot (1 - 1/2)}\\ &= 2.24
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 86:</i></b> 
+7/10 is the probability of a failure on each trial and the number of independent trials is 100. What is the probability that the number of successes is 7? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 86:</i></b><br/>
+Let $X$ be the number of successes.
+$X \sim \Bin(n = 100, p = 0.3)$
+\begin{align*}
+\P(X = 7) &= 
+      {n \choose 7 } p^{ 7 } (1 - p)^{n - 7 } \\
+      &= { 100 \choose 7 } 0.3^{ 7 } (1 - 0.3)^{100 - 7 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 87:</i></b> 
+You generate random bit strings. What is the expectation of 1s? there are 100 independent bits and 0.1 is the probability of a 1 at each bit. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 87:</i></b><br/>
+Let $X$ be the number of 1s.
+$X \sim \Bin(n = 100, p = 0.1)$
+\begin{align*}
+\E[X] &= np \\ &= 100 \cdot 0.1 \\ &= 10.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 88:</i></b> 
+You are testing a new medicine on patients. 3/5 is the probability of a cured patient on each trial. There are 30 independent trials. What is the probability that the number of cured patients is greater than or equal to 1? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 88:</i></b><br/>
+Let $X$ be the number of cured patients.
+$X \sim \Bin(n = 30, p = 3/5)$
+\begin{align*}
+\P(X >= 1) &=  1 - \P(0 <= X <= 0)\\
+ &= 1 - {n \choose 0} p^0 (1 - p)^{n - 0}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 89:</i></b> 
+A student is guessing randomly on an exam. 0.9 is the probability of a correct answer on each question and the test has 20 questions. What is the standard deviation of correct answers? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 89:</i></b><br/>
+Let $X$ be the number of correct answers.
+$X \sim \Bin(n = 20, p = 0.9)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{20 \cdot 0.9 \cdot (1 - 0.9)}\\ &= 1.34
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 90:</i></b> 
+A student is guessing randomly on an exam with 40 questions. What is the probability that the number of correct answers is 32? 0.5 is the probability of a correct answer on each question. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 90:</i></b><br/>
+Let $X$ be the number of correct answers.
+$X \sim \Bin(n = 40, p = 0.5)$
+\begin{align*}
+\P(X = 32) &= 
+      {n \choose 32 } p^{ 32 } (1 - p)^{n - 32 } \\
+      &= { 40 \choose 32 } 0.5^{ 32 } (1 - 0.5)^{40 - 32 } \\
+      &= 0.00007
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 91:</i></b> 
+In a restaurant some customers ask for a water with their meal. A random sample of 40 customers is selected where the probability of a water not requested by a given customer is 1/4. What is the standard deviation of waters requested? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 91:</i></b><br/>
+Let $X$ be the number of waters requested.
+$X \sim \Bin(n = 40, p = 3/4)$
+\begin{align*}
+\Std(X) &= \sqrt{np(1-p)} \\ &= \sqrt{40 \cdot 3/4 \cdot (1 - 3/4)}\\ &= 2.74
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 92:</i></b> 
+A machine learning algorithm makes binary predictions. The number of correct predictions can be represented by a random variable X. X is a Bin(n = 30, p = 2/5). What is P(X < 27)? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 92:</i></b><br/>
+Let $X$ be the number of correct predictions.
+$X \sim \Bin(n = 30, p = 2/5)$
+\begin{align*}
+\P(X < 27) &=  1 - \P(27 <= X <= 30)\\
+ &= 1 - \sum_{i = 27}^{30} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 93:</i></b> 
+Irina is flipping a coin. The probability of a tail on each coin-flip is 3/4. The number of independent coin-flips is 40. What is the probability that the number of tails is greater than 0? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 93:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 40, p = 3/4)$
+\begin{align*}
+\P(X > 0) &=  1 - \P(0 <= X <= 0)\\
+ &= 1 - {n \choose 0} p^0 (1 - p)^{n - 0}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 94:</i></b> 
+Waddie is sending a stream of 50 bits to space. The probability of a no corruption on a given bit is 1/2. What is the expectation of corruptions? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 94:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 50, p = 0.5)$
+\begin{align*}
+\E[X] &= np \\ &= 50 \cdot 0.5 \\ &= 25.0
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 95:</i></b> 
+You are hashing strings into a hashtable. There are 30 independent string hashes where the probability of a hash to the first bucket on each string hash is 5/6. What is the probability that the number of hashes to the first bucket is 24? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 95:</i></b><br/>
+Let $X$ be the number of hashes to the first bucket.
+$X \sim \Bin(n = 30, p = 5/6)$
+\begin{align*}
+\P(X = 24) &= 
+      {n \choose 24 } p^{ 24 } (1 - p)^{n - 24 } \\
+      &= { 30 \choose 24 } 5/6^{ 24 } (1 - 5/6)^{30 - 24 } \\
+      &= 0.16009
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 96:</i></b> 
+Charlotte is hashing strings into a hashtable. 100 strings are hashed and the probability of a hash to the first bucket on a given string hash is 1/5. What is the probability that the number of hashes to the first bucket is greater than or equal to 1? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 96:</i></b><br/>
+Let $X$ be the number of hashes to the first bucket.
+$X \sim \Bin(n = 100, p = 1/5)$
+\begin{align*}
+\P(X >= 1) &=  1 - \P(0 <= X <= 0)\\
+ &= 1 - {n \choose 0} p^0 (1 - p)^{n - 0}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 97:</i></b> 
+You are flipping a coin. Each coin-flip has a 3/10 probability of resulting in a head and there are 100 coin-flips. You can assume each coin-flip is independent. What is the probability that the number of heads is 0? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 97:</i></b><br/>
+Let $X$ be the number of heads.
+$X \sim \Bin(n = 100, p = 3/10)$
+\begin{align*}
+\P(X = 0) &= 
+      {n \choose 0 } p^{ 0 } (1 - p)^{n - 0 } \\
+      &= { 100 \choose 0 } 3/10^{ 0 } (1 - 3/10)^{100 - 0 } \\
+      &< 0.00001
+      
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 98:</i></b> 
+Chris is sending a stream of 50 bits to space. 16/25 is the probability of a no corruption on each bit. What is the probability that the number of corruptions is greater than or equal to 47? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 98:</i></b><br/>
+Let $X$ be the number of corruptions.
+$X \sim \Bin(n = 50, p = 9/25)$
+\begin{align*}
+\P(X >= 47) &= P(47 <= X <= 50)\\ 
+ &= \sum_{i = 47}^{50} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 99:</i></b> 
+You are flipping a coin 30 times. What is the probability that the number of tails is less than 29? the probability of a tail on a given coin-flip is 2/3. 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 99:</i></b><br/>
+Let $X$ be the number of tails.
+$X \sim \Bin(n = 30, p = 2/3)$
+\begin{align*}
+\P(X < 29) &=  1 - \P(29 <= X <= 30)\\
+ &= 1 - \sum_{i = 29}^{30} {n \choose i} p^i (1 - p)^{n - i}
+ \end{align*}
+
+</div></p>
+
+
+<p>
+<b><i>Question 100:</i></b> 
+You are manufacturing chips and are testing for defects. There are 40 independent tests. The probability of a non-defect on a given test is 5/8. What is the probability that the number of defects is 10? 
+</p>
+
+<p><div class="bordered">
+<b><i>Answer 100:</i></b><br/>
+Let $X$ be the number of defects.
+$X \sim \Bin(n = 40, p = 3/8)$
+\begin{align*}
+\P(X = 10) &= 
+      {n \choose 10 } p^{ 10 } (1 - p)^{n - 10 } \\
+      &= { 40 \choose 10 } 3/8^{ 10 } (1 - 3/8)^{40 - 10 } \\
+      &= 0.03507
+      
+ \end{align*}
+
+</div></p>
+
+
+                        
+
+<hr/>
+
+<script type="text/javascript">
+    // const firebase = require("firebase");
+    // Required for side-effects
+    // require("firebase/firestore");
+
+    $(document).ready(function () {
+        console.log('ready')
+        const scrollTop = getScrollTop()
+        console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
+        // $("#sidebar").mCustomScrollbar({
+        //     theme: "minimal",
+        //     mouseWheel: {preventDefault: true},
+        //     advanced:{
+        //      autoScrollOnFocus: false,
+        //      updateOnContentResize: true
+        //     },
+        //     scrollInertia:0,
+        //     contentTouchScroll:1,
+        //     mouseWheel: {
+        //         scrollAmount:1000
+        //     },
+        //     setTop:scrollTop + 'px',
+        //     callbacks:{
+        //         onScroll:function(){
+        //             if(hasStorage) {
+
+        //                 localStorage.scrollTop = this.mcs.top;
+        //                 console.log(localStorage.scrollTop)
+        //             }
+        //         }
+        //     } 
+        // });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+        
+        let lastPart = getUrlKey()
+
+        // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
+        //     scrollInertia:0
+        // });
+
+        // addExampleToFirebase()
+    });
+
+    function getScrollTop() {
+        console.log('here')
+        if(typeof(Storage) !== "undefined") {
+            return Number(localStorage.scrollTop)
+        }
+        return 0;
+    }
+
+    function getUrlKey() {
+        var pathname = window.location.pathname;
+        
+        let parts = pathname.split('/')
+        var currIndex = parts.length - 1
+        while(currIndex >= 0) {
+            let nextPart = parts[currIndex]
+            if(nextPart) {
+                return nextPart
+            }
+            currIndex -= 1
+        }
+        return ''
+    }
+
+    function submitQuestion() {
+        firebase.initializeApp({
+          apiKey: "AIzaSyBqZVV7Qrp0DT3aBCCTCTMUCrPJO0pb3tY",
+          authDomain: "probability-digital-world.firebaseapp.com",
+          projectId: "probability-digital-world"
+        });
+
+        var db = firebase.firestore();
+
+        db.collection("questions").add({
+            email: $("#question-email").val(),
+            question: "Lovelace",
+            page: getUrlKey()
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            alert('success')
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+        // // // Generate a new push ID for the new post
+        // var questionListRef = db.child("questions")
+        // var newQuestionRef = questionListRef.push();
+        // newQuestionRef.set({
+        //     'title':'test'
+        // });
+        
+    }
+
+    function onCuriosity() {
+        Swal.fire({
+          title: 'Curious?',
+          position: 'bottom-end',
+          allowOutsideClick:false,
+          backdrop:false,
+          confirmButtonText: 'Submit',
+          input: 'textarea',
+          html:
+            '<p>We are trying to make this book better. Let us know if you find something confusing. If you ask a question we will try to answer it. If you find a mistake we will fix it. </p>' +
+            '<input placeholder="Your email (optional)..." id="question-email" class="swal2-input">',
+          inputPlaceholder: 'Type your question or message here...',
+          inputAttributes: {
+            'aria-label': 'Type your question or message here'
+          },
+          showCancelButton: true,
+          preConfirm: () => submitQuestion()
+        })
+    }
+</script>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+$(document).ready(function() {
+  addH2Numbers()
+  enableSearch()
+})
+
+function addH2Numbers() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+}
+
+function enableSearch() {
+  $("#probability-for-digital-world-search").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+          let query = $("#probability-for-digital-world-search").val()
+          
+          window.location = `../../search.html?q=${query}`
+      }
+  });
+  // $.ajax({
+  //     type: "GET",
+  //     url: "../../../searchIndex.json",
+  //     dataType: "text",
+  //     success: function(data) {addSearchIndexData(data);}
+  //  });
+}
+
+function addSearchIndexData(data) {
+  var idx = lunr(function () {
+    this.ref('name')
+    this.field('text')
+
+    let documents = JSON.parse(data)
+
+    documents.forEach(function (doc) {
+      this.add(doc)
+      console.log(doc)
+    }, this)
+
+    $("#probability-for-digital-world-search").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            let query = $("#probability-for-digital-world-search").val()
+            let results = idx.search(query)
+            console.log(results)
+        }
+    });
+  })
+}
+
+    </script>
+
+</body>
+
+
+
+
+</html>

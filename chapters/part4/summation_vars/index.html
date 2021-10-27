@@ -68,16 +68,16 @@ Convolution is a very fancy way of saying "adding" two different random variable
 	<img class="mainFigureLg" src="{{pathToRoot}}img/chapters/sum2die.png"></img>
 </center>
 
-Let's use this context to practice deriving the sum of two variables, starting with the General Rule for the Convolution of Discrete  Random Variables:
+Let's use this context to practice deriving the sum of two variables, in this case $\p(X + Y = n)$, starting with the General Rule for the Convolution of Discrete  Random Variables. We start by considering values of $n$ between 2 and 7. In this range $\p(X = i, Y = n- i) = \frac{1}{36}$ for all values of $i$ between 1 and $n-1$. There is exactly one outcome of the two die where $X = i$ and $Y= n-i$. For values of $i$ outside this range $n- i$ is not a valid dice outcome and $\p(X = i, Y = n- i) = 0$:
 \begin{align*}
 	\p&(X + Y = n) \\
 	&= \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- i) \\
-	&= \sum_{i=0}^n \p(X = i, Y = n- i) \\
-	&= \sum_{i=0}^n \frac{1}{36}\\
-	&= \frac{n+1}{36}
+	&= \sum_{i=1}^{n-1} \p(X = i, Y = n- i) \\
+	&= \sum_{i=1}^{n-1} \frac{1}{36}\\
+	&= \frac{n-1}{36}
 \end{align*}
 
-<p>Note that $\p(X = i, Y = n- i) = \frac{1}{36}$ if $n <12$ and $i < n$. </p>
+<p>For values of $n$ greater than 7 we could use the same approach, though different values of $i$ would make $\p(X = i, Y = n- i)$ non-zero.</p>
 
 <p><!-- For two general independent random variables (aka cases of independent random variables that don't fit the above special situations) you can calculate the CDF or the PDF of the sum of two random variables using the following formulas: -->
 	This derivation for a general rule has a continuous equivalent:
@@ -94,11 +94,12 @@ Let's use this context to practice deriving the sum of two variables, starting w
 
 <h2 id="poissons">Sum of Independent Poissons</h2>
 
-<p>For any two Poisson random variables: $X ~ \sim \Poi(\lambda_1)$ and $Y ~ \sim \Poi(\lambda_2)$ the sum of those two random variables is another Poisson: $X +Y ~ \sim \Poi(\lambda_1 + \lambda_2)$. This holds when $\lambda_1$ is not the same as $\lambda_2$.</p>
+<p><div class="bordered">For any two Poisson random variables: $X ~ \sim \Poi(\lambda_1)$ and $Y ~ \sim \Poi(\lambda_2)$ the sum of those two random variables is another Poisson: $X +Y ~ \sim \Poi(\lambda_1 + \lambda_2)$. This holds when $\lambda_1$ is not the same as $\lambda_2$.</div></p>
 
-<p>How could we prove a claim the the one above?
+<p>How could we prove a the above claim?
 
 <p><div class="purpleBox">
+	<b><i>Example derivation:</i></b><br/>
 <p>Let's go about proving that the sum of two independent Poisson random variables is also Poisson. Let $X\sim\Poi(\lambda_1)$ and $Y\sim\Poi(\lambda_2)$ be two independent random variables, and $Z = X + Y$. What is $P(Z = n)$?
 
 <p>
@@ -120,11 +121,15 @@ Note that the Binomial Theorem (which we did not cover in this class, but is oft
 
 <h2 id="binomials">Sum of Independent Binomials with equal $p$</h2>
 
-<p>For any two Binomial random variables with the same "success" probability: $X ~ \sim \Bin(n_1,p)$ and $Y ~ \sim \Bin(n_2,p)$ the sum of those two random variables is another binomial: $X +Y ~ \sim \Bin(n_1 + n_2,p)$. This does not hold when the two distribution have different parameters $p$. This hopefully makes sense. The convolution is the number of sucesses across $X$ and $Y$. Since each trial has the same probability of success, and there are now $n_1 + n_2$ trials, which are all independent, the convolution is simply a new Binomial.</p>
+<p><div class="bordered">For any two independent Binomial random variables with the same "success" probability $p$: $X ~ \sim \Bin(n_1,p)$ and $Y ~ \sim \Bin(n_2,p)$ the sum of those two random variables is another binomial: $X +Y ~ \sim \Bin(n_1 + n_2,p)$.</div></p>
+
+<p> This result hopefully makes sense. The convolution is the number of sucesses across $X$ and $Y$. Since each trial has the same probability of success, and there are now $n_1 + n_2$ trials, which are all independent, the convolution is simply a new Binomial. This rule does not hold when the two Binomial random variables have different parameters $p$. </p>
 
 <h2 id="normals">Sum of Independent Normals</h2>
 
-<p>For any two independent normal random variables $X ~ \sim \mathcal{N}(\mu_1,\sigma_1^2)$ and $Y ~ \sim \mathcal{N}(\mu_2,\sigma_2^2)$ the sum of those two random variables is another normal: $X +Y ~ \sim \mathcal{N}(\mu_1 + \mu_2,\sigma_1^2 + \sigma_2^2)$.</p>
+<p><div class="bordered">For any two independent normal random variables $X ~ \sim \mathcal{N}(\mu_1,\sigma_1^2)$ and $Y ~ \sim \mathcal{N}(\mu_2,\sigma_2^2)$ the sum of those two random variables is another normal: $X +Y ~ \sim \mathcal{N}(\mu_1 + \mu_2,\sigma_1^2 + \sigma_2^2)$.</div></p>
+
+<p>Again this only holds when the two normals are independent.</p>
 
 
 
@@ -133,8 +138,17 @@ Note that the Binomial Theorem (which we did not cover in this class, but is oft
 
 <h2 id="uniforms">Sum of Independent Uniforms</h2>
 
+<p><div class="bordered">
+If $X$ and $Y$ are independent uniform random variables where $X \sim \Uni(0,1)$ and $Y \sim \Uni(0,1)$: 
+	\begin{align*}
+    f(X+Y=n) = \begin{cases} n &\mbox{if } 0 < n \leq 1 \\ 
+2-n & \mbox{if } 1 < n \leq 2 \\
+0 & \mbox{else} \end{cases} 
+\end{align*}
+</div>
+
 <div class="purpleBox">
-<b><i>Example</i></b>: 
+<b><i>Example derivation</i></b>: <br/>
 Calculate the PDF of $X + Y$ for independent uniform random variables $X \sim \Uni(0,1)$ and $Y \sim \Uni(0,1)$? First plug in the equation for general convolution of independent random variables:
 \begin{align*}
     f(X+Y=n) 

@@ -16,39 +16,52 @@ Two continuous random variables $X$ and $Y$ are called independent if:
 \begin{align*}
 \P(X\leq a, Y \leq b) = \P(X \leq a)\P(Y \leq b) \text{ for all } a,b
 \end{align*}
-This can be stated equivalently as:
+This can be stated equivalently using either the CDF or the PDF:
 \begin{align*}
-&F_{X,Y}(a,b) = F_{X}(a)F_{Y}(b) \text{ for all } a,b \\
-&f_{X,Y}(a,b) = f_{X}(a)f_{Y}(b) \text{ for all } a,b 
+F_{X,Y}(a,b) &= F_{X}(a)F_{Y}(b) \text{ for all } a,b \\
+f(X=x,Y=y) &= f(X=x)f(Y=y) \text{ for all } x,y 
 \end{align*}
-More generally, if you can factor the joint density function then your continuous random variable are independent:
+More generally, if you can factor the joint density function then your random variable are independent (or the joint probability function for discrete random variables):
 \begin{align*}
-&f_{X,Y}(x,y) = h(x)g(y) \text{ where }-\infty < x,y < \infty 
+
+&f(X=x,Y=y) = h(x)g(y) \\
+&\P(X=x,Y=y) = h(x)g(y)
 \end{align*}
 
+
+<h2>Example: Showing Independence</h2>
 <div class="purpleBox">
-	<b><i>Example</i></b>
-Let $N$ be the # of requests to a web server/day and that $N \sim \Poi(\lambda)$. Each request comes from a human (probability = $p$) or from a "bot" (probability = $(1 – p)$), independently. Define $X$ to be the # of requests from humans/day and $Y$ to be the # of requests from bots/day.
+<p>Let $N$ be the # of requests to a web server/day and that $N \sim \Poi(\lambda)$. Each request comes from a human with probability = $p$ or from a "bot" with probability = $(1 – p)$. Define $X$ to be the # of requests from humans/day and $Y$ to be the # of requests from bots/day. Show that the number of requests from humans, $X$, is independent of the number of requests from bots, $Y$.
 
-Since requests come in independently, the probability of $X$ conditioned on knowing the number of requests is a Binomial. Specifically:
+<p>Since requests come in independently, the probability of $X$ conditioned on knowing the number of requests is a Binomial. Specifically:
 \begin{align*}
 (X|N) &\sim \Bin(N,p)\\
 (Y|N) &\sim \Bin(N, 1-p)
 \end{align*}
-Calculate the probability of getting exactly $i$ human requests and $j$ bot requests. Start by expanding using the chain rule:
+To get started we need to first write an expression for the join probability of $X$ and $Y$. To do so, we use the chain rule:
 \begin{align*}
-    \P(X=i,Y=j) = \P(X = i, Y=j|X+Y = i+j)\P(X + Y = i+j)
+    \P(X=x,Y=y) = \P(X = x, Y=y|N = x+y)\P(N = x+y)
 \end{align*}
-We can calculate each term in this expression:
+We can calculate each term in this expression. The first term is the PMF of the binomial $X|N$ having $x$ ``successes."" The second term is the probability that the Poisson $N$ takes on the value $x+y$ :
  \begin{align*}
-   &\P(X = i, Y=j|X+Y = i+j) = { {i + j} \choose i}p^i(1-p)^j \\
-   &\P(X+Y = i + j) = e^{-\lambda}\frac{\lambda^{i+j}}{(i+j)!} 
+   &\P(X = x, Y=y|N = x+y) = { {x + y} \choose x}p^x(1-p)^y \\
+   &\P(N = x + y) = e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} 
 \end{align*}
-Now we can put those together and simplify:
+Now we can put those together we have an expression for the joint:
 \begin{align*}
-   &\P(X = i, Y=j) = { {i + j} \choose i}p^i(1-p)^j e^{-\lambda}\frac{\lambda^{i+j}}{(i+j)!}
+   &\P(X = x, Y=y) = { {x + y} \choose x}p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
 \end{align*}
-As an exercise you can simplify this expression into two independent Poisson distributions.
+At this point we have derived the joint distribution over $X$ and $Y$. In order to show that these two are independent, we need to be able to factor the joint:
+
+\begin{align*}
+   \P&(X = x, Y=y) \\
+   &= { {x + y} \choose x}p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} \\
+   &= \frac{(x+y)!}{x! \cdot y!} p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} \\
+   &= \frac{1}{x! \cdot y!} p^x(1-p)^y e^{-\lambda}\lambda^{x+y} && \text{Cancel (x+y)!} \\
+   &= \frac{p^x \cdot \lambda^x}{x!} \cdot \frac{(1-p)^y \cdot \lambda ^{y}}{y!}  \cdot e^{-\lambda} && \text{Rearrange} \\
+\end{align*}
+
+Because the joint can be factered into a term that only has $x$ and a term that only has $y$, the random variables are independent.
 </div>
 
 <h2>Symmetry of Independence</h2>
@@ -58,9 +71,10 @@ Independence is symmetric. That means that if random variables $X$ and $Y$ are i
 
 <div class="bordered">
 	<b><i>Lemma: Product of Expectation for Independent Random Variables</i></b>:<br/>
-	If two random variables $X$ and $Y$ are independent, the expectation of their product of their expectations is the product of the individual expectations.
+	If two random variables $X$ and $Y$ are independent, the expectation of their product is the product of the individual expectations.
 \begin{align*}
- &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{ if and only if $X$ and $Y$ are independent} 
+ &E[X \cdot Y] = E[X] \cdot E[Y] && \text{ if and only if $X$ and $Y$ are independent}
+ &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{ where $g$ and $h$ are functions} 
 \end{align*}
 Note that this assumes that $X$ and $Y$ are independent. Contrast this to the sum version of this rule (expectation of sum of random variables, is the sum of individual expectations) which does <b>not</b> require the random variables to be independent.
 	</div>
