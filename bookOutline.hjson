@@ -84,12 +84,13 @@
 	"part4":{
 		"title":"Part 4: Uncertainty Theory",
 		"sections": {
+			"beta":"Beta Distribution",
 			"summation_vars":"Adding Random Variables",
 			"clt":"Central Limit Theorem",
 			"samples":"Sampling",
 			"bootstrapping":"Bootstrapping",
 			#"parameters":"Uncertainty in Parameters",
-			"beta":"Beta Distribution",
+			"algorithmic_analysis":"Algorithmic Analysis",
 			#"bounds":"Probability Bounds"
 		},
 		"examples": {
