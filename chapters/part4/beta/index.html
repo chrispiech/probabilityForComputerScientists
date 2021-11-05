@@ -42,14 +42,14 @@ include('templates/rvCards/beta.html')
 
 <p>Before flipping the coin, we could say that our belief about the coin's heads probability is uniform: $X \sim \Uni(0, 1)$. Let $H$ be a random variable for the number of heads and let $T$ be a random variable for the number of tails observed. What is $\P(X =x | H = 9, T = 1)$? 
 
-<p>It is much easier to think of the probability with the condition reveresed: $P(H = 9, T = 1 | X= x)$. This term asks the question: what is the probability of seeing 9 heads and 1 tail in 10 coin flips, given that the true probability of a heads is $x$. Convince yourself that this probability is just a binomial probability mass function with $n=10$ experiements, and $p=x$ evaluated at $k=9$ heads:
+<p>That probability is hard to think about! However it is much easier to reason about the probability with the condition reveresed: $P(H = 9, T = 1 | X= x)$. This term asks the question: what is the probability of seeing 9 heads and 1 tail in 10 coin flips, given that the true probability of a heads is $x$. Convince yourself that this probability is just a binomial probability mass function with $n=10$ experiements, and $p=x$ evaluated at $k=9$ heads:
     $$
     P(H = 9, T = 1 | X= x) = {10 \choose 9}x^{9} (1-x)^{1}
     $$
 
 <p>
 
-<p>This is the perfect context for <a href="{{pathToLang}}part3/inference/">Bayes' theorem with random variables</a>. We know a conditional probability in one direction and we would like to know it in the other:
+<p>We are presented with a perfect context for <a href="{{pathToLang}}part3/inference/">Bayes' theorem with random variables</a>. We know a conditional probability in one direction and we would like to know it in the other:
    \begin{align*}
     f(&X = x|H =9, T=1) \\
     &=  \frac{P(H =9, T=1|X=x) \cdot f(X=x)}{P(H =9, T=1)} && \text{Bayes Theorem}\\
