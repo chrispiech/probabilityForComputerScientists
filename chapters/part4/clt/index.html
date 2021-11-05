@@ -4,7 +4,7 @@
 <center><h1>Central Limit Theorem</h1></center>
 <hr/>
 
-<p>The central limit theorem proves that the average of equally sized samples from <i>any</i> distribution themselves be normally distributed. Consider IID random variables  $X_1, X_2 \dots$ such that $E[X_i] = \mu$ and $\text{Var}(X_i) = \sigma^2$. Let 
+<!-- <p>The central limit theorem proves that the average of equally sized samples from <i>any</i> distribution themselves be normally distributed. Consider IID random variables  $X_1, X_2 \dots$ such that $E[X_i] = \mu$ and $\text{Var}(X_i) = \sigma^2$. Let 
 \begin{align*}
 \bar{X} = \frac{1}{n} \sum_{i = 1}^n X_i
 \end{align*}
@@ -24,7 +24,7 @@ It is often expressed in terms of the standard normal, $Z$:
   &\sim N(n \mu, n  \sigma^2) && \text{By simplifying.}
 \end{align*}
 In summary, the central limit theorem explains that both the sample mean of IID variables is normal (regardless of what distribution the IID variables came from) and that the sum of equally weighted IID random variables is normal (again, regardless of the underlying distribution).
-
+ -->
 <div class="purpleBox">
 	<p><b><i>Example:</i></b></p>
 <p>Say you have a new algorithm and you want to test its running time. You have an idea of the variance of the algorithm's run time: $\sigma^2 = 4\text{sec}^2$ but you want to estimate the mean: $\mu = t$sec. You can run the algorithm repeatedly (IID trials). How many trials do you have to run so that your estimated runtime = $t \pm 0.5$ with 95\% certainty? Let$X_i$ be the run time of the $i$-th run (for $1 \leq i \leq n$).
