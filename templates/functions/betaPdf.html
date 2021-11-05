@@ -1,0 +1,84 @@
+
+<canvas id="betaPdf{{id}}" style="max-height: 400px"></canvas>
+
+<script>
+
+$(document).ready(function(){
+	drawBetaPdf{{id}}("betaPdf{{id}}", {{a}}, {{b}})
+})
+
+
+function drawBetaPdf{{id}}(parentDivId, a, b) {
+	console.log(parentDivId)
+
+	let N_BUCKETS = 100
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < N_BUCKETS + 1; i++) {
+		let x = i/(N_BUCKETS * 1.0)
+		let y = jStat.beta.pdf(x, a,b).toFixed(5)
+		xValues.push(x)
+		yValues.push(y)
+	}
+
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability Density'
+
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'f(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	new Chart(ctx, config);
+}
+</script>

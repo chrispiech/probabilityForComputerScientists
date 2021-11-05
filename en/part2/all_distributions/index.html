@@ -1551,6 +1551,159 @@ function drawNormalPdf(parentDivId, mu, sigma) {
 }
 </script></p>
 
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Beta Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Beta(a, b)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A belief distribution over the value of a probability $p$ from a Binomial distribution after observing $a+1$ successes and $b+1$ fails. </td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$a \in \{1, \dots \infty \}$, the number successes + 1 <br/>
+		    $b \in \{1, \dots \infty \}$, the number of fails + 1</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in [0, 1]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = B \cdot x^{a-1} \cdot (1-x)^{b-1}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">No closed form</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{a}{a+b}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{ab}{(a+b)^2(a+b+1)}$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $a$: <input onchange="redrawBetaPdf()" type="number" class="form-control example-inline-input mb-3" id="betaA" min="1" max="130" value="2" step = "1">
+</div>
+<div class="mr-2">
+Parameter $b$: <input onchange="redrawBetaPdf()" type="number" class="form-control example-inline-input mb-3" id="betaB" min="1" max="130" value="4" step = "1">
+</div>
+</div>
+<canvas id="betaPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawBetaPdf()
+})
+
+function redrawBetaPdf() {
+	let parentDivId = 'betaPdf'
+	let a = parseFloat($("#betaA").val())
+	let b = parseFloat($("#betaB").val())
+	drawBetaPdf(parentDivId, a, b)
+}
+
+function drawBetaPdf(parentDivId, a, b) {
+	if(window.myExpLine) {
+		window.myExpLine.destroy()
+	}
+
+	let N_BUCKETS = 100
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < N_BUCKETS + 1; i++) {
+		let x = i/(N_BUCKETS * 1.0)
+		let y = jStat.beta.pdf(x, a,b).toFixed(5)
+		xValues.push(x)
+		yValues.push(y)
+		console.log(x,y,a,b)
+	}
+
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability Density'
+	console.log('STARTING')
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'f(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	console.log('FINISHED')
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myExpLine = new Chart(ctx, config);
+}
+</script></p>
+
                         
 
 <hr/>
