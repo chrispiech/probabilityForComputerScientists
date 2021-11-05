@@ -107,12 +107,36 @@ greyBackground as a style class)
   }
 
   #content {
-    padding:15px !important;
+    padding:0px !important;
   }
 
   .purpleBox{
-    padding-left: 2px !important;
-    padding-right: 2px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #sidebarCollapse{
+    margin: 10px;
+  }
+
+  .handout > p {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .handout > h2 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .handout > img {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .handout > center > img {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 

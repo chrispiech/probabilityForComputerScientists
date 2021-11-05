@@ -645,7 +645,14 @@ function drawBetaPdf9heads(parentDivId, a, b) {
 
 <div class="purpleBox">
     <b><i>Wait but why?</i></b> <br/>
-    In the derivation above for $f(&X = x|H =9, T=1)$ we made the claim that $P(H =9, T=1)$ is a constant. A lot of folks find that hard to believe.
+    <p>In the derivation above for $f(X = x|H =9, T=1)$ we made the claim that $P(H =9, T=1)$ is a constant. A lot of folks find that hard to believe. Why is that the case?
+
+    <p>It may be helpful to juxtapose  $P(H =9, T=1)$ with $P(H =9, T=1 | X= x)$. The later says "what is the probability of 9 heads, given the true probability is $x$". The former says "what is the probability of 9 heads, under all possible assignments of $x$". If you wanted to calculate it fully you could use the law of total probability:
+     \begin{align*}
+        P(&H =9, T=1) \\
+        &= \int_{x=0}^{1} P(H =9, T=1 | X= x) f(X=x)
+     \end{align*}
+    That is a hard number to calculate, but it is in fact a constant with respect to $x$.
 </div>
 
 <h2>Beta Derivation</h2>
@@ -707,7 +714,7 @@ Which is the PDF of $\Beta(a+h, b+t)$
 
                         
 
-<hr/>
+
 
 <script type="text/javascript">
     // const firebase = require("firebase");
