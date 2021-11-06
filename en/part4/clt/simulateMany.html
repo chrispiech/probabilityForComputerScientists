@@ -1,0 +1,115 @@
+
+
+
+<canvas id="cltHistogram" style="max-height: 400px"></canvas>
+<button class="btn btn-primary" onclick="addMoreRuns()">10,000 more runs</button>
+<script>
+
+$(document).ready(function() {
+	
+
+	window.sumUniformCounts = {}
+	for (var i = 0; i < 101; i++) {
+		window.sumUniformCounts[i] = 0
+	}
+	window.sumUniformN = 0.0
+
+	
+	addMoreRuns()
+	
+	
+})
+
+function addMoreRuns() {
+	let more = 10000
+	let n = 100
+	for (var i = 0; i < more; i++) {
+
+		var total = jStat.normal.sample(n * 1/2., n * 1/12.)
+		var bucket = Math.round(total)
+		window.sumUniformCounts[bucket] += 1
+	}
+	window.sumUniformN += more
+	redrawCltHistogram()
+}
+
+
+function redrawCltHistogram() {
+	if(window.myCltHistogramGraph) {
+		window.myCltHistogramGraph.destroy()
+	}
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < 101; i++) {
+		xValues.push(i)
+		let y = window.sumUniformCounts[i] / window.sumUniformN
+		yValues.push(y.toFixed(5))
+	}
+	let xLabel = 'Values that total can take on'
+	let yLabel = 'Approx Probability from ' + Math.round(window.sumUniformN) + ' runs'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'Count(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+			animation: {
+		        duration: 0
+		    },
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true,
+                        suggestedMax: 0.06,
+                        userCallback: function(label, index, labels) {
+	                     // when the floored value is the same as the value we have a whole number
+	                     if (parseFloat(label.toFixed(2)) === label) {
+	                         return label;
+	                     }
+
+	                 },
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById('cltHistogram').getContext('2d');
+	window.myCltHistogramGraph = new Chart(ctx, config);
+}
+</script>

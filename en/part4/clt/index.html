@@ -202,11 +202,12 @@
 <a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
 <a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
 <a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+<a id=sidebar-many_flips href="../../part1/many_flips">Many Coin Flips</a>
 
 <li>
     <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part1_examples">
-        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li><li><a href="../../examples/many_flips">Many Coin Flips</a></li>
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
     </ul>
 </li>
 </li>
@@ -347,26 +348,229 @@
 <center><h1>Central Limit Theorem</h1></center>
 <hr/>
 
-<p>The central limit theorem proves that the average of equally sized samples from <i>any</i> distribution themselves be normally distributed. Consider IID random variables  $X_1, X_2 \dots$ such that $E[X_i] = \mu$ and $\text{Var}(X_i) = \sigma^2$. Let 
-\begin{align*}
-\bar{X} = \frac{1}{n} \sum_{i = 1}^n X_i
-\end{align*}
-Mathematically, the central limit theorem states:
-\begin{align*}
-&\bar{X} \sim N(\mu, \frac{\sigma^2}{n}) && \text{ as } n \rightarrow \infty
-\end{align*}
-It is often expressed in terms of the standard normal, $Z$:
-\begin{align*}
-& Z = \frac{\left(  \sum_{i=1}^n  X_i  \right) - n\mu}{\sigma \sqrt{n}} && \text{ as } n \rightarrow \infty
-\end{align*}
+<p>There are two ways that you could state the central limit theorem. Either that the sum of IID random variables is normally distributed, or that the average of IID random variables is normally distributed.
 
-<p>At this point you probably think that the central limit theorem is awesome. But it gets even better. With some algebraic manipulation we can show that if the sample mean of IID random variables is normal, it follows that the sum of equally weighted IID random variables must also be normal. Let's call the sum of IID random variables $\bar{Y}$:
+<p><div class="bordered">
+    <b>The Central Limit Thorem (Sum Version)</b><br/>
+
+
+
+Let $X_1, X_2 \dots X_n$ be independent and identically distributed random variables. The <b>sum</b> of these random variables approaches a normal as $n \rightarrow \infty$:
+
 \begin{align*}
- \bar{Y} &= \sum_{i=1}^n X_i = n \cdot \bar{X} && \text{If we define $ \bar{Y}$ to be the sum of our variables } \\
- &\sim N(n \mu, n^2  \frac{\sigma^2}{n}) && \text{Since $\bar{X}$ is a normal and $n$ is a constant.} \\
-  &\sim N(n \mu, n  \sigma^2) && \text{By simplifying.}
+\sum_{i=1}^{n}X_i \sim N(n \cdot \mu, n \cdot \sigma^2)
+\end{align*}  
+
+Where $\mu = \E[X_i]$ and $\sigma^2 = \Var(X_i)$. Note that since each $X_i$ is identically distributed they share the same expectation and variance.
+    </div></p>
+
+<p>At this point you probably think that the central limit theorem is awesome. But it gets even better. With some algebraic manipulation we can show that if the sample mean of IID random variables is normal, it follows that the sum of equally weighted IID random variables must also be normal:
+
+    <div class="bordered">
+<b>The Central Limit Thorem (Average Version)</b><br/>
+
+
+
+Let $X_1, X_2 \dots X_n$ be independent and identically distributed random variables. The <b>average</b> of these random variables approaches a normal as $n \rightarrow \infty$:
+
+\begin{align*}
+\frac{1}{n}\sum_{i=1}^{n}X_i \sim N(\mu, \frac{\sigma^2}{n})
+\end{align*}  
+
+Where $\mu = \E[X_i]$ and $\sigma^2 = \Var(X_i)$. 
+    </div>
+
+    <h2>Central Limit Theorem Intuition</h2>
+
+     <p>In the previous section we explored what happens when you <a href="../../part4/summation_vars">add two random variables</a>. What happens when you add more than two random variables? For example, what if I wanted to add up 100 different uniform random variables:
+
+     <p><pre class="language-python"><code>from random import random 
+
+def add_100_uniforms():
+   total = 0
+   for i in range(100):
+       # returns a sample from uniform(0, 1)
+       x_i = random()    
+       total += x_i
+   return total</code></pre></p> 
+
+<p>The value, <code>total</code> returned by this function will be a random variable. Hit the button below to run the function and observe the resulting value of total:
+
+    <p>
+
+
+	
+		<button onclick="simulateTotalOnce()" class="btn btn-light" style="background-color:#e8e9ea"><code style="color:black !important">add_100_uniforms()</code></button>
+ <span class="ml-2"><code>total:</code></span>  <code id="totalVal"></code>
+
+<script>
+
+$(document).ready(function() {
+	simulateTotalOnce()
+})
+function simulateTotalOnce() {
+	
+	var total = 0
+	for (var i = 0; i < 100; i++) {
+		total += Math.random()
+	}
+	$("#totalVal").html(total.toFixed(5))
+}
+</script></p>
+
+<p>What does total look like as a distribution? Let's calculate <code>total</code> many times and visualize the histogram of values it produces.
+
+    <p>
+
+
+
+<canvas id="cltHistogram" style="max-height: 400px"></canvas>
+<button class="btn btn-primary" onclick="addMoreRuns()">10,000 more runs</button>
+<script>
+
+$(document).ready(function() {
+	
+
+	window.sumUniformCounts = {}
+	for (var i = 0; i < 101; i++) {
+		window.sumUniformCounts[i] = 0
+	}
+	window.sumUniformN = 0.0
+
+	
+	addMoreRuns()
+	
+	
+})
+
+function addMoreRuns() {
+	let more = 10000
+	let n = 100
+	for (var i = 0; i < more; i++) {
+
+		var total = jStat.normal.sample(n * 1/2., n * 1/12.)
+		var bucket = Math.round(total)
+		window.sumUniformCounts[bucket] += 1
+	}
+	window.sumUniformN += more
+	redrawCltHistogram()
+}
+
+
+function redrawCltHistogram() {
+	if(window.myCltHistogramGraph) {
+		window.myCltHistogramGraph.destroy()
+	}
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < 101; i++) {
+		xValues.push(i)
+		let y = window.sumUniformCounts[i] / window.sumUniformN
+		yValues.push(y.toFixed(5))
+	}
+	let xLabel = 'Values that total can take on'
+	let yLabel = 'Approx Probability from ' + Math.round(window.sumUniformN) + ' runs'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'Count(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+			animation: {
+		        duration: 0
+		    },
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true,
+                        suggestedMax: 0.06,
+                        userCallback: function(label, index, labels) {
+	                     // when the floored value is the same as the value we have a whole number
+	                     if (parseFloat(label.toFixed(2)) === label) {
+	                         return label;
+	                     }
+
+	                 },
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById('cltHistogram').getContext('2d');
+	window.myCltHistogramGraph = new Chart(ctx, config);
+}
+</script></p>
+
+<p>That is interesting! <code>total</code> which is the sum of 100 independent uniforms looks normal. Is that a special property of uniforms? No! It turns out to work for almost any type of distribution (as long as the thing you are adding has finite mean and finite variance, everything we have covered in this reader).
+
+<ul>
+    <li>Sum of 40 $X_i$ where $X_i \sim \Beta(a = 5, b = 4)$? Normal.
+    <li>Sum of 90 $X_i$ where $X_i \sim \Poi(\lambda = 4)$? Normal.
+        <li>Sum of 50 dice-rolls? Normal.
+              <li>Average of 10000  $X_i$ where $X_i \sim \Exp(\lambda = 8)$? Normal.
+</ul>
+<p>For any distribution the sum, or average, of $n$ independent equally-weighted samples from that distribution, will be normal.
+
+<h2>Continuity Correction</h2>
+
+<p>Now we can see that the Binomial Approximation using a Normal actually derives from the central limit theorem. Recall that, when computing probabilities for a normal approximation, we had to to use a <a href="../../part2/binomial_approx/#norm_approx">continuity correction</a>. This was because we were approximating a discrete random variable (a binomial) with a continuous one (a normal). You should use a continuity correction any time your normal is approximating a discrete random variable. The rules for a general continuity correction are the same as the rules for the binomial-approximation continuity correction.
+
+<p>In the motivating example above, where we added 100 uniforms, a continuity correction isn't needed because the sum of uniforms is continuous. In the dice sum example below, a continuity correction is needed because die outcomes are discrete.
+
+<h2>Examples</h2> 
+
+
+<div class="purpleBox">
+    <p><b><i>Example:</i></b></p>
+<p>You will roll a 6 sided dice 10 times. Let $X$ be the total value of all 10 dice = $X_1 + X_2 + \dots + X_{10}$. You win the game if $X \leq 25$ or $X \geq 45$. Use the central limit theorem to calculate the probability that you win.
+
+<p>Recall that $E[X_i] = 3.5$ and $\text{Var}(X_i) = \frac{35}{12}$.
+
+\begin{align*}
+\P(&X \leq 25 \text{ or } X \geq 45) \\
+&= 1 -  P(25.5 \leq X \leq 44.5) \\
+&= 1 - P(\frac{25.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
+\leq \frac{X - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
+\leq \frac{44.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}} \\
+&\approx 1 - (2\phi(1.76) - 1) \approx 2(1- 0.9608) = 0.0784
 \end{align*}
-In summary, the central limit theorem explains that both the sample mean of IID variables is normal (regardless of what distribution the IID variables came from) and that the sum of equally weighted IID random variables is normal (again, regardless of the underlying distribution).
+</div>
 
 <div class="purpleBox">
 	<p><b><i>Example:</i></b></p>
@@ -398,20 +602,7 @@ n &= 61.4
 Thus it takes 62 runs. If you are interested in how this extends to cases where the variance is unknown, look into variations of the students' t-test.
 </div>
 
-<div class="purpleBox">
-	<p><b><i>Example:</i></b></p>
-<p>You will roll a 6 sided dice 10 times. Let $X$ be the total value of all 10 dice = $X_1 + X_2 + \dots + X_10$. You win the game if $X \leq 25$ or $X \geq 45$. Use the central limit theorem to calculate the probability that you win.
 
-<p>Recall that $E[X_i] = 3.5$ and $\text{Var}(X_i) = \frac{35}{12}$.
-
-\begin{align*}
-P(X \leq 25 \text{ or } X \geq 45) &= 1 -  P(25.5 \leq X \leq 44.5) \\
-&= 1 - P(\frac{25.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
-\leq \frac{X - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
-\leq \frac{44.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}} \\
-&\approx 1 - (2\phi(1.76) - 1) \approx 2(1- 0.9608) = 0.0784
-\end{align*}
-</div>
 
 
                         

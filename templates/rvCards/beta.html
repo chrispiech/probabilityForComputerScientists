@@ -72,8 +72,8 @@ function redrawBetaPdf() {
 }
 
 function drawBetaPdf(parentDivId, a, b) {
-	if(window.myExpLine) {
-		window.myExpLine.destroy()
+	if(window.myBetaLine) {
+		window.myBetaLine.destroy()
 	}
 
 	let N_BUCKETS = 100
@@ -85,7 +85,6 @@ function drawBetaPdf(parentDivId, a, b) {
 		let y = jStat.beta.pdf(x, a,b).toFixed(5)
 		xValues.push(x)
 		yValues.push(y)
-		console.log(x,y,a,b)
 	}
 
 	let xLabel = 'Values that X can take on'
@@ -146,6 +145,6 @@ function drawBetaPdf(parentDivId, a, b) {
 	};
 	console.log('FINISHED')
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myExpLine = new Chart(ctx, config);
+	window.myBetaLine = new Chart(ctx, config);
 }
 </script>

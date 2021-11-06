@@ -1,0 +1,20 @@
+
+
+	
+		<button onclick="simulateTotalOnce()" class="btn btn-light" style="background-color:#e8e9ea"><code style="color:black !important">add_100_uniforms()</code></button>
+ <span class="ml-2"><code>total:</code></span>  <code id="totalVal"></code>
+
+<script>
+
+$(document).ready(function() {
+	simulateTotalOnce()
+})
+function simulateTotalOnce() {
+	
+	var total = 0
+	for (var i = 0; i < 100; i++) {
+		total += Math.random()
+	}
+	$("#totalVal").html(total.toFixed(5))
+}
+</script>

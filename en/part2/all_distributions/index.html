@@ -202,11 +202,12 @@
 <a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
 <a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
 <a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+<a id=sidebar-many_flips href="../../part1/many_flips">Many Coin Flips</a>
 
 <li>
     <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part1_examples">
-        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li><li><a href="../../examples/many_flips">Many Coin Flips</a></li>
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
     </ul>
 </li>
 </li>
@@ -1626,8 +1627,8 @@ function redrawBetaPdf() {
 }
 
 function drawBetaPdf(parentDivId, a, b) {
-	if(window.myExpLine) {
-		window.myExpLine.destroy()
+	if(window.myBetaLine) {
+		window.myBetaLine.destroy()
 	}
 
 	let N_BUCKETS = 100
@@ -1639,7 +1640,6 @@ function drawBetaPdf(parentDivId, a, b) {
 		let y = jStat.beta.pdf(x, a,b).toFixed(5)
 		xValues.push(x)
 		yValues.push(y)
-		console.log(x,y,a,b)
 	}
 
 	let xLabel = 'Values that X can take on'
@@ -1700,7 +1700,7 @@ function drawBetaPdf(parentDivId, a, b) {
 	};
 	console.log('FINISHED')
 	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myExpLine = new Chart(ctx, config);
+	window.myBetaLine = new Chart(ctx, config);
 }
 </script></p>
 

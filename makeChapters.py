@@ -122,4 +122,4 @@ def safe_mkdir(path):
 # 	# return lines
 
 if __name__ == '__main__':
-	main()
+	make_chapters()

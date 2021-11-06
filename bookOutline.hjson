@@ -22,13 +22,13 @@
 			"law_total":"Law of Total Probability",
 			"bayes_theorem":"Bayes' Theorem",
 			# "random_computers":"Randomness in Computers",
-			"log_probabilities":"Log Probabilities"
+			"log_probabilities":"Log Probabilities",
+			"many_flips":"Many Coin Flips"
 		},
 		"examples": {
 			"enigma":"Enigma Machine",
 			"serendipity":"Serendipity",
-			"bacteria_evolution":"Bacteria Evolution",
-			"many_flips":"Many Coin Flips"
+			"bacteria_evolution":"Bacteria Evolution"
 		}
 	},
 	"part2":{
