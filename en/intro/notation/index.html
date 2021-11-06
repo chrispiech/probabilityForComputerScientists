@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Notation</title>
+<title>Notation Reference</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -184,6 +184,10 @@
 <!-- intro -->
 <ul class="list-unstyled components">
 <li>
+<a id=sidebar-intro href="../../intro/intro">Introduction</a>
+<a id=sidebar-notation href="../../intro/notation">Notation Reference</a>
+<a id=sidebar-all_distributions href="../../intro/all_distributions">Random Variable Reference</a>
+<a id=sidebar-calculators href="../../intro/calculators">Calculators</a>
 </li>
 </ul>
 
@@ -229,7 +233,6 @@
 <a id=sidebar-exponential href="../../part2/exponential">Exponential Distribution</a>
 <a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
 <a id=sidebar-binomial_approx href="../../part2/binomial_approx">Binomial Approximation</a>
-<a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
 
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -345,8 +348,187 @@
               
                         
  
-<center><h1>Notation</h1></center>
+<center><h1>Notation Reference</h1></center>
 <hr/>
+
+<h3>Core Probability</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" style="width:170px">Notation</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tr>
+  	<td>$E \text{ or } F$</td>
+  	<td>Capital letters can denote events</td>
+  </tr>
+  <tr>
+  	<td>$A \text{ or } B$</td>
+  	<td>Sometimes they denote sets</td>
+  </tr>
+  <tr>
+  	<td>$|E| $</td>
+  	<td>Size of an event or set</td>
+  </tr>
+   <tr>
+  	<td>$E^C$</td>
+  	<td>Complement of an event or set</td>
+  </tr>
+   <tr>
+  	<td>$EF$</td>
+  	<td>And  of events (aka intersection)</td>
+  </tr>
+  <tr>
+  	<td>$ E \and F$</td>
+  	<td>And  of events (aka intersection)</td>
+  </tr>
+  <tr>
+  	<td>$ E \cap F$</td>
+  	<td>And  of events (aka intersection)</td>
+  </tr>
+  <tr>
+  	<td>$ E \or F$</td>
+  	<td>Or  of events (aka union)</td>
+  </tr>
+  <tr>
+  	<td> $ E \cup F$</td>
+  	<td>Or  of events (aka union)</td>
+  </tr>
+  <tr>
+  	<td>$\p(E)$</td>
+  	<td>The probability of an event  $E$</td>
+  </tr>
+  <tr>
+  	<td>$\p(E|F)$</td>
+  	<td>The conditional probability of an event $E$ given $F$</td>
+  </tr>
+  <tr>
+  	<td>$\p(E,F)$</td>
+  	<td>The  probability of event $E$ and $F$</td>
+  </tr>
+  <tr>
+  	<td>$\p(E|F,G)$</td>
+  	<td>The conditional probability of an event $E$ given both $F$ and $G$</td>
+  </tr>
+  <tr>
+  	<td>$n!$</td>
+  	<td>$n$ factorial</td>
+  </tr>
+  <tr>
+  	<td>${n \choose k}$</td>
+  	<td>Binomial coefficient</td>
+  </tr>
+  <tr>
+  	<td>${n \choose {r_1,r_2,r_3} }$</td>
+  	<td><a href="../../part1/combinatorics/#bucketing_fixed">Multinomial coefficient</a></td>
+  </tr>
+</table>
+
+
+<h3>Random Variables</h3>
+<table class="table">
+	 <thead>
+    <tr>
+      <th scope="col" style="width:170px">Notation</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tr>
+  	<td>$x \text{ or } y \text{ or } i$</td>
+  	<td>Lower case letters denote regular variables</td>
+  </tr>
+  <tr>
+  	<td>$X \text{ or } Y$</td>
+  	<td>Capital letters are used to denote random variables</td>
+  </tr>
+  <tr>
+  	<td>$K$</td>
+  	<td>Capital $K$ is reserved for constants</td>
+  </tr>
+  <tr>
+  	<td>$\E[X]$</td>
+  	<td>Expectation of $X$</td>
+  </tr>
+   <tr>
+  	<td>$\Var(X)$</td>
+  	<td>Variance of $X$</td>
+  </tr>
+   <tr>
+  	<td>$\p(X=x)$</td>
+  	<td>Probability mass function (PMF) of $X$, evaluated at $x$</td>
+  </tr>
+  <tr>
+  	<td>$\p(x)$</td>
+  	<td>Probability mass function (PMF) of $X$, evaluated at $x$</td>
+  </tr>
+  <tr>
+  	<td>$f(X=x)$</td>
+  	<td>Probability density function (PDF) of $X$, evaluated at $x$</td>
+  </tr>
+  <tr>
+  	<td>$f(x)$</td>
+  	<td>Probability density function (PDF) of $X$, evaluated at $x$</td>
+  </tr>
+  <tr>
+  	<td>$f(X=x,Y=y)$</td>
+  	<td>Joint probability density</td>
+  </tr>
+  <tr>
+  	<td>$f(X=x|Y=y)$</td>
+  	<td>Conditional probability density</td>
+  </tr>
+  <tr>
+  	<td>$F_X(x)$ or $F(x)$</td>
+  	<td>Cumulative distribution function (CDF) of  $X$</td>
+  </tr>
+	</table>
+
+<h3>Parametric Distributions</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" style="width:170px">Notation</th>
+      <th scope="col">Meaning</th>
+    </tr>
+  </thead>
+  <tr>
+  	<td>$X \sim \Ber(p)$</td>
+  	<td>$X$ is a Bernoulli random variable</td>
+  </tr>
+  <tr>
+  	<td>$X \sim \Bin(n,p)$</td>
+  	<td>$X$ is a Binomial random variable</td>
+  </tr>
+  <tr>
+  	<td>$X \sim \Poi(p)$</td>
+  	<td>$X$ is a Poisson random variable</td>
+  </tr>
+  <tr>
+  	<td>$X \sim \Geo(p)$</td>
+  	<td>$X$ is a Geometric random variable</td>
+  </tr>
+   <tr>
+  	<td>$X \sim \NegBin(r, p)$</td>
+  	<td>$X$ is a Negative Binomial random variable</td>
+  </tr>
+   <tr>
+  	<td>$X \sim \Uni(a,b)$</td>
+  	<td>$X$ is a Uniform random variable</td>
+  </tr>
+  <tr>
+  	<td>$X \sim \Exp(\lambda)$</td>
+  	<td>$X$ is a Exponential random variable</td>
+  </tr>
+  <tr>
+  	<td>$X \sim \Beta(a,b)$</td>
+  	<td>$X$ is a Beta random variable</td>
+  </tr>
+  
+</table>
+
 
 
                         

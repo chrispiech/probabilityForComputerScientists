@@ -1,0 +1,58 @@
+<div class="bordered">
+<b>Beta CDF Calculator</b>
+
+<table>
+	<tr>
+		<td style="width:50px">x</td>
+		<td><input onchange="calculateBetaCdf()" type="number" class="form-control" id="betaCdfX" value="0.5"></td>
+	</tr>
+	<tr>
+		<td>a</td>
+		<td><input onchange="calculateBetaCdf()" type="number" class="form-control" id="betaCdfA" value="3"></td>
+	</tr>
+	<tr>
+		<td>b</td>
+		<td><input onchange="calculateBetaCdf()" type="number" class="form-control" id="betaCdfB" value="4"></td>
+	</tr>
+</table>
+
+<p>
+  <button class="btn btn-primary mt-3" onclick="calculateBetaCdf()" style="font-family:monospace">beta.cdf(x, a, b)</button> 
+</p>
+
+<p id="betaCdfResult">&nbsp;</p>
+
+</div>
+<script>
+
+function calculateBetaCdf() {
+	var x = parseFloat($("#betaCdfX").val())
+	var a = parseFloat($("#betaCdfA").val())
+	var b = parseFloat($("#betaCdfB").val())
+
+	$("#betaCdfX").removeClass("is-invalid")
+	$("#betaCdfA").removeClass("is-invalid")
+	$("#betaCdfB").removeClass("is-invalid")
+	
+
+	if(a <= 0) {
+	  let aField = $("#betaCdfA")
+	  aField.addClass("is-invalid")
+      aField.attr('placeholder', 'Must be positive')
+      aField.val('')
+      return
+	}
+
+	if(b <= 0) {
+	  let bField = $("#betaCdfB")
+	  bField.addClass("is-invalid")
+      bField.attr('placeholder', 'Must be positive')
+      bField.val('')
+      return
+	}
+
+	
+	var result = jStat.beta.cdf( x, a, b )
+	$("#betaCdfResult").html(result.toFixed(5))
+}
+</script>

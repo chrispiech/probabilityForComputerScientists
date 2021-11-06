@@ -1,0 +1,44 @@
+<div class="bordered">
+<b>Inverse Phi Calculator</b>, $\Phi^{-1}(y)$
+
+<table>
+	<tr>
+		<td style="width:50px">y</td>
+		<td><input onchange="calculateInvPhiCdf()" type="number" class="form-control" id="invPhiCdfX" value="0.7"></td>
+	</tr>
+	
+</table>
+
+<p>
+  <button class="btn btn-primary mt-3" onclick="calculateInvPhiCdf()" style="font-family:monospace">inverse_phi(y)</button> 
+</p>
+
+<p id="invPhiCdfResult">&nbsp;</p>
+
+</div>
+<script>
+
+function calculateInvPhiCdf() {
+	var x = parseFloat($("#invPhiCdfX").val())
+	$("#invPhiCdfX").removeClass("is-invalid")
+
+	if(x >= 1.0) {
+			let xField = $("#invPhiCdfX")
+			xField.addClass("is-invalid")
+      xField.attr('placeholder', 'Must be less than 1')
+      xField.val('')
+      return
+	}
+
+	if(x <= 0.0) {
+			let xField = $("#invPhiCdfX")
+			xField.addClass("is-invalid")
+      xField.attr('placeholder', 'Must be greater than 0')
+      xField.val('')
+      return
+	}
+	
+	var result = jStat.normal.inv( x, 0, 1 )
+	$("#invPhiCdfResult").html(result.toFixed(5))
+}
+</script>

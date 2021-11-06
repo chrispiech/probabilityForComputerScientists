@@ -1,0 +1,27 @@
+<div class="bordered">
+<b>Phi Calculator</b>, $\Phi(x)$
+
+<table>
+	<tr>
+		<td style="width:50px">x</td>
+		<td><input onchange="calculatePhiCdf()" type="number" class="form-control" id="PhiCdfX" value="0.7"></td>
+	</tr>
+	
+</table>
+
+<p>
+  <button class="btn btn-primary mt-3" onclick="calculatePhiCdf()" style="font-family:monospace">phi(x)</button> 
+</p>
+
+<p id="PhiCdfResult">&nbsp;</p>
+
+</div>
+<script>
+
+function calculatePhiCdf() {
+	var x = parseFloat($("#PhiCdfX").val())
+	
+	var result = jStat.normal.cdf( x, 0, 1 )
+	$("#PhiCdfResult").html(result.toFixed(5))
+}
+</script>

@@ -2,9 +2,11 @@
 	"intro": {
 		"title":null,
 		"sections": {
-			# "intro":"Introduction",
+			"intro":"Introduction",
 			# "free_book":"A Free Online Textbook",
-			# "notation": "Notation",
+			"notation": "Notation Reference",
+			"all_distributions":"Random Variable Reference",
+			"calculators": "Calculators",
 			# "prob_code": "Probability in Code"
 		}
 	},
@@ -47,8 +49,7 @@
 			"uniform":"Uniform Distribution",
 			"exponential":"Exponential Distribution",
 			"normal":"Normal Distribution",
-			"binomial_approx":"Binomial Approximation",
-			"all_distributions":"Random Variable Reference"
+			"binomial_approx":"Binomial Approximation"
 		},
 		"examples": {
 			"100_binomial_problems":"100 Binomial Problems",

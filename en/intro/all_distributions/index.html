@@ -1,0 +1,1907 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+
+<title>Random Variable Reference</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+ <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<!-- D3 CDN -->
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- Chart CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+<!-- PDF JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
+
+<!-- Lunr CDN -->
+ <script src="https://unpkg.com/lunr@2.0.4/lunr.js"></script>
+
+<!-- Firebase CDN -->
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
+
+   
+
+<!-- Java Script -->
+<script src="../../../plugins/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- Probability Packages -->
+<script src="../../../js/probabilityUtils.js"></script>
+<script src="../../../plugins/probability/gaussian.js"></script>
+<script src="../../../plugins/color.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js'></script>
+
+
+<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<!-- Stanford -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+
+<!-- Math Jax -->
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script> -->
+<script type="text/javascript">
+  MathJax = {
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "action.js"]
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+	"fast-preview": {
+	  disabled: true
+	}
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<script src="../../../plugins/math.min.js"></script>
+
+
+
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+ <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script src="../../../plugins/jquery.mCustomScrollbar.js"></script>
+
+</head>
+
+<script>
+  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
+  Chart.defaults.global.defaultFontSize = 18;
+</script>
+
+
+<!-- I declare a few math operators I often use in equations -->
+<div style="display:none">
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
+  $\DeclareMathOperator{\c}{^C}$
+  $\DeclareMathOperator{\or}{  or}$
+  $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\var}{Var}$
+  $\DeclareMathOperator{\Var}{Var}$
+  $\DeclareMathOperator{\Std}{Std}$
+  $\DeclareMathOperator{\E}{E}$
+  $\DeclareMathOperator{\std}{Std}$
+  $\DeclareMathOperator{\Ber}{Bern}$
+  $\DeclareMathOperator{\Bin}{Bin}$
+  $\DeclareMathOperator{\Poi}{Poi}$
+  $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Geo}{Geo}$
+  $\DeclareMathOperator{\NegBin}{NegBin}$
+  $\DeclareMathOperator{\Beta}{Beta}$
+  $\DeclareMathOperator{\Exp}{Exp}$
+  $\DeclareMathOperator{\N}{N}$
+  $\DeclareMathOperator{\R}{\mathbb{R}}$
+  $\DeclareMathOperator{\argmax}{argmax}$
+  $\newcommand{\d}{\, d}$
+  
+</div>
+
+<body class="greyBackground">
+
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!-- <div></div> -->
+        <a style="text-align:center" href="../../index.html"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
+    </div>
+
+    <div> 
+        <!-- Put a link back to cs109 -->
+    
+
+        <!-- This adds a search bar! -->
+        <div class="searchCol" style="font-family: 'Source Sans Pro', sans-serif;">
+            
+            <input type="text" class="form-control bookSearch" id="probability-for-digital-world-search" aria-describedby="search box" placeholder="🔍 Search book..."/>
+        </div>
+        
+    </div>
+
+<!-- intro -->
+<ul class="list-unstyled components">
+<li>
+<a id=sidebar-intro href="../../intro/intro">Introduction</a>
+<a id=sidebar-notation href="../../intro/notation">Notation Reference</a>
+<a id=sidebar-all_distributions href="../../intro/all_distributions">Random Variable Reference</a>
+<a id=sidebar-calculators href="../../intro/calculators">Calculators</a>
+</li>
+</ul>
+
+<!-- part1 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part1">Part 1: Core Probability</p></li>
+<li>
+<a id=sidebar-counting href="../../part1/counting">Counting</a>
+<a id=sidebar-combinatorics href="../../part1/combinatorics">Combinatorics</a>
+<a id=sidebar-probability href="../../part1/probability">Definition of Probability</a>
+<a id=sidebar-equally_likely href="../../part1/equally_likely">Equally Likely Outcomes</a>
+<a id=sidebar-prob_or href="../../part1/prob_or">Probability of <b>or</b></a>
+<a id=sidebar-cond_prob href="../../part1/cond_prob">Conditional Probability</a>
+<a id=sidebar-independence href="../../part1/independence">Independence</a>
+<a id=sidebar-prob_and href="../../part1/prob_and">Probability of <b>and</b></a>
+<a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
+<a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
+<a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+<a id=sidebar-many_flips href="../../part1/many_flips">Many Coin Flips</a>
+
+<li>
+    <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part1_examples">
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part2 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
+<li>
+<a id=sidebar-rvs href="../../part2/rvs">Random Variables</a>
+<a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
+<a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
+<a id=sidebar-variance href="../../part2/variance">Variance</a>
+<a id=sidebar-bernoulli href="../../part2/bernoulli">Bernoulli Distribution</a>
+<a id=sidebar-binomial href="../../part2/binomial">Binomial Distribution</a>
+<a id=sidebar-poisson href="../../part2/poisson">Poisson Distribution</a>
+<a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
+<a id=sidebar-uniform href="../../part2/uniform">Uniform Distribution</a>
+<a id=sidebar-exponential href="../../part2/exponential">Exponential Distribution</a>
+<a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
+<a id=sidebar-binomial_approx href="../../part2/binomial_approx">Binomial Approximation</a>
+
+<li>
+    <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part2_examples">
+        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part3 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part3">Part 3: Probabilistic Models</p></li>
+<li>
+<a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
+<a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
+<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
+
+<li>
+    <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part3_examples">
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part4 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part4">Part 4: Uncertainty Theory</p></li>
+<li>
+<a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
+<a id=sidebar-summation_vars href="../../part4/summation_vars">Adding Random Variables</a>
+<a id=sidebar-clt href="../../part4/clt">Central Limit Theorem</a>
+<a id=sidebar-samples href="../../part4/samples">Sampling</a>
+<a id=sidebar-bootstrapping href="../../part4/bootstrapping">Bootstrapping</a>
+<a id=sidebar-algorithmic_analysis href="../../part4/algorithmic_analysis">Algorithmic Analysis</a>
+
+<li>
+    <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part4_examples">
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part5 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part5">Part 5: Machine Learning</p></li>
+<li>
+<a id=sidebar-parameter_estimation href="../../part5/parameter_estimation">Parameter Estimation</a>
+<a id=sidebar-mle href="../../part5/mle">Maximum Likelihood Estimation</a>
+<a id=sidebar-map href="../../part5/map">Maximum A Posteriori</a>
+<a id=sidebar-machine_learning href="../../part5/machine_learning">Machine Learning</a>
+<a id=sidebar-naive_bayes href="../../part5/naive_bayes">Naïve Bayes</a>
+<a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
+
+<li>
+    <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part5_examples">
+        
+    </ul>
+</li>
+</li>
+</ul>
+
+
+
+    <!-- <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part ?: Misfits</p>
+        </li>
+        <li>
+             <a href="../../examples/probBabies.html">Probability and babies</a>
+            
+             <a href="../../">Sampling from a likelihood function</a>
+             <a href="../../">Law of Total Expectation</a>
+            
+        </li>
+    </ul> -->
+
+
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            Ⓒ Chris Piech, Stanford University
+            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
+        </li>
+    </ul>
+</nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+<button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
+    <i class="fas fa-align-left"></i>
+    <span></span>
+</button>
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+              <span style="font-size:150%">I'm Curious</span>
+              <span></span>
+          </button> -->
+            
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col handout" >
+              
+                        
+ 
+<center><h1>Random Variable Reference</h1></center>
+<hr/>
+
+<h3>Discrete Random Variables</h3>
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Bernoulli Random Variable</b></p>
+
+
+<table>
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Ber(p)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A boolean variable that is 1 with probability $p$</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+		<td>$p$, the probability that $X=1$.</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x$ is either 0 or 1</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td>$\p(X=x) = 
+			\begin{cases}
+				p && \text{if }x = 1\\
+				1-p && \text{if }x = 0
+			\end{cases}$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = p$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = p (1-p)$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</table>
+Parameter $p$: <input onchange="redrawBernoulliPmf()" type="number" class="form-control example-inline-input mb-3" id="bernoulliPmfP" min="0" max="1" value="0.80" step = "0.05">
+<canvas id="bernoulliPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawBernoulliPmf()
+})
+
+function redrawBernoulliPmf() {
+	let parentDivId = 'bernoulliPmf'
+	let p = parseFloat($('#bernoulliPmfP').val())
+	drawBernoulliPmf(parentDivId, p)
+}
+
+function drawBernoulliPmf(parentDivId, p) {
+	if(window.myBernLine) {
+		window.myBernLine.destroy()
+	}
+	var xValues = [0, 1]
+	var q = 1 - p;
+	var yValues = [q.toFixed(5), p.toFixed(5)]
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'P(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true,
+                        steps: 10,
+                        stepValue: 0.1,
+                        max: 1.0
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myBernLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Binomial Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Bin(n, p)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Number of "successes" in $n$ identical, independent experiments each with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$n \in \{0, 1, \dots\}$, the number of experiments.<br/>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{0, 1, \dots, n\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = {n \choose x}p^x(1-p)^{n-x}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = n \cdot p$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = n \cdot p \cdot (1-p)$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $n$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfN" min="1" value="20" step = "1">
+</div>
+<div>
+Parameter $p$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfP" min="0" max="1" value="0.60" step = "0.05">
+</div>
+</div>
+<canvas id="binomialPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawBinomialPmf()
+})
+
+function redrawBinomialPmf() {
+	let parentDivId = 'binomialPmf'
+	let n = Math.round($('#binomialPmfN').val())
+	$('#binomialPmfN').val(n)
+	let p = parseFloat($('#binomialPmfP').val())
+	drawBinomialPmf(parentDivId, n, p)
+}
+
+function drawBinomialPmf(parentDivId, n, p) {
+	if(window.myBinLine) {
+		window.myBinLine.destroy()
+	}
+	console.log(n, p)
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i <= n; i++) {
+		let pr_x = binomialPmf(n,p,i).toFixed(5)
+		xValues.push(i)
+		yValues.push(pr_x)
+	}
+	console.log(xValues, yValues)
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'P(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myBinLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Poisson Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Poi(\lambda)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Number of events in a fixed time frame if (a) the events occur with a constant mean rate and (b) they occur independently of time since last event.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$\lambda \in \{0, 1, \dots\}$, the constant average rate.</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{0, 1, \dots\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \lambda$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \lambda$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\lambda$: <input onchange="redrawPoissonPmf()" type="number" class="form-control example-inline-input mb-3" id="poissonPmfLambda" min="1" max="130" value="5" step = "1">
+</div>
+</div>
+<canvas id="poissonPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawPoissonPmf()
+})
+
+function redrawPoissonPmf() {
+	let parentDivId = 'poissonPmf'
+	let lambda = parseFloat($("#poissonPmfLambda").val())
+	drawPoissonPmf(parentDivId, lambda)
+}
+
+function drawPoissonPmf(parentDivId, lambda) {
+	if(window.myPoissonLine) {
+		window.myPoissonLine.destroy()
+	}
+
+	console.log('lambda',lambda)
+	var xValues = []
+	var yValues = []
+	var i = 0
+	while(true){
+		let pr_x = jStat.poisson.pdf(i, lambda).toFixed(5)
+		xValues.push(i)
+		yValues.push(pr_x)
+		console.log(i, pr_x)
+		i += 1
+		if(pr_x < 0.00001 && i > lambda) {
+			break;
+		}
+	}
+	console.log(xValues, yValues)
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'P(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myPoissonLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Geometric Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Geo(p)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Number of experiments until a success. Assumes independent experiments each with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{1, \dots, \infty\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = (1-p)^{x-1} p$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{1}{p}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{1-p}{p^2}$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	
+<div>
+Parameter $p$: <input onchange="redrawGeometricPmf()" type="number" class="form-control example-inline-input mb-3" id="geometricPmfP" min="0" max="1" value="0.20" step = "0.05">
+</div>
+</div>
+<canvas id="geometricPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawGeometricPmf()
+})
+
+function redrawGeometricPmf() {
+	let parentDivId = 'geometricPmf'
+	let p = parseFloat($('#geometricPmfP').val())
+	drawGeometricPmf(parentDivId, p)
+}
+
+function drawGeometricPmf(parentDivId, p) {
+	if(window.myGeoLine) {
+		window.myGeoLine.destroy()
+	}
+	console.log(p)
+
+	var xValues = []
+	var yValues = []
+	var curr_prob = p
+	var curr_x = 0
+	while(curr_prob > 0.001) {
+		if(curr_x == 0) {
+			xValues.push(0)
+			yValues.push(0)
+		} else {
+			let pr_x = curr_prob.toFixed(5)
+			xValues.push(curr_x)
+			yValues.push(pr_x)
+			curr_prob *= (1 - p)
+		}
+
+		
+		curr_x++
+	}
+	console.log(xValues, yValues)
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'P(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myGeoLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Negative Binomial Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \NegBin(r, p)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Number of experiments until $r$ successes. Assumes each experiment is independent with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$r > 0$, the number of success we are waiting for.<br/>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \{r, \dots, \infty\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = {x - 1 \choose r - 1}p^r(1-p)^{x-r}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{r}{p}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{r \cdot (1-p)}{p^2}$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $r$: <input onchange="redrawNegBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="negBinomialPmfR" min="1" value="3" step = "1">
+</div>
+<div>
+Parameter $p$: <input onchange="redrawNegBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="negBinomialPmfP" min="0" max="1" value="0.20" step = "0.05">
+</div>
+</div>
+<canvas id="negBinomialPmf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawNegBinomialPmf()
+})
+
+function redrawNegBinomialPmf() {
+	let parentDivId = 'negBinomialPmf'
+	let r = Math.round($('#negBinomialPmfR').val())
+	$('#negBinomialPmfR').val(r)
+	let p = parseFloat($('#negBinomialPmfP').val())
+	drawNegBinomialPmf(parentDivId, r, p)
+}
+
+function drawNegBinomialPmf(parentDivId, r, p) {
+	if(window.myNegBinLine) {
+		window.myNegBinLine.destroy()
+	}
+	console.log(r, p)
+
+	var xValues = []
+	var yValues = []
+	var curr_prob = 1
+	var i = 0
+	while(curr_prob > 0.001 || i < r + 10) {
+		if(i < r){
+			xValues.push(i)
+			yValues.push(0)
+		} else {
+			var pr_x = jStat.combination(i-1, r-1)
+			pr_x *= p ** r
+			pr_x *= (1- p) ** (i - r)
+			pr_x = pr_x.toFixed(5)
+			xValues.push(i)
+			yValues.push(pr_x)
+			curr_prob = pr_x
+		}
+		i += 1
+	}
+	console.log(xValues, yValues)
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'bar',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'P(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myNegBinLine = new Chart(ctx, config);
+}
+</script></p>
+
+<h3>Continuous Random Variables</h3>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Uniform Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Uni(\alpha, \beta)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A continuous random variable that takes on values, with equal likelihood, between $\alpha$ and $\beta$</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$\alpha \in \R$, the minimum value of the variable.<br/>$\beta \in \R$, $\beta > \alpha$, the maximum value of the variable. </td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in [\alpha, \beta]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \begin{cases}
+\frac{1}{\beta - \alpha} && \text{for }x \in [\alpha, \beta]\\
+0 && \text{else}
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$F(x) = \begin{cases}
+\frac{x - \alpha}{\beta - \alpha} && \text{for }x \in [\alpha, \beta]\\
+0 && \text{for } x < \alpha \\
+1 && \text{for } x > \beta
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{1}{2}(\alpha + \beta)$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{1}{12}(\beta - \alpha)^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\alpha$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniA" value="0" step = "0.05">
+</div>
+<div>
+Parameter $\beta$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniB" value="1" step = "0.05">
+</div>
+</div>
+
+<canvas id="uniPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawUniPdf()
+})
+
+function redrawUniPdf() {
+	let parentDivId = 'uniPdf'
+	let a = parseFloat($("#uniA").val())
+	let b = parseFloat($("#uniB").val())
+	drawUniPdf(parentDivId, a, b)
+}
+
+function drawUniPdf(parentDivId, a, b) {
+	if(window.myUniformLine) {
+		window.myUniformLine.destroy()
+	}
+
+	var pdfValue = 0
+	if(b > a) {
+		pdfValue = 1 / (b - a)
+	} else {
+
+		return
+	}
+	 
+	var xValues = []
+	var yValues = []
+	var step = (b-a)/100
+	
+	for (var i = a - 1; i <= b + 1; i+=step) {
+		xValues.push(i.toFixed(2))
+		if(i >= a && i <= b){
+			yValues.push(pdfValue.toFixed(3))
+
+		} else {
+			yValues.push(0)
+		}
+	}
+
+	
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability Density'
+
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'f(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myUniformLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Exponential Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Exp(\lambda)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Time until next events if (a) the events occur with a constant mean rate and (b) they occur independently of time since last event.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$\lambda \in \{0, 1, \dots\}$, the constant average rate.</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \mathbb{R}^+$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \lambda e^{-\lambda x}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$F(x) = 1 - e^{-\lambda x}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = 1/\lambda$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = 1/\lambda^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\lambda$: <input onchange="redrawExponentialPdf()" type="number" class="form-control example-inline-input mb-3" id="exponentialPdfLambda" min="1" max="130" value="5" step = "1">
+</div>
+</div>
+<canvas id="exponentialPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawExponentialPdf()
+})
+
+function redrawExponentialPdf() {
+	let parentDivId = 'exponentialPdf'
+	let lambda = parseFloat($("#exponentialPdfLambda").val())
+	drawExponentialPdf(parentDivId, lambda)
+}
+
+function drawExponentialPdf(parentDivId, lambda) {
+	if(window.myExpLine) {
+		window.myExpLine.destroy()
+	}
+
+	var expectation = 1 / lambda
+	var xValues = []
+	var yValues = []
+	var i = 0
+	while(true){
+		let pr_x = jStat.exponential.pdf(i, lambda).toFixed(5)
+		xValues.push(i.toFixed(3))
+		yValues.push(pr_x)
+		i += expectation / 100
+		if(pr_x < 0.001) {
+			break;
+		}
+	}
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'f(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myExpLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Normal (aka Gaussian) Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \N(\mu, \sigma^2)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A common, naturally occuring distribution.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$\mu \in \mathbb{R}$, the mean.<br/>$\sigma^2 \in \mathbb{R}$, the variance.<br/></td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \mathbb{R}$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)^2}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$\begin{align}
+		F(x) &= \phi(\frac{x-\mu}{\sigma})
+		   && \text{Where $\phi$ is the CDF of the standard normal}
+	\end{align}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \mu$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \sigma^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\mu$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input mb-3" id="normalPdfMu" value="5" step = "1">
+	</div>
+	<div>
+Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input mb-3" id="normalPdfSigma" value="5" step = "1">
+	</div>
+</div>
+<canvas id="normalPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawNormalPdf()
+})
+
+function redrawNormalPdf() {
+	let parentDivId = 'normalPdf'
+	let mu = parseFloat($("#normalPdfMu").val())
+	let sigma = parseFloat($("#normalPdfSigma").val())
+	drawNormalPdf(parentDivId, mu, sigma)
+}
+
+function drawNormalPdf(parentDivId, mu, sigma) {
+	if(window.myNormalLine) {
+		window.myNormalLine.destroy()
+	}
+	var xValues = []
+	var yValues = []
+
+	var yStandardNorm = []
+
+	var min_i = mu - 3 * sigma
+	var max_i = mu + 3 * sigma
+	var step = (max_i - min_i) / 100
+	for (var i = min_i; i <= max_i; i+= step) {
+		let pr_x = jStat.normal.pdf(i, mu, sigma)
+		let pr_std_x = jStat.normal.pdf(i, 0, 1)
+		xValues.push(i.toFixed(3))
+		yValues.push(pr_x.toFixed(5))
+		yStandardNorm.push(pr_std_x.toFixed(5))
+	}
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: `X ~ N(μ=${mu},σ=${sigma})`,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}, {
+				label: 'Standard Normal',
+				fill: false,
+				backgroundColor: 'purple',
+				borderColor: 'purple',
+				data: yStandardNorm,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myNormalLine = new Chart(ctx, config);
+}
+</script></p>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Beta Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim \Beta(a, b)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>A belief distribution over the value of a probability $p$ from a Binomial distribution after observing $a+1$ successes and $b+1$ fails. </td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+
+		<td>$a > 0$, the number successes + 1 <br/>
+		    $b > 0$, the number of fails + 1</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in [0, 1]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = B \cdot x^{a-1} \cdot (1-x)^{b-1}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">No closed form</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{a}{a+b}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{ab}{(a+b)^2(a+b+1)}$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $a$: <input onchange="redrawBetaPdf()" type="number" class="form-control example-inline-input mb-3" id="betaA" min="1" max="130" value="2" step = "1">
+</div>
+<div class="mr-2">
+Parameter $b$: <input onchange="redrawBetaPdf()" type="number" class="form-control example-inline-input mb-3" id="betaB" min="1" max="130" value="4" step = "1">
+</div>
+</div>
+<canvas id="betaPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawBetaPdf()
+})
+
+function redrawBetaPdf() {
+	let parentDivId = 'betaPdf'
+	let a = parseFloat($("#betaA").val())
+	let b = parseFloat($("#betaB").val())
+	drawBetaPdf(parentDivId, a, b)
+}
+
+function drawBetaPdf(parentDivId, a, b) {
+	if(window.myBetaLine) {
+		window.myBetaLine.destroy()
+	}
+
+	let N_BUCKETS = 100
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < N_BUCKETS + 1; i++) {
+		let x = i/(N_BUCKETS * 1.0)
+		let y = jStat.beta.pdf(x, a,b).toFixed(5)
+		xValues.push(x)
+		yValues.push(y)
+	}
+
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability Density'
+	console.log('STARTING')
+	var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: 'f(x)',
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+	console.log('FINISHED')
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myBetaLine = new Chart(ctx, config);
+}
+</script></p>
+
+                        
+
+
+
+<script type="text/javascript">
+    // const firebase = require("firebase");
+    // Required for side-effects
+    // require("firebase/firestore");
+
+    $(document).ready(function () {
+        console.log('ready')
+        const scrollTop = getScrollTop()
+        console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
+        // $("#sidebar").mCustomScrollbar({
+        //     theme: "minimal",
+        //     mouseWheel: {preventDefault: true},
+        //     advanced:{
+        //      autoScrollOnFocus: false,
+        //      updateOnContentResize: true
+        //     },
+        //     scrollInertia:0,
+        //     contentTouchScroll:1,
+        //     mouseWheel: {
+        //         scrollAmount:1000
+        //     },
+        //     setTop:scrollTop + 'px',
+        //     callbacks:{
+        //         onScroll:function(){
+        //             if(hasStorage) {
+
+        //                 localStorage.scrollTop = this.mcs.top;
+        //                 console.log(localStorage.scrollTop)
+        //             }
+        //         }
+        //     } 
+        // });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+        
+        let lastPart = getUrlKey()
+
+        // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
+        //     scrollInertia:0
+        // });
+
+        // addExampleToFirebase()
+    });
+
+    function getScrollTop() {
+        console.log('here')
+        if(typeof(Storage) !== "undefined") {
+            return Number(localStorage.scrollTop)
+        }
+        return 0;
+    }
+
+    function getUrlKey() {
+        var pathname = window.location.pathname;
+        
+        let parts = pathname.split('/')
+        var currIndex = parts.length - 1
+        while(currIndex >= 0) {
+            let nextPart = parts[currIndex]
+            if(nextPart) {
+                return nextPart
+            }
+            currIndex -= 1
+        }
+        return ''
+    }
+
+    function submitQuestion() {
+        firebase.initializeApp({
+          apiKey: "AIzaSyBqZVV7Qrp0DT3aBCCTCTMUCrPJO0pb3tY",
+          authDomain: "probability-digital-world.firebaseapp.com",
+          projectId: "probability-digital-world"
+        });
+
+        var db = firebase.firestore();
+
+        db.collection("questions").add({
+            email: $("#question-email").val(),
+            question: "Lovelace",
+            page: getUrlKey()
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            alert('success')
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+        // // // Generate a new push ID for the new post
+        // var questionListRef = db.child("questions")
+        // var newQuestionRef = questionListRef.push();
+        // newQuestionRef.set({
+        //     'title':'test'
+        // });
+        
+    }
+
+    function onCuriosity() {
+        Swal.fire({
+          title: 'Curious?',
+          position: 'bottom-end',
+          allowOutsideClick:false,
+          backdrop:false,
+          confirmButtonText: 'Submit',
+          input: 'textarea',
+          html:
+            '<p>We are trying to make this book better. Let us know if you find something confusing. If you ask a question we will try to answer it. If you find a mistake we will fix it. </p>' +
+            '<input placeholder="Your email (optional)..." id="question-email" class="swal2-input">',
+          inputPlaceholder: 'Type your question or message here...',
+          inputAttributes: {
+            'aria-label': 'Type your question or message here'
+          },
+          showCancelButton: true,
+          preConfirm: () => submitQuestion()
+        })
+    }
+</script>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+$(document).ready(function() {
+  addH2Numbers()
+  enableSearch()
+})
+
+function addH2Numbers() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+}
+
+function enableSearch() {
+  $("#probability-for-digital-world-search").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+          let query = $("#probability-for-digital-world-search").val()
+          
+          window.location = `../../search.html?q=${query}`
+      }
+  });
+  // $.ajax({
+  //     type: "GET",
+  //     url: "../../../searchIndex.json",
+  //     dataType: "text",
+  //     success: function(data) {addSearchIndexData(data);}
+  //  });
+}
+
+function addSearchIndexData(data) {
+  var idx = lunr(function () {
+    this.ref('name')
+    this.field('text')
+
+    let documents = JSON.parse(data)
+
+    documents.forEach(function (doc) {
+      this.add(doc)
+      console.log(doc)
+    }, this)
+
+    $("#probability-for-digital-world-search").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            let query = $("#probability-for-digital-world-search").val()
+            let results = idx.search(query)
+            console.log(results)
+        }
+    });
+  })
+}
+
+    </script>
+
+</body>
+
+
+
+
+</html>

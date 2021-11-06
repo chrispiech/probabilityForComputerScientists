@@ -1,0 +1,27 @@
+<div class="bordered">
+<b>Factorial Calculator</b> ${n!}$
+
+<table>
+	<tr>
+		<td style="width:50px">n</td>
+		<td><input onchange="calculateFactorial()" type="number" class="form-control" id="factN" value="10"></td>
+	</tr>
+	
+</table>
+
+<p>
+  <button class="btn btn-primary mt-3" onclick="calculateFactorial()" style="font-family:monospace">factorial(n)</button> 
+</p>
+
+<p id="factorialResult">&nbsp;</p>
+
+</div>
+<script>
+
+function calculateFactorial() {
+	var n = parseFloat($("#factN").val())
+	
+	var result = jStat.factorial( n)
+	$("#factorialResult").html(result)
+}
+</script>

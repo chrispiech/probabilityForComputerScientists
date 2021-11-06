@@ -129,6 +129,16 @@ greyBackground as a style class)
     padding-right: 10px;
   }
 
+  .handout > h3 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .handout > b {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   .handout > img {
     padding-left: 10px;
     padding-right: 10px;
@@ -137,6 +147,11 @@ greyBackground as a style class)
   .handout > center > img {
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .handout > table {
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 

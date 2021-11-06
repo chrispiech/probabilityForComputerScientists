@@ -184,6 +184,10 @@
 <!-- intro -->
 <ul class="list-unstyled components">
 <li>
+<a id=sidebar-intro href="../../intro/intro">Introduction</a>
+<a id=sidebar-notation href="../../intro/notation">Notation Reference</a>
+<a id=sidebar-all_distributions href="../../intro/all_distributions">Random Variable Reference</a>
+<a id=sidebar-calculators href="../../intro/calculators">Calculators</a>
 </li>
 </ul>
 
@@ -229,7 +233,6 @@
 <a id=sidebar-exponential href="../../part2/exponential">Exponential Distribution</a>
 <a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
 <a id=sidebar-binomial_approx href="../../part2/binomial_approx">Binomial Approximation</a>
-<a id=sidebar-all_distributions href="../../part2/all_distributions">Random Variable Reference</a>
 
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
@@ -417,7 +420,7 @@ Independence is symmetric. That means that if random variables $X$ and $Y$ are i
 	<b><i>Lemma: Product of Expectation for Independent Random Variables</i></b>:<br/>
 	If two random variables $X$ and $Y$ are independent, the expectation of their product is the product of the individual expectations.
 \begin{align*}
- &E[X \cdot Y] = E[X] \cdot E[Y] && \text{ if and only if $X$ and $Y$ are independent}
+ &E[X \cdot Y] = E[X] \cdot E[Y] && \text{ if and only if $X$ and $Y$ are independent}\\
  &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{ where $g$ and $h$ are functions} 
 \end{align*}
 Note that this assumes that $X$ and $Y$ are independent. Contrast this to the sum version of this rule (expectation of sum of random variables, is the sum of individual expectations) which does <b>not</b> require the random variables to be independent.

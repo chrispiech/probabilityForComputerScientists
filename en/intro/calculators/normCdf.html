@@ -1,0 +1,47 @@
+<div class="bordered">
+<b>Norm CDF Calculator</b>
+
+<table>
+	<tr>
+		<td style="width:50px">x</td>
+		<td><input onchange="calculateNormCdf()" type="number" class="form-control" id="normCdfX" value="0.0"></td>
+	</tr>
+	<tr>
+		<td>mu</td>
+		<td><input onchange="calculateNormCdf()" type="number" class="form-control" id="normCdfMu" value="0"></td>
+	</tr>
+	<tr>
+		<td>std</td>
+		<td><input onchange="calculateNormCdf()" type="number" class="form-control" id="normCdfStd" value="1"></td>
+	</tr>
+</table>
+
+<p>
+  <button class="btn btn-primary mt-3" onclick="calculateNormCdf()" style="font-family:monospace">norm.cdf(x, mu, std)</button> 
+</p>
+
+<p id="normCdfResult">&nbsp;</p>
+
+</div>
+<script>
+
+function calculateNormCdf() {
+	var x = $("#normCdfX").val()
+	var mu = $("#normCdfMu").val()
+	var std = $("#normCdfStd").val()
+
+	$("#normCdfStd").removeClass("is-invalid")
+
+	if(std <= 0.0) {
+	  let xField = $("#normCdfStd")
+	  xField.addClass("is-invalid")
+      xField.attr('placeholder', 'Must be positive')
+      xField.val('')
+      return
+	}
+
+	var dist = gaussian(mu, std * std);
+	var result = dist.cdf(x).toFixed(5);
+	$("#normCdfResult").html(result)
+}
+</script>

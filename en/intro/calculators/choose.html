@@ -1,0 +1,32 @@
+<div class="bordered">
+<b>Combination Calculator</b> ${n \choose k}$
+
+<table>
+	<tr>
+		<td style="width:50px">n</td>
+		<td><input onchange="calculateChoose()" type="number" class="form-control" id="ChooseN" value="10"></td>
+	</tr>
+	<tr>
+		<td style="width:50px">k</td>
+		<td><input onchange="calculateChoose()" type="number" class="form-control" id="ChooseK" value="6"></td>
+	</tr>
+	
+</table>
+
+<p>
+  <button class="btn btn-primary mt-3" onclick="calculateChoose()" style="font-family:monospace">combination(n,k)</button> 
+</p>
+
+<p id="chooseResult">&nbsp;</p>
+
+</div>
+<script>
+
+function calculateChoose() {
+	var n = parseFloat($("#ChooseN").val())
+	var k = parseFloat($("#ChooseK").val())
+	
+	var result = jStat.combination( n,k)
+	$("#chooseResult").html(result)
+}
+</script>
