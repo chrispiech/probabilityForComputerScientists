@@ -561,17 +561,22 @@ function redrawCltHistogram() {
 
 <div class="purpleBox">
     <p><b><i>Example:</i></b></p>
-<p>You will roll a 6 sided dice 10 times. Let $X$ be the total value of all 10 dice = $X_1 + X_2 + \dots + X_{10}$. You win the game if $X \leq 25$ or $X \geq 45$. Use the central limit theorem to calculate the probability that you win.
+<p>You will roll a 6 sided dice 10 times. Let $X$ be the total value of all 10 dice = $X_1 + X_2 + \dots + X_{10}$. You win the game if $X \leq 25$ or $X \geq 45$. Use the central limit theorem to calculate the probability that you win. Recall that $E[X_i] = 3.5$ and $\text{Var}(X_i) = \frac{35}{12}$.
 
-<p>Recall that $E[X_i] = 3.5$ and $\text{Var}(X_i) = \frac{35}{12}$.
+<p>Let $Y$ be the approximating normal. By the Central Limit Theorem $Y \sim N(10 \cdot E[X_i], 10 \cdot \Var(X_i))$. Substituting in the known values for expectation and variance: $Y \sim N(35, 29.2)$
 
 \begin{align*}
 \P(&X \leq 25 \text{ or } X \geq 45) \\
-&= 1 -  P(25.5 \leq X \leq 44.5) \\
-&= 1 - P(\frac{25.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
+&= \P(X \leq 25) + \P(X \geq 45) \\
+&\approx \P(Y < 25.5) + \P(Y > 44.5) &&\text{Continuity Correction} \\
+&\approx \P(Y < 25.5) + [1 -\P(Y < 44.5)]\\
+&\approx \Phi(\frac{25.5 - 35}{\sqrt{29.2} }) + \Big[1 -\Phi(\frac{44.5- 35}{\sqrt{29.2} })\Big] &&\text{Normal CDF}\\
+&\approx \Phi(-1.76) + [1 - \Phi(1.76)]\\
+&\approx 0.039 + (1-0.961) \approx 0.078
+<!-- &= 1 - P(\frac{25.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
 \leq \frac{X - 10(3.5)}{\sqrt{35/12}\sqrt{10}}
 \leq \frac{44.5 - 10(3.5)}{\sqrt{35/12}\sqrt{10}} \\
-&\approx 1 - (2\phi(1.76) - 1) \approx 2(1- 0.9608) = 0.0784
+&\approx 1 - (2\phi(1.76) - 1) \approx 2(1- 0.9608) = 0.0784 -->
 \end{align*}
 </div>
 
