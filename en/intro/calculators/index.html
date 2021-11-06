@@ -350,7 +350,7 @@
  
 <center><h1>Calculators</h1></center>
 <hr/>
-
+<p>
 <div class="bordered">
 <b>Factorial Calculator</b> ${n!}$
 
@@ -377,7 +377,7 @@ function calculateFactorial() {
 	var result = jStat.factorial( n)
 	$("#factorialResult").html(result)
 }
-</script>
+</script><p>
 <div class="bordered">
 <b>Combination Calculator</b> ${n \choose k}$
 
@@ -409,7 +409,7 @@ function calculateChoose() {
 	var result = jStat.combination( n,k)
 	$("#chooseResult").html(result)
 }
-</script>
+</script><p>
 <div class="bordered">
 <b>Phi Calculator</b>, $\Phi(x)$
 
@@ -436,7 +436,7 @@ function calculatePhiCdf() {
 	var result = jStat.normal.cdf( x, 0, 1 )
 	$("#PhiCdfResult").html(result.toFixed(5))
 }
-</script>
+</script><p>
 <div class="bordered">
 <b>Inverse Phi Calculator</b>, $\Phi^{-1}(y)$
 
@@ -480,7 +480,7 @@ function calculateInvPhiCdf() {
 	var result = jStat.normal.inv( x, 0, 1 )
 	$("#invPhiCdfResult").html(result.toFixed(5))
 }
-</script>
+</script><p>
 <div class="bordered">
 <b>Norm CDF Calculator</b>
 
@@ -527,7 +527,7 @@ function calculateNormCdf() {
 	var result = dist.cdf(x).toFixed(5);
 	$("#normCdfResult").html(result)
 }
-</script>
+</script><p>
 <div class="bordered">
 <b>Beta CDF Calculator</b>
 
