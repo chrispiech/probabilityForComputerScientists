@@ -122,7 +122,7 @@ A Beta distribution has $E[X] = \frac{a}{a + b}$ and $Var(X) = \frac{ab}{(a+b)^2
 
 <h2>Beta as a Prior</h2>
 
-<p>You can set $X \sim \Beta(a, b)$ as a prior to reflect how biased you think the coin is apriori to flipping it. This is a subjective judgment that represent $a+b- 2$ "imaginary" trials with $a-1$ heads and $b-1$ tails. If you then observe $h + t$ real trials with $h$ heads you can update your belief. Your new belief would be, $X \sim \Beta(a+n, b+m)$. Using the prior $\Beta(1,1) = \Uni(0, 1)$ is the same as saying we haven't seen any "imaginary" trials, so apriori we know nothing about the coin. Here is the proof:</p>
+<p>You can set $X \sim \Beta(a, b)$ as a prior to reflect how biased you think the coin is apriori to flipping it. This is a subjective judgment that represent $a+b- 2$ "imaginary" trials with $a-1$ heads and $b-1$ tails. If you then observe $h + t$ real trials with $h$ heads you can update your belief. Your new belief would be, $X \sim \Beta(a+h, b+t)$. Using the prior $\Beta(1,1) = \Uni(0, 1)$ is the same as saying we haven't seen any "imaginary" trials, so apriori we know nothing about the coin. Here is the proof for the distribution of $X$ when the prior was a Beta too:</p>
 
     <p><div class="bordered">
 If our prior belief for $X \sim \Beta(a, b)$, then our posterior is $\Beta(a+h, b+t)$:
