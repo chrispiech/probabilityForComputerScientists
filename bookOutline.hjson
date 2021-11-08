@@ -109,6 +109,7 @@
 			"log_regression":"Logistic Regression"
 		},
 		"examples": {
+			"mle_demo":"MLE Demo"
 		}
 	},
 	# "examples": {

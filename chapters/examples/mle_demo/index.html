@@ -1,0 +1,168 @@
+
+% rebase('templates/chapter.html', title="MLE Demo")
+ 
+<center><h1>MLE Demo</h1></center>
+<hr/>
+
+<p>We assume the following 20 data points come from the same gaussian. Use MLE to estimate the parameters.</p>
+
+<p><div class="bordered">
+Data = [6.3  , 5.5
+, 5.4, 7.1, 4.6,
+       6.7, 5.3 , 4.8, 5.6, 3.4,
+       5.4, 3.4, 4.8, 7.9, 4.6,
+       7.0, 2.9, 6.4, 6.0 , 4.3]
+</div></p>
+
+
+
+<h3>Estimate the Parameters</h3>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\mu$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input " id="normalPdfMu" value="5" step = ".1">
+	</div>
+	<div>
+Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma" value="5" step = ".1">
+	</div>
+</div>
+
+
+
+	<h3>Likelihood</h3>
+	<p>Likelihood: <span id="likelihood"></span><br/>
+		Log Likelihood: <span id="ll"></span><br/>
+		Best Seen: <span id="best"></span> 
+	<!-- <p>\begin{align*}
+		\text{LL} = \log \prod_i l(x_i | \theta)
+		\end{align*}
+	</p> -->
+
+
+<h3>PDF Graph</h3>
+<canvas id="normalPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+var best = null
+
+$(document).ready(function(){
+	redrawNormalPdf()
+})
+
+function redrawNormalPdf() {
+	let parentDivId = 'normalPdf'
+	let mu = parseFloat($("#normalPdfMu").val())
+	let sigma = parseFloat($("#normalPdfSigma").val())
+	drawNormalPdf(parentDivId, mu, sigma)
+	calculateLogLikelihood(mu, sigma)
+}
+
+function calculateLogLikelihood(mu, sigma) {
+	let data = [6.286912  , 5.46503278, 5.44423621, 7.13128938, 4.62481881,
+       6.69696709, 5.2849901 , 4.82127431, 5.59968142, 3.39145276,
+       5.37585565, 3.38904864, 4.80153727, 7.91285929, 4.57919734,
+       7.04245161, 2.91950716, 6.39462536, 5.9956091 , 4.28722288]
+
+    ll = 0
+    likelihood = 1.0
+    for (var i = 0; i < data.length; i++) {
+    	let x = data[i]
+    	l = jStat.normal.pdf(x, mu, sigma )
+    	ll += Math.log(likelihood)
+    	likelihood *= l
+    	console.log(likelihood)
+
+    }
+    $("#likelihood").html(likelihood)
+    $("#ll").html(ll.toFixed(1))
+    if(best == null || ll > best) {
+    	console.log('here')
+    	best = ll
+    	$("#best").html(ll.toFixed(1))
+    }
+}
+
+function drawNormalPdf(parentDivId, mu, sigma) {
+	if(window.myNormalLine) {
+		window.myNormalLine.destroy()
+	}
+	var xValues = []
+	var yValues = []
+
+
+
+	var min_i = 0
+	var max_i = 20
+	var step = (max_i - min_i) / 100
+	for (var i = min_i; i <= max_i; i+= step) {
+		let pr_x = jStat.normal.pdf(i, mu, sigma)
+		let pr_std_x = jStat.normal.pdf(i, 0, 1)
+		xValues.push(i.toFixed(3))
+		yValues.push(pr_x.toFixed(5))
+	}
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'line',
+		
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: `X ~ N(μ=${mu},σ=${sigma})`,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+			animation: {
+		        duration: 0
+		    },
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true,
+                        suggestedMax: 0.45
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myNormalLine = new Chart(ctx, config);
+}
+</script>

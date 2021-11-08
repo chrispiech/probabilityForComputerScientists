@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Bootstrapping</title>
+<title>MLE Demo</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -348,63 +348,171 @@
               
                         
  
-<center><h1>Bootstrapping</h1></center>
+<center><h1>MLE Demo</h1></center>
 <hr/>
 
-<p>The bootstrap is a newly invented statistical technique for both understanding distributions of statistics and for calculating $p$-values (a $p$-value is a the probability that a scientific claim is incorrect). It was invented here at Stanford in 1979 when mathematicians were just starting to understand how computers, and computer simulations, could be used to better understand probabilities.
+<p>We assume the following 20 data points come from the same gaussian. Use MLE to estimate the parameters.</p>
 
-<p>The first key insight is that: if we had access to the underlying distribution ($F$) then answering almost any question we might have as to how accurate our statistics are becomes straightforward. For example, in the previous section we gave a formula for how you could calculate the sample variance from a sample of size $n$. We know that in expectation our sample variance is equal to the true variance. But what if we want to know the probability that the true variance is within a certain range of the number we calculated? That question might sound dry, but it is critical to evaluating scientific claims! If you knew the underlying distribution, $F$, you could simply repeat the experiment of drawing a sample of size $n$ from $F$, calculate the sample variance from our new sample and test what portion fell within a certain range. 
-
-<p>The next insight behind bootstrapping is that the best estimate that we can get for $F$ is from our sample itself! The simplest way to estimate $F$ (and the one we will use in this class) is to assume that the $P(X=k)$ is simply the fraction of times that $k$ showed up in the sample. Note that this defines the probability mass function of our estimate $\hat{F}$ of $F$.
-
-
-
-<pre ><code>def bootstrap(sample):
-   N = number of elements in sample
-   pmf = estimate the underlying pmf from the sample
-   stats = []
-   repeat 10,000 times:
-      resample = draw N new samples from the pmf
-      stat = calculate your stat on the resample
-      stats.append(stat)
-   stats can now be used to estimate the distribution of the stat</code></pre>
-
-<p>Bootstrapping is a reasonable thing to do because the sample you have is the best and only information you have about what the underlying population distribution actually looks like. Moreover most samples will, if they're randomly chosen, look quite like the population they came from. 
-
-<p>To calculate $\text{Var}(S^2)$ we could calculate $S_i^2$ for each resample $i$ and after 10,000 iterations, we could calculate the sample variance of all the $S_i^2$s. You might be wondering why the resample is the same size as the original sample ($n$). The answer is that the variation of the variation of stat that you are calculating could depend on the size of the sample (or the resample). To accurately estimate the distribution of the stat we must use resamples of the same size.
-
-<p>The bootstrap has strong theoretic grantees, and is accepted by the scientific community. It breaks down when the underlying distribution has a ``long tail" or if the samples are not I.I.D.
+<p><div class="bordered">
+Data = [6.3  , 5.5
+, 5.4, 7.1, 4.6,
+       6.7, 5.3 , 4.8, 5.6, 3.4,
+       5.4, 3.4, 4.8, 7.9, 4.6,
+       7.0, 2.9, 6.4, 6.0 , 4.3]
+</div></p>
 
 
 
-<h2>Example of p-value calculation</h2>
+<h3>Estimate the Parameters</h3>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\mu$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input " id="normalPdfMu" value="5" step = ".1">
+	</div>
+	<div>
+Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma" value="5" step = ".1">
+	</div>
+</div>
 
-<p>We are trying to figure out if people are happier in Bhutan or in Nepal. We sample $n_1 = 200$ individuals in Bhutan and $n_2 = 300$ individuals in Nepal and ask them to rate their happiness on a scale from 1 to 10. We measure the sample means for the two samples and observe that people in Nepal are slightly happier--the difference between the Nepal sample mean and the Bhutan sample mean is 0.5 points on the happiness scale. 
-
-<p>If you want to make this claim scientific you should calculate a $p$-value. A p-value is the probability that, when the null hypothesis is true, the statistic measured would be equal to, or more extreme than, than the value you are reporting. The null hypothesis is the hypothesis that there is no relationship between two measured phenomena or no difference between two groups.
-
-<p>In the case of comparing Nepal to Bhutan, the null hypothesis is that there is no difference between the distribution of happiness in Bhutan and Nepal. The null hypothesis argument is: there is no difference in the distribution of happiness between Nepal and Bhutan. When you drew samples, Nepal had a mean that 0.5 points larger than Bhutan by chance.
-
-<p>We can use bootstrapping to calculate the p-value. First, we estimate the underlying distribution of the null hypothesis underlying distribution, by making a probability mass function from all of our samples from Nepal and all of our samples from Bhutan.
 
 
-<pre class="language-python"><code>def pvalueBootstrap(bhutanSample, nepalSample):
-   N = size of the bhutanSample
-   M = size of the nepalSample
-   universalSample = combine bhutanSamples and nepalSamples
-   universalPmf = estimate the underlying pmf of the universalSample
-   count = 0
-   repeat 10,000 times:
-      bhutanResample = draw N new samples from the universalPmf
-      nepalResample = draw M new samples from the universalPmf
-      muBhutan = sample mean of the bhutanResample
-      muNepal = sample mean of the nepalResample
-      meanDifference = |muNepal - muBhutan|
-      if meanDifference > observedDifference:
-         count += 1
-   pValue = count / 10,000</code></pre>
+	<h3>Likelihood</h3>
+	<p>Likelihood: <span id="likelihood"></span><br/>
+		Log Likelihood: <span id="ll"></span><br/>
+		Best Seen: <span id="best"></span> 
+	<!-- <p>\begin{align*}
+		\text{LL} = \log \prod_i l(x_i | \theta)
+		\end{align*}
+	</p> -->
 
-<p>This is particularly nice because nowhere did we have to make an assumption about a parametric distribution that our samples came from (ie we never had to claim that happiness is gaussian). You might have heard of a t-test. That is another way of calculating p-values, but it makes the assumption that both samples are gaussian and that they both have the same variance. In the modern context where we have reasonable computer power, bootstrapping is a more correct and versatile tool.
+
+<h3>PDF Graph</h3>
+<canvas id="normalPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+var best = null
+
+$(document).ready(function(){
+	redrawNormalPdf()
+})
+
+function redrawNormalPdf() {
+	let parentDivId = 'normalPdf'
+	let mu = parseFloat($("#normalPdfMu").val())
+	let sigma = parseFloat($("#normalPdfSigma").val())
+	drawNormalPdf(parentDivId, mu, sigma)
+	calculateLogLikelihood(mu, sigma)
+}
+
+function calculateLogLikelihood(mu, sigma) {
+	let data = [6.286912  , 5.46503278, 5.44423621, 7.13128938, 4.62481881,
+       6.69696709, 5.2849901 , 4.82127431, 5.59968142, 3.39145276,
+       5.37585565, 3.38904864, 4.80153727, 7.91285929, 4.57919734,
+       7.04245161, 2.91950716, 6.39462536, 5.9956091 , 4.28722288]
+
+    ll = 0
+    likelihood = 1.0
+    for (var i = 0; i < data.length; i++) {
+    	let x = data[i]
+    	l = jStat.normal.pdf(x, mu, sigma )
+    	ll += Math.log(likelihood)
+    	likelihood *= l
+    	console.log(likelihood)
+
+    }
+    $("#likelihood").html(likelihood)
+    $("#ll").html(ll.toFixed(1))
+    if(best == null || ll > best) {
+    	console.log('here')
+    	best = ll
+    	$("#best").html(ll.toFixed(1))
+    }
+}
+
+function drawNormalPdf(parentDivId, mu, sigma) {
+	if(window.myNormalLine) {
+		window.myNormalLine.destroy()
+	}
+	var xValues = []
+	var yValues = []
+
+
+
+	var min_i = 0
+	var max_i = 20
+	var step = (max_i - min_i) / 100
+	for (var i = min_i; i <= max_i; i+= step) {
+		let pr_x = jStat.normal.pdf(i, mu, sigma)
+		let pr_std_x = jStat.normal.pdf(i, 0, 1)
+		xValues.push(i.toFixed(3))
+		yValues.push(pr_x.toFixed(5))
+	}
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = {
+		type: 'line',
+		
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: `X ~ N(μ=${mu},σ=${sigma})`,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValues,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+			animation: {
+		        duration: 0
+		    },
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true,
+                        suggestedMax: 0.45
+                    }
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myNormalLine = new Chart(ctx, config);
+}
+</script>
 
                         
 
