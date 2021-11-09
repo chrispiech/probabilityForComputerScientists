@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Geometric</title>
+<title>Mixture Models</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -349,9 +349,216 @@
               
                         
  
-<center><h1>Geometric</h1></center>
+<center><h1>Mixture Models</h1></center>
 <hr/>
 
+<!-- 
+  >>> from scipy import stats
+def sample():
+   t = stats.bernoulli.rvs(0.8)
+   if t ==1:
+      return stats.norm.rvs(6.8,0.7)
+   else:
+      return stats.norm.rvs(3.5,0.7)
+
+data = []
+for i in range(50):
+   s = sample()
+   n = round(s * 100)/100
+   data.append(n)
+-->
+
+
+<p><div class="bordered">
+Data = [6.47, 5.82, 8.7, 4.76, 7.62, 6.95, 7.44, 6.73, 3.38, 5.89, 7.81, 6.93, 7.23, 6.25, 5.31, 7.71, 7.42, 5.81, 4.03, 7.09, 7.1, 7.62, 7.74, 6.19, 7.3, 7.37, 6.99, 2.97, 3.3, 7.08, 6.23, 3.67, 3.05, 6.67, 6.5, 6.08, 3.7, 6.76, 6.56, 3.61, 7.25, 7.34, 6.27, 6.54, 5.83, 6.44, 5.34, 7.7, 4.19, 7.34]
+</div></p>
+
+
+<div class="d-flex">
+  <div>
+Parameter $t$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="mixtureT" value="0.8" step = ".1">
+  </div>
+  <div class="mr-2">
+Parameter $\mu_a$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input " id="normalPdfMu1" value="6.8" step = ".1">
+  </div>
+  <div>
+Parameter $\sigma_a$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma1" value="0.7" step = ".1">
+  </div>
+  <div class="mr-2">
+Parameter $\mu_b$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input " id="normalPdfMu2" value="3.5" step = ".1">
+  </div>
+  <div>
+Parameter $\sigma_b$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma2" value="0.7" step = ".1">
+  </div>
+
+</div>
+
+<canvas id="mixturePdf" style="max-height: 400px"></canvas>
+
+<h3>Probability Mass Function</h3>
+
+\begin{align*}
+f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x)
+\end{align*}
+$$\text{st}$$
+$$A \sim N(\mu_a, \sigma_a^2)$$
+$$B \sim N(\mu_b, \sigma_b^2)$$
+
+<h3>Generative Code</h3>
+
+<pre class="language-python"><code>from scipy import stats
+def sample():
+   t = stats.bernoulli.rvs(0.8)
+   if t == 1:
+      return stats.norm.rvs(6.8,0.7)
+   else:
+      return stats.norm.rvs(3.5,0.7)</code></pre>
+
+<script>
+
+var best = null
+
+let DATA = [6.47, 5.82, 8.7, 4.76, 7.62, 6.95, 7.44, 6.73, 3.38, 5.89, 7.81, 6.93, 7.23, 6.25, 5.31, 7.71, 7.42, 5.81, 4.03, 7.09, 7.1, 7.62, 7.74, 6.19, 7.3, 7.37, 6.99, 2.97, 3.3, 7.08, 6.23, 3.67, 3.05, 6.67, 6.5, 6.08, 3.7, 6.76, 6.56, 3.61, 7.25, 7.34, 6.27, 6.54, 5.83, 6.44, 5.34, 7.7, 4.19, 7.34]
+
+$(document).ready(function(){
+  redrawMixturePdf()
+})
+
+function redrawMixturePdf() {
+  let parentDivId = 'mixturePdf'
+  let mu1 = parseFloat($("#normalPdfMu1").val())
+  let sigma1 = parseFloat($("#normalPdfSigma1").val())
+  let mu2 = parseFloat($("#normalPdfMu2").val())
+  let sigma2 = parseFloat($("#normalPdfSigma2").val())
+  let mixtureT = parseFloat($("#mixtureT").val())
+  drawMixturePdf(parentDivId, mixtureT, mu1, sigma1, mu2, sigma2)
+  
+}
+
+function calculateLogLikelihood(mu, sigma) {
+  
+
+    ll = 0
+    likelihood = 1.0
+    for (var i = 0; i < DATA.length; i++) {
+      let x = DATA[i]
+      l = jStat.normal.pdf(x, mu, sigma )
+      ll += Math.log(likelihood)
+      likelihood *= l
+
+    }
+    $("#likelihood").html(likelihood)
+    $("#ll").html(ll.toFixed(1))
+    if(best == null || ll > best) {
+      best = ll
+      $("#best").html(ll.toFixed(1))
+    }
+}
+
+function drawMixturePdf(parentDivId, t, mu1, sigma1, mu2, sigma2) {
+  if(window.myNormalLine) {
+    window.myNormalLine.destroy()
+  }
+  var xValues = []
+  var yValues = []
+
+
+
+  var min_i = 0
+  var max_i = 10
+  var step = (max_i - min_i) / 1000
+  for (var i = min_i; i <= max_i; i+= step) {
+    let pr_x1 = jStat.normal.pdf(i, mu1, sigma1)
+    let pr_x2 = jStat.normal.pdf(i, mu2, sigma2)
+    let pr_x = pr_x1 * t + pr_x2 * (1-t)
+    xValues.push(i.toFixed(3))
+    yValues.push(pr_x.toFixed(5))
+  }
+  let xLabel = 'Values that X can take on'
+  let yLabel = 'Probability'
+  console.log('tes')
+
+  let dataLines = {}
+  for (var i = 0; i < DATA.length; i++) {
+    let point = DATA[i]
+    let key = 'line' + (i+1)
+    let value = {
+      type: 'line',
+      xMin: Math.round(point*100),
+      xMax: Math.round(point*100),
+      borderColor: 'rgb(100, 100, 100)',
+      borderWidth: 1,
+      drawTime: 'beforeDatasetsDraw',
+    }
+    dataLines[key] = value
+  }
+  console.log(dataLines)
+
+  var config = {
+    type: 'line',
+    
+    data: {
+      labels: xValues,
+      datasets: [{
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+      animation: {
+            duration: 0
+        },
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      legend: {
+              display: false
+           },
+      plugins: {
+        autocolors: false,
+        annotation: {
+          annotations: dataLines
+        },
+        legend: {
+              display: false
+        },
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+
+          display: true,
+          suggestedMax: 0.45,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          
+        }
+      }
+    }
+  }
+  var ctx = document.getElementById(parentDivId).getContext('2d');
+  window.myNormalLine = new Chart(ctx, config);
+}
+</script>
 
                         
 
