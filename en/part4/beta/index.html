@@ -534,7 +534,7 @@ function drawBetaPdf9heads(parentDivId, a, b) {
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	new Chart(ctx, config);
 }
-</script><p>What a beautiful image. It tell us relatively likelihood over all probabilities. Here are a few observations from this chart:
+</script><p>What a beautiful image. It tells us relatively likelihood over the probability that is governing our coinflips. Here are a few observations from this chart:
     <ol>
         <li>Even after only 10 coin flips we are very confident that the true probability is > 0.5
         <li>It is almost 10 times more likely that $X=0.9$ as it is that $X=0.6$.
@@ -555,9 +555,9 @@ function drawBetaPdf9heads(parentDivId, a, b) {
 
 <h2>Beta Derivation</h2>
 
-<p>Of course if we had seen 14 heads and 5 tails out of 19 coin flips, we could have come up with a similar derivation. Let's repeat the derivation from the previous section, using non-random variables for the number of observed heads, $h$, and the number of tails, $t$, observed.
+<p>Let's repeat the derivation from the previous section, using non-random variables for the number of observed heads, $h$, and the number of tails, $t$, observed.
 
-<p>If we let $H =h $ be the event that we say $h$ heads, and let $T=t$ be the even that we saw $t$ tails in $h+t$ coinflips. We want to calculate the probability density function $f(X=x|H=h,T=t)$. We can use the exam same series of steps, starting with Bayes Theorem:
+<p>If we let $H =h $ be the event that we saw $h$ heads, and let $T=t$ be the even that we saw $t$ tails in $h+t$ coinflips. We want to calculate the probability density function $f(X=x|H=h,T=t)$. We can use the exam same series of steps, starting with Bayes Theorem:
 \begin{align*}
     f(&X = x|H =h, T=t) \\
 &=  \frac{P(H =h, T=t|X=x)f(X=x)}{P(H =h, T=t)} && \text{Bayes Theorem}\\
