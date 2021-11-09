@@ -417,13 +417,13 @@ Where $K$ is a normalization constant and $\lambda$ must be greater than 0.
         &= \frac{\frac{\lambda^{4} e^{-\lambda}}{4!} \cdot K \cdot \lambda \cdot e^{\lambda / 2}}{P(X = 4)} \\
         &= \frac{K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}}{4! P(X=4)}
      \end{align*}
-      </div>
+      </div></p>
 
-   <p>A doctor takes a single  sample and counts 4 cells. What is the Maximum Likelihood estimate of $\lambda$?</p>
+   <p>A doctor takes a single  sample and counts 4 cells. What is the Maximum A Posteriori estimate of $\lambda$?</p>
 
 <p><div class="bordered">
     
-    Maximize the likelihood of the parameter given the data by using argmax:
+    Maximize the "posterior" of the parameter calculated in the previous section:
     \begin{align*}
         \argmax_\lambda \frac{K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}}{4! P(X=4)}
             &= \argmax_\lambda \lambda^5 e^{-\frac{3}{2}\lambda}  \\
