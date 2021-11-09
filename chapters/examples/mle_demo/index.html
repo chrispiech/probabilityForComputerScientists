@@ -1,7 +1,7 @@
 
-% rebase('templates/chapter.html', title="MLE Demo")
+% rebase('templates/chapter.html', title="MLE Normal Demo")
  
-<center><h1>MLE Demo</h1></center>
+<center><h1>MLE Normal Demo</h1></center>
 <hr/>
 
 <p>We assume the following 20 data points come from the same gaussian. Use MLE to estimate the parameters.</p>
@@ -22,7 +22,7 @@ Data = [6.3  , 5.5
 Parameter $\mu$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input " id="normalPdfMu" value="5" step = ".1">
 	</div>
 	<div>
-Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma" value="5" step = ".1">
+Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma" value="3" step = ".1">
 	</div>
 </div>
 
@@ -40,7 +40,7 @@ Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="for
 
 <h3>PDF Graph</h3>
 <canvas id="normalPdf" style="max-height: 400px"></canvas>
-</div>
+
 
 <script>
 
@@ -94,11 +94,11 @@ function drawNormalPdf(parentDivId, mu, sigma) {
 
 	var min_i = 0
 	var max_i = 20
-	var step = (max_i - min_i) / 100
+	var step = (max_i - min_i) / 1000
 	for (var i = min_i; i <= max_i; i+= step) {
 		let pr_x = jStat.normal.pdf(i, mu, sigma)
 		let pr_std_x = jStat.normal.pdf(i, 0, 1)
-		xValues.push(i.toFixed(3))
+		xValues.push(i.toFixed(2))
 		yValues.push(pr_x.toFixed(5))
 	}
 	let xLabel = 'Values that X can take on'
@@ -136,29 +136,37 @@ function drawNormalPdf(parentDivId, mu, sigma) {
 			legend: {
 	            display: false
 	         },
+      annotation: {
+        annotations: [{
+           type: 'box',
+           drawTime: 'beforeDatasetsDraw',
+           yScaleID: 'y-axis-0',
+           yMin: .2,
+           yMax: .3,
+           backgroundColor: 'rgba(0, 255, 0, 0.1)'
+        }]
+     },
 			scales: {
-				xAxes: [{
+				x: {
 					display: true,
-					scaleLabel: {
+					title: {
 						display: true,
-						labelString: xLabel
+						text: xLabel
 					},
 					ticks: {
                         beginAtZero: true
                     }
-				}],
-				yAxes: [{
+				},
+				y: {
 
 					display: true,
-					scaleLabel: {
+          suggestedMax: 0.45,
+					title: {
 						display: true,
-						labelString: yLabel
+						text: yLabel
 					},
-					ticks: {
-                        beginAtZero: true,
-                        suggestedMax: 0.45
-                    }
-				}]
+					
+				}
 			}
 		}
 	};

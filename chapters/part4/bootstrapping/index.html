@@ -12,7 +12,7 @@
 
 
 
-<pre ><code>def bootstrap(sample):
+<pre class="language-python"><code>def bootstrap(sample):
    N = number of elements in sample
    pmf = estimate the underlying pmf from the sample
    stats = []
@@ -41,20 +41,21 @@
 <p>We can use bootstrapping to calculate the p-value. First, we estimate the underlying distribution of the null hypothesis underlying distribution, by making a probability mass function from all of our samples from Nepal and all of our samples from Bhutan.
 
 
-<pre class="language-python"><code>def pvalueBootstrap(bhutanSample, nepalSample):
-   N = size of the bhutanSample
-   M = size of the nepalSample
-   universalSample = combine bhutanSamples and nepalSamples
-   universalPmf = estimate the underlying pmf of the universalSample
+<pre class="language-python"><code>def pvalue_bootstrap(bhutan_sample, nepal_sample):
+   N = size of the bhutan_sample
+   M = size of the nepal_sample
+   universal_sample = combine bhutan_samples and nepal_samples
+   universal_pmf = estimate the underlying pmf of the universalSample
    count = 0
+   observed_difference = mean(nepal_sample) - mean(bhutan_sample)
    repeat 10,000 times:
-      bhutanResample = draw N new samples from the universalPmf
-      nepalResample = draw M new samples from the universalPmf
-      muBhutan = sample mean of the bhutanResample
-      muNepal = sample mean of the nepalResample
-      meanDifference = |muNepal - muBhutan|
-      if meanDifference > observedDifference:
+      bhutan_resample = draw N new samples from the universalPmf
+      nepal_resample = draw M new samples from the universalPmf
+      mu_bhutan = sample mean of the bhutanResample
+      mu_nepal = sample mean of the nepalResample
+      mean_difference = |muNepal - muBhutan|
+      if mean_difference > observed_difference:
          count += 1
-   pValue = count / 10,000</code></pre>
+   pvalue = count / 10,000</code></pre>
 
 <p>This is particularly nice because nowhere did we have to make an assumption about a parametric distribution that our samples came from (ie we never had to claim that happiness is gaussian). You might have heard of a t-test. That is another way of calculating p-values, but it makes the assumption that both samples are gaussian and that they both have the same variance. In the modern context where we have reasonable computer power, bootstrapping is a more correct and versatile tool.

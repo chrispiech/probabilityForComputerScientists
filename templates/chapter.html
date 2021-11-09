@@ -10,8 +10,8 @@
 </head>
 
 <script>
-  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
-  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.font.family = 'Times New Roman';
+  Chart.defaults.font.size = 18;
 </script>
 
 
@@ -104,6 +104,122 @@ function enableSearch() {
   //     dataType: "text",
   //     success: function(data) {addSearchIndexData(data);}
   //  });
+}
+
+function standardPMFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'bar',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
 }
 
 function addSearchIndexData(data) {

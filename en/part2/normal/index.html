@@ -28,7 +28,8 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js" integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- PDF JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
@@ -126,8 +127,8 @@
 </head>
 
 <script>
-  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
-  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.font.family = 'Times New Roman';
+  Chart.defaults.font.size = 18;
 </script>
 
 
@@ -299,7 +300,7 @@
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/mle_demo">MLE Demo</a></li>
+        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li>
     </ul>
 </li>
 </li>
@@ -351,17 +352,17 @@
 <center><h1>Normal Distribution</h1></center>
 <hr/>
 
-The single most important random variable type is the Normal (aka Gaussian) random variable, parametrized by a mean ($\mu$) and variance ($\sigma^2$), or sometimes equivalently written as mean and variance ($\sigma^2$). If $X$ is a normal variable we write $X \sim N(\mu, \sigma^2)$. The normal is important for many reasons: it is generated from the summation of independent random variables and as a result it occurs often in nature. Many things in the world are not distributed normally but data scientists and computer scientists model them as Normal distributions anyways. Why? Because it is the most entropic (conservative) modelling decision that we can make for a random variable while still matching a particular expectation (average value) and variance (spread). 
+<p>The single most important random variable type is the Normal (aka Gaussian) random variable, parametrized by a mean ($\mu$) and variance ($\sigma^2$), or sometimes equivalently written as mean and variance ($\sigma^2$). If $X$ is a normal variable we write $X \sim N(\mu, \sigma^2)$. The normal is important for many reasons: it is generated from the summation of independent random variables and as a result it occurs often in nature. Many things in the world are not distributed normally but data scientists and computer scientists model them as Normal distributions anyways. Why? Because it is the most entropic (conservative) modelling decision that we can make for a random variable while still matching a particular expectation (average value) and variance (spread). 
 
-The Probability Density Function (PDF) for a Normal $X \sim N(\mu, \sigma^2)$ is:
+<p>The Probability Density Function (PDF) for a Normal $X \sim N(\mu, \sigma^2)$ is:
 \begin{align*}
     f_X(x) = \frac{1}{\sigma \sqrt{2\pi} } e ^{\frac{-(x-\mu)^2}{2\sigma^2}}
 \end{align*}
 Notice the $x$ in the exponent of the PDF function. When $x$ is equal to the mean ($\mu$) then e is raised to the power of $0$ and the PDF is maximized.
 
-By definition a Normal has $\E[X] = \mu$ and $\var(X) = \sigma^2$. 
+<p>By definition a Normal has $\E[X] = \mu$ and $\var(X) = \sigma^2$. 
 
-There is no closed form for the integral of the Normal PDF, and as such there is no closed form CDF. However we can use a transformation of any normal to a normal with a precomputed CDF. The result of this mathematical gymnastics is that the CDF for a Normal $X \sim N(\mu, \sigma^2)$ is:
+<p>There is no closed form for the integral of the Normal PDF, and as such there is no closed form CDF. However we can use a transformation of any normal to a normal with a precomputed CDF. The result of this mathematical gymnastics is that the CDF for a Normal $X \sim N(\mu, \sigma^2)$ is:
 \begin{align*}
     F_X(x) = \Phi\left(\frac{x - \mu}{\sigma}\right)
 \end{align*}
@@ -533,13 +534,13 @@ function drawNormalPdf(parentDivId, mu, sigma) {
 </script>
 
 <h2>Linear Transform</h2>
-If $X$ is a Normal such that $X \sim N(\mu, \sigma^2)$ and $Y$ is a linear transform of $X$ such that $Y = aX + b$ then $Y$ is also a Normal where:
+<p>If $X$ is a Normal such that $X \sim N(\mu, \sigma^2)$ and $Y$ is a linear transform of $X$ such that $Y = aX + b$ then $Y$ is also a Normal where:
 \begin{align*}
     Y \sim N(a\mu + b, a^2\sigma^2)
 \end{align*}
 
 <h2>Projection to Standard Normal</h2>
-For any Normal $X$ we can find a linear transform from $X$ to the standard normal $Z \sim N(0, 1)$. Note that $Z$ is the typical notation choice for the standard normal. For any normal, if you subtract the mean ($\mu$) of the normal and divide by the standard deviation ($\sigma$) the result is always the standard normal. We can prove this mathematically. Let $W = \frac{X - \mu}{\sigma}$:
+<p>For any Normal $X$ we can find a linear transform from $X$ to the standard normal $Z \sim N(0, 1)$. Note that $Z$ is the typical notation choice for the standard normal. For any normal, if you subtract the mean ($\mu$) of the normal and divide by the standard deviation ($\sigma$) the result is always the standard normal. We can prove this mathematically. Let $W = \frac{X - \mu}{\sigma}$:
 \begin{align*}
 W &= \frac{X -\mu}{\sigma} && \text{ Transform X: Subtract by $\mu$ and diving by $\sigma$} \\
   & = \frac{1}{\sigma}X - \frac{\mu}{\sigma} && \text{ Use algebra to rewrite the equation}\\
@@ -548,14 +549,15 @@ W &= \frac{X -\mu}{\sigma} && \text{ Transform X: Subtract by $\mu$ and diving b
  &\sim N(\frac{\mu}{\sigma} - \frac{\mu}{\sigma}, \frac{\sigma^2}{\sigma^2}) && \text{ Substituting values in for $a$ and $b$}\\
  &\sim N(0, 1) && \text{ The standard normal}
 \end{align*}
-Using this transform we can express $F_X(x)$, the CDF of $X$, in terms of the known CDF of $Z$, $F_Z(x)$. Since the CDF of $Z$ is so common it gets its own Greek symbol: $\Phi(x)$
+
+<p>Using this transform we can express $F_X(x)$, the CDF of $X$, in terms of the known CDF of $Z$, $F_Z(x)$. Since the CDF of $Z$ is so common it gets its own Greek symbol: $\Phi(x)$
 \begin{align*}
 F_X(x) &= P(X \leq x) \\
 &= P\left(\frac{X - \mu}{\sigma} \leq \frac{x - \mu}{\sigma}\right) \\
 &= P\left(Z \leq \frac{x - \mu}{\sigma}\right)\\
 &= \Phi\left(\frac{x - \mu}{\sigma}\right)
 \end{align*}
-The values of $\Phi(x)$ can be looked up in a table. Every modern programming language also has the ability to calculate the CDF of a normal random variable!
+<p>The values of $\Phi(x)$ can be looked up in a table. Every modern programming language also has the ability to calculate the CDF of a normal random variable!
 
 <div class="purpleBox">
 <p><b><i>Example</i></b>: Let $X\sim \mathcal{N}(3, 16)$, what is $P(X > 0)$?
@@ -776,6 +778,122 @@ function enableSearch() {
   //     dataType: "text",
   //     success: function(data) {addSearchIndexData(data);}
   //  });
+}
+
+function standardPMFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'bar',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
 }
 
 function addSearchIndexData(data) {

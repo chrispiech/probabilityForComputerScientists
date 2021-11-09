@@ -28,7 +28,8 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js" integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- PDF JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
@@ -126,8 +127,8 @@
 </head>
 
 <script>
-  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
-  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.font.family = 'Times New Roman';
+  Chart.defaults.font.size = 18;
 </script>
 
 
@@ -299,7 +300,7 @@
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/mle_demo">MLE Demo</a></li>
+        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li>
     </ul>
 </li>
 </li>
@@ -384,14 +385,14 @@ We could have also modelled X as a binomial such that $X \sim Bin(10^4, 10^{-6})
 
 <h2 id="norm_approx">Normal Approximation</h2>
 
-For a Binomial where $n$ is large and $p$ is mid-ranged, a Normal can be used to approximate the Binomial. Let's take a side by side view of a normal and a binomial:
+<p>For a Binomial where $n$ is large and $p$ is mid-ranged, a Normal can be used to approximate the Binomial. Let's take a side by side view of a normal and a binomial:
 
 <img style="width:100%" src="../../../img/chapters/normalApproxBinomial.png"></img>
 
-Lets say our binomial is a random variable $X \sim \text{Bin}(100, 0.5)$ and we want to calculate $P(X \geq 55)$. We could cheat by using the closest fit normal (in this case $Y \sim N(50, 25)$). How did we chose that particular Normal? Simply select one with a mean and variance that matches the Binomial expectation and variance. The binomial expectation is $np = 100 \cdot 0.5 = 50$. The Binomial variance is $np(1-p) = 100 \cdot 0.5 \cdot 0.5 = 25$.
+<p>Lets say our binomial is a random variable $X \sim \text{Bin}(100, 0.5)$ and we want to calculate $P(X \geq 55)$. We could cheat by using the closest fit normal (in this case $Y \sim N(50, 25)$). How did we chose that particular Normal? Simply select one with a mean and variance that matches the Binomial expectation and variance. The binomial expectation is $np = 100 \cdot 0.5 = 50$. The Binomial variance is $np(1-p) = 100 \cdot 0.5 \cdot 0.5 = 25$.
 
 
-You can use a Normal distribution to approximate a Binomial $X\sim \Bin(n,p)$. To do so define a normal $Y \sim (E[X], Var(X))$. Using the Binomial formulas for expectation and variance, $Y \sim (np, np(1-p))$. This approximation holds for large $n$ and moderate $p$. That gets you very close. However since a Normal is continuous and Binomial is discrete we have to use a continuity correction to discretize the Normal.
+<p>You can use a Normal distribution to approximate a Binomial $X\sim \Bin(n,p)$. To do so define a normal $Y \sim (E[X], Var(X))$. Using the Binomial formulas for expectation and variance, $Y \sim (np, np(1-p))$. This approximation holds for large $n$ and moderate $p$. That gets you very close. However since a Normal is continuous and Binomial is discrete we have to use a continuity correction to discretize the Normal.
 
 
 <img style="width:100%" src="../../../img/chapters/normalApproxBinomialZoomed.png"></img>
@@ -607,6 +608,122 @@ function enableSearch() {
   //     dataType: "text",
   //     success: function(data) {addSearchIndexData(data);}
   //  });
+}
+
+function standardPMFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'bar',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
 }
 
 function addSearchIndexData(data) {

@@ -28,7 +28,8 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js" integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- PDF JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
@@ -126,8 +127,8 @@
 </head>
 
 <script>
-  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
-  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.font.family = 'Times New Roman';
+  Chart.defaults.font.size = 18;
 </script>
 
 
@@ -299,7 +300,7 @@
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/mle_demo">MLE Demo</a></li>
+        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li>
     </ul>
 </li>
 </li>
@@ -351,7 +352,7 @@
 <center><h1>Exponential Distribution</h1></center>
 <hr/>
 
-An exponential distribution measures the <b>amount</b> of time until a next event occurs. It assumes that the events occur via a poisson process. Note that this is different from the Poisson Random Variable which measures number of events in a fixed amount of time.
+<p>An exponential distribution measures the <b>amount</b> of time until a next event occurs. It assumes that the events occur via a poisson process. Note that this is different from the Poisson Random Variable which measures number of events in a fixed amount of time.
 
 <!-- Template that renders a single random variable card -->
 
@@ -442,64 +443,12 @@ function drawExponentialPdf(parentDivId, lambda) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'line',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'f(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myExpLine = new Chart(ctx, config);
 }
 </script>
-An exponential distribution is a great example of a continuous distribution where the <a href="../../part2/continuous#cdf">cumulative distribution funciton (CDF)</a> is much easier to work with as it allows you to answer probability questions without using integrals.
+<p>An exponential distribution is a great example of a continuous distribution where the <a href="../../part2/continuous#cdf">cumulative distribution funciton (CDF)</a> is much easier to work with as it allows you to answer probability questions without using integrals.
 
 <div class="purpleBox">
 <p><b>Example:</b> Based on historical data from the USGS, earthquakes of magnitude 8.0+ happen in a certain location at a rate of 0.002 per year. Earthquakes are known to occur via a poisson process. What is the probability of a major earthquake in the next 4 years?
@@ -519,7 +468,7 @@ Note that it is possible to answer this question using the PDF, but it will requ
 </div>
 
 <h2>Exponential is Memoryless</h2>
-One way to gain intuition for what is meant by the "poisson process" is through the proof that the exponential distribution is <a href="https://en.wikipedia.org/wiki/Memorylessness">"memoryless"</a>. That means that the occurence (or lack of occurence) of events in the past does not change our belief as to how long until the next occurence. This can be stated formally. If $X \sim \Exp(\lambda)$ then for an interval of time until the start $s$, and a proceeding, query, interval of time $t$:
+<p>One way to gain intuition for what is meant by the "poisson process" is through the proof that the exponential distribution is <a href="https://en.wikipedia.org/wiki/Memorylessness">"memoryless"</a>. That means that the occurence (or lack of occurence) of events in the past does not change our belief as to how long until the next occurence. This can be stated formally. If $X \sim \Exp(\lambda)$ then for an interval of time until the start $s$, and a proceeding, query, interval of time $t$:
 
 $$\p(X > s + t | X > s) = \p(X > t) $$
 
@@ -715,6 +664,122 @@ function enableSearch() {
   //     dataType: "text",
   //     success: function(data) {addSearchIndexData(data);}
   //  });
+}
+
+function standardPMFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'bar',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
 }
 
 function addSearchIndexData(data) {

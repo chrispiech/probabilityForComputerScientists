@@ -4,17 +4,17 @@
 <center><h1>Continuous Joint</h1></center>
 <hr/>
 
-Random variables $X$ and $Y$ are Jointly Continuous if there exists a joint Probability Density Function (PDF) $f$ such that:
+<p>Random variables $X$ and $Y$ are Jointly Continuous if there exists a joint Probability Density Function (PDF) $f$ such that:
 \begin{align*}
     P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = \int_{a_1}^{a_2} \int_{b_1}^{b_2} f(X=x,Y=y)\d y \text{ } \d x
 \end{align*}
-Using the PDF we can compute marginal probability densities:
+<p>Using the PDF we can compute marginal probability densities:
 \begin{align*}
     f(X=a) &= \int_{-\infty}^{\infty}f(X=a,Y=y)\d y \\
     f(Y=b) &= \int_{-\infty}^{\infty}f(X=x,Y=b)\d x 
 \end{align*}
 
-Let $F(x,y)$ be the Cumulative Density Function (CDF):
+<p>Let $F(x,y)$ be the Cumulative Density Function (CDF):
 \begin{align*}
     P(a_1 < X \leq a_2,b_1 < Y \leq b_2) = F(a_2,b_2) - F(a_1,b_2) + F(a_1,b_1) - F(a_2,b_1)
 \end{align*}

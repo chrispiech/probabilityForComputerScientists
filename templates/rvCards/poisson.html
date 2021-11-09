@@ -85,56 +85,7 @@ function drawPoissonPmf(parentDivId, lambda) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'bar',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'P(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					}
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myPoissonLine = new Chart(ctx, config);
 }

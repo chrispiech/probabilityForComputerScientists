@@ -47,7 +47,7 @@ function redrawCltHistogram() {
 		yValues.push(y.toFixed(5))
 	}
 	let xLabel = 'Values that total can take on'
-	let yLabel = 'Approx Probability from ' + Math.round(window.sumUniformN) + ' runs'
+	let yLabel = 'Prob from ' + Math.round(window.sumUniformN) + ' runs'
 
 	var config = {
 		type: 'bar',
@@ -81,22 +81,23 @@ function redrawCltHistogram() {
 	            display: false
 	         },
 			scales: {
-				xAxes: [{
+				x:{
 					display: true,
-					scaleLabel: {
+					title: {
 						display: true,
-						labelString: xLabel
+						text: xLabel
 					}
-				}],
-				yAxes: [{
+				},
+				y: {
 					display: true,
-					scaleLabel: {
+					title: {
 						display: true,
-						labelString: yLabel
+						text: yLabel
 					},
+					suggestedMax: 0.06,
 					ticks: {
                         beginAtZero: true,
-                        suggestedMax: 0.06,
+                        
                         userCallback: function(label, index, labels) {
 	                     // when the floored value is the same as the value we have a whole number
 	                     if (parseFloat(label.toFixed(2)) === label) {
@@ -105,7 +106,7 @@ function redrawCltHistogram() {
 
 	                 },
                     }
-				}]
+				}
 			}
 		}
 	};

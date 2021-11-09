@@ -28,7 +28,8 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js" integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- PDF JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
@@ -126,8 +127,8 @@
 </head>
 
 <script>
-  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
-  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.font.family = 'Times New Roman';
+  Chart.defaults.font.size = 18;
 </script>
 
 
@@ -299,7 +300,7 @@
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/mle_demo">MLE Demo</a></li>
+        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li>
     </ul>
 </li>
 </li>
@@ -359,7 +360,7 @@
 
 
 
-<pre ><code>def bootstrap(sample):
+<pre class="language-python"><code>def bootstrap(sample):
    N = number of elements in sample
    pmf = estimate the underlying pmf from the sample
    stats = []
@@ -388,21 +389,22 @@
 <p>We can use bootstrapping to calculate the p-value. First, we estimate the underlying distribution of the null hypothesis underlying distribution, by making a probability mass function from all of our samples from Nepal and all of our samples from Bhutan.
 
 
-<pre class="language-python"><code>def pvalueBootstrap(bhutanSample, nepalSample):
-   N = size of the bhutanSample
-   M = size of the nepalSample
-   universalSample = combine bhutanSamples and nepalSamples
-   universalPmf = estimate the underlying pmf of the universalSample
+<pre class="language-python"><code>def pvalue_bootstrap(bhutan_sample, nepal_sample):
+   N = size of the bhutan_sample
+   M = size of the nepal_sample
+   universal_sample = combine bhutan_samples and nepal_samples
+   universal_pmf = estimate the underlying pmf of the universalSample
    count = 0
+   observed_difference = mean(nepal_sample) - mean(bhutan_sample)
    repeat 10,000 times:
-      bhutanResample = draw N new samples from the universalPmf
-      nepalResample = draw M new samples from the universalPmf
-      muBhutan = sample mean of the bhutanResample
-      muNepal = sample mean of the nepalResample
-      meanDifference = |muNepal - muBhutan|
-      if meanDifference > observedDifference:
+      bhutan_resample = draw N new samples from the universalPmf
+      nepal_resample = draw M new samples from the universalPmf
+      mu_bhutan = sample mean of the bhutanResample
+      mu_nepal = sample mean of the nepalResample
+      mean_difference = |muNepal - muBhutan|
+      if mean_difference > observed_difference:
          count += 1
-   pValue = count / 10,000</code></pre>
+   pvalue = count / 10,000</code></pre>
 
 <p>This is particularly nice because nowhere did we have to make an assumption about a parametric distribution that our samples came from (ie we never had to claim that happiness is gaussian). You might have heard of a t-test. That is another way of calculating p-values, but it makes the assumption that both samples are gaussian and that they both have the same variance. In the modern context where we have reasonable computer power, bootstrapping is a more correct and versatile tool.
 
@@ -572,6 +574,122 @@ function enableSearch() {
   //     dataType: "text",
   //     success: function(data) {addSearchIndexData(data);}
   //  });
+}
+
+function standardPMFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'bar',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
 }
 
 function addSearchIndexData(data) {

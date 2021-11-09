@@ -89,61 +89,7 @@ function drawBetaPdf(parentDivId, a, b) {
 
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability Density'
-	console.log('STARTING')
-	var config = {
-		type: 'line',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'f(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
-	console.log('FINISHED')
+	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myBetaLine = new Chart(ctx, config);
 }

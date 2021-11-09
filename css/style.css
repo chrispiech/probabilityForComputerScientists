@@ -153,6 +153,11 @@ greyBackground as a style class)
     margin-left: 10px;
     margin-right: 10px;
   }
+
+  .handout > .d-flex {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 /* 

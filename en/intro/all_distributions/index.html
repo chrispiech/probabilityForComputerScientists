@@ -28,7 +28,8 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Chart CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js" integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- PDF JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
@@ -126,8 +127,8 @@
 </head>
 
 <script>
-  Chart.defaults.global.defaultFontFamily = 'Times New Roman';
-  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.font.family = 'Times New Roman';
+  Chart.defaults.font.size = 18;
 </script>
 
 
@@ -299,7 +300,7 @@
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/mle_demo">MLE Demo</a></li>
+        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li>
     </ul>
 </li>
 </li>
@@ -387,6 +388,10 @@
 			\end{cases}$</td>
 	</tr>
 	<tr>
+		<th>PMF (smooth):</th>
+		<td>$\p(X=x) = p^x(1-p)^{1-x}$</td>
+	</tr>
+	<tr>
 		<th>Expectation:</th>
 		<td>$\E[X] = p$</td>
 	</tr>
@@ -424,59 +429,7 @@ function drawBernoulliPmf(parentDivId, p) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'bar',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'P(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					}
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true,
-                        steps: 10,
-                        stepValue: 0.1,
-                        max: 1.0
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myBernLine = new Chart(ctx, config);
 }
@@ -569,56 +522,7 @@ function drawBinomialPmf(parentDivId, n, p) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'bar',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'P(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					}
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myBinLine = new Chart(ctx, config);
 }
@@ -712,56 +616,7 @@ function drawPoissonPmf(parentDivId, lambda) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'bar',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'P(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					}
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myPoissonLine = new Chart(ctx, config);
 }
@@ -861,56 +716,7 @@ function drawGeometricPmf(parentDivId, p) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'bar',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'P(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					}
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myGeoLine = new Chart(ctx, config);
 }
@@ -1015,56 +821,7 @@ function drawNegBinomialPmf(parentDivId, r, p) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'bar',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'P(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					}
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myNegBinLine = new Chart(ctx, config);
 }
@@ -1185,59 +942,7 @@ function drawUniPdf(parentDivId, a, b) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability Density'
 
-	var config = {
-		type: 'line',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'f(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myUniformLine = new Chart(ctx, config);
 }
@@ -1333,59 +1038,7 @@ function drawExponentialPdf(parentDivId, lambda) {
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability'
 
-	var config = {
-		type: 'line',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'f(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
+	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myExpLine = new Chart(ctx, config);
 }
@@ -1647,61 +1300,7 @@ function drawBetaPdf(parentDivId, a, b) {
 
 	let xLabel = 'Values that X can take on'
 	let yLabel = 'Probability Density'
-	console.log('STARTING')
-	var config = {
-		type: 'line',
-		data: {
-			labels: xValues,
-			datasets: [{
-				label: 'f(x)',
-				fill: false,
-				backgroundColor: 'blue',
-				borderColor: 'blue',
-				data: yValues,
-				pointRadius:1,
-				maxBarThickness:100
-			}]
-		},
-		options: {
-
-			steppedLine: false,
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			legend: {
-	            display: false
-	         },
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: xLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: yLabel
-					},
-					ticks: {
-                        beginAtZero: true
-                    }
-				}]
-			}
-		}
-	};
-	console.log('FINISHED')
+	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myBetaLine = new Chart(ctx, config);
 }
@@ -1873,6 +1472,122 @@ function enableSearch() {
   //     dataType: "text",
   //     success: function(data) {addSearchIndexData(data);}
   //  });
+}
+
+function standardPMFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'bar',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
 }
 
 function addSearchIndexData(data) {

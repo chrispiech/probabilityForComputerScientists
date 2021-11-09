@@ -72,20 +72,20 @@ Where $K$ is a normalization constant and $\lambda$ must be greater than 0.
      \end{align*}
       </div></p>
 
-   <p>A doctor takes a single  sample and counts 4 cells. What is the Maximum A Posteriori estimate of $\lambda$?</p>
+   <p>A doctor takes a single  sample and counts 4 cells. What is the <a href="{{pathToLang}}part5/map">Maximum A Posteriori</a> estimate of $\lambda$?</p>
 
 <p><div class="bordered">
     
     Maximize the "posterior" of the parameter calculated in the previous section:
     \begin{align*}
-        \argmax_\lambda \frac{K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}}{4! P(X=4)}
-            &= \argmax\limits_\lambda \lambda^5 e^{-\frac{3}{2}\lambda}  \\
+        \argmax_\limits\lambda \frac{K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}}{4! P(X=4)}
+            &= \argmax_\limits\lambda \lambda^5 e^{-\frac{3}{2}\lambda}  \\
     \end{align*}
     
     Take logarithm (preserves argmax, and easier derivative):
     \begin{align*}
-        &= \argmax_\lambda \log \left(\lambda^5 e^{-\frac{3}{2}\lambda} \right) \\
-        &= \argmax_\lambda \left(5 \log \lambda -\frac{3}{2}\lambda\right)
+        &= \argmax_\limits\lambda \log \left(\lambda^5 e^{-\frac{3}{2}\lambda} \right) \\
+        &= \argmax_\limits\lambda \left(5 \log \lambda -\frac{3}{2}\lambda\right)
     \end{align*}
 
     Calculate the derivative with respect to the parameter, and set equal to 0
@@ -94,13 +94,19 @@ Where $K$ is a normalization constant and $\lambda$ must be greater than 0.
         0 &= \frac{5}{\lambda} -\frac{3}{2} \\
         \lambda &= \frac{10}{3}
     \end{align*}
- </div>
+ </div></p>
 
 <p>Explain, in words, the difference between the two estimates of lambda in the two previous parts. </p>
 
 <p><div class="bordered">
-	The estimate in the first part is a ``distribution" (also called a soft estimate) whereas the estimate in the second part is a single value (also called a \Point estimate). The former contains information about confidence.
-</div>
+	The estimate in the first part is a ``distribution" (also called a soft estimate) whereas the estimate in the second part is a single value (also called a point estimate). The former contains information about confidence.
+</div></p>
+
+What is the MLE estimate of $\lambda$?
+
+<p><div class="bordered">
+    The MLE estimate doesn't use the prior belief. The MLE estimate for a poisson is simply the average of the observations. In this case the average of our single observation is 4. MLE is not a great tool for estimating our parameter from just one datapoint.
+</div></p>
 
 <p>A patient comes on two separate days. The first day the doctor counts 5 cells, the second day the doctor counts 4 cells. Based only on this observation, and treating the true rates on the two days as independent, what is the probability that the patient's inflammation has gotten better (in other words, that their $\lambda$ has decreased)? </p>
 

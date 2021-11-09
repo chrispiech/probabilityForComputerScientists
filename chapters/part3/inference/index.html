@@ -28,9 +28,9 @@ The conditional probability mass function (PMF) for the discrete case:
 \begin{align*}
     \P(X=x|Y=y)=\frac{P(Y=y|X=x)P(X=x)}{P(Y=y)}
 \end{align*}
-</div>
+</div></p>
 
-In the presence of multiple random variables, it becomes increasingly useful to use shorthand! The above definition is identical to this notation where a lowercase symbol such as $x$ is short hand for the event $X=x$. :
+<p>In the presence of multiple random variables, it becomes increasingly useful to use shorthand! The above definition is identical to this notation where a lowercase symbol such as $x$ is short hand for the event $X=x$:
 \begin{align*}
     \P(x|y)=\frac{P(x,y)}{P(y)}
 \end{align*}
@@ -68,15 +68,15 @@ Let $X$ be continuous random variable and let $N$ be a discrete random variable.
 \begin{align*}
     \p(N=n|X=x) =  \frac{f(X=x|N=n)\p(N=n)}{f(X=x)} 
 \end{align*}
-</div>
+</div></p>
 
 <p>These equations might seem complicated since they mix probability densities and probabilities. Why should we believe that they are correct? First, observe that anytime the random variable on the left hand side of the conditional is continuous, we use a density, whenever it is discrete, we use a probability. This result can be derived by making the observation:
     $$
     \P(X = x) = f(X=x) \cdot \epsilon_x
     $$
-In the limit as $\epsilon_x \rightarrow 0$. In order to obtain a probability from a density function is to integrate under the function. If you wanted to approximate the probability that $X = x$ you could consider the area created by a rectangle which has height $f(X=x)$ and some very small width. As that width gets smaller, your answer becomes more accurate:
+<p>In the limit as $\epsilon_x \rightarrow 0$. In order to obtain a probability from a density function is to integrate under the function. If you wanted to approximate the probability that $X = x$ you could consider the area created by a rectangle which has height $f(X=x)$ and some very small width. As that width gets smaller, your answer becomes more accurate:
 
-    <center><img class="mainFigureFull" src="{{pathToRoot}}img/chapters/densitytopr.png"></img></center>
+    <p><center><img class="mainFigureFull" src="{{pathToRoot}}img/chapters/densitytopr.png"></img></center></p>
 
     <p>A value of $\epsilon_x$ is problematic if it is left in a formula. However, if we can get them to cancel, we can arrive at a working equation. This is the key insight used to derive the rules of probability in the context of one or more continuous random variables. Again, let $X$ be continuous random variable and let $N$ be a discrete random variable:
 

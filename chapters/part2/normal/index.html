@@ -4,17 +4,17 @@
 <center><h1>Normal Distribution</h1></center>
 <hr/>
 
-The single most important random variable type is the Normal (aka Gaussian) random variable, parametrized by a mean ($\mu$) and variance ($\sigma^2$), or sometimes equivalently written as mean and variance ($\sigma^2$). If $X$ is a normal variable we write $X \sim N(\mu, \sigma^2)$. The normal is important for many reasons: it is generated from the summation of independent random variables and as a result it occurs often in nature. Many things in the world are not distributed normally but data scientists and computer scientists model them as Normal distributions anyways. Why? Because it is the most entropic (conservative) modelling decision that we can make for a random variable while still matching a particular expectation (average value) and variance (spread). 
+<p>The single most important random variable type is the Normal (aka Gaussian) random variable, parametrized by a mean ($\mu$) and variance ($\sigma^2$), or sometimes equivalently written as mean and variance ($\sigma^2$). If $X$ is a normal variable we write $X \sim N(\mu, \sigma^2)$. The normal is important for many reasons: it is generated from the summation of independent random variables and as a result it occurs often in nature. Many things in the world are not distributed normally but data scientists and computer scientists model them as Normal distributions anyways. Why? Because it is the most entropic (conservative) modelling decision that we can make for a random variable while still matching a particular expectation (average value) and variance (spread). 
 
-The Probability Density Function (PDF) for a Normal $X \sim N(\mu, \sigma^2)$ is:
+<p>The Probability Density Function (PDF) for a Normal $X \sim N(\mu, \sigma^2)$ is:
 \begin{align*}
     f_X(x) = \frac{1}{\sigma \sqrt{2\pi} } e ^{\frac{-(x-\mu)^2}{2\sigma^2}}
 \end{align*}
 Notice the $x$ in the exponent of the PDF function. When $x$ is equal to the mean ($\mu$) then e is raised to the power of $0$ and the PDF is maximized.
 
-By definition a Normal has $\E[X] = \mu$ and $\var(X) = \sigma^2$. 
+<p>By definition a Normal has $\E[X] = \mu$ and $\var(X) = \sigma^2$. 
 
-There is no closed form for the integral of the Normal PDF, and as such there is no closed form CDF. However we can use a transformation of any normal to a normal with a precomputed CDF. The result of this mathematical gymnastics is that the CDF for a Normal $X \sim N(\mu, \sigma^2)$ is:
+<p>There is no closed form for the integral of the Normal PDF, and as such there is no closed form CDF. However we can use a transformation of any normal to a normal with a precomputed CDF. The result of this mathematical gymnastics is that the CDF for a Normal $X \sim N(\mu, \sigma^2)$ is:
 \begin{align*}
     F_X(x) = \Phi\left(\frac{x - \mu}{\sigma}\right)
 \end{align*}
@@ -28,13 +28,13 @@ Where $\Phi$ is a precomputed function that represents that CDF of the Standard 
 
 
 <h2>Linear Transform</h2>
-If $X$ is a Normal such that $X \sim N(\mu, \sigma^2)$ and $Y$ is a linear transform of $X$ such that $Y = aX + b$ then $Y$ is also a Normal where:
+<p>If $X$ is a Normal such that $X \sim N(\mu, \sigma^2)$ and $Y$ is a linear transform of $X$ such that $Y = aX + b$ then $Y$ is also a Normal where:
 \begin{align*}
     Y \sim N(a\mu + b, a^2\sigma^2)
 \end{align*}
 
 <h2>Projection to Standard Normal</h2>
-For any Normal $X$ we can find a linear transform from $X$ to the standard normal $Z \sim N(0, 1)$. Note that $Z$ is the typical notation choice for the standard normal. For any normal, if you subtract the mean ($\mu$) of the normal and divide by the standard deviation ($\sigma$) the result is always the standard normal. We can prove this mathematically. Let $W = \frac{X - \mu}{\sigma}$:
+<p>For any Normal $X$ we can find a linear transform from $X$ to the standard normal $Z \sim N(0, 1)$. Note that $Z$ is the typical notation choice for the standard normal. For any normal, if you subtract the mean ($\mu$) of the normal and divide by the standard deviation ($\sigma$) the result is always the standard normal. We can prove this mathematically. Let $W = \frac{X - \mu}{\sigma}$:
 \begin{align*}
 W &= \frac{X -\mu}{\sigma} && \text{ Transform X: Subtract by $\mu$ and diving by $\sigma$} \\
   & = \frac{1}{\sigma}X - \frac{\mu}{\sigma} && \text{ Use algebra to rewrite the equation}\\
@@ -43,14 +43,15 @@ W &= \frac{X -\mu}{\sigma} && \text{ Transform X: Subtract by $\mu$ and diving b
  &\sim N(\frac{\mu}{\sigma} - \frac{\mu}{\sigma}, \frac{\sigma^2}{\sigma^2}) && \text{ Substituting values in for $a$ and $b$}\\
  &\sim N(0, 1) && \text{ The standard normal}
 \end{align*}
-Using this transform we can express $F_X(x)$, the CDF of $X$, in terms of the known CDF of $Z$, $F_Z(x)$. Since the CDF of $Z$ is so common it gets its own Greek symbol: $\Phi(x)$
+
+<p>Using this transform we can express $F_X(x)$, the CDF of $X$, in terms of the known CDF of $Z$, $F_Z(x)$. Since the CDF of $Z$ is so common it gets its own Greek symbol: $\Phi(x)$
 \begin{align*}
 F_X(x) &= P(X \leq x) \\
 &= P\left(\frac{X - \mu}{\sigma} \leq \frac{x - \mu}{\sigma}\right) \\
 &= P\left(Z \leq \frac{x - \mu}{\sigma}\right)\\
 &= \Phi\left(\frac{x - \mu}{\sigma}\right)
 \end{align*}
-The values of $\Phi(x)$ can be looked up in a table. Every modern programming language also has the ability to calculate the CDF of a normal random variable!
+<p>The values of $\Phi(x)$ can be looked up in a table. Every modern programming language also has the ability to calculate the CDF of a normal random variable!
 
 <div class="purpleBox">
 <p><b><i>Example</i></b>: Let $X\sim \mathcal{N}(3, 16)$, what is $P(X > 0)$?

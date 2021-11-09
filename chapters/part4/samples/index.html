@@ -37,14 +37,14 @@ The first question to ask is, are those unbiased estimates? Yes. Unbiased, means
 <p>The intuition behind the proof is that sample variance calculates the distance of each sample to the sample mean, \emph{not} the true mean. The sample mean itself varies, and we can show that its variance is also related to the true variance. 
 
 <h2>Standard Error</h2>
-Ok, you convinced me that our estimates for mean and variance are not biased. But now I want to know how much my sample mean might vary relative to the true mean.
+<p>Ok, you convinced me that our estimates for mean and variance are not biased. But now I want to know how much my sample mean might vary relative to the true mean.
 \begin{align*}
  \text{Var}(\bar{X}) &= \text{Var}(\sum_{i=1}^n \frac{X_i}{n}) = \left(\frac{1}{n}\right)^2 \text{Var}\left(\sum_{i=1}^n X_i\right) \\
  &= \left(\frac{1}{n}\right)^2 \sum_{i=1}^n\text{Var}( X_i) =\left(\frac{1}{n}\right)^2 \sum_{i=1}^n \sigma^2 = \left(\frac{1}{n}\right)^2 n \sigma^2 = \frac{\sigma^2}{n}\\
 &\approx \frac{S^2}{n} \\
  \text{Std}(\bar{X}) &\approx \sqrt{\frac{S^2}{n}}  
 \end{align*}
-That Std($\bar{X}$) term has a special name. It is called the standard error and its how you report uncertainty of estimates of means in scientific papers (and how you get error bars).
-Great! Now we can compute all these wonderful statistics for the Bhutanese people. But wait! You never told me how to calculate the Std($S^2$). True, that is outside the scope of CS109. You can find it on wikipedia if you want.
+<p>That term, Std($\bar{X}$), has a special name. It is called the standard error and its how you report uncertainty of estimates of means in scientific papers (and how you get error bars).
+Great! Now we can compute all these wonderful statistics for the Bhutanese people. But wait! You never told me how to calculate the Std($S^2$). That is hard because the central limit theorem doesn't apply to the computation of $S^2$. Instead we will need a more general technique. See the next chapter: <a href="{{pathToLang}}part4/bootstrapping/">Bootstrapping</a>
 
-<p>Let's say we calculate the our sample of happiness has $n$ = 200 people. The sample mean is $\bar{X} = 83$ (what is the unit here? happiness score?) and the sample variance is $S^2 = 450$. We can now calculate the standard error of our estimate of the mean to be 1.5. When we report our results we will say that the average happiness score in Bhutan is 83 $\pm$ 1.5 with variance $450$.
+<p>Let's say we calculate the our sample of happiness has $n$ = 200 people. The sample mean is $\bar{X} = 83$ (what is the unit here? happiness score?) and the sample variance is $S^2 = 450$. We can now calculate the standard error of our estimate of the mean to be 1.5. When we report our results we will say that our estimate of the average happiness score in Bhutan is 83 $\pm$ 1.5. Our estimate of the variance of happiness is 450 $\pm$ ?.
