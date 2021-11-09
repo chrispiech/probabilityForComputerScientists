@@ -4,9 +4,9 @@
 <center><h1>Bayesian Networks</h1></center>
 <hr/>
 
-At this point in the reader we have developed tools for analytically solving for probabilities. We can calculate the likelihood of random variables taking on values, even if they are interacting with other random variables (which we have called multi-variate models, or we say the random variables are jointly distributed). We have also started to study samples and sampling. 
+<p>At this point in the reader we have developed tools for analytically solving for probabilities. We can calculate the likelihood of random variables taking on values, even if they are interacting with other random variables (which we have called multi-variate models, or we say the random variables are jointly distributed). We have also started to study samples and sampling. 
 
-Consider the WebMd Symptom Checker. WebMD have built a probabilistic model with random variables which roughly fall under three categories: symptoms, risk factors and diseases. For any combination of observed symptoms and risk factors, they can calculate the probability of any disease. For example, they can calculate the probability that I have influenza given that I am a 21-year-old female who has a fever and who is tired: $P(I = 1 | A = 21, G = 1, T = 1, F = 1)$. Or they could calculate the probability that I have a cold given that I am a 30-year-old with a runny nose: $P(C = 1 | A = 30, R = 1)$. At first blush this might not seem difficult. But as we dig deeper we will realize just how hard it is.  There are two challenges: (1) Modelling: sufficiently specifying the probabilistic model and (2) Inference: calculating any desired probability.
+<p>Consider the WebMd Symptom Checker. WebMD have built a probabilistic model with random variables which roughly fall under three categories: symptoms, risk factors and diseases. For any combination of observed symptoms and risk factors, they can calculate the probability of any disease. For example, they can calculate the probability that I have influenza given that I am a 21-year-old female who has a fever and who is tired: $P(I = 1 | A = 21, G = 1, T = 1, F = 1)$. Or they could calculate the probability that I have a cold given that I am a 30-year-old with a runny nose: $P(C = 1 | A = 30, R = 1)$. At first blush this might not seem difficult. But as we dig deeper we will realize just how hard it is.  There are two challenges: (1) Modelling: sufficiently specifying the probabilistic model and (2) Inference: calculating any desired probability.
 
 <h2>Bayesian Networks</h2>
 
@@ -51,7 +51,7 @@ This is a conditional independence statement. It is saying that once you know th
 
 <h2>Designing a Bayes Net</h2>
 
-There are several steps to designing a Bayes Net. 
+<p>There are several steps to designing a Bayes Net. 
 <ol>
 <li>Chose you random variables, and make them nodes. 
 	<li>Add edges, often based off your assumptions about which nodes directly cause which others.
