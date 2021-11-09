@@ -117,7 +117,7 @@ A Beta distribution has $E[X] = \frac{a}{a + b}$ and $Var(X) = \frac{ab}{(a+b)^2
 <p><center><img class="mainFigure" src="{{pathToRoot}}img/chapters/beta.png"></img></center>
 <p>Notice how the most likely belief for the probability of curing a patient, is $4/6$, the fraction of patients cured. This distribution shows that we hold a non-zero belief that the probability could be something other than $4/6$. It is unlikely that the probability is 0.01 or 0.09, but reasonably likely that it could be 0.5.
 
-<p>It works out that $\Beta(1,1) = \Uni(0,1)$. As a result the distribution of our belief about $p$ before (""prior") and after ("posterior") can both be represented using a Beta distribution. When that happens we call Beta a ``conjugate" distribution. Practically conjugate means easy update.
+
 
 
 <h2>Beta as a Prior</h2>
@@ -136,7 +136,9 @@ If our prior belief for $X \sim \Beta(a, b)$, then our posterior is $\Beta(a+h, 
 Which is the PDF of $\Beta(a+h, b+t)$
     </div></p>
 
-<p>It is pretty convenient that if we have a Beta prior belief, then our posterior belief is also Beta. This makes Betas especially convenient to work with, in code and in proof, if there are many updates. This property where the type of distribution is the same before and after an observation is called a conjugate prior.
+<p>It is pretty convenient that if we have a Beta prior belief, then our posterior belief is also Beta. This makes Betas especially convenient to work with, in code and in proof, if there are many updates that you will make to your belief over time. This property where the type of distribution is the same before and after an observation is called a conjugate prior.
 
 
-<p>Quick question: Are you allowed to just make up priors and imaginary trials? Some folks think that is fine (they are called Bayesians) and some folks think that you shouldn't make up prior beliefs (they are called frequentists).</p>
+<p>Quick question: Are you allowed to just make up priors and imaginary trials? Some folks think that is fine (they are called Bayesians) and some folks think that you shouldn't make up prior beliefs (they are called frequentists). In general, for small data it can make you much better at making predictions if you are able to come up with a good prior belief.</p>
+
+<p>Observation: There is a deep connection between the beta-prior and the uniform-prior (which we used initially). It turns out that $\Beta(1,1) = \Uni(0,1)$. Recall that $\Beta(1,1)$ means 0 imaginary heads and 0 imaginary tails.
