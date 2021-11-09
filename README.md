@@ -1,4 +1,11 @@
-# Authoring Content
+# Setup
+
+Download dependencies
+```
+python -m pip install -r requirements.txt
+```
+
+# Editing Content
 
 Make changes to the content in the chapters directory.
 
@@ -13,14 +20,16 @@ To recompile after you make changes
 python compile.py
 ```
 
-Never directly modify files in the en directory
+Warning: Never directly modify files in the en directory
 
-# Development
 
-Download dependencies
-```
-pip3 install -r requirements.txt
-```
+# Adding new Chapters / Examples
+
+The book outline is defined in the file bookOutline.hjson. If you want to create a new chapter or a new worked example put it in there. Then run compile and you will see a skeleton directory created in chapters.
+
+# Submit a pull request
+
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 
 # Using a Virtual Environment
 You can optionally use a virtual environment.
