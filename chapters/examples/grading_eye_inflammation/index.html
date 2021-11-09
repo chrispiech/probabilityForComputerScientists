@@ -67,8 +67,8 @@ Where $K$ is a normalization constant and $\lambda$ must be greater than 0.
     \begin{align*}
         f(\theta = \lambda | X = 4)  
         &= \frac{P(X=4|\theta = \lambda) f(\theta = \lambda)}{P(X = 4)} \\
-        &= K \cdot \lambda^4 e^{-\lambda} \lambda e ^{-\frac{\lambda}{2}}  \\
-        &= K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}
+        &= \frac{\frac{\lambda^{4} e^{-\lambda}}{4!} \cdot K \cdot \lambda \cdot e^{\lambda / 2}}{P(X = 4)} \\
+        &= \frac{K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}}{4! P(X=4)}
      \end{align*}
       </div>
 
@@ -76,24 +76,23 @@ Where $K$ is a normalization constant and $\lambda$ must be greater than 0.
 
 <p><div class="bordered">
     
-    Maximize the likelihood of the parameter given the data:
+    Maximize the likelihood of the parameter given the data by using argmax:
+    \begin{align*}
+        \argmax_\lambda \frac{K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}}{4! P(X=4)}
+            &= \argmax_\lambda \lambda^5 e^{-\frac{3}{2}\lambda}  \\
+    \end{align*}
     
+    Take logarithm (preserves argmax, and easier derivative):
     \begin{align*}
-        \argmax_\lambda K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}   &=
-             \argmax_\lambda \log K \cdot \lambda^5 e^{-\frac{3}{2}\lambda}  \\
-             &= \argmax_\lambda \log K + 5 \log \lambda -\frac{3}{2}\lambda
+        &= \argmax_\lambda \log \left(\lambda^5 e^{-\frac{3}{2}\lambda} \right) \\
+        &= \argmax_\lambda \left(5 \log \lambda -\frac{3}{2}\lambda\right)
     \end{align*}
-    Calculate the derivative 
+
+    Calculate the derivative with respect to the parameter, and set equal to 0
     \begin{align*}
-       \frac{\partial}{\partial \lambda} f(\theta = \lambda | X = 4) 
-       &=\frac{\partial}{\partial \lambda} \log K + 5 \log \lambda -\frac{3}{2}\lambda   \\
-        &= \frac{5}{\lambda} -\frac{3}{2}
-    \end{align*}
-    Set it equal to 0
-    \begin{align*}
-      \frac{5}{\lambda} -\frac{3}{2} = 0\\
-       \frac{5}{\lambda} = \frac{3}{2}\\
-      \lambda = \frac{10}{3}
+        0 &= \frac{\partial}{\partial \lambda} \left(5 \log \lambda -\frac{3}{2}\lambda\right) \\
+        0 &= \frac{5}{\lambda} -\frac{3}{2} \\
+        \lambda &= \frac{10}{3}
     \end{align*}
  </div>
 
