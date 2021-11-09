@@ -1,3 +1,20 @@
+# Authoring Content
+
+Make changes to the content in the chapters directory.
+
+To test
+```
+./runLocal.sh
+```
+And navigate on a browser to http://localhost:8000/
+
+To recompile after you make changes
+```
+python compile.py
+```
+
+Never directly modify files in the en directory
+
 # Development
 
 Download dependencies
