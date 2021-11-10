@@ -47,6 +47,10 @@ Parameter $\sigma_b$: <input onchange="redrawMixturePdf()" type="number" class="
 
 <canvas id="mixturePdf" style="max-height: 400px"></canvas>
 
+<p>Likelihood: <span id="likelihood"></span><br/>
+    Log Likelihood: <span style="color:blue" id="ll"></span><br/>
+    Best Seen: <span style="color:blue"  id="best"></span> 
+
 <h3>What is a Gaussian Mixture?</h3>
 
 <p>A Gaussian Mixture describes a random variable whose PDF could come from one of two Gaussians (or more, but we will just use two in this demo). There is a certain probability the sample will come from the first gaussian, otherwise it comes from the second. It has five parameters: 4 to describe the two gaussians and one to describe the relative weighting of the two gaussians.
@@ -153,19 +157,22 @@ function redrawMixturePdf() {
   let sigma2 = parseFloat($("#normalPdfSigma2").val())
   let mixtureT = parseFloat($("#mixtureT").val())
   drawMixturePdf(parentDivId, mixtureT, mu1, sigma1, mu2, sigma2)
+  calculateLogLikelihood(mixtureT, mu1, sigma1, mu2, sigma2)
   
 }
 
-function calculateLogLikelihood(mu, sigma) {
+function calculateLogLikelihood(t, mu1, sigma1, mu2, sigma2) {
   
 
-    ll = 0
-    likelihood = 1.0
+    var ll = 0
+    var likelihood = 1.0
     for (var i = 0; i < DATA.length; i++) {
       let x = DATA[i]
-      l = jStat.normal.pdf(x, mu, sigma )
-      ll += Math.log(likelihood)
-      likelihood *= l
+      let pr_x1 = jStat.normal.pdf(x, mu1, sigma1)
+      let pr_x2 = jStat.normal.pdf(x, mu2, sigma2)
+      let pr_x = pr_x1 * t + pr_x2 * (1-t)
+      ll += Math.log(pr_x)
+      likelihood *= pr_x
 
     }
     $("#likelihood").html(likelihood)
