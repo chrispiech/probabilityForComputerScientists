@@ -78,7 +78,6 @@
 			"fairness":"Fairness in AI",
 			"federalist":"Federalist Paper Authorship",
 			"name2age":"Name to Age",
-			"mixture_models":"Mixture Models",
 			"bridge_distribution":"Bridge Distribution",
 			"tracking_in_2D":"Tracking in 2D"
 
@@ -112,7 +111,7 @@
 		},
 		"examples": {
 			"mle_demo":"MLE Normal Demo",
-
+			"mixture_models":"MLE Mixture Model",
 		}
 	},
 	# "examples": {

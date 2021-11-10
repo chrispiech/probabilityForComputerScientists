@@ -260,7 +260,7 @@
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/mixture_models">Mixture Models</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+        <li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -300,7 +300,7 @@
 <li>
     <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part5_examples">
-        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li>
+        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li><li><a href="../../examples/mixture_models">MLE Mixture Model</a></li>
     </ul>
 </li>
 </li>
@@ -349,7 +349,7 @@
               
                         
  
-<center><h1>Mixture Models</h1></center>
+<center><h1>Gaussian Mixtures</h1></center>
 <hr/>
 
 <!-- 
@@ -395,7 +395,22 @@ Parameter $\sigma_b$: <input onchange="redrawMixturePdf()" type="number" class="
 
 <canvas id="mixturePdf" style="max-height: 400px"></canvas>
 
-<h3>Probability Mass Function</h3>
+<h3>What is a Gaussian Mixture?</h3>
+
+<p>A Gaussian Mixture describes a random variable whose PDF could come from one of two Gaussians (or more, but we will just use two in this demo). There is a certain probability the sample will come from the first gaussian, otherwise it comes from the second. It has five parameters: 4 to describe the two gaussians and one to describe the relative weighting of the two gaussians.
+
+<h4>Generative Code</h4>
+
+<pre class="language-python"><code>from scipy import stats
+def sample():
+   origin = stats.bernoulli.rvs(0.8)
+   if origin == 1:
+      return stats.norm.rvs(6.8,0.7)
+   else:
+      return stats.norm.rvs(3.5,0.7)</code></pre>
+
+
+<h4>Probability Mass Function</h4>
 
 \begin{align*}
 f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x)
@@ -403,16 +418,70 @@ f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x)
 $$\text{st}$$
 $$A \sim N(\mu_a, \sigma_a^2)$$
 $$B \sim N(\mu_b, \sigma_b^2)$$
+<p>Putting it all together, the PMF of a Gaussian Mixture is:</p>
+\begin{align*}
+f(X=x) = t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x-\mu_a}{\sigma_a})^2}\Big)
 
-<h3>Generative Code</h3>
++ (1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x-\mu_b}{\sigma_b})^2}\Big)
+\end{align*}
 
-<pre class="language-python"><code>from scipy import stats
-def sample():
-   t = stats.bernoulli.rvs(0.8)
-   if t == 1:
-      return stats.norm.rvs(6.8,0.7)
-   else:
-      return stats.norm.rvs(3.5,0.7)</code></pre>
+
+<h3>MLE for Gaussian Mixture</h3>
+
+<p>Special note: even though the generative story has a bernoulli it is never observed. MLE maximizes the likelihood of the observed data.
+
+<p>Let $\vec{\theta} = [t, \mu_a,\mu_b,\sigma_a, \sigma_b]$ be the parameters
+
+<p>The MLE idea is to chose values of $\theta$ which maximize log likelihood. All optimization methods require us to caluclate the partial derivatives of the thing we want to optimize (log likelihood) with respect to the values we can change (our parameters).
+
+
+<h4> Likelihood function</h4>
+
+\begin{align*}
+L(\vec{\theta}) &= \prod_i^n f(X_i=x_i | \vec{\theta}) \\
+&= \prod_i^n \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ (1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
+\Big]
+\end{align*}
+
+<h4> Log Likelihood function</h4>
+
+\begin{align*}
+LL(\vec{\theta}) 
+&= \log L(\vec{\theta}) \\
+&= \log \prod_i^n f(X_i=x_i | \vec{\theta}) \\
+&=  \sum_i^n \log f(X_i=x_i | \vec{\theta}) \\
+&= \sum_i^n \log  \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ (1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
+\Big] \\
+&= \sum_i^n 
+\log t + \log \frac{1}{\sqrt{2\pi}} - \log \sigma_a -\frac{1}{2}\Big(\frac{x_i-\mu_a}{\sigma_a}\Big)^2 
++ \log (1-t) + \log \frac{1}{\sqrt{2\pi}} - \log \sigma_b \frac{1}{2} \Big(\frac{x_i-\mu_b}{\sigma_b}\Big)^2 
+\end{align*}
+
+
+<h4> Derivative of LL with respect to $\theta$</h4>
+
+<p>Here is an example of calculating a partial derivative with respect to one of the parameters, $\mu_a$. You would need a derivative like this for all parameters.
+
+  <p>Notice how few terms actually contain $\mu_a$. Any term which does not have $\mu_a$ in it will have a zero derivative.
+<p>\begin{align*}
+\frac{\d LL(\vec{\theta})}{\d \mu_a} 
+&= \sum_i^n \frac{\d}{\d \mu_a}
+\Big[
+-\frac{1}{2}\Big(\frac{x_i-\mu_a}{\sigma_a}\Big)^2 
+\Big]\\
+&= \sum_i^n 2\Big(\frac{x_i-\mu_a}{\sigma_a}\Big)\frac{1}{\sigma_a}
+
+\end{align*}</p>
+
+
 
 <script>
 

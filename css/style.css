@@ -134,6 +134,11 @@ greyBackground as a style class)
     padding-right: 10px;
   }
 
+  .handout > h4 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   .handout > b {
     padding-left: 10px;
     padding-right: 10px;
