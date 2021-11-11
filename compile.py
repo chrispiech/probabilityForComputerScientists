@@ -39,7 +39,12 @@ class Compiler(object):
         pathToLangRoot = self.getPathToRoot(relativePath)
         filePath = os.path.join(TEMPLATE_DIR, relativePath)
         templateText = open(filePath).read()
-        compiledHtml = SimpleTemplate(templateText).render(pathToRoot = '../' + pathToLangRoot, pathToLang = pathToLangRoot)
+        params = {
+            'pathToRoot': '../' + pathToLangRoot, 
+            'pathToLang' : pathToLangRoot,
+            'beta':'<a href="">BETA</a>'
+        }
+        compiledHtml = SimpleTemplate(templateText).render(params)
         
         fileName, fileExtension = os.path.splitext(relativePath)
         compiledHtml = compiledHtml.encode('utf8')
