@@ -158,7 +158,7 @@ So we are going to think of this whole term as a constant which we call $K$. Ok,
 &= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} \Big[t \cdot 
 \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)\Big]  &&\text{derivative of sum}\\
 
-&= \frac{t}{f(x_i|\theta) \cdot \sqrt{2\pi}\sigma_a} \cdot \frac{\d}{\d \mu_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  &&\text{pull out const}\\
+&= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot \frac{\d}{\d \mu_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  &&\text{pull out const}\\
 
 &= \frac{1}{f(x_i|\theta)}  \cdot t \cdot \frac{1}{\sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \frac{\d}{\d \mu_a} -\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2&&\text{chain on }e^x \\
 
