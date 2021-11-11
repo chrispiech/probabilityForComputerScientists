@@ -452,6 +452,13 @@ function drawBernoulliPmf(parentDivId, p) {
 	let yLabel = 'Probability'
 
 	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
+	config.options.scales.x = {
+      display: true,
+      title: {
+        display: true,
+        text: xLabel
+      }
+    }
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myBernLine = new Chart(ctx, config);
 }
@@ -713,6 +720,7 @@ function standardPMFConfig(xValues, yValues, xLabel, yLabel){
       scales: {
         x: {
           display: true,
+          type: 'linear',
           title: {
             display: true,
             text: xLabel
@@ -772,6 +780,7 @@ function standardPDFConfig(xValues, yValues, xLabel, yLabel){
       scales: {
         x: {
           display: true,
+          type: 'linear',
           title: {
             display: true,
             text: xLabel

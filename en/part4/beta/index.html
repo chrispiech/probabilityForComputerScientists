@@ -503,7 +503,6 @@ function drawBetaPdf(parentDivId, a, b) {
 
 
 <p>
-
 <canvas id="betaPdf9heads" style="max-height: 400px"></canvas>
 
 <script>
@@ -515,13 +514,15 @@ $(document).ready(function(){
 
 function drawBetaPdf9heads(parentDivId, a, b) {
 	console.log(parentDivId)
-
-	let N_BUCKETS = 100
+	let min = 0.0
+	let max = 1.0
+	let N_BUCKETS = 100.0
 
 	var xValues = []
 	var yValues = []
 	for (var i = 0; i < N_BUCKETS + 1; i++) {
-		let x = i/(N_BUCKETS * 1.0)
+		let t = i / N_BUCKETS
+		let x = min + t * (max - min)
 		let y = jStat.beta.pdf(x, a,b).toFixed(5)
 		xValues.push(x)
 		yValues.push(y)
@@ -531,6 +532,14 @@ function drawBetaPdf9heads(parentDivId, a, b) {
 	let yLabel = 'Probability Density'
 
 	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
+	config['options']['scales']['x'] = {
+        max: max,
+        min: min,
+        type: 'linear',
+        ticks: {
+            precision: 5
+        }
+    }
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	new Chart(ctx, config);
 }
@@ -819,6 +828,7 @@ function standardPMFConfig(xValues, yValues, xLabel, yLabel){
       scales: {
         x: {
           display: true,
+          type: 'linear',
           title: {
             display: true,
             text: xLabel
@@ -878,6 +888,7 @@ function standardPDFConfig(xValues, yValues, xLabel, yLabel){
       scales: {
         x: {
           display: true,
+          type: 'linear',
           title: {
             display: true,
             text: xLabel

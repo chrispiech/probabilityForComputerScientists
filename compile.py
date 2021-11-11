@@ -7,6 +7,7 @@ from bottle import SimpleTemplate
 from makeChapters import make_chapters
 import os.path
 import sys
+from tqdm import tqdm
 
 IGNORE_DIRS = [
 ]
@@ -25,9 +26,9 @@ class Compiler(object):
     # from the templates dir into the current folder. Folder
     # hierarchy is preserved
     def run(self):
-        make_chapters()
+        self.link_data = make_chapters()
         templateFilePaths = self.getTemplateFilePaths('')
-        for templateFilePath in templateFilePaths:
+        for templateFilePath in tqdm(templateFilePaths):
             self.compileTemplate(templateFilePath)
 
     #####################
@@ -35,15 +36,15 @@ class Compiler(object):
     #####################
 
     def compileTemplate(self, relativePath):
-        print(relativePath)
+        # print(relativePath)
         pathToLangRoot = self.getPathToRoot(relativePath)
         filePath = os.path.join(TEMPLATE_DIR, relativePath)
         templateText = open(filePath).read()
         params = {
             'pathToRoot': '../' + pathToLangRoot, 
             'pathToLang' : pathToLangRoot,
-            'beta':'<a href="">BETA</a>'
         }
+        self.addChapterLinks(params)
         compiledHtml = SimpleTemplate(templateText).render(params)
         
         fileName, fileExtension = os.path.splitext(relativePath)
@@ -97,6 +98,12 @@ class Compiler(object):
             elif self.isTemplateFile(fileName):
                 paths.append(filePath)
         return paths
+
+    def addChapterLinks(self, params):
+        for key, data in self.link_data.items():
+            compiled_path = SimpleTemplate(data['path']).render(params)
+            params[key] = '<a href="{}">{}</a>'.format(compiled_path, data['title'])
+        pass
 
 
 if __name__ == '__main__':

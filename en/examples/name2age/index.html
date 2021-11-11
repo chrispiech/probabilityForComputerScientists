@@ -353,11 +353,11 @@
 <hr/>
 
 <p>
-Because of shifting patterns in name popularity, a person's age is a hint as to their age. The United States publishes a census which contains counts of how many US residents were born with a given name in a given year. We can use inference to compute the reverse probability distribution: an updated belief in a person's age, given their name. As a reminder, if I know the year someone was born, I can calculate their age.
+Because of shifting patterns in name popularity, a person's age is a hint as to their age. The United States publishes a data which contains counts of how many US residents were born with a given name in a given year, based off Social Security applications. We can use inference to compute the reverse probability distribution: an updated belief in a person's age, given their name. As a reminder, if I know the year someone was born, I can calculate their age within one year.
 
 <center><img class="mainFigureLg" src="../../../img/chapters/name2age.png"></img></center>
 
-<p> The US census data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
+<p> The US Social Security applications data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
 	$$
 	P(B = b,N = n) \approx 
 	\frac{\text{count}(b, n)}
@@ -421,7 +421,7 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 }
 \end{align*}
 
-<h3>Fromt Birth Year to Age</h3>
+<h3>From Birth Year to Age</h3>
 
 <p>Of course, if $B$ is the birth year of a person, their age, $A$ is approximately the current year minus $B$. This could be off by one if someone has a birth day later in the year, but we will ignore this small deviation for now. So for example, if we think that a person was born in 1988, since the current year is <span class="currYear"></span> then their age is <span class="currYear"></span> - 1988 = <span id="exampleAge"></span></p>
 
@@ -430,9 +430,10 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 <p>This problem makes many assumptions which are worth highlighting. In fact, any time we make generalizations (especially about demographics) based on sparse information we should tread lightly. Here are the assumptions that I can think of:
 
 <ol>
-	<li>We assume that people don't change their first names. Obviously this is wrong. It is especially wrong for the trans community, thus introducing a systematic error.</li>
-	<li>This algorithm doesn't take into account the distribution over who could plaussibly be alive at the time the name was recorded. For example, lets say the name was recorded from a user in 2021. That user likely wasn't born in 1800.</li>
-	<li>The US census is not perfect. It does not capture all people, and there are demographics which are underrepresented. This will also skew our results</li>
+	<!-- <li>We assume that people don't change their first names. Obviously this is wrong. It is especially wrong for the trans community, thus introducing a systematic error.</li>
+	<li>This algorithm doesn't take into account the distribution over who could plaussibly be alive at the time the name was recorded. For example, lets say the name was recorded from a user in 2021. That user likely wasn't born in 1800.</li> -->
+	<li>This data only is accurate for names of people in the US. The probability of age given names could be very different in other countries.</li>
+	<li>The US census is not perfect. It does not capture all people who are resident in the US, and there are demographics which are underrepresented. This will also skew our results.</li>
 </ol>
 
 <h3>Demo</h3>
@@ -440,26 +441,109 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 
 
 <p><div class="content">
-Query Name: <input onchange="runName2Age()" class="form-control" id="queryName" style="display:inline-block;width:200px"> <span id="inputStatus"></span>
+Query Name: <input onchange="runName2Age()" class="form-control" value="Katherine" id="queryName" style="display:inline-block;width:200px"> <span id="inputStatus"></span>
   </div></p>
 
-  <canvas id="babyNamePMF" style="max-height: 400px;background-color: grey;"></canvas>
+  <div class="loader" id="dataLoader"></div>
+  <canvas id="babyNamePMF" style="max-height: 400px;display:none"></canvas>
 
   <p>Records with name: <span id="totalCount"></span>
 
-  	<p>This demo is based on real data from the US Census between 1914 and 2014. Thank you to <a href="https://www.kaggle.com/kaggle/us-baby-names">https://www.kaggle.com/kaggle/us-baby-names</a> for compiling the data. <a href="../../../data/babyNames/count_map.json" download="countMap.json" class="btn btn-secondary btn-sm">Download Data</a>.</p>
+  	<p>This demo is based on real data from US Social Security applications between 1914 and 2014. Thank you to <a href="https://www.kaggle.com/kaggle/us-baby-names">https://www.kaggle.com/kaggle/us-baby-names</a> for compiling the data. <a href="../../../data/babyNames/count_map.json" download="countMap.json" class="btn btn-secondary btn-sm">Download Data</a>.</p>
 
+<h3>Names that Give Away Your Age</h3>
+
+<p>Some names have certain years where they were exceptionally popular. These names provide quite a lot of information about birth year. Let's look at some of the names with the highest max probability.</p>
+
+<p><b>Medium Popularity (>10,000 people with the name)</b><br/>
+	<table class="table table-sm table-hover">
+		<thead>
+		<tr><th>Name</th><th>Age with max prob</th><th>Prob of most likely age</th></tr>
+</thead>
+<tr><td>Katina	</td><td class="yearsAt2021">49</td> 	<td>0.245</td></tr>
+<tr><td>Marquita	</td><td class="yearsAt2021">38</td> 	<td>0.233</td></tr>
+<tr><td>Ashanti	</td><td class="yearsAt2021">19</td> 	<td>0.250</td></tr>
+<tr><td>Miley</td>	<td class="yearsAt2021">13</td> <td>0.250</td><td></td></tr>
+<tr><td>Aria	</td><td class="yearsAt2021">7</td> 	<td>0.247</td></tr>
+
+
+	</table>
+
+	<p><b>High Popularity (>100,000 people with the name)</b><br/>
+	<table class="table table-sm table-hover">
+				<thead>
+		<tr><th>Name</th><th>Age with max prob</th><th>Prob of most likely age</th></tr>
+</thead>
+<tr><td>Debbie	</td>	<td class="yearsAt2021">62</td>  <td>0.104</td></tr>
+<tr><td>Whitney	</td>	<td class="yearsAt2021">35</td>  <td>0.098</td></tr>
+<tr><td>Chelsea	</td>	<td class="yearsAt2021">29</td>  <td>0.103</td></tr>
+<tr><td>Aidan	</td>	<td class="yearsAt2021">18</td>  <td>0.098</td></tr>
+<tr><td>Addison</td>	<td class="yearsAt2021">14</td>  <td>0.112</td></tr>
+	</table>
+
+	<p>A google search for Katina 1972 brought up this interesting article <a href="http://www.nancy.cc/2012/01/25/baby-name-katina/">Baby Name Katina</a>.
 
 <h3>Futher Reading</h3>
-<p>Some names don't have enough data to make a good estimate. For example, if a name has 10,000 entries in the database, of which 100 were born on a given year. How confident are we that the true probability is $\frac{100}{10000} = 0.01$? One way to express our uncertainty would be through a <a href="">BETA</a>
+<p>Some names don't seem to have enough data to make good probability estimates. Can we quantify our uncertainty in such probability estimates? For example, if a name has only 10,000 entries in the database, of which only 100 were born in the year 1950, how confident are we that the true probability for 1950 is $\frac{100}{10000} = 0.01$? One way to express our uncertainty would be through a <a href="../../part4/beta">Beta Distribution</a>. In this scenario we could represent our belief in the probability for 1950 as $X \sim \Beta(a=101, b=9901)$ reflecting that we have seen 100 people born in 1950 and 9900 people who were not. We can plot that belief, zoomed into the range [0, 0.03]:
+
+<canvas id="betaPdfnameBeta" style="max-height: 400px"></canvas>
+
+<script>
+
+$(document).ready(function(){
+	drawBetaPdfnameBeta("betaPdfnameBeta", 101, 9901)
+})
+
+
+function drawBetaPdfnameBeta(parentDivId, a, b) {
+	console.log(parentDivId)
+	let min = 0
+	let max = 0.03
+	let N_BUCKETS = 100.0
+
+	var xValues = []
+	var yValues = []
+	for (var i = 0; i < N_BUCKETS + 1; i++) {
+		let t = i / N_BUCKETS
+		let x = min + t * (max - min)
+		let y = jStat.beta.pdf(x, a,b).toFixed(5)
+		xValues.push(x)
+		yValues.push(y)
+	}
+
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability Density'
+
+	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
+	config['options']['scales']['x'] = {
+        max: max,
+        min: min,
+        type: 'linear',
+        ticks: {
+            precision: 5
+        }
+    }
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	new Chart(ctx, config);
+}
+</script>
+<p>We can now ask questions such as, what is the probability that $X$ is within 0.002 of 0.01?</p>
+\begin{align*}
+P(&0.008 < X < 0.012) \\
+&= P(X < 0.012) - P(X < 0.008) \\
+&= F_X(0.012) - F_X(0.008) \\
+&= 0.966 - 0.013 \\
+&= 0.953
+\end{align*}
+
+<p>Semantically this leads to the claim that, after observing 100 births with a name in 1950, out of  10,000 births with that name over the whole dataset, there is a 95% chance that the probability of someone being born in 1950 is 0.010 $\pm$ 0.002.
 <script>
 
 var data = null
 
 $.getJSON("../../../data/babyNames/count_map.json", function(json) {
     data = json;
-    console.log('data loaded')
-    console.log(data)
+    runName2Age()
 });
 
 
@@ -483,7 +567,8 @@ function runName2Age() {
 	if(isValid) {
 		$("#queryName").removeClass("is-invalid")
 		$("#queryName").addClass("is-valid")
-		$("#babyNamePMF").css("background-color", "white")
+		$("#dataLoader").hide()
+		$("#babyNamePMF").show()
 		plotName(queryName)
 	} else {
 		$("#queryName").removeClass("is-valid")
@@ -731,6 +816,7 @@ function standardPMFConfig(xValues, yValues, xLabel, yLabel){
       scales: {
         x: {
           display: true,
+          type: 'linear',
           title: {
             display: true,
             text: xLabel
@@ -790,6 +876,7 @@ function standardPDFConfig(xValues, yValues, xLabel, yLabel){
       scales: {
         x: {
           display: true,
+          type: 'linear',
           title: {
             display: true,
             text: xLabel

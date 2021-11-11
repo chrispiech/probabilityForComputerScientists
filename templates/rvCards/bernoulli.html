@@ -74,6 +74,13 @@ function drawBernoulliPmf(parentDivId, p) {
 	let yLabel = 'Probability'
 
 	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
+	config.options.scales.x = {
+      display: true,
+      title: {
+        display: true,
+        text: xLabel
+      }
+    }
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	window.myBernLine = new Chart(ctx, config);
 }

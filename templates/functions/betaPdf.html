@@ -1,4 +1,7 @@
-
+<%
+	setdefault("min", 0.0)
+	setdefault("max", 1.0)
+%>
 <canvas id="betaPdf{{id}}" style="max-height: 400px"></canvas>
 
 <script>
@@ -10,13 +13,15 @@ $(document).ready(function(){
 
 function drawBetaPdf{{id}}(parentDivId, a, b) {
 	console.log(parentDivId)
-
-	let N_BUCKETS = 100
+	let min = {{min}}
+	let max = {{max}}
+	let N_BUCKETS = 100.0
 
 	var xValues = []
 	var yValues = []
 	for (var i = 0; i < N_BUCKETS + 1; i++) {
-		let x = i/(N_BUCKETS * 1.0)
+		let t = i / N_BUCKETS
+		let x = min + t * (max - min)
 		let y = jStat.beta.pdf(x, a,b).toFixed(5)
 		xValues.push(x)
 		yValues.push(y)
@@ -26,6 +31,14 @@ function drawBetaPdf{{id}}(parentDivId, a, b) {
 	let yLabel = 'Probability Density'
 
 	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
+	config['options']['scales']['x'] = {
+        max: max,
+        min: min,
+        type: 'linear',
+        ticks: {
+            precision: 5
+        }
+    }
 	var ctx = document.getElementById(parentDivId).getContext('2d');
 	new Chart(ctx, config);
 }

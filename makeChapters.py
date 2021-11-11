@@ -27,18 +27,21 @@ book_outline = hjson.load(open('bookOutline.hjson'))
 def make_chapters():
 
 	create_directories_and_files()
-	create_sidebar()
+	link_data = create_sidebar()
+	return link_data
 
 def create_sidebar():
 	html = ''
+	link_data = {}
 	for part_key in book_outline:
-		part_html = create_part_html(part_key,)
+		part_html = create_part_html(part_key,link_data)
 		html += part_html
 	writer = open('templates/chapterList.html', 'w')
 	writer.write(html)
+	return link_data
 	
 
-def create_part_html(part_key):
+def create_part_html(part_key, link_data):
 	part = book_outline[part_key]
 	html = '<!-- {} -->\n'.format(part_key)
 	html += '<ul class="list-unstyled components">\n'
@@ -51,6 +54,10 @@ def create_part_html(part_key):
 		section_title = part['sections'][section_key]
 		sidebar_id = 'sidebar-' + section_key
 		html += '<a id={} href="{}">{}</a>\n'.format(sidebar_id, section_path, section_title)
+		link_data[section_key] = {
+			'path':section_path,
+			'title':section_title
+		}
 	
 	if 'examples' in part:
 		example_html = ''
@@ -59,6 +66,10 @@ def create_part_html(part_key):
 			example_title = part['examples'][example_key]
 			sidebar_id = 'sidebar-' + example_key
 			example_html += '<li><a href="{}">{}</a></li>'.format(example_path, example_title)
+			link_data[example_key] = {
+				'path':example_path,
+				'title':example_title
+			}
 		
 		example_data = {
 			'uid':part_key+'_examples',
