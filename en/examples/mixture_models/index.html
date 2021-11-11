@@ -405,16 +405,19 @@ Parameter $\sigma_b$: <input onchange="redrawMixturePdf()" type="number" class="
 
 <h4>Generative Code</h4>
 
-<pre class="language-python"><code>from scipy import stats
+<p><pre class="language-python"><code>from scipy import stats
 def sample():
-   origin = stats.bernoulli.rvs(0.8)
-   if origin == 1:
+   # choose group membership
+   membership = stats.bernoulli.rvs(0.8)
+   if membership == 1:
+      # sample from gaussian 1
       return stats.norm.rvs(6.8,0.7)
    else:
-      return stats.norm.rvs(3.5,0.7)</code></pre>
+      # sample from gaussian 2
+      return stats.norm.rvs(3.5,0.7)</code></pre></p>
 
 
-<h4>Probability Mass Function</h4>
+<h4>Probability Density Function</h4>
 
 \begin{align*}
 f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x)
@@ -422,9 +425,9 @@ f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x)
 $$\text{st}$$
 $$A \sim N(\mu_a, \sigma_a^2)$$
 $$B \sim N(\mu_b, \sigma_b^2)$$
-<p>Putting it all together, the PMF of a Gaussian Mixture is:</p>
+<p>Putting it all together, the PDF of a Gaussian Mixture is:</p>
 \begin{align*}
-f(X=x) = t \cdot 
+f(x) = t \cdot 
 \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x-\mu_a}{\sigma_a})^2}\Big)
 
 + (1-t) \cdot
@@ -434,7 +437,7 @@ f(X=x) = t \cdot
 
 <h3>MLE for Gaussian Mixture</h3>
 
-<p>Special note: even though the generative story has a bernoulli it is never observed. MLE maximizes the likelihood of the observed data.
+<p>Special note: even though the generative story has a bernoulli (group membership) it is never observed. MLE maximizes the likelihood of the observed data.
 
 <p>Let $\vec{\theta} = [t, \mu_a,\mu_b,\sigma_a, \sigma_b]$ be the parameters
 
@@ -444,7 +447,7 @@ f(X=x) = t \cdot
 <h4> Likelihood function</h4>
 
 \begin{align*}
-L(\vec{\theta}) &= \prod_i^n f(X_i=x_i | \vec{\theta}) \\
+L(\vec{\theta}) &= \prod_i^n f(x_i | \vec{\theta}) \\
 &= \prod_i^n \Big[t \cdot 
 \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
 + (1-t) \cdot
@@ -457,24 +460,85 @@ L(\vec{\theta}) &= \prod_i^n f(X_i=x_i | \vec{\theta}) \\
 \begin{align*}
 LL(\vec{\theta}) 
 &= \log L(\vec{\theta}) \\
-&= \log \prod_i^n f(X_i=x_i | \vec{\theta}) \\
-&=  \sum_i^n \log f(X_i=x_i | \vec{\theta}) \\
-&= \sum_i^n \log  \Big[t \cdot 
+&= \log \prod_i^n f(x_i | \vec{\theta}) \\
+
+&=  \sum_i^n \log f(x_i | \vec{\theta}) \\
+
+\end{align*}
+<p>That is suffiecient for now, but if you wanted to expand out the term you would get:
+  \begin{align*}
+LL(\vec{\theta})  &= \sum_i^n \log  \Big[t \cdot 
 \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
 + (1-t) \cdot
 \Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
-\Big] \\
-&= \sum_i^n 
-\log t + \log \frac{1}{\sqrt{2\pi}} - \log \sigma_a -\frac{1}{2}\Big(\frac{x_i-\mu_a}{\sigma_a}\Big)^2 
-+ \log (1-t) + \log \frac{1}{\sqrt{2\pi}} - \log \sigma_b \frac{1}{2} \Big(\frac{x_i-\mu_b}{\sigma_b}\Big)^2 
+\Big] 
 \end{align*}
 
 
 <h4> Derivative of LL with respect to $\theta$</h4>
 
-<p>Here is an example of calculating a partial derivative with respect to one of the parameters, $\mu_a$. You would need a derivative like this for all parameters.
 
-  <p>Notice how few terms actually contain $\mu_a$. Any term which does not have $\mu_a$ in it will have a zero derivative.
+
+<p>Here is an example of calculating a partial derivative with respect to one of the parameters, $\mu_a$. You would need a derivative like this for all parameters. 
+
+  <div class="alert alert-warning"><b>Caution:</b> When I first wrote this demo I thought it would be a simple derivative . It is not so simple because the log has a sum in it. As such the log term doesn't reduce. The log still serves to make the outer $\prod$ into a $\sum$. As such the $LL$ partial derivatives are solvable, but uses quite a lot of chain rule. </div>
+
+<p>A good first step when doing a huge derivative of a likelihood function is to think of the derivative for the log of likelihood of a single datapoint. This is the inner sum in the log likelihood expression:
+ $$
+  \frac{\d}{\d \mu_a} \log f(X_i=x_i) 
+  $$
+</p>
+
+<p> To make things easier, notice that $\mu_a$ does not show up in this term:
+  $$(1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big) =K $$
+So we are going to think of this whole term as a constant which we call $K$. Ok, lets go for it!
+
+\begin{align*}
+\frac{\d}{\d \mu_a} & \log f(x_i|\theta) \\
+
+&= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} f(x_i|\theta) &&\text{chain rule on }\log \\
+
+&= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ K\Big]  &&\text{substitute in }f(x_i|\theta)\\
+
+&= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)\Big]  &&\text{derivative of sum}\\
+
+&= \frac{1}{f(x_i|\theta)}  \cdot t \cdot \frac{1}{\sqrt{2\pi}\sigma_a} \cdot \frac{\d}{\d \mu_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  &&\text{}\\
+
+&= \frac{1}{f(x_i|\theta)}  \cdot t \cdot \frac{1}{\sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \frac{\d}{\d \mu_a} -\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2&&\text{chain on }e^x \\
+
+&= \frac{1}{f(x_i|\theta)}  \cdot t \cdot \frac{1}{\sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  \cdot \Big[-2(\frac{x_i-\mu_a}{\sigma_a}) \frac{\d}{\d \mu_a} (\frac{x_i-\mu_a}{\sigma_a})\Big]&&\text{chain on }x^2 \\
+
+&= \frac{1}{f(x_i|\theta)}  \cdot t \cdot \frac{1}{\sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \Big[ -2(\frac{x_i-\mu_a}{\sigma_a}) \cdot \frac{-1}{\sigma_a}\Big] &&\text{final derivative} \\
+
+&= \frac{1}{f(x_i|\theta)}  \cdot t \cdot \frac{1}{\sqrt{2\pi}\cdot \sigma_a^2} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot 2(\frac{x_i-\mu_a}{\sigma_a})   &&\text{simplify} \\
+\end{align*}
+
+<p>That was for a single data-point. For the full dataset:
+\begin{align*}
+\frac{\d LL(\theta)}{\d \mu_a} 
+&=  \sum_i^n 
+\frac{\d}{\d \mu_a}  \log f(x_i|\theta)\\
+&= \sum_i^n 
+\frac{1}{f(x_i|\theta)}  \cdot t \cdot \frac{1}{\sqrt{2\pi}\cdot \sigma_a^2} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot 2(\frac{x_i-\mu_a}{\sigma_a})
+\end{align*}
+
+<p>This process should be repeated for all five parameters!
+
+<h3>Use an Optimizer to Estimate Params</h3>
+<p>Once we have a $LL$ function and the derivate of $LL$ with respect to each parameter we are ready to compute argmax using an optimizer. In this case the best choice would probably be gradient ascent (or gradient descent with negative log likelihood).
+
+<!-- <p>\begin{align*}
+\frac{\d}{\d \mu_a} LL(\theta) &= \sum_i^n  \frac{\d}{\d \mu_a} \log  \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ K] 
+
+\end{align*}</p> -->
+
+ <!--  <p>Notice how few terms actually contain $\mu_a$. Any term which does not have $\mu_a$ in it will have a zero derivative.
 <p>\begin{align*}
 \frac{\d LL(\vec{\theta})}{\d \mu_a} 
 &= \sum_i^n \frac{\d}{\d \mu_a}
@@ -483,7 +547,7 @@ LL(\vec{\theta})
 \Big]\\
 &= \sum_i^n 2\Big(\frac{x_i-\mu_a}{\sigma_a}\Big)\frac{1}{\sigma_a}
 
-\end{align*}</p>
+\end{align*}</p> -->
 
 
 
