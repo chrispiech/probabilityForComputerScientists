@@ -513,7 +513,7 @@ function plotName(queryName) {
 	  yValues.unshift(pr)
 	}
 
-	var config = standardPDFConfig(xValues, yValues, 'Age', 'Probability')
+	var config = standardPMFConfig(xValues, yValues, 'Age', 'Probability')
 	var ctx = document.getElementById("babyNamePMF").getContext('2d');
 	window.name2AgeLine = new Chart(ctx, config);
 }
@@ -700,7 +700,8 @@ function standardPMFConfig(xValues, yValues, xLabel, yLabel){
         borderColor: 'blue',
         data: yValues,
         pointRadius:1,
-        maxBarThickness:100
+        maxBarThickness:100,
+        pointHitRadius: 20
       }]
     },
     options: {

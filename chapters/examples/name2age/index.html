@@ -165,7 +165,7 @@ function plotName(queryName) {
 	  yValues.unshift(pr)
 	}
 
-	var config = standardPDFConfig(xValues, yValues, 'Age', 'Probability')
+	var config = standardPMFConfig(xValues, yValues, 'Age', 'Probability')
 	var ctx = document.getElementById("babyNamePMF").getContext('2d');
 	window.name2AgeLine = new Chart(ctx, config);
 }
