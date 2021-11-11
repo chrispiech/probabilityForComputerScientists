@@ -378,7 +378,7 @@ Data = [6.47, 5.82, 8.7, 4.76, 7.62, 6.95, 7.44, 6.73, 3.38, 5.89, 7.81, 6.93, 7
 
 <div class="d-flex">
   <div>
-Parameter $t$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="mixtureT" value="0.8" step = ".1">
+Parameter $t$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="mixtureT" value="0.2" step = ".1">
   </div>
   <div class="mr-2">
 Parameter $\mu_a$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input " id="normalPdfMu1" value="6.8" step = ".1">
@@ -410,13 +410,13 @@ Parameter $\sigma_b$: <input onchange="redrawMixturePdf()" type="number" class="
 <p><pre class="language-python"><code>from scipy import stats
 def sample():
    # choose group membership
-   membership = stats.bernoulli.rvs(0.8)
+   membership = stats.bernoulli.rvs(0.2)
    if membership == 1:
       # sample from gaussian 1
-      return stats.norm.rvs(6.8,0.7)
+      return stats.norm.rvs(3.5,0.7)
    else:
       # sample from gaussian 2
-      return stats.norm.rvs(3.5,0.7)</code></pre></p>
+      return stats.norm.rvs(6.8,0.7)</code></pre></p>
 
 
 <h4>Probability Density Function</h4>
