@@ -70,17 +70,17 @@ include('templates/functions/betaPdf.html', a=10, b=2,id='9heads')
     <ol>
         <li>Even after only 10 coin flips we are very confident that the true probability is > 0.5
         <li>It is almost 10 times more likely that $X=0.9$ as it is that $X=0.6$.
-        <li>$P(X=1) = 0$, which makes sense. How could we have flipped that one tail if the probability of heads was 1?
+        <li>$f(X=1) = 0$, which makes sense. How could we have flipped that one tail if the probability of heads was 1?
     </ol>
 
 <div class="purpleBox">
     <b><i>Wait but why?</i></b> <br/>
     <p>In the derivation above for $f(X = x|H =9, T=1)$ we made the claim that $P(H =9, T=1)$ is a constant. A lot of folks find that hard to believe. Why is that the case?
 
-    <p>It may be helpful to juxtapose  $P(H =9, T=1)$ with $P(H =9, T=1 | X= x)$. The later says "what is the probability of 9 heads, given the true probability is $x$". The former says "what is the probability of 9 heads, under all possible assignments of $x$". If you wanted to calculate it fully you could use the law of total probability:
+    <p>It may be helpful to juxtapose  $P(H =9, T=1)$ with $P(H =9, T=1 | X= x)$. The later says "what is the probability of 9 heads, given the true probability is $x$". The former says "what is the probability of 9 heads, under all possible assignments of $x$". If you wanted to calculate $P(H =9, T=1)$ you could use the law of total probability:
      \begin{align*}
         P(&H =9, T=1) \\
-        &= \int_{x=0}^{1} P(H =9, T=1 | X= x) f(X=x)
+        &= \int_{y=0}^{1} P(H =9, T=1 | X= y) f(X=y)
      \end{align*}
     That is a hard number to calculate, but it is in fact a constant with respect to $x$.
 </div>
