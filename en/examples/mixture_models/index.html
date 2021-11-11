@@ -483,7 +483,7 @@ LL(\vec{\theta})  &= \sum_i^n \log  \Big[t \cdot
 
 <p>Here is an example of calculating a partial derivative with respect to one of the parameters, $\mu_a$. You would need a derivative like this for all parameters. 
 
-  <div class="alert alert-warning"><b>Caution:</b> When I first wrote this demo I thought it would be a simple derivative . It is not so simple because the log has a sum in it. As such the log term doesn't reduce. The log still serves to make the outer $\prod$ into a $\sum$. As such the $LL$ partial derivatives are solvable, but uses quite a lot of chain rule. </div>
+  <div class="alert alert-warning"><b>Caution:</b> When I first wrote this demo I thought it would be a simple derivative . It is not so simple because the log has a sum in it. As such the log term doesn't reduce. The log still serves to make the outer $\prod$ into a $\sum$. As such the $LL$ partial derivatives are solvable, but the proof uses quite a lot of chain rule. </div>
 
    <div class="alert alert-primary"><b>Takeaway:</b> The main takeaway from this section (in case you want to skip the derivative proof) is that the resulting derivative is complex enough that we will want a way to compute argmax without having to set that derivative equal to zero and solving for $\mu_a$. Enter gradient descent!</div>
 
