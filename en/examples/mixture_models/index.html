@@ -574,6 +574,9 @@ function redrawMixturePdf() {
   let mu2 = parseFloat($("#normalPdfMu2").val())
   let sigma2 = parseFloat($("#normalPdfSigma2").val())
   let mixtureT = parseFloat($("#mixtureT").val())
+  if(mixtureT > 1 || mixtureT < 0){
+    return
+  }
   drawMixturePdf(parentDivId, mixtureT, mu1, sigma1, mu2, sigma2)
   calculateLogLikelihood(mixtureT, mu1, sigma1, mu2, sigma2)
   
