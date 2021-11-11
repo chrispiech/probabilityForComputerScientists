@@ -443,7 +443,7 @@ f(x) = t \cdot
 
 <p>Let $\vec{\theta} = [t, \mu_a,\mu_b,\sigma_a, \sigma_b]$ be the parameters. Because the math will get long I will use $\theta$ as notation in place of $\vec{\theta}$. Just keep in mind that it is a vector.
 
-<p>The MLE idea is to chose values of $\theta$ which maximize log likelihood. All optimization methods require us to caluclate the partial derivatives of the thing we want to optimize (log likelihood) with respect to the values we can change (our parameters).
+<p>The MLE idea is to chose values of $\theta$ which maximize log likelihood. All optimization methods require us to calculate the partial derivatives of the thing we want to optimize (log likelihood) with respect to the values we can change (our parameters).
 
 
 <h4> Likelihood function</h4>
@@ -467,7 +467,7 @@ LL(\theta)
 &=  \sum_i^n \log f(x_i | \theta) \\
 
 \end{align*}
-<p>That is suffiecient for now, but if you wanted to expand out the term you would get:
+<p>That is sufficient for now, but if you wanted to expand out the term you would get:
   \begin{align*}
 LL(\theta)  &= \sum_i^n \log  \Big[t \cdot 
 \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
@@ -712,6 +712,7 @@ function drawMixturePdf(parentDivId, t, mu1, sigma1, mu2, sigma2) {
   window.myNormalLine = new Chart(ctx, config);
 }
 </script>
+
 
                         
 
