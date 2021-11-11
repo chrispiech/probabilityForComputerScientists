@@ -163,6 +163,11 @@ greyBackground as a style class)
     margin-left: 10px;
     margin-right: 10px;
   }
+
+  .handout > .content {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 /* 

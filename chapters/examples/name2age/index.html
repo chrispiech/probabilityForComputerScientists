@@ -73,6 +73,10 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 }
 \end{align*}
 
+<h3>Fromt Birth Year to Age</h3>
+
+<p>Of course, if $B$ is the birth year of a person, their age, $A$ is approximately the current year minus $B$. This could be off by one if someone has a birth day later in the year, but we will ignore this small deviation for now. So for example, if we think that a person was born in 1988, since the current year is <span class="currYear"></span> then their age is <span class="currYear"></span> - 1988 = <span id="exampleAge"></span></p>
+
 <h3>Assumptions</h3>
 
 <p>This problem makes many assumptions which are worth highlighting. In fact, any time we make generalizations (especially about demographics) based on sparse information we should tread lightly. Here are the assumptions that I can think of:
@@ -83,3 +87,86 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 	<li>The US census is not perfect. It does not capture all people, and there are demographics which are underrepresented. This will also skew our results</li>
 </ol>
 
+<h3>Demo</h3>
+
+
+
+<p><div class="content">
+Query Name: <input onchange="runName2Age()" class="form-control" id="queryName" style="display:inline-block;width:200px"> <span id="inputStatus"></span>
+  </div></p>
+
+  <canvas id="babyNamePMF" style="max-height: 400px;background-color: grey;"></canvas>
+
+  <p>Records with name: <span id="totalCount"></span>
+
+  	<p>This demo is based on real data from the US Census between 1914 and 2014. Thank you to <a href="https://www.kaggle.com/kaggle/us-baby-names">https://www.kaggle.com/kaggle/us-baby-names</a> for compiling the data. <a href="{{pathToRoot}}data/babyNames/count_map.json" download="countMap.json" class="btn btn-secondary btn-sm">Download Data</a>.</p>
+
+<script>
+
+var data = null
+
+$.getJSON("{{pathToRoot}}data/babyNames/count_map.json", function(json) {
+    data = json;
+    console.log('data loaded')
+    console.log(data)
+});
+
+
+
+$( document ).ready(function() {
+    let year = getCurrYear()
+    $(".currYear").html(year)
+    let exampleAge = year - 1988
+    $("#exampleAge").html(exampleAge)
+});
+
+function getCurrYear() {
+	return new Date().getFullYear()
+}
+
+function runName2Age() {
+	var queryName = $("#queryName").val();
+	queryName = queryName.toLowerCase();
+	console.log(queryName)
+	let isValid = data[queryName] !== undefined
+	if(isValid) {
+		$("#queryName").removeClass("is-invalid")
+		$("#queryName").addClass("is-valid")
+		$("#babyNamePMF").css("background-color", "white")
+		plotName(queryName)
+	} else {
+		$("#queryName").removeClass("is-valid")
+		$("#queryName").addClass("is-invalid")
+		$("#totalCount").html("")
+	}
+}
+
+function plotName(queryName) {
+	if(window.name2AgeLine) {
+		window.name2AgeLine.destroy()
+	}
+	let nameCounts = data[queryName]
+	var xValues = []
+	var yValues = []
+	let currYear = getCurrYear()
+
+	var total = 0
+	for (const [year, count] of Object.entries(nameCounts)) {
+	  total += count
+
+	}
+	console.log(total)
+	$("#totalCount").html(total)
+	
+	for (const [year, count] of Object.entries(nameCounts)) {
+	  let age = currYear - year
+	  xValues.unshift(age)
+	  let pr = count / total
+	  yValues.unshift(pr)
+	}
+
+	var config = standardPDFConfig(xValues, yValues, 'Age', 'Probability')
+	var ctx = document.getElementById("babyNamePMF").getContext('2d');
+	window.name2AgeLine = new Chart(ctx, config);
+}
+</script>
