@@ -95,7 +95,7 @@ f(x) = t \cdot
 
 <p>Let $\vec{\theta} = [t, \mu_a,\mu_b,\sigma_a, \sigma_b]$ be the parameters. Because the math will get long I will use $\theta$ as notation in place of $\vec{\theta}$. Just keep in mind that it is a vector.
 
-<p>The MLE idea is to chose values of $\theta$ which maximize log likelihood. All optimization methods require us to caluclate the partial derivatives of the thing we want to optimize (log likelihood) with respect to the values we can change (our parameters).
+<p>The MLE idea is to chose values of $\theta$ which maximize log likelihood. All optimization methods require us to calculate the partial derivatives of the thing we want to optimize (log likelihood) with respect to the values we can change (our parameters).
 
 
 <h4> Likelihood function</h4>
@@ -119,7 +119,7 @@ LL(\theta)
 &=  \sum_i^n \log f(x_i | \theta) \\
 
 \end{align*}
-<p>That is suffiecient for now, but if you wanted to expand out the term you would get:
+<p>That is sufficient for now, but if you wanted to expand out the term you would get:
   \begin{align*}
 LL(\theta)  &= \sum_i^n \log  \Big[t \cdot 
 \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
@@ -166,11 +166,11 @@ In the proof, when we encounter this term, we are going to think of it as a cons
 
 &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \frac{\d}{\d \mu_a} -\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2&&\text{chain on }e^x \\
 
-&= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  \cdot \Big[-2(\frac{x_i-\mu_a}{\sigma_a}) \frac{\d}{\d \mu_a} (\frac{x_i-\mu_a}{\sigma_a})\Big]&&\text{chain on }x^2 \\
+&= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  \cdot \Big[-(\frac{x_i-\mu_a}{\sigma_a}) \frac{\d}{\d \mu_a} (\frac{x_i-\mu_a}{\sigma_a})\Big]&&\text{chain on }x^2 \\
 
-&= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \Big[ -2(\frac{x_i-\mu_a}{\sigma_a}) \cdot \frac{-1}{\sigma_a}\Big] &&\text{final derivative} \\
+&= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \Big[ -(\frac{x_i-\mu_a}{\sigma_a}) \cdot \frac{-1}{\sigma_a}\Big] &&\text{final derivative} \\
 
-&= \frac{2t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^2} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \frac{x_i-\mu_a}{\sigma_a}   &&\text{simplify} \\
+&= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot (x_i-\mu_a)   &&\text{simplify} \\
 \end{align*}
 
 <p>That was for a single data-point. For the full dataset:
@@ -179,7 +179,7 @@ In the proof, when we encounter this term, we are going to think of it as a cons
 &=  \sum_i^n 
 \frac{\d}{\d \mu_a}  \log f(x_i|\theta)\\
 &= \sum_i^n 
-\frac{2t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^2} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \frac{x_i-\mu_a}{\sigma_a}
+\frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot (x_i-\mu_a)
 \end{align*}
 
 <p>This process should be repeated for all five parameters! Now, how should we find a value of $\mu_a$, which, in the presence of the other settings to parameters, and the data, makes this derivative zero? Setting the derivative = 0 and solving for $\mu_a$ is not going to work.
@@ -188,6 +188,17 @@ In the proof, when we encounter this term, we are going to think of it as a cons
 
 
 <p>Once we have a $LL$ function and the derivative of $LL$ with respect to each parameter we are ready to compute argmax using an optimizer. In this case the best choice would probably be gradient ascent (or gradient descent with negative log likelihood).
+
+\begin{align*}
+\nabla_{\theta} LL(\theta)
+&=\begin{bmatrix}
+\frac{\d LL(\theta)}{\d t}\\
+\frac{\d LL(\theta)}{\d \mu_a}\\
+\frac{\d LL(\theta)}{\d \mu_b}\\
+\frac{\d LL(\theta)}{\d \sigma_a}\\
+\frac{\d LL(\theta)}{\d \sigma_b}\\
+\end{bmatrix}
+\end{align*}
 
 <!-- <p>\begin{align*}
 \frac{\d}{\d \mu_a} LL(\theta) &= \sum_i^n  \frac{\d}{\d \mu_a} \log  \Big[t \cdot 
