@@ -227,6 +227,9 @@ function redrawMixturePdf() {
   let sigma2 = parseFloat($("#normalPdfSigma2").val())
   let mixtureT = parseFloat($("#mixtureT").val())
   if(mixtureT > 1 || mixtureT < 0){
+    if(window.myNormalLine) {
+      window.myNormalLine.destroy()
+    }
     return
   }
   drawMixturePdf(parentDivId, mixtureT, mu1, sigma1, mu2, sigma2)
