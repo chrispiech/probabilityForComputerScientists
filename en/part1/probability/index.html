@@ -442,6 +442,14 @@ common meaning ascribed is that $\p(E)$ is a measure of the chance of event E oc
     $
 			<span id="p"></span></span>
 	</div>
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<canvas id="observed" style="max-height: 400px"></canvas>
+		</div>
+		<div class="col-12 col-md-6">
+			<canvas id="trueProb" style="max-height: 400px"></canvas>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -453,6 +461,57 @@ const FAST_TRIALS_PER_HEARTBEAT = 47
 
 // single global variables
 var isRunning = false
+
+$(document).ready(function(){
+	drawTrueProb()
+	drawEstimatedProb(0,0)
+})
+
+function drawTrueProb() {
+
+	var xValues = ['E', 'not E']
+	var yValues = [2/6, 4/6]
+	let xLabel = ''
+	let yLabel = 'True Probability'
+
+	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
+	config.options.scales.x = {
+      display: true,
+      title: {
+        display: true,
+        text: xLabel
+      }
+    }
+	var ctx = document.getElementById('trueProb').getContext('2d');
+	new Chart(ctx, config);
+}
+
+function drawEstimatedProb(trials, successes) {
+	if(window.myObservedProb) {
+		window.myObservedProb.destroy()
+	}
+
+
+	var xValues = ['E', 'not E']
+	var yValues = [0, 0]
+	if(trials > 0 ) {
+		let p = (successes * 1.0) / trials
+		yValues = [p, 1-p]
+	}
+	let yLabel = 'Observed Fraction'
+
+	var config = standardPMFConfig(xValues, yValues, '', yLabel)
+	config.options.scales.x = {
+      display: true,
+      title: {
+        display: true,
+        text: ''
+      }
+    }
+	var ctx = document.getElementById('observed').getContext('2d');
+	window.myObservedProb = new Chart(ctx, config);
+}
+
 
 function onRunButtonClicked() {
 	if(isRunning) {
@@ -508,6 +567,7 @@ function fastTrials(n, countE, k) {
 	$("#n").html(n)
 	$("#countE").html(countE)
 	$("#p").html(p.toFixed(4))
+	drawEstimatedProb(n,countE)
 
 	setTimeout(function() {
 		runDiceLimitTrial(n, countE)
@@ -528,6 +588,7 @@ function slowTrial(n, countE, delay) {
 			
 			$("#countE").html(countE)
 			$("#p").html(p.toFixed(4))
+			drawEstimatedProb(n,countE)
 
 			setTimeout(function() {
 				runDiceLimitTrial(n, countE)
@@ -544,6 +605,7 @@ function runDiceLimitTrial(n, countE) {
 		$("#p").html('')
 		$("#trialOutcome").html('')
 		$("#diceButton").prop('disabled', false);
+		drawEstimatedProb(0,0)
 		return
 	}
 	
