@@ -160,7 +160,7 @@ In the proof, when we encounter this term, we are going to think of it as a cons
 + K\Big]  &&\text{substitute in }f(x_i|\theta)\\
 
 &= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} \Big[t \cdot 
-\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)\Big]  &&\text{derivative of sum}\\
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)\Big]  &&\frac{\d}{\d \mu_a} K = 0\\
 
 &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot \frac{\d}{\d \mu_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  &&\text{pull out const}\\
 
