@@ -352,7 +352,7 @@
 <center><h1>Naïve Bayes</h1></center>
 <hr/>
 
-<p>Here is the Naïve Bayes algorithm. After presenting the algorithm I am going to show the theory behind it.
+<p>Naive Bayes is a Machine Learning algorithm for the ``classification task". It make the substantial assumption (called the Naive Bayes assumption) that all features are independent of one another, given the classification label. This assumption is wrong, but allows for a fast and quick algorithm that is often useful. In order to implement Naive Bayes you will need to learn how to train your model and how to use it to make predictions, once trained.
  
 
  
@@ -399,7 +399,7 @@
 
 <p>The bad times hit when the number of features becomes large. Recall that our multinomial needs to estimate a parameter for every unique combination of assignments to the vector $\mathbf{x}$ and the value $y$. If there are $|\mathbf{x}| = n$ binary features then this strategy is going to take order $\mathcal{O}(2^n)$ space and there will likely be many parameters that are estimated without any training data that matches the corresponding assignment.
 
-<h2>Naïve Bayes Assumption</h2>
+<!-- <h2>Naïve Bayes Assumption</h2>
 <p>The Naïve Bayes Assumption is that each feature of $\mathbf{x}$ is independent of one another given $y$. That assumption is wrong, but useful. This assumption allows us to make predictions using space and data which is linear with respect to the size of the features: $\mathcal{O}(n)$ if $|\mathbf{x}| = n$. That allows us to train and make predictions for huge feature spaces such as one which has an indicator for every word on the internet. Using this assumption the prediction algorithm can be simplified.
 \begin{align*}
     \hat{y} = \text{g}(\mathbf{x}) 
@@ -410,10 +410,10 @@
     &= \argmax_{y = \{0, 1\}} \text{ } \log P(Y = y)  + \sum_i \log P(X_i = x_i| Y = y)  
         && \text{Log version for numerical stability}\\
 \end{align*}
-<p>This algorithm is both fast and stable both when training and making predictions. If we think of each $X_i,y$ pair as a multinomial we can find MLE and MAP estimations for the values. See the "algorithm" section for the optimal values of each $p$ in the multinomial.
+<p>This algorithm is both fast and stable both when training and making predictions. If we think of each $X_i,y$ pair as a multinomial we can find MLE and MAP estimations for the values. See the "algorithm" section for the optimal values of each $p$ in the multinomial. -->
 
-<p>Naïve Bayes is a simple form of a field of machine learning called Probabilistic Graphical Models. In that field you make a graph of how your variables are related to one another and you come up with conditional independence assumptions that make it computationally tractable to estimate the joint distribution.
- 
+<!-- <p>Naïve Bayes is a simple form of a field of machine learning called Probabilistic Graphical Models. In that field you make a graph of how your variables are related to one another and you come up with conditional independence assumptions that make it computationally tractable to estimate the joint distribution.
+  -->
 
 
                         
