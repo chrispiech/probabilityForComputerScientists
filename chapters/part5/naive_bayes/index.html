@@ -56,7 +56,9 @@
  <div class="bordered">
      <b>Naive Bayes Assumption</b><br/>
      The Naïve Bayes Assumption is that each feature of $\mathbf{x}$ is independent of one another given $y$. 
- </div>   
+ </div> 
+ 
+ 
 The Naïve Bayes Assumption is wrong, but useful. This assumption allows us to make predictions using space and data which is linear with respect to the size of the features: $\mathcal{O}(n)$ if $|\mathbf{x}| = n$. That allows us to train and make predictions for huge feature spaces such as one which has an indicator for every word on the internet. Using this assumption the prediction algorithm can be simplified.
 \begin{align*}
     \hat{y} = \text{g}(\mathbf{x}) 
