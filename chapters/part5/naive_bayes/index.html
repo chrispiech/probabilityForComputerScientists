@@ -46,13 +46,18 @@
         && \text{By bayes theorem}\\
     &= \argmax_{y = \{0, 1\}} P(Y=y)P(\mathbf{X} =\mathbf{x}| Y = y)) 
         && \text{Since $P(\mathbf{X} =\mathbf{x})$ is constant with respect to $Y$}
+    
 \end{align*}
 <p>Using our training data we could interpret the joint distribution of $\mathbf{X}$ and $Y$ as one giant multinomial with a different parameter for every combination of $\mathbf{X}=\mathbf{x}$ and $Y=y$. If for example, the input vectors are only length one. In other words $|\mathbf{x}| = 1$ and the number of values that $x$ and $y$ can take on are small, say binary, this is a totally reasonable approach. We could estimate the multinomial using MLE or MAP estimators and then calculate argmax over a few lookups in our table.
 
 <p>The bad times hit when the number of features becomes large. Recall that our multinomial needs to estimate a parameter for every unique combination of assignments to the vector $\mathbf{x}$ and the value $y$. If there are $|\mathbf{x}| = n$ binary features then this strategy is going to take order $\mathcal{O}(2^n)$ space and there will likely be many parameters that are estimated without any training data that matches the corresponding assignment.
 
-<!-- <h2>Naïve Bayes Assumption</h2>
-<p>The Naïve Bayes Assumption is that each feature of $\mathbf{x}$ is independent of one another given $y$. That assumption is wrong, but useful. This assumption allows us to make predictions using space and data which is linear with respect to the size of the features: $\mathcal{O}(n)$ if $|\mathbf{x}| = n$. That allows us to train and make predictions for huge feature spaces such as one which has an indicator for every word on the internet. Using this assumption the prediction algorithm can be simplified.
+
+ <div class="bordered">
+     <b>Naive Bayes Assumption</b><br/>
+     The Naïve Bayes Assumption is that each feature of $\mathbf{x}$ is independent of one another given $y$. 
+ </div>   
+The Naïve Bayes Assumption is wrong, but useful. This assumption allows us to make predictions using space and data which is linear with respect to the size of the features: $\mathcal{O}(n)$ if $|\mathbf{x}| = n$. That allows us to train and make predictions for huge feature spaces such as one which has an indicator for every word on the internet. Using this assumption the prediction algorithm can be simplified.
 \begin{align*}
     \hat{y} = \text{g}(\mathbf{x}) 
     &= \argmax_{y = \{0, 1\}} \text{ }P(Y = y)P(\mathbf{X} = \mathbf{x}| Y = y) 
