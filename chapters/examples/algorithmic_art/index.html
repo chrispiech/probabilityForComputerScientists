@@ -1,0 +1,203 @@
+
+% rebase('templates/chapter.html', title="Algorithmic Art")
+ 
+<center><h1>Algorithmic Art</h1></center>
+<hr/>
+<p>
+We want to generate probabilistic artwork, efficiently. We are going to use random variables to make a picture filled with non-overlapping circles:
+</p>
+
+<p>
+<canvas id="canvas" width='782' height='782'></canvas>
+
+<p>
+<center><btn id="regenerateButton" onclick="draw()" class="btn btn-primary btn-lg">Regenerate</btn></center>
+</p>
+<p>
+In our art, the circles are different sizes. Specifically, each circle's <b>radius</b> is drawn from a Pareto distribution (which is described below). The placement algorithm is greedy: we sample 1000 circle sizes. Sort them by size, largest to smallest. Loop over the circle sizes and place circles one by one. 
+</p>
+<p>
+To place a circle on the canvas, we sample the location of the center of the circle. Both the x and y coordinates are uniformly distributed over the dimensions of the canvas. Once we have selected a prospective location we then check if there would be a collision with a circle that has already been placed. If there is a collision we keep trying new locations until you find one that has no collisions.
+</p>
+<h3>The Pareto Distribution</h3>
+
+<div class="bordered">
+    <p><b>Pareto Random Variable</b></p>
+    
+    
+    <table>
+    <tbody class="rvCardBody">
+        <tr>
+            <th style="width:150px">Notation:</td>
+            <td>$X \sim \text{Pareto}(a)$</td>
+        </tr>
+        <tr>
+            <th>Description:</td>
+            <td>A long tail distribution. Large values are rare and small values are common.</td>
+        </tr>
+        <tr>
+            <th>Parameters:</td>
+    
+            <td>$a \ge 1$, the shape parameter <br/>
+                Note there are other optional params. See <a href="https://en.wikipedia.org/wiki/Pareto_distribution">wikipedia</a></td>
+        </tr>
+        
+        
+        <tr>
+            <th>Support:</td>
+            <td>$x \in [0, 1]$</td>
+        </tr>
+        <tr>
+            <th>PDF equation:</th>
+            <td class="mathLeft">$$f(x) = \frac{1}{x^{a+1}}$$</td>
+        </tr>
+        <tr>
+            <th>CDF equation:</th>
+            <td class="mathLeft">$$F(x) = 1- \frac{1}{x^a}$$</td>
+        </tr>
+       
+    </tbody>
+    </table>
+</p>
+</div>
+
+<h3>Sampling from a Pareto Distribution</h3>
+
+<p>How can we draw samples from a pareto? In python its simple: <code>stats.pareto.rvs(a)</code> however in JavaScript, or other languages, it might not be made transparent</p>
+
+\begin{aligned}
+y &= 1 - (\frac{\beta}{x})^\alpha \\
+(\frac{\beta}{x})^\alpha &= 1 - y \\
+\frac{\beta}{x} &= (1-y)^{\frac{1}{\alpha}} \\
+x &= \frac{\beta}{(1-y)^{\frac{1}{\alpha}}}
+
+\end{aligned}
+
+
+<script>
+    let SPACING = 1.5
+    let CANVAS_SIZE  =782
+    let N_CIRCLES = 6000
+    let MIN_SIZE = 1
+    let PARETO_ALPHA = 1.8
+    let N_PLACE_TRIES = 1000
+
+    $(document).ready(function() {
+        draw()
+        
+    })
+
+    var sizes = []
+    var placed = []
+    var currIndex = 0
+    var ctx = null
+    var nPlaced = 0
+    var isGenerating = false
+
+    function draw() {
+        if(isGenerating) return;
+
+        $("#regenerateButton").addClass('disabled');
+        isGenerating = true
+        var canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        sizes = []
+        placed = []
+        currIndex = 0
+        nPlaced = 0
+        for(var i = 0; i < N_CIRCLES; i++) {
+            let p = Math.random()
+            let s = jStat.pareto.inv(p,MIN_SIZE, PARETO_ALPHA)
+            if(s < CANVAS_SIZE / 3){ // max size
+                sizes.push(s)
+            }
+        }
+        sizes.sort(compareDecimals) // sorts in place from low to high
+        sizes.reverse(compareDecimals)
+       
+
+        setTimeout(draw1000, 100) // give time to disable the button
+    }
+
+    function draw1000() {
+        for(var i = 0; i < 1000; i++) {
+            if(currIndex > sizes.length) {
+                console.log('done')
+                console.log('nplaced', nPlaced)
+                $("#regenerateButton").removeClass('disabled');
+                isGenerating = false
+                return;
+            }
+            let nextSize = sizes[i]
+            drawRandomCircle(ctx, nextSize, placed)
+            currIndex += 1
+        }
+        setTimeout(draw1000, 100)
+    }
+
+    function drawRandomCircle(ctx, size, placed) {
+        for(var i = 0; i < N_PLACE_TRIES; i++){
+            let x = randomUniform(size, CANVAS_SIZE-size)
+            let y = randomUniform(size, CANVAS_SIZE-size)
+            if(!overlaps(x,y,size, placed)){
+                console.log(size)
+                drawCircle(ctx, x, y, size, randomColor())
+                placed.push({x:x,y:y,r:size})
+                nPlaced += 1
+                return true
+            }
+        }
+        return false
+    }
+
+    function overlaps(x, y, r, placed) {
+        for(var i = 0; i < placed.length; i++) {
+            let circle = placed[i]
+            let d = distance(circle.x, circle.y, x, y)
+            if(d < r + circle.r + SPACING){
+                return true
+            }
+        }
+        return false
+    }
+
+    function distance(x1,y1,x2,y2) {
+        return Math.sqrt((x2 - x1) ** 2 + (y2-y1) ** 2)
+    }
+
+    function randomUniform(minV, maxV) {
+        return Math.random() * (maxV - minV) + minV;
+    }
+
+    function drawLine(ctx, x1,y1,x2,y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+    function drawCircle(ctx, centerX, centerY, radius, color) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = color;
+        ctx.stroke();
+    }
+
+    function compareDecimals(a, b) {
+        if (a === b) 
+            return 0;
+
+        return a < b ? -1 : 1;
+    }
+
+    function randomColor(){ 
+        // if(Math.random() < 0.1) return 'white'
+        return "hsl(" + 20 + 120 * Math.random() + ',' +
+                    (0 + 80 * Math.random()) + '%,' + 
+                    (50 + 20 * Math.random()) + '%)'
+    }
+</script>

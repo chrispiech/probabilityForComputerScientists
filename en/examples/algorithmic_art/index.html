@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Adding Random Variables</title>
+<title>Algorithmic Art</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -349,168 +349,206 @@
               
                         
  
-<center><h1>Adding Random Variables</h1></center>
+<center><h1>Algorithmic Art</h1></center>
 <hr/>
-
-<p>In this section on uncertainty theory we are going to explore some of the great results in probability theory. As a gentle introduction we are going to start with convolution.
-Convolution is a very fancy way of saying "adding" two different random variables together. The name comes from the fact that adding two random varaibles requires you to "convolve" their distribution functions. It is interesting to study in detail because (1) many natural processes can be modelled as the sum of random variables, and (2) because mathemeticians have made great progress on proving convolution theorems. For some particular random variables computing convolution has closed form equations. Importantly convolution is the sum of the random variables themselves, not the addition of the probability density functions (PDF)s that correspond to the random variables.</p>
-<ol>
-	<li><a href="#general">Adding Two Random Variables</a></li>
-	<li><a href="#poissons">Sum of Independent Poissons</a></li>
-	<li><a href="#binomials">Sum of Independent Binomials</a></li>
-	<li><a href="#normals">Sum of Independent Normals</a></li>
-	<li><a href="#uniforms">Sum of Independent Uniforms</a></li>
-</ol>
-
-<h2 id="general" >Adding Two Random Variables</h2>
-
-<p>Deriving an expression for the likelihood for the sum of two random variables requires an interesting insight. If your random variables are discrete then the probability that $X + Y = n$ is the sum of mutually exclusive cases where $X$ takes on a values in the range $[0, n]$ and $Y$ takes on a value that allows the two to sum to $n$. Here are a few examples $X = 0 \and Y = n$, $X = 1 \and Y = n - 1$ etc. In fact all of the mutually exclusive cases can be enumerated in a sum:</p>
-
-<p><div class="bordered">
-	<b><i>Def: General Rule for the Convolution of Discrete Variables </i></b> 
-	$$\p(X + Y = n) = \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- i)$$
-</div></p>
-<p>If the random variables are independent you can futher decompose the term $\p(X = i, Y = n- i)$. Let's expand on some of the mutually exclusive cases where $X+Y=n$:
-
-<table class="table">
-	<tr>	
-		<th>$i$</th>
-		<th>$X$</th>
-		<th>$Y$</th>
-		<th></th>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>0</td>
-		<td>$n$</td>
-		<td>$\P(X=0,Y=n)$</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>1</td>
-		<td>$n-1$</td>
-		<td>$\P(X=1,Y=n-1)$</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>2</td>
-		<td>$n-2$</td>
-		<td>$\P(X=2,Y=n-2)$</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td colspan=3>...</td>
-	</tr>
-	<tr>
-		<td>$n$</td>
-		<td>$n$</td>
-		<td>0</td>
-		<td>$\P(X=n,Y=0)$</td>
-	</tr>
-	
-</table>
-
-<p>Consider the sum of two independent dice. Let $X$ and $Y$ be the outcome of each dice. Here is the probability mass function for the sum $X + Y$:</p>
-
-<center>
-	<img class="mainFigureLg" src="../../../img/chapters/sum2die.png"></img>
-</center>
-
-Let's use this context to practice deriving the sum of two variables, in this case $\p(X + Y = n)$, starting with the General Rule for the Convolution of Discrete  Random Variables. We start by considering values of $n$ between 2 and 7. In this range $\p(X = i, Y = n- i) = \frac{1}{36}$ for all values of $i$ between 1 and $n-1$. There is exactly one outcome of the two die where $X = i$ and $Y= n-i$. For values of $i$ outside this range $n- i$ is not a valid dice outcome and $\p(X = i, Y = n- i) = 0$:
-\begin{align*}
-	\p&(X + Y = n) \\
-	&= \sum_{i=-\infty}^{\infty} \p(X = i, Y = n- i) \\
-	&= \sum_{i=1}^{n-1} \p(X = i, Y = n- i) \\
-	&= \sum_{i=1}^{n-1} \frac{1}{36}\\
-	&= \frac{n-1}{36}
-\end{align*}
-
-<p>For values of $n$ greater than 7 we could use the same approach, though different values of $i$ would make $\p(X = i, Y = n- i)$ non-zero.</p>
-
-<p><!-- For two general independent random variables (aka cases of independent random variables that don't fit the above special situations) you can calculate the CDF or the PDF of the sum of two random variables using the following formulas: -->
-	This derivation for a general rule has a continuous equivalent:
-\begin{align*}
-&f(X+Y = n) = \int_{i=-\infty}^{\infty} f(X = n-i, Y=i) \d i
-\end{align*}
-<!-- Another way to derive the distribution for the sum of random variables is via the CDF:
-\begin{align*} 
-&F_{X+Y}(a) = \P(X + Y \leq a) = \int_{y=-\infty}^{\infty} \P(X < a-y)f(Y=y)dy 
-\end{align*} -->
+<p>
+We want to generate probabilistic artwork, efficiently. We are going to use random variables to make a picture filled with non-overlapping circles:
 </p>
 
-
-
-<h2 id="poissons">Sum of Independent Poissons</h2>
-
-<p><div class="bordered">For any two Poisson random variables: $X ~ \sim \Poi(\lambda_1)$ and $Y ~ \sim \Poi(\lambda_2)$ the sum of those two random variables is another Poisson: $X +Y ~ \sim \Poi(\lambda_1 + \lambda_2)$. This holds even when $\lambda_1$ is not the same as $\lambda_2$.</div></p>
-
-<p>How could we prove a the above claim?
-
-<p><div class="purpleBox">
-	<b><i>Example derivation:</i></b><br/>
-<p>Let's go about proving that the sum of two independent Poisson random variables is also Poisson. Let $X\sim\Poi(\lambda_1)$ and $Y\sim\Poi(\lambda_2)$ be two independent random variables, and $Z = X + Y$. What is $P(Z = n)$?
+<p>
+<canvas id="canvas" width='782' height='782'></canvas>
 
 <p>
-\begin{align*}
-P(Z = n) 
-&= P(X + Y = n) \\
-&= \sum_{k=-\infty}^{\infty} \p(X = k, Y = n- k) & \text{(Convolution)}\\
-&= \sum_{k=-\infty}^{\infty} P(X = k) P(Y = n - k) & \text{(Independence)}\\
-&= \sum_{k=0}^n P(X = k) P(Y = n - k) &\text{(Range of }X\text{ and }Y\text{)}\\
-&= \sum_{k=0}^n e^{-{\lambda_1}} \frac{\lambda_1^k}{k!} e^{-{\lambda_2}} \frac{\lambda_2^{n-k}}{(n-k)!} & \text{(Poisson PMF)} \\
-&= e^{-(\lambda_1 + \lambda_2)} \sum_{k=0}^n \frac{\lambda_1^k \lambda_2^{n-k}}{k!(n-k)!} \\
-&= \frac{ e^{-(\lambda_1 + \lambda_2)}}{n!} \sum_{k=0}^n \frac{n!}{k!(n-k)!} \lambda_1^k \lambda_2^{n-k} \\
-&= \frac{ e^{-(\lambda_1 + \lambda_2)}}{n!} (\lambda_1 + \lambda_2)^n & \text{(Binomial theorem)}
-\end{align*}
-
+<center><btn id="regenerateButton" onclick="draw()" class="btn btn-primary btn-lg">Regenerate</btn></center>
+</p>
 <p>
-Note that the Binomial Theorem (which we did not cover in this class, but is often used in contexts like expanding polynomials) says that for two numbers $a$ and $b$ and positive integer $n$, $(a+b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$.
+In our art, the circles are different sizes. Specifically, each circle's <b>radius</b> is drawn from a Pareto distribution (which is described below). The placement algorithm is greedy: we sample 1000 circle sizes. Sort them by size, largest to smallest. Loop over the circle sizes and place circles one by one. 
+</p>
+<p>
+To place a circle on the canvas, we sample the location of the center of the circle. Both the x and y coordinates are uniformly distributed over the dimensions of the canvas. Once we have selected a prospective location we then check if there would be a collision with a circle that has already been placed. If there is a collision we keep trying new locations until you find one that has no collisions.
+</p>
+<h3>The Pareto Distribution</h3>
+
+<div class="bordered">
+    <p><b>Pareto Random Variable</b></p>
+    
+    
+    <table>
+    <tbody class="rvCardBody">
+        <tr>
+            <th style="width:150px">Notation:</td>
+            <td>$X \sim \text{Pareto}(a)$</td>
+        </tr>
+        <tr>
+            <th>Description:</td>
+            <td>A long tail distribution. Large values are rare and small values are common.</td>
+        </tr>
+        <tr>
+            <th>Parameters:</td>
+    
+            <td>$a \ge 1$, the shape parameter <br/>
+                Note there are other optional params. See <a href="https://en.wikipedia.org/wiki/Pareto_distribution">wikipedia</a></td>
+        </tr>
+        
+        
+        <tr>
+            <th>Support:</td>
+            <td>$x \in [0, 1]$</td>
+        </tr>
+        <tr>
+            <th>PDF equation:</th>
+            <td class="mathLeft">$$f(x) = \frac{1}{x^{a+1}}$$</td>
+        </tr>
+        <tr>
+            <th>CDF equation:</th>
+            <td class="mathLeft">$$F(x) = 1- \frac{1}{x^a}$$</td>
+        </tr>
+       
+    </tbody>
+    </table>
+</p>
 </div>
 
-<h2 id="binomials">Sum of Independent Binomials with equal $p$</h2>
+<h3>Sampling from a Pareto Distribution</h3>
 
-<p><div class="bordered">For any two independent Binomial random variables with the same "success" probability $p$: $X ~ \sim \Bin(n_1,p)$ and $Y ~ \sim \Bin(n_2,p)$ the sum of those two random variables is another binomial: $X +Y ~ \sim \Bin(n_1 + n_2,p)$.</div></p>
+<p>How can we draw samples from a pareto? In python its simple: <code>stats.pareto.rvs(a)</code> however in JavaScript, or other languages, it might not be made transparent</p>
 
-<p> This result hopefully makes sense. The convolution is the number of sucesses across $X$ and $Y$. Since each trial has the same probability of success, and there are now $n_1 + n_2$ trials, which are all independent, the convolution is simply a new Binomial. This rule does not hold when the two Binomial random variables have different parameters $p$. </p>
+\begin{aligned}
+y &= 1 - (\frac{\beta}{x})^\alpha \\
+(\frac{\beta}{x})^\alpha &= 1 - y \\
+\frac{\beta}{x} &= (1-y)^{\frac{1}{\alpha}} \\
+x &= \frac{\beta}{(1-y)^{\frac{1}{\alpha}}}
 
-<h2 id="normals">Sum of Independent Normals</h2>
-
-<p><div class="bordered">For any two independent normal random variables $X ~ \sim \mathcal{N}(\mu_1,\sigma_1^2)$ and $Y ~ \sim \mathcal{N}(\mu_2,\sigma_2^2)$ the sum of those two random variables is another normal: $X +Y ~ \sim \mathcal{N}(\mu_1 + \mu_2,\sigma_1^2 + \sigma_2^2)$.</div></p>
-
-<p>Again this only holds when the two normals are independent.</p>
-
-
+\end{aligned}
 
 
+<script>
+    let SPACING = 1.5
+    let CANVAS_SIZE  =782
+    let N_CIRCLES = 6000
+    let MIN_SIZE = 1
+    let PARETO_ALPHA = 1.8
+    let N_PLACE_TRIES = 1000
 
+    $(document).ready(function() {
+        draw()
+        
+    })
 
-<h2 id="uniforms">Sum of Independent Uniforms</h2>
+    var sizes = []
+    var placed = []
+    var currIndex = 0
+    var ctx = null
+    var nPlaced = 0
+    var isGenerating = false
 
-<p><div class="bordered">
-If $X$ and $Y$ are independent uniform random variables where $X \sim \Uni(0,1)$ and $Y \sim \Uni(0,1)$: 
-	\begin{align*}
-    f(X+Y=n) = \begin{cases} n &\mbox{if } 0 < n \leq 1 \\ 
-2-n & \mbox{if } 1 < n \leq 2 \\
-0 & \mbox{else} \end{cases} 
-\end{align*}
-</div>
+    function draw() {
+        if(isGenerating) return;
 
-<div class="purpleBox">
-<b><i>Example derivation</i></b>: <br/>
-Calculate the PDF of $X + Y$ for independent uniform random variables $X \sim \Uni(0,1)$ and $Y \sim \Uni(0,1)$? First plug in the equation for general convolution of independent random variables:
-\begin{align*}
-    f(X+Y=n) 
-    &= \int_{i=0}^{1} f(X=n-i, Y=i)di\\
-    &= \int_{i=0}^{1} f(X=n-i)f(Y=i)di && \text{Independence}\\
-     &= \int_{i=0}^{1} f(X=n-i)di && \text{Because } f(Y=y) = 1
-\end{align*}
-It turns out that is not the easiest thing to integrate. By trying a few different values of $n$ in the range $[0,2]$ we can observe that the PDF we are trying to calculate is discontinuous at the point $n=1$ and thus will be easier to think about as two cases: $n < 1$ and $n > 1$. If we calculate $f(X+Y=n)$ for both cases and correctly constrain the bounds of the integral we get simple closed forms for each case:
-\begin{align*}
-    f(X+Y=n) = \begin{cases} n &\mbox{if } 0 < n \leq 1 \\ 
-2-n & \mbox{if } 1 < n \leq 2 \\
-0 & \mbox{else} \end{cases} 
-\end{align*}
-</div>
+        $("#regenerateButton").addClass('disabled');
+        isGenerating = true
+        var canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        sizes = []
+        placed = []
+        currIndex = 0
+        nPlaced = 0
+        for(var i = 0; i < N_CIRCLES; i++) {
+            let p = Math.random()
+            let s = jStat.pareto.inv(p,MIN_SIZE, PARETO_ALPHA)
+            if(s < CANVAS_SIZE / 3){ // max size
+                sizes.push(s)
+            }
+        }
+        sizes.sort(compareDecimals) // sorts in place from low to high
+        sizes.reverse(compareDecimals)
+       
+
+        setTimeout(draw1000, 100) // give time to disable the button
+    }
+
+    function draw1000() {
+        for(var i = 0; i < 1000; i++) {
+            if(currIndex > sizes.length) {
+                console.log('done')
+                console.log('nplaced', nPlaced)
+                $("#regenerateButton").removeClass('disabled');
+                isGenerating = false
+                return;
+            }
+            let nextSize = sizes[i]
+            drawRandomCircle(ctx, nextSize, placed)
+            currIndex += 1
+        }
+        setTimeout(draw1000, 100)
+    }
+
+    function drawRandomCircle(ctx, size, placed) {
+        for(var i = 0; i < N_PLACE_TRIES; i++){
+            let x = randomUniform(size, CANVAS_SIZE-size)
+            let y = randomUniform(size, CANVAS_SIZE-size)
+            if(!overlaps(x,y,size, placed)){
+                console.log(size)
+                drawCircle(ctx, x, y, size, randomColor())
+                placed.push({x:x,y:y,r:size})
+                nPlaced += 1
+                return true
+            }
+        }
+        return false
+    }
+
+    function overlaps(x, y, r, placed) {
+        for(var i = 0; i < placed.length; i++) {
+            let circle = placed[i]
+            let d = distance(circle.x, circle.y, x, y)
+            if(d < r + circle.r + SPACING){
+                return true
+            }
+        }
+        return false
+    }
+
+    function distance(x1,y1,x2,y2) {
+        return Math.sqrt((x2 - x1) ** 2 + (y2-y1) ** 2)
+    }
+
+    function randomUniform(minV, maxV) {
+        return Math.random() * (maxV - minV) + minV;
+    }
+
+    function drawLine(ctx, x1,y1,x2,y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+    function drawCircle(ctx, centerX, centerY, radius, color) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = color;
+        ctx.stroke();
+    }
+
+    function compareDecimals(a, b) {
+        if (a === b) 
+            return 0;
+
+        return a < b ? -1 : 1;
+    }
+
+    function randomColor(){ 
+        // if(Math.random() < 0.1) return 'white'
+        return "hsl(" + 20 + 120 * Math.random() + ',' +
+                    (0 + 80 * Math.random()) + '%,' + 
+                    (50 + 20 * Math.random()) + '%)'
+    }
+</script>
 
                         
 
