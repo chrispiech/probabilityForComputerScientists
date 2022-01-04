@@ -12,7 +12,8 @@ examples you can build off of the corresponding combinatorics formulas:</p>
 	<li><a href="#perm_distinct">Permutations of Distinct Objects</a></li>
 	<li><a href="#perm_indisctinct">Permutations with Indistinct Objects</a></li>
 	<li><a href="#comb_distinct">Combinations with Distinct Objects</a></li>
-	<li><a href="#bucketing">Bucketing into Containers</a></li>
+	<li><a href="#bucketing_distinct">Bucketing with Distinct Objects</a></li>
+	<li><a href="#bucketing_indistinct">Bucketing with Indistinct Objects</a></li>
 	<li><a href="#bucketing_fixed">Bucketing into Fixed Sized Containers</a></li>
 </ol>
 
@@ -272,15 +273,15 @@ Two different ways to get the same right answer!
 </div>
 </p>
 
-<h2 id="bucketing">Bucketing / Group Assignment with Distinct</h2>
+<h2 id="bucketing_distinct">Bucketing with Distinct Objects</h2>
 
 <p>
 In this section we are going to be counting the many different ways that we can think of stuffing elements into containers. (It turns out that Jacob Bernoulli was into voting and ancient Rome. And in ancient Rome they used urns for ballot boxes. For this reason many books introduce this through counting ways to put balls in urns.) This "bucketing" or "group assignment" process is a useful metaphor for many counting problems.</p>
 
-<p>The most common case that we will want to consider is when all of the items you are putting into buckets are distinct. In that case you can think of  bucketing as a series of steps, and employ the step rule of counting. The first step? You put the first distinct item into a bucket (there are number-of-buckets ways to do this). Second step? You put the second distinct item into a bucket (again, there are number-of-buckets ways to do this). The resulting formula is called the General Rule of Counting:</p>
+<p>The most common case that we will want to consider is when all of the items you are putting into buckets are distinct. In that case you can think of  bucketing as a series of steps, and employ the step rule of counting. The first step? You put the first distinct item into a bucket (there are number-of-buckets ways to do this). Second step? You put the second distinct item into a bucket (again, there are number-of-buckets ways to do this). </p>
 
 <p>
-	<div class="bordered"><p><b>General Rule of Counting:</b></p>
+	<div class="bordered"><p><b>Bucketing Distinct Items:</b></p>
 	
 	<p>Suppose you want to place $n$ distinguishable items into $r$ containers. The number of ways of doing so is:</p>
 	
@@ -289,18 +290,19 @@ In this section we are going to be counting the many different ways that we can 
 	<p>You have $n$ steps (place each item) and for each item you have $r$ choices</p>
 	</div>
 	</p>
+	
+<p>
+	<div class="purpleBox">
+		<b>Problem:</b> Say you want to put 10 distinguishable balls into 5 urns (No! Wait! Don't say that! Not urns!). Okay, fine. No urns. Say we are going to put 10 different strings into 5 buckets of a hash table. How many possible ways are there of doing this?
+		<hr/>
+		
+		<p><b>Solution:</b> You can think of this as 10 independent experiments each with 5 outcomes. Using our rule for bucketing with distinct items, this comes out to $5^{10}$.</p></p>
+		</div>
+		</p>
 
 <p>
-<div class="purpleBox">
+	<h2 id="bucketing_indistinct">Bucketing with Indistinct Objects</h2>
 
-<h2 id="bucketingIndistinct">Bucketing / Group Assignment with Indistinct</h2>
-
-<b>Problem:</b> Say you want to put $n$ distinguishable balls into $r$ urns. (No! Wait! Don't say that!) Okay, fine. No urns. Say we are going to put $n$ strings into $r$ buckets of a hash table where all outcomes are equally likely. How many possible ways are there of doing this?
-<hr/>
-
-<p><b>Solution:</b> You can think of this as $n$ independent experiments each with $r$ outcomes. Using our friend the General Principle of Counting, this comes out to $r^n$.</p></p>
-</div>
-</p>
 <p>
 
 	While the previous example allowed us to put $n$ distinguishable objects into $r$ distinct groups, the more interesting problem is to work with $n$ indistinguishable objects. 
