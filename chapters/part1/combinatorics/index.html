@@ -296,19 +296,21 @@ In this section we are going to be counting the many different ways that we can 
 <p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are same (your elements) and $r - 1$ of which are same (the dividers). Thus the total number of outcomes is:</p>
 
 $${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}$$
+
+<p>Another way to think of this is called "Stars and Bars" method. Let's call indistinguishable items "stars" denoted by <b>*</b> and the dividers "bars" denoted by <b>|</b>. In the above case, we want to permute n stars and r - 1 bars (We need r - 1 dividers in dividing stars into r groups). It can be visualized as:</p>
+
+$$\underbrace{* ... *}_\text{n stars} \underbrace{| ... |}_\text{r-1 bars}$$
+
+<p> Based on "Permutations of Indistinct Objects," we have::</p>
+
+<p>
+<span class="mathLeft">
+$$
+\text{Number of unique orderings} = \frac{(n+r-1)!}{n!(r-1)!}
+$$</span></p>
+
 </div>
 </p>
-
-
-<p>
-<div class="purpleBox">
-
-<b>Problem:</b> Say you want to put $n$ distinguishable balls into $r$ urns. (No! Wait! Don't say that!) Okay, fine. No urns. Say we are going to put $n$ strings into $r$ buckets of a hash table where all outcomes are equally likely. How many possible ways are there of doing this?
-<hr/>
-
-<p><b>Solution:</b> You can think of this as $n$ independent experiments each with $r$ outcomes. Using our friend the General Principle of Counting, this comes out to $r^n$.</p></p>
-</div>
-<p>
 
 <p>
 <div class="purpleBox">
