@@ -144,7 +144,7 @@ $$
 <hr/>
 
 
-In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings as: $$\frac{11!}{1!4!4!2!} = 34,650$$
+In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings are: $$\frac{11!}{1!4!4!2!} = 34,650$$
 	</div>
 </p>
 
@@ -174,7 +174,7 @@ $$
 </p>
 
 <p>
-	You can use the power of computers to enumerate all permutations. Here is sample python which uses the built in itertools library:
+	You can use the power of computers to enumerate all permutations. Here is sample python code which uses the built in itertools library:
 	</p>
 
 <pre class="language-python wrapPre"><code class="wrapPre">>>> import itertools
@@ -310,7 +310,7 @@ In this section we are going to be counting the many different ways that we can 
 <p>
 <div class="bordered"><p><b>Divider Method:</b></p>
 
-<p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are same (your elements) and $r - 1$ of which are same (the dividers). Thus the total number of outcomes is:</p>
+<p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are the same (your elements) and $r - 1$ of which are the same (the dividers). Thus the total number of outcomes is:</p>
 
 $${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}$$
 </div>
@@ -367,7 +367,7 @@ where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomi
 </p>
 
 <p>
-You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deap parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
+You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deep parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
 </p>
 
 <p>
