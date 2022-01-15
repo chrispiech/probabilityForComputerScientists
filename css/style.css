@@ -318,7 +318,7 @@ purpleBox:
     margin-left: -250px;
 }
 
-#sidebar .active-link {
+.active-link {
     background: white !important;
     color: black !important;
 }
