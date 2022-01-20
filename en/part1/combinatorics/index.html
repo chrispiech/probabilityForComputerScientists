@@ -626,7 +626,7 @@ Two different ways to get the same right answer!
 <p>
 In this section we are going to be counting the many different ways that we can think of stuffing elements into containers. (It turns out that Jacob Bernoulli was into voting and ancient Rome. And in ancient Rome they used urns for ballot boxes. For this reason many books introduce this through counting ways to put balls in urns.) This "bucketing" or "group assignment" process is a useful metaphor for many counting problems.</p>
 
-<p>The most common case that we will want to consider is when all of the items you are putting into buckets are distinct. In that case you can think of  bucketing as a series of steps, and employ the step rule of counting. The first step? You put the first distinct item into a bucket (there are number-of-buckets ways to do this). Second step? You put the second distinct item into a bucket (again, there are number-of-buckets ways to do this).</p>
+<p>The most common case that we will want to consider is when all of the items you are putting into buckets are distinct. In that case you can think of  bucketing as a series of steps, and employ the step rule of counting. The first step? You put the first distinct item into a bucket (there are number-of-buckets ways to do this). Second step? You put the second distinct item into a bucket (again, there are number-of-buckets ways to do this). </p>
 
 <p>
 	<div class="bordered"><p><b>Bucketing Distinct Items:</b></p>
@@ -783,6 +783,14 @@ Another way to do this problem would be from first principles of combinations as
 
         
         let lastPart = getUrlKey()
+        //can't use this with example submenus
+        // $("#sidebar-"+lastPart).addClass('active-link');
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            if ($($(this)[0]).attr('href').endsWith(lastPart)) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
         // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
         //     scrollInertia:0

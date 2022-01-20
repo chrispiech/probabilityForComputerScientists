@@ -134,7 +134,7 @@ $(document).ready(function(){
 <h2>Counting with <b>or</b></h2>
 
 <p>
-	If you want to consider the total number of unique outcomes, when outcomes can come from source $A$ <b>or</b> source $B$, then the equation you use depends on whether or not there are outcomes which are both in $A$ and $B$. If not, you can use the simpler "Mutually Exclusive Counting" rule. Otherwise you need to use the slightly more involved Inclusiong Exclusion rule.
+	If you want to consider the total number of unique outcomes, when outcomes can come from source $A$ <b>or</b> source $B$, then the equation you use depends on whether or not there are outcomes which are both in $A$ and $B$. If not, you can use the simpler "Mutually Exclusive Counting" rule. Otherwise you need to use the slightly more involved Inclusion Exclusion rule.
 </p>
 <p>
 	<div class="bordered">
@@ -157,7 +157,7 @@ then there are $|A \or B| = |A|+|B|$ possible outcomes of the experiment.</p>
 </p>
 
 <p>
-	If you can show that two groups are mutually exclusive counting becomes simple addition. Of course not all sets are mutually exclusive. In the example above, imagine there had been a single route which went through both Mt Kilimanjaro and Mombasa. We would have double counted that routes because it would be included in both the sets. If sets are not mutually exclusive, counting the <b>or</b> is still addition, we simply need to take into account any double counting.
+	If you can show that two groups are mutually exclusive counting becomes simple addition. Of course not all sets are mutually exclusive. In the example above, imagine there had been a single route which went through both Mt Kilimanjaro and Mombasa. We would have double counted that route because it would be included in both the sets. If sets are not mutually exclusive, counting the <b>or</b> is still addition, we simply need to take into account any double counting.
 	</p>
 
 <p>
@@ -206,7 +206,7 @@ we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Excl
 
 <div id="allGridsOneThree"></div>
 
-<p>Next lets add a much harder constraint: mirror indistinction. If you can flip any image horizontally to create another, they are no longer considered unique. For example these two both show up in our set of 8 odd-blue pixel images, but they are now considered to be the same (the are indistinct after a horizontal flip): 
+<p>Next lets add a much harder constraint: mirror indistinction. If you can flip any image horizontally to create another, they are no longer considered unique. For example these two both show up in our set of 8 odd-blue pixel images, but they are now considered to be the same (they are indistinct after a horizontal flip): 
 	<div id="rotationExample"></div>
 
 <p>How many images have an odd number of pixels taking into account mirror indistinction? The answer is that for each unique image with odd numbers of blue pixels, under this new constraint, you have counted it twice: itself and its horizonal flip. To convince yourself that each image has been counted <i>exactly</i> twice you can look at all of the example in the set of 8 imagines with odd number of blue pixels. Each image is next to one which is indistinct after a horizontal flip. Since each image was counted exactly twice in the set of 8, we can divide by two to get the updated count. If we list them out we can confirm that there are 8/2=4 images left after this last constraint:</p>

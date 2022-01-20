@@ -45,6 +45,14 @@
 
         
         let lastPart = getUrlKey()
+        //can't use this with example submenus
+        // $("#sidebar-"+lastPart).addClass('active-link');
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            if ($($(this)[0]).attr('href').endsWith(lastPart)) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
         // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
         //     scrollInertia:0
