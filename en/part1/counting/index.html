@@ -411,7 +411,7 @@ grid with 300 pixels, and (c) a grid with just 12 pixels?</p>
 </p>
 
 <p>
-	Answer: We can use the steps rule of counting. An image can be created one pixel at a time, step by step. Each time we chose a pixel you can select its color out of 17 million choices. An array of $n$ pixels produces (17 million)$^n$ different pictures. (17 million)$^{12}$ ≈ $10^{86}$, so the tiny
+	Answer: We can use the step rule of counting. An image can be created one pixel at a time, step by step. Each time we choose a pixel you can select its color out of 17 million choices. An array of $n$ pixels produces (17 million)$^n$ different pictures. (17 million)$^{12}$ ≈ $10^{86}$, so the tiny
 12-pixel grid produces a million times more pictures than the number of atoms in the universe! How about
 the 300 pixel array? It can produce $10^{2167}$ pictures. You may think the number of atoms in the universe is big,
 but that’s just peanuts to the number of pictures in a 300-pixel array. And 12M pixels? $10^{86696638}$ pictures.
@@ -428,7 +428,7 @@ configurations.</p>
 
 <p> Here we are going to construct the board one point at a time, step by step. Each time we add a point we have a unique choice where we can decide to make the point one of three options:
  {Black, White, No Stone}. Using this construction we can apply the Step Rule of Counting. If there was only one point, there would be three unique board configurations. If there were four points you would have $3 \cdot 3 \cdot 3 \cdot 3 = 81$ unique combinations. In Go there are $3^{(19×19)} ≈ 10^{172}$ possible board positions. The way we constructed our board didn't take into account which ones were illegal by the rules of Go. It turns out that "only" about
-$10^{170}$ of those positions are legal. That is about the square of the number of atoms in the universe. In otherwords: if there was another universe of atoms for every single atom, only then would there be as many atoms
+$10^{170}$ of those positions are legal. That is about the square of the number of atoms in the universe. In other words: if there was another universe of atoms for every single atom, only then would there be as many atoms
 in the universe as there are unique configurations of a Go board. </p>
 <p>
 	As a computer scientist this sort of result can be very important. While computers are powerful, an algorithm which needed to store each configuration of the board would not be a reasonable approach. No computer can store more information than atoms in the universe squared!
@@ -441,12 +441,12 @@ rule of counting. Let’s take a moment to talk about how the product rule of co
 time algorithms leverage this principle. </p>
 
 <p>
-	Imagine you are building a machine learning system that needs to learn from data and you want to synthetically generate 10 million unique data points for it. How many steps would you need to encode to get to 10 million? Assuming that at each step you have a binary choice, the number of unique data points you produce will be $2^n$ by the Steps Rule of counting. If we chose $n$ such that $\log_{2} 10,000,000 < n$. You would only need to encode $n=24$ binary decisions.
+	Imagine you are building a machine learning system that needs to learn from data and you want to synthetically generate 10 million unique data points for it. How many steps would you need to encode to get to 10 million? Assuming that at each step you have a binary choice, the number of unique data points you produce will be $2^n$ by the Step Rule of counting. If we chose $n$ such that $\log_{2} 10,000,000 < n$. You would only need to encode $n=24$ binary decisions.
 	</p>
 
 <p>
 <div class="purpleBox">
-	<p><b><i>Example</i></b>: Rolling two dice. Two 6-sided dice , with faces numbered 1 through 6, are rolled. How many possible
+	<p><b><i>Example</i></b>: Rolling two dice. Two 6-sided dice, with faces numbered 1 through 6, are rolled. How many possible
 outcomes of the roll are there?</p>
 
 		<hr>
@@ -482,14 +482,14 @@ $(document).ready(function(){
 <h2>Counting with <b>or</b></h2>
 
 <p>
-	If you want to consider the total number of unique outcomes, when outcomes can come from source $A$ <b>or</b> source $B$, then the equation you use depends on whether or not there are outcomes which are both in $A$ and $B$. If not, you can use the simpler "Mutually Exclusive Counting" rule. Otherwise you need to use the slightly more involved Inclusiong Exclusion rule.
+	If you want to consider the total number of unique outcomes, when outcomes can come from source $A$ <b>or</b> source $B$, then the equation you use depends on whether or not there are outcomes which are both in $A$ and $B$. If not, you can use the simpler "Mutually Exclusive Counting" rule. Otherwise you need to use the slightly more involved Inclusion Exclusion rule.
 </p>
 <p>
 	<div class="bordered">
 		<p><b><i>Definition</i></b>: Mutually Exclusive Counting</p>
 
-		<p>If the outcome of an experiment can either be drawn from set $A$ or set $B$, and sets $A$ and $B$, where none of
-the outcomes in set $A$ is the same as the any of the outcomes in set $B$ (called mutual exclusion),
+		<p>If the outcome of an experiment can either be drawn from set $A$ or set $B$, where none of
+the outcomes in set $A$ are the same as any of the outcomes in set $B$ (called mutual exclusion),
 then there are $|A \or B| = |A|+|B|$ possible outcomes of the experiment.</p>
 	</div>
 </p>
@@ -505,7 +505,7 @@ then there are $|A \or B| = |A|+|B|$ possible outcomes of the experiment.</p>
 </p>
 
 <p>
-	If you can show that two groups are mutually exclusive counting becomes simple addition. Of course not all sets are mutually exclusive. In the example above, imagine there had been a single route which went through both Mt Kilimanjaro and Mombasa. We would have double counted that routes because it would be included in both the sets. If sets are not mutually exclusive, counting the <b>or</b> is still addition, we simply need to take into account any double counting.
+	If you can show that two groups are mutually exclusive counting becomes simple addition. Of course not all sets are mutually exclusive. In the example above, imagine there had been a single route which went through both Mt Kilimanjaro and Mombasa. We would have double counted that route because it would be included in both the sets. If sets are not mutually exclusive, counting the <b>or</b> is still addition, we simply need to take into account any double counting.
 	</p>
 
 <p>
@@ -544,9 +544,9 @@ we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Excl
 
 <h2>Overcounting and Correcting</h2>
 
-<p>One strategy for counting is sometimes to overcount a solution and the correct for any duplicates. This is especially common when it is easier to generate all outcomes under some relaxed assumptions, or someone introduces contraints. If you can argue that you have over-counted each element the same multiple number of times, you can simply correct by using division. If you can count exactly how many elements were over-counted you can correct using subtraction.</p>
+<p>One strategy for counting is sometimes to overcount a solution and then correct for any duplicates. This is especially common when it is easier to generate all outcomes under some relaxed assumptions, or someone introduces contraints. If you can argue that you have over-counted each element the same multiple number of times, you can simply correct by using division. If you can count exactly how many elements were over-counted you can correct using subtraction.</p>
 
-<p>As a simple example to demonstrate the point, lets revisit the problem of generating all images, but this time lets just have 4 pixels (2x2) and each pixel can only be <b style="color:#3BB9FF">blue</b> or white. How many unique images are there? Generating any image is a four step process where you chose each pixel one at a time. Since each pixel has two choices there are $2^4 = 16$ unique images (they are not exactly Picasso &mdash; but hey its 4 pixels):</p>
+<p>As a simple example to demonstrate the point, lets revisit the problem of generating all images, but this time lets just have 4 pixels (2x2) and each pixel can only be <b style="color:#3BB9FF">blue</b> or white. How many unique images are there? Generating any image is a four step process where you choose each pixel one at a time. Since each pixel has two choices there are $2^4 = 16$ unique images (they are not exactly Picasso &mdash; but hey its 4 pixels):</p>
 
 <div id="allGrids"></div>
 
@@ -554,10 +554,10 @@ we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Excl
 
 <div id="allGridsOneThree"></div>
 
-<p>Next lets add a much harder constraint: mirror indistinction. If you can flip any image horizontally to create another, they are no longer considered unique. For example these two both show up in our set of 8 odd-blue pixel images, but they are now considered to be the same (the are indistinct after a horizontal flip): 
+<p>Next lets add a much harder constraint: mirror indistinction. If you can flip any image horizontally to create another, they are no longer considered unique. For example these two both show up in our set of 8 odd-blue pixel images, but they are now considered to be the same (they are indistinct after a horizontal flip): 
 	<div id="rotationExample"></div>
 
-<p>How many images have an odd number of pixels taking into account mirror indistinction? The answer is that for each unique image with odd numbers of blue pixels, under this new constraint, you have counted it twice: itself and its horizonal flip. To convince yourself that each image has been counted <i>exactly</i> twice you can look at all of the example in the set of 8 imagines with odd number of blue pixels. Each image is next to one which is indistinct after a horizontal flip. Since each image was counted exactly twice in the set of 8, we can divide by two to get the updated count. If we list them out we can confirm that there are 8/2=4 images left after this last constraint:</p>
+<p>How many images have an odd number of pixels taking into account mirror indistinction? The answer is that for each unique image with odd numbers of blue pixels, under this new constraint, you have counted it twice: itself and its horizonal flip. To convince yourself that each image has been counted <i>exactly</i> twice you can look at all of the examples in the set of 8 images with an odd number of blue pixels. Each image is next to one which is indistinct after a horizontal flip. Since each image was counted exactly twice in the set of 8, we can divide by two to get the updated count. If we list them out we can confirm that there are 8/2=4 images left after this last constraint:</p>
 
 <div id="noFlips"></div>
 
