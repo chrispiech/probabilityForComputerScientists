@@ -319,7 +319,7 @@ purpleBox:
 }
 
 .active-link {
-    background: white !important;
+    background: grey !important;
     color: black !important;
 }
 
