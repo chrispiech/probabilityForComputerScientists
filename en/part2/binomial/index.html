@@ -520,7 +520,24 @@ Perhaps include a small explanation or link to the wiki that explains why this t
     \end{align}
     $$
 
+<h2>Binomial Distribution in Python</h2>
 
+<p>As you might expect, you can use binomial distributions in code. The standarized library for binomials is <code>scipy.stats.binom</code>. You can read the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html">scipy.stats.binom documentation</a>, especially the list of methods.</p>
+
+<p>One of the most helpful methods that this package provides is a way to calculate the PMF. For example, say $X \sim \text{Bin}(n=5,p=0.6)$ and you want to find $P(X=2)$ you could use the following code:</p>
+
+<pre class="language-python"><code>from scipy import stats
+
+# define variables for x, n, and p
+n = 5
+p = 0.6
+x = 2
+
+# use scipy to compute the pmf
+p_x = stats.binom.pmf(x, n, p)
+
+# use the probability for future work
+print(p_x)</code>
 
 
                         
