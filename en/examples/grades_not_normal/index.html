@@ -460,6 +460,14 @@ P(H_2|X = 0.9) &= \frac{f(X = 0.9|H_2)P(H_2)}{f(X = 0.9|H_2)P(H_2) + f(X = 0.9|H
 
         
         let lastPart = getUrlKey()
+        //can't use this with example submenus
+        // $("#sidebar-"+lastPart).addClass('active-link');
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            if ($($(this)[0]).attr('href').endsWith(lastPart)) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
         // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
         //     scrollInertia:0

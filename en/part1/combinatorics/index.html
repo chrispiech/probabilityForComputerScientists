@@ -356,11 +356,12 @@
 higher level counting abstractions. When solving problems, if you can find the analogy from these canonical
 examples you can build off of the corresponding combinatorics formulas:</p>
 
-<ol>
+<ol>	
 	<li><a href="#perm_distinct">Permutations of Distinct Objects</a></li>
 	<li><a href="#perm_indisctinct">Permutations with Indistinct Objects</a></li>
 	<li><a href="#comb_distinct">Combinations with Distinct Objects</a></li>
-	<li><a href="#bucketing">Bucketing into Containers</a></li>
+	<li><a href="#bucketing_distinct">Bucketing with Distinct Objects</a></li>
+	<li><a href="#bucketing_indistinct">Bucketing with Indistinct Objects</a></li>
 	<li><a href="#bucketing_fixed">Bucketing into Fixed Sized Containers</a></li>
 </ol>
 
@@ -491,7 +492,7 @@ $$
 <hr/>
 
 
-In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings as: $$\frac{11!}{1!4!4!2!} = 34,650$$
+In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings are: $$\frac{11!}{1!4!4!2!} = 34,650$$
 	</div>
 </p>
 
@@ -521,7 +522,7 @@ $$
 </p>
 
 <p>
-	You can use the power of computers to enumerate all permutations. Here is sample python which uses the built in itertools library:
+	You can use the power of computers to enumerate all permutations. Here is sample python code which uses the built in itertools library:
 	</p>
 
 <pre class="language-python wrapPre"><code class="wrapPre">>>> import itertools
@@ -593,8 +594,8 @@ permute them. The selection remains unchanged.
 <b>Solution:</b> If each of the books are distinct, then this is another straightforward combination problem. There are $\binom{6}{3} = \frac{6!}{3!3!} = 20$ ways.
 
 <hr/>
-<b>Part B:</b> How many ways are there to select 3 books if there are two books that should not both be chosen together? For example, if you are choosing 3 out of 6 probability books, don't choose both the 8th and 9th edition of the Ross textbook).
-\paragraph{Solution:} This problem is easier to solve if we split it up into cases. Consider the following three different cases:
+<b>Part B:</b> How many ways are there to select 3 books if there are two books that should not both be chosen together? For example, if you are choosing 3 out of 6 probability books, don't choose both the 8th and 9th edition of the Ross textbook.
+<b>Solution:</b> This problem is easier to solve if we split it up into cases. Consider the following three different cases:
 
 <br/>
 Case 1: Select the 8th Ed. and 2 other non-9th Ed.: There are $\binom{4}{2}$ ways of doing so.<br/>
@@ -620,43 +621,49 @@ Two different ways to get the same right answer!
 </div>
 </p>
 
-<h2 id="bucketing">Bucketing / Group Assignment</h2>
+<h2 id="bucketing_distinct">Bucketing with Distinct Objects</h2>
 
 <p>
 In this section we are going to be counting the many different ways that we can think of stuffing elements into containers. (It turns out that Jacob Bernoulli was into voting and ancient Rome. And in ancient Rome they used urns for ballot boxes. For this reason many books introduce this through counting ways to put balls in urns.) This "bucketing" or "group assignment" process is a useful metaphor for many counting problems.</p>
 
+<p>The most common case that we will want to consider is when all of the items you are putting into buckets are distinct. In that case you can think of  bucketing as a series of steps, and employ the step rule of counting. The first step? You put the first distinct item into a bucket (there are number-of-buckets ways to do this). Second step? You put the second distinct item into a bucket (again, there are number-of-buckets ways to do this). </p>
+
 <p>
-<div class="purpleBox">
+	<div class="bordered"><p><b>Bucketing Distinct Items:</b></p>
+	
+	<p>Suppose you want to place $n$ distinguishable items into $r$ containers. The number of ways of doing so is:</p>
+	
+	$$r^n$$
 
-<b>Problem:</b> Say you want to put $n$ distinguishable balls into $r$ urns. (No! Wait! Don't say that!) Okay, fine. No urns. Say we are going to put $n$ strings into $r$ buckets of a hash table where all outcomes are equally likely. How many possible ways are there of doing this?
-<hr/>
+	<p>You have $n$ steps (place each item) and for each item you have $r$ choices</p>
+	</div>
+	</p>
+	
+<p>
+	<div class="purpleBox">
+		<b>Problem:</b> Say you want to put 10 distinguishable balls into 5 urns (No! Wait! Don't say that! Not urns!). Okay, fine. No urns. Say we are going to put 10 different strings into 5 buckets of a hash table. How many possible ways are there of doing this?
+		<hr/>
+		
+		<p><b>Solution:</b> You can think of this as 10 independent experiments each with 5 outcomes. Using our rule for bucketing with distinct items, this comes out to $5^{10}$.</p></p>
+		</div>
+		</p>
 
-<p><b>Solution:</b> You can think of this as $n$ independent experiments each with $r$ outcomes. Using our friend the General Principle of Counting, this comes out to $r^n$.</p></p>
-</div>
-</p>
+<p>
+	<h2 id="bucketing_indistinct">Bucketing with Indistinct Objects</h2>
+
 <p>
 
-	While the previous example allowed us to put $n$ distinguishable objects into $r$ distinct groups, the more interesting problem is to work with $n$ indistinguishable objects. This task has a direct analogy to the number of ways to solve the following positive integer equation:
+	While the previous example allowed us to put $n$ distinguishable objects into $r$ distinct groups, the more interesting problem is to work with $n$ indistinguishable objects. 
 
 <p>
 <div class="bordered"><p><b>Divider Method:</b></p>
 
-<p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are same (your elements) and $r - 1$ of which are same (the dividers). Thus the total number of outcomes is:</p>
+<p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are the same (your elements) and $r - 1$ of which are the same (the dividers). Thus the total number of outcomes is:</p>
 
 $${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}$$
 </div>
 </p>
 
-
-<p>
-<div class="purpleBox">
-
-<b>Problem:</b> Say you want to put $n$ distinguishable balls into $r$ urns. (No! Wait! Don't say that!) Okay, fine. No urns. Say we are going to put $n$ strings into $r$ buckets of a hash table where all outcomes are equally likely. How many possible ways are there of doing this?
-<hr/>
-
-<p><b>Solution:</b> You can think of this as $n$ independent experiments each with $r$ outcomes. Using our friend the General Principle of Counting, this comes out to $r^n$.</p></p>
-</div>
-<p>
 
 <p>
 <div class="purpleBox">
@@ -708,7 +715,7 @@ where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomi
 </p>
 
 <p>
-You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deap parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
+You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deep parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
 </p>
 
 <p>
@@ -776,6 +783,14 @@ Another way to do this problem would be from first principles of combinations as
 
         
         let lastPart = getUrlKey()
+        //can't use this with example submenus
+        // $("#sidebar-"+lastPart).addClass('active-link');
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            if ($($(this)[0]).attr('href').endsWith(lastPart)) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
         // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
         //     scrollInertia:0

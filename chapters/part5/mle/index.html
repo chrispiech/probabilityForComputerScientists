@@ -43,32 +43,32 @@
 
 <p>Step one of MLE is to write the likelihood of a Bernoulli as a function that we can maximize. Since a Bernoulli is a discrete distribution, the likelihood is the probability mass function.
 
-<p>The probability mass function of a Bernoulli $X$ can be written as $f(X) = p^{X}(1-p)^{1-X}$. Wow! Whats up with that? Its an equation that allows us to say that the probability that $X = 1$ is $p$ and the probability that $X = 0$ is $1- p$. Convince yourself that when $X_i=0$ and $X_i=1$ the PMF returns the right probabilities. We write the PMF this way because its derivable. 
+<p>The probability mass function of a Bernoulli $X$ can be written as $f(x) = p^{x}(1-p)^{1-x}$. Wow! What's up with that? It's an equation that allows us to say that the probability that $X = 1$ is $p$ and the probability that $X = 0$ is $1- p$. Convince yourself that when $X_i=0$ and $X_i=1$ the PMF returns the right probabilities. We write the PMF this way because its derivable.
 
 <p>Now let's do some MLE estimation:
 \begin{align*}
-L(\theta) &= \prod_{i=1}^n p^{X_i}(1-p)^{1-X_i} && \text{First write the likelihood function} \\ 
-LL(\theta) &= \sum_{i=1}^n \log p^{X_i}(1-p)^{1-X_i} && \text{Then write the log likelihood function}\\
-&= \sum_{i=1}^n X_i (\log p) + (1 - X_i) log(1-p) \\
-&= Y \log p + (n - Y) log(1-p) && \text{where } Y = \sum_{i=1}^n X_i
+L(\theta)   &= \prod_{i=1}^n p^{x_i}(1-p)^{1-x_i} && \text{First write the likelihood function} \\
+LL(\theta)  &= \sum_{i=1}^n \log p^{x_i}(1-p)^{1-x_i} && \text{Then write the log likelihood function}\\
+            &= \sum_{i=1}^n x_i (\log p) + (1 - x_i) log(1-p) \\
+            &= Y \log p + (n - Y) \log(1-p) && \text{where } Y = \sum_{i=1}^n x_i
 \end{align*}
 <p>Great Scott! We have the log likelihood equation. Now we simply need to chose the value of $p$ that maximizes our log-likelihood. As your calculus teacher probably taught you, one way to find the value which maximizes a function that is to find the first derivative of the function and set it equal to 0.
 \begin{align*}
 \frac{\delta LL(p)}{\delta p} &= Y \frac{1}{p} + (n - Y) \frac{-1}{1-p} = 0 \\
- \hat{p} &= \frac{Y}{n} = \frac{\sum_{i=1}^n X_i}{n}
+ \hat{p} &= \frac{Y}{n} = \frac{\sum_{i=1}^n x_i}{n}
 \end{align*}
 <p>All that work and find out that the MLE estimate is simply the sample mean...
 
 <h2>Normal MLE Estimation</h2>
-<p>Practice is key. Next up we are going to try and estimate the best parameter values for a normal distribution. All we have access to are $n$ samples from our normal which we refer to as IID random variables $X_1, X_2, \dots X_n$. We assume that for all $i$, $X_i \sim N(\mu = \theta_0, \sigma^2 = \theta_1)$. This example seems trickier since a normal has \textbf{two} parameters that we have to estimate. In this case $\theta$ is a vector with two values, the first is the mean ($\mu$) parameter. The second is the variance($\sigma^2$) parameter.
+<p>Practice is key. Next up we are going to try and estimate the best parameter values for a normal distribution. All we have access to are $n$ samples from our normal which we refer to as IID random variables $X_1, X_2, \dots X_n$. We assume that for all $i$, $X_i \sim N(\mu = \theta_0, \sigma^2 = \theta_1)$. This example seems trickier since a normal has $\textbf{two}$ parameters that we have to estimate. In this case $\theta$ is a vector with two values, the first is the mean ($\mu$) parameter. The second is the variance($\sigma^2$) parameter.
 \begin{align*}
 L(\theta) &= \prod_{i=1}^n f(X_i|\theta) \\ 
- &=\prod_{i=1}^n \frac{1}{\sqrt{2\pi\theta_1}} e^{-\frac{(X_i - \theta_0)^2}{2\theta_1}} && \text{Likelihood for a continuous variable is the PDF}\\
- LL(\theta) &= \sum_{i=1}^n \log \frac{1}{\sqrt{2\pi\theta_1}} e^{-\frac{(X_i - \theta_0)^2}{2\theta_1}} && \text{We want to calculate log likelihood} \\
+ &=\prod_{i=1}^n \frac{1}{\sqrt{2\pi\theta_1}} e^{-\frac{(x_i - \theta_0)^2}{2\theta_1}} && \text{Likelihood for a continuous variable is the PDF}\\
+ LL(\theta) &= \sum_{i=1}^n \log \frac{1}{\sqrt{2\pi\theta_1}} e^{-\frac{(x_i - \theta_0)^2}{2\theta_1}} && \text{We want to calculate log likelihood} \\
  &= \sum_{i=1}^n\left[ 
-    - \log(\sqrt{2\pi\theta_1}) - \frac{1}{2\theta_1}(X_i - \theta_0)^2 \right]
+    - \log(\sqrt{2\pi\theta_1}) - \frac{1}{2\theta_1}(x_i - \theta_0)^2 \right]
 \end{align*}
-<p>Again, the last step of MLE is to chose values of $\theta$ that maximize the log likelihood function. In this case we can calculate the partial derivative of the $LL$ function with respect to both $\theta_0$ and $\theta_1$, set both equations to equal 0 and than solve for the values of $\theta$. Doing so results in the equations for the values $\hat{\mu} = \hat{\theta_0}$ and $\hat{\sigma^2} = \hat{\theta_1}$ that maximize likelihood. The result is:$\hat{\mu} = \frac{1}{n}\sum_{i=1}^n X_i$ and $\hat{\sigma^2} = \frac{1}{n}\sum_{i=1}^n (X_i - \hat{\mu})^2$.
+<p>Again, the last step of MLE is to chose values of $\theta$ that maximize the log likelihood function. In this case we can calculate the partial derivative of the $LL$ function with respect to both $\theta_0$ and $\theta_1$, set both equations to equal 0 and than solve for the values of $\theta$. Doing so results in the equations for the values $\hat{\mu} = \hat{\theta_0}$ and $\hat{\sigma^2} = \hat{\theta_1}$ that maximize likelihood. The result is: $\hat{\mu} = \frac{1}{n}\sum_{i=1}^n x_i$ and $\hat{\sigma^2} = \frac{1}{n}\sum_{i=1}^n (x_i - \hat{\mu})^2$.
 
 <h2>Linear Transform Plus Noise</h2>
 <p>MLE is an algorithm that can be used for any probability model with a derivable likelihood function. As an example lets estimate the parameter $\theta$ in a model where there is a random variable $Y$ such that $Y = \theta X + Z$, $Z \sim N(0, \sigma^2)$ and $X$ is an unknown distribution. 

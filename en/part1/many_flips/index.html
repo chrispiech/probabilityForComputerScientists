@@ -678,7 +678,7 @@ If you rearrange these multiplication terms you get:
 	&= p^4 \cdot (1-p)^{6}
 	\end{align}
 	$$
-There is nothing too special about row 128. If you chose any row, you would get $k$ independent heads and $n-k$ independent tails. For any row $i$, $\p(E_i) = p^n \cdot (1-p)^{k-n}$. Now we are ready to calculate the probability of exactly $k$ heads:
+There is nothing too special about row 128. If you chose any row, you would get $k$ independent heads and $n-k$ independent tails. For any row $i$, $\p(E_i) = p^k \cdot (1-p)^{n-k}$. Now we are ready to calculate the probability of exactly $k$ heads:
 
 $$
 \begin{align}
@@ -764,6 +764,14 @@ $$
 
         
         let lastPart = getUrlKey()
+        //can't use this with example submenus
+        // $("#sidebar-"+lastPart).addClass('active-link');
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            if ($($(this)[0]).attr('href').endsWith(lastPart)) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
         // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
         //     scrollInertia:0
