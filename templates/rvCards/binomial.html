@@ -77,8 +77,12 @@ function drawBinomialPmf(parentDivId, n, p) {
 	var yValues = []
 	for (var i = 0; i <= n; i++) {
 		let pr_x = binomialPmf(n,p,i).toFixed(5)
-		xValues.push(i)
-		yValues.push(pr_x)
+		console.log(i, pr_x)
+		if(pr_x > 0.00001) {
+			xValues.push(i)
+			yValues.push(pr_x)
+		}
+		
 	}
 	console.log(xValues, yValues)
 	let xLabel = 'Values that X can take on'
