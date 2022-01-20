@@ -2,7 +2,7 @@
 	"intro": {
 		"title":null,
 		"sections": {
-			"intro":"Introduction",
+			# "intro":"Introduction",
 			# "free_book":"A Free Online Textbook",
 			"notation": "Notation Reference",
 			"all_distributions":"Random Variable Reference",
