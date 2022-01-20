@@ -53,6 +53,7 @@
 		},
 		"examples": {
 			"100_binomial_problems":"100 Binomial Problems",
+			"winning_series":"Winning Series",
 			"jury":"Jury Selection",
 			"grading_eye_inflammation":"Grading Eye Inflamation"
 			"norm_cdf_calculator":"Gaussian CDF Calculator",
