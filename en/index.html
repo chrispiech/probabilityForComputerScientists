@@ -368,15 +368,15 @@ Probability for Computer Scientists
   V 0.2
   </p>
 
-  <p><center><a class="btn btn-primary btn-lg" href="part1/counting" role="button"><span class="glyphicon glyphicon-play" aria-hidden="true"></center</span> Get Started</a></p>
+  <p><center><a class="btn btn-primary btn-lg" href="part1/counting" role="button"><span class="glyphicon glyphicon-play" aria-hidden="true"></center></span> Get Started</a></p>
 
-  <p><i>Acknowledgements: This book was written based on notes from Chris Piech for Stanford's CS109 course, Probability for Computer scientists. The course was originally designed by Mehran Sahami and followed the Sheldon Ross book Probability Theory from which we take inspiration. The course has since been taught by Lisa Yan, Jerry Cain and David Varodayan and their ideas and feedback have improved this reader.</i></p>
+  <p><i>Acknowledgements: This book was written and curated by <a href="https://stanford.edu/~cpiech/bio/index.html">Chris Piech</a> for Stanford's CS109 course, Probability for Computer scientists. The course was originally designed by Mehran Sahami and followed the Sheldon Ross book Probability Theory from which we take inspiration. The course has since been taught by Lisa Yan, Jerry Cain and David Varodayan and their ideas and feedback have improved this reader.</i></p>
 
   <p><i>This course reader is open source. Want to make your mark? Keen to fix a typo? Download the <a href="https://github.com/chrispiech/probabilityForComputerScientists">github project</a> and publish a pull request. We will credit all contributors.</i></p>
 
 	
 
-    <p>Contributors: Tim Gianitsos, Logan Bhamidipaty</p>
+    <p>Folks who have contributed to editing the book: <a href="https://github.com/chrispiech/probabilityForComputerScientists/graphs/contributors">GitHub Contributors</a>. This includes <a href="https://github.com/FlyingWorkshop">Logan Bhamidipaty</a>, <a href="https://github.com/jonatan-perez">Jonatan Pérez</a>, Tim Gianitsos, <a href="https://github.com/Yogi-The-Curious">Yogi the Curious</a>, <a href="https://github.com/thanawan-atc">Thanawan “Ly-Ly” Atchariyachanvanit</a>, <a href="https://github.com/gursahani">Kunal</a></p>
 
 
 
@@ -429,12 +429,20 @@ Probability for Computer Scientists
 
         
         let lastPart = getUrlKey()
+        console.log('lastpart', lastPart)
+        
+        // Bug: this code will highlight anything which matches with the last part
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            let currLink = $($(this)[0]).attr('href')
+            let currLastPart = getLastPartOfUrl(currLink)
+            console.log('currlastpart', currLastPart)
+            if (currLastPart === lastPart) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
-        // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
-        //     scrollInertia:0
-        // });
-
-        // addExampleToFirebase()
+        
     });
 
     function getScrollTop() {
@@ -446,9 +454,13 @@ Probability for Computer Scientists
     }
 
     function getUrlKey() {
-        var pathname = window.location.pathname;
+        var path = window.location.pathname;
+        return getLastPartOfUrl(path)
         
-        let parts = pathname.split('/')
+    }
+
+    function getLastPartOfUrl(path) {
+        let parts = path.split('/')
         var currIndex = parts.length - 1
         while(currIndex >= 0) {
             let nextPart = parts[currIndex]

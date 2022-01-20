@@ -144,7 +144,7 @@ $$
 <hr/>
 
 
-In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings as: $$\frac{11!}{1!4!4!2!} = 34,650$$
+In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings are: $$\frac{11!}{1!4!4!2!} = 34,650$$
 	</div>
 </p>
 
@@ -174,7 +174,7 @@ $$
 </p>
 
 <p>
-	You can use the power of computers to enumerate all permutations. Here is sample python which uses the built in itertools library:
+	You can use the power of computers to enumerate all permutations. Here is sample python code which uses the built in itertools library:
 	</p>
 
 <pre class="language-python wrapPre"><code class="wrapPre">>>> import itertools
@@ -246,8 +246,8 @@ permute them. The selection remains unchanged.
 <b>Solution:</b> If each of the books are distinct, then this is another straightforward combination problem. There are $\binom{6}{3} = \frac{6!}{3!3!} = 20$ ways.
 
 <hr/>
-<b>Part B:</b> How many ways are there to select 3 books if there are two books that should not both be chosen together? For example, if you are choosing 3 out of 6 probability books, don't choose both the 8th and 9th edition of the Ross textbook).
-\paragraph{Solution:} This problem is easier to solve if we split it up into cases. Consider the following three different cases:
+<b>Part B:</b> How many ways are there to select 3 books if there are two books that should not both be chosen together? For example, if you are choosing 3 out of 6 probability books, don't choose both the 8th and 9th edition of the Ross textbook.
+<b>Solution:</b> This problem is easier to solve if we split it up into cases. Consider the following three different cases:
 
 <br/>
 Case 1: Select the 8th Ed. and 2 other non-9th Ed.: There are $\binom{4}{2}$ ways of doing so.<br/>
@@ -310,9 +310,35 @@ In this section we are going to be counting the many different ways that we can 
 <p>
 <div class="bordered"><p><b>Divider Method:</b></p>
 
-<p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are same (your elements) and $r - 1$ of which are same (the dividers). Thus the total number of outcomes is:</p>
+<p>Suppose you want to place $n$ indistinguishable items into $r$ containers. The divider method works by imagining that you are going to solve this problem by sorting two types of objects, your $n$ original elements and $(r - 1)$ dividers. Thus, you are permuting $n + r - 1$ objects, $n$ of which are the same (your elements) and $r - 1$ of which are the same (the dividers). Thus the total number of outcomes is:</p>
 
 $${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}$$
+
+<p>The divider method can be derived via the "Stars and Bars" method. This is a creative construction where we consider permutations of indistinguishable items, represented by stars <code>*</code>, and dividers between our containers, represented by bars <code>|</code>. Any distinct permutation of these stars and bars represents a unique assignments of our items to containers.</p>
+
+
+
+<p> Imagine we want to separate 5 indistinguishable objects into 3 containers. We can think of the problem as finding the number of ways to order 5 stars and 2 bars <code>*****||</code>. Any permutation of these symbols represents a unique assignment. Here are a few examples:
+
+<p>
+<code>**|*|**</code> represents 2 items in the first bucket, 1 item in the second and 2 items in the third.
+</p>
+<p>
+<code>****||*</code> represents 4 items in the first bucket, 0 item in the second and 1 items in the third.
+</p>
+<p>
+<code>||*****</code> represents 0 items in the first bucket, 0 item in the second and 5 items in the third.
+</p>
+
+
+Why are there only 2 dividers when there are 3 buckets? This is an example of a <a href="https://en.wikipedia.org/wiki/Off-by-one_error#Fencepost_error">fence-post-problem"</a>. With 2 dividers you have created three containers. We already have a method for counting permutations with some indistinct items. For the example above where we have seven elements in our permutation ($n = 5$ stars and $r-1 = 2$ bars):</p>
+
+<p>
+<span class="mathLeft">
+$$
+\text{Number of unique orderings} = \frac{n!}{n_1! n_2!} = \frac{(n+r-1)!}{n! (r-1)!} =\frac{7!}{5!2!} = 21
+$$</span></p>
+
 </div>
 </p>
 
@@ -367,7 +393,7 @@ where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomi
 </p>
 
 <p>
-You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deap parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
+You may have noticed that this is the exact same formula as "Permutations With Indistinct Objects". There is a deep parallel. One way to imagine assigning objects into their groups would be to imagine the groups themselves as objects. You have one object per "slot" in a group. So if there were two slots in group 1, three slots in group 2, and one slot in group 3 you could have six objects (1, 1, 2, 2, 2, 3). Each unique permutation can be used to make a unique assignment. 
 </p>
 
 <p>

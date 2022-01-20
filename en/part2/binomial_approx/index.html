@@ -491,12 +491,20 @@ $E[X] = np = 1686.4$. $\var(X) = np(1-p) = 539.7$. $\sigma = \sqrt{\Var(X)} = 23
 
         
         let lastPart = getUrlKey()
+        console.log('lastpart', lastPart)
+        
+        // Bug: this code will highlight anything which matches with the last part
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            let currLink = $($(this)[0]).attr('href')
+            let currLastPart = getLastPartOfUrl(currLink)
+            console.log('currlastpart', currLastPart)
+            if (currLastPart === lastPart) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
-        // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
-        //     scrollInertia:0
-        // });
-
-        // addExampleToFirebase()
+        
     });
 
     function getScrollTop() {
@@ -508,9 +516,13 @@ $E[X] = np = 1686.4$. $\var(X) = np(1-p) = 539.7$. $\sigma = \sqrt{\Var(X)} = 23
     }
 
     function getUrlKey() {
-        var pathname = window.location.pathname;
+        var path = window.location.pathname;
+        return getLastPartOfUrl(path)
         
-        let parts = pathname.split('/')
+    }
+
+    function getLastPartOfUrl(path) {
+        let parts = path.split('/')
         var currIndex = parts.length - 1
         while(currIndex >= 0) {
             let nextPart = parts[currIndex]

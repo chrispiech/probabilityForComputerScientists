@@ -465,12 +465,20 @@ Using this equation (and the product lemma) is it easy to see that if two random
 
         
         let lastPart = getUrlKey()
+        console.log('lastpart', lastPart)
+        
+        // Bug: this code will highlight anything which matches with the last part
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            let currLink = $($(this)[0]).attr('href')
+            let currLastPart = getLastPartOfUrl(currLink)
+            console.log('currlastpart', currLastPart)
+            if (currLastPart === lastPart) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
 
-        // $(".scroller-back").mCustomScrollbar("scrollTo", $("#" +scrollKey), {
-        //     scrollInertia:0
-        // });
-
-        // addExampleToFirebase()
+        
     });
 
     function getScrollTop() {
@@ -482,9 +490,13 @@ Using this equation (and the product lemma) is it easy to see that if two random
     }
 
     function getUrlKey() {
-        var pathname = window.location.pathname;
+        var path = window.location.pathname;
+        return getLastPartOfUrl(path)
         
-        let parts = pathname.split('/')
+    }
+
+    function getLastPartOfUrl(path) {
+        let parts = path.split('/')
         var currIndex = parts.length - 1
         while(currIndex >= 0) {
             let nextPart = parts[currIndex]
