@@ -23,11 +23,13 @@
     </p>
 
     <p>To answer this question, first recognize that: 
-        $$\P(X \geq 4) = \P(X = 4) + \P(X = 5) + \P(X = 6) + \P(X = 7)$$ 
+        \begin{aligned}\P(X \geq 4) = &\P(X = 4) + \P(X = 5) \\
+        &+ \P(X = 6) + \P(X = 7)\end{aligned} 
         This is because the question is asking the probability of the "or" of each of the events on the right hand side of the equals sign. Since each of these events; $X=4$, $X=5$, etc are mutually exclusive, the probability of the "or" is simply the sum of the probabilities.</p>
 
     \begin{aligned}
-    \P(X \geq 4) &= \P(X = 4) + \P(X = 5) + \P(X = 6) + \P(X = 7) \\
+    \P(X \geq 4) &= \P(X = 4) + \P(X = 5) \\
+    &+ \P(X = 6) + \P(X = 7) \\
     &= \sum_{i=4}^7 P(X = i)
     \end{aligned}
 
