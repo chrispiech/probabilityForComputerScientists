@@ -4,7 +4,9 @@
 <center><h1>Winning the Series</h1></center>
 <hr/>
 
-<p>Warriors are going to play the Bucks in a best of 7 series during the 2022 NBA finals. What is the probability that the warriors win the series? Each game is independent. Each game, the warriors have a 0.55 probability of winning. Win series if you win at least 4 games.</p>
+<p>The Golden State Warriors are the basketball team for the Bay Area. The Warriors are going to play the Bucks (another professional basketball team) in a best of 7 series during the next NBA finals. They will win the series if you win at least 4 games. What is the probability that the warriors win the series? Each game is independent. Each game, the warriors have a 0.55 probability of winning. </p>
+
+<p>This problem is equivalent to: Flip a biased coin 7 times (with a $p=0.55$ probability of getting a heads). What is the probability of at least 4 heads?</p>
 
 <p>
 <center>
@@ -15,3 +17,18 @@
 <p><i>Note</i>: without loss of generality you could imagine that the two teams always play all 7 games, regardless of the outcome. Technically they stop playing after one team has achieved 4 wins, because the outcomes of the games no longer impact who wins. However, you could imagine that they continue.</p>
 
 <p>What is the probability that the warriors win the series? Leave your answer to 3 decimal places</p>
+
+<p><b>Math solution</b>
+<div class="bordered">
+<p>A critical step is to define a random variable and to recognize it is a Binomial. Let $X$ be the number of games won. Since each game is independent, $X \sim \Bin(n=7, p =0.55)$. The question is asking: $\P(X \geq 4)$?
+    </p>
+
+    <p>To answer this question, first recognize that  $\P(X \geq 4) = \P(X = 4) + \P(X = 5) + \P(X = 6) + \P(X = 7)$. This is because the question is asking the probability of the "or" of each of the events on the right hand side of the equals sign. Since each of these events $X=4$, $X=5$, etc are mutually exclusive, the probability of the "or" is simply the sum of the probabilities.</p>
+
+    $$
+    \P(X \geq 4) 
+    &= \P(X = 4) + \P(X = 5) + \P(X = 6) + \P(X = 7) \\
+    &= \sum_{i=4}^7 P(X = i)
+    $$
+</div>
+</p>
