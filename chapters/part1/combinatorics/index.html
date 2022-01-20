@@ -314,21 +314,34 @@ In this section we are going to be counting the many different ways that we can 
 
 $${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}$$
 
-<p>The divider method can be derived via the "Stars and Bars" method. Let's call indistinguishable items "stars" denoted by <b>*</b> and the dividers "bars" denoted by <b>|</b>. In the above case, we want to permute n stars and r - 1 bars (We need r - 1 dividers in dividing stars into r groups). It can be visualized as:</p>
-
-$$\underbrace{* ... *}_\text{n stars} \underbrace{| ... |}_\text{r-1 bars}$$
+<p>The divider method can be derived via the "Stars and Bars" method. This is a creative construction where we consider permutations of indistinguishable items, represented by stars <code>*</code>, and dividers between our containers, represented by bars <code>|</code>. Any distinct permutation of these stars and bars represents a unique assignments of our items to containers.</p>
 
 
-<p> If we want to separate 5 indistinguishable objects into 3 containers. We can think of the problem as finding the number of ways to order 5 stars and 2 bars ({*****||}). Based on "Permutations of Indistinct Objects," we have:</p>
+
+<p> Imagine we want to separate 5 indistinguishable objects into 3 containers. We can think of the problem as finding the number of ways to order 5 stars and 2 bars <code>*****||</code>. Any permutation of these symbols represents a unique assignment. Here are a few examples:
+
+<p>
+<code>**|*|**</code> represents 2 items in the first bucket, 1 item in the second and 2 items in the third.
+</p>
+<p>
+<code>****||*</code> represents 4 items in the first bucket, 0 item in the second and 1 items in the third.
+</p>
+<p>
+<code>||*****</code> represents 0 items in the first bucket, 0 item in the second and 5 items in the third.
+</p>
+
+
+Why are there only 2 dividers when there are 3 buckets? This is an example of a <a href="https://en.wikipedia.org/wiki/Off-by-one_error#Fencepost_error">fence-post-problem"</a>. With 2 dividers you have created three containers. We already have a method for counting permutations with some indistinct items. For the example above where we have seven elements in our permutation ($n = 5$ stars and $r-1 = 2$ bars):</p>
 
 <p>
 <span class="mathLeft">
 $$
-\text{Number of unique orderings} = \frac{7!}{5!2!} = 21
+\text{Number of unique orderings} = \frac{n!}{n_1! n_2!} = \frac{(n+r-1)!}{n! (r-1)!} =\frac{7!}{5!2!} = 21
 $$</span></p>
 
 </div>
 </p>
+
 
 <p>
 <div class="purpleBox">
