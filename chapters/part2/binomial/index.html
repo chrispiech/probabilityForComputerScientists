@@ -87,9 +87,9 @@ Perhaps include a small explanation or link to the wiki that explains why this t
 
 <h2>Binomial Distribution in Python</h2>
 
-<p>As you might expect, you can use binomial distributions in code. The standarized library for binomials is <code>scipy.stats.binom</code>. You can read the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html">scipy.stats.binom documentation</a>, especially the list of methods.</p>
+<p>As you might expect, you can use binomial distributions in code. The standarized library for binomials is <code>scipy.stats.binom</code>. </p>
 
-<p>One of the most helpful methods that this package provides is a way to calculate the PMF. For example, say $X \sim \text{Bin}(n=5,p=0.6)$ and you want to find $P(X=2)$ you could use the following code:</p>
+<p>One of the most helpful methods that this package provides is a way to calculate the PMF. For example, say $X \sim \text{Bin}(n=5,p=0.6)$ and you want to find $\P(X=2)$ you could use the following code:</p>
 
 <pre class="language-python"><code>from scipy import stats
 
@@ -102,4 +102,29 @@ x = 2
 p_x = stats.binom.pmf(x, n, p)
 
 # use the probability for future work
-print(p_x)</code>
+print(f'P(X = {x}) = {p_x}')</code></pre>
+<p>
+<div>Console:<br/><pre class="console"><code>P(X = 2) = 0.2304</code></pre></div>
+
+<p>Another particularly helpful function is the ability to generate a random sample from a binomial. For example, say $X \sim \Bin(n=10, p = 0.3)$ represents the number of requests to a website. We can draw 100 samples from this distrubtion using the following code:</p>
+
+<pre class="language-python"><code>from scipy import stats
+
+# define variables for x, n, and p
+n = 10
+p = 0.3
+x = 2
+
+# use scipy to compute the pmf
+samples = stats.binom.rvs(n, p, size=100)
+
+# use the probability for future work
+print(samples)</code></pre>
+
+<p>
+<div>Console:<br/><pre class="console"><code>[4 5 3 1 4 5 3 1 4 6 5 6 1 2 1 1 2 3 2 5 2 2 2 4 4 2 2 3 6 3 1 1 4 2 6 2 4
+ 2 3 3 4 2 4 2 4 5 0 1 4 3 4 3 3 1 3 1 1 2 2 2 2 3 5 3 3 3 2 1 3 2 1 2 3 3
+ 4 5 1 3 7 1 4 1 3 3 4 4 1 2 4 4 0 2 4 3 2 3 3 1 1 4]</code></pre></div>
+ <p>You might be wondering what a random sample is! A random sample is a randomly chosen assignment to a our random variable. Above we have 100 such assignments. The probability that value $x$ is chosen is given by the PMF: $\p(X=x)$. You will notice that even though 8 is a possible assignment to the binomial above, in 100 samples we never saw the value 8. Why? Because $P(X=8) \approx 0.0014$. You would need to draw 1,000 samples before you would expect to see an 8.
+
+    <p>There are also functions for getting the mean, the variance, and more. You can read the scipy.stats.binom <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html">documentation</a>, especially the list of methods.</p>

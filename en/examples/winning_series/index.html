@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Binomial</title>
+<title>Vision Test</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -348,222 +348,15 @@
                     <div class="col handout" >
               
                         
-<center><h1>Binomial Distribution</h1></center>
+ 
+<center><h1>Winning the Series</h1></center>
 <hr/>
 
-<p>In this section, we will discuss the binomial distribution. To start, imagine the following example. Consider $n$
-    independent trials of an experiment where each trial is a "success" probability $p$. Let $X$ be the
-    number of successes in $n$ trials. This situation is truly common in the natural world, and as such, there has been
-    a lot of research into such phenomena. Random variables like $X$ are called binomial random variables. If you
-    can identify that a process fits this description, you can inherit many already proved properties such as the PMF
-    formula, expectation, and variance!
-</p>
+<p>Warriors are going to play the Bucks in a best of 7 series during the 2022 NBA finals. What is the probability that the warriors win the series? Each game is independent. Each game, the warriors have a 0.55 probability of winning. Win series if you win at least 4 games.</p>
 
+<p><i>Note</i>: without loss of generality you could imagine that the two teams always play all 7 games, regardless of the outcome. Technically they stop playing after one team has achieved 4 wins, because the outcomes of the games no longer impact who wins. However, you could imagine that they continue.</p>
 
-<p>
-<center>
-    <img src="../../../img/chapters/binEquation.png" class="mainFigure"></img>
-</center>
-</p>
-
-<p>Here are a few examples of binomial random variables:
-<ul>
-    <li># of heads in $n$ coin flips
-    <li># of 1’s in randomly generated length $n$ bit string
-    <li># of disk drives crashed in 1000 computer cluster, assuming disks crash independently
-</ul>
-
-
-<!-- Template that renders a single random variable card -->
-
-<div class="bordered">
-<p><b>Binomial Random Variable</b></p>
-
-
-<table>
-<tbody class="rvCardBody">
-	<tr>
-		<th style="width:150px">Notation:</td>
-		<td>$X \sim \Bin(n, p)$</td>
-	</tr>
-	<tr>
-		<th>Description:</td>
-		<td>Number of "successes" in $n$ identical, independent experiments each with probability of success $p$.</td>
-	</tr>
-	<tr>
-		<th>Parameters:</td>
-
-		<td>$n \in \{0, 1, \dots\}$, the number of experiments.<br/>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
-	</tr>
-	
-	
-	<tr>
-		<th>Support:</td>
-		<td>$x \in \{0, 1, \dots, n\}$</td>
-	</tr>
-	<tr>
-		<th>PMF equation:</th>
-		<td class="mathLeft">$$\p(X=x) = {n \choose x}p^x(1-p)^{n-x}$$</td>
-	</tr>
-	<tr>
-		<th>Expectation:</th>
-		<td>$\E[X] = n \cdot p$</td>
-	</tr>
-	<tr>
-		<th>Variance:</th>
-		<td>$\var(X) = n \cdot p \cdot (1-p)$</td>
-	</tr>
-	<tr>
-		<th>PMF graph:</th>
-	</tr>
-</tbody>
-</table>
-<div class="d-flex">
-	<div class="mr-2">
-Parameter $n$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfN" min="1" value="20" step = "1">
-</div>
-<div>
-Parameter $p$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfP" min="0" max="1" value="0.60" step = "0.05">
-</div>
-</div>
-<canvas id="binomialPmf" style="max-height: 400px"></canvas>
-</div>
-
-<script>
-
-$(document).ready(function(){
-	redrawBinomialPmf()
-})
-
-function redrawBinomialPmf() {
-	let parentDivId = 'binomialPmf'
-	let n = Math.round($('#binomialPmfN').val())
-	$('#binomialPmfN').val(n)
-	let p = parseFloat($('#binomialPmfP').val())
-	drawBinomialPmf(parentDivId, n, p)
-}
-
-function drawBinomialPmf(parentDivId, n, p) {
-	if(window.myBinLine) {
-		window.myBinLine.destroy()
-	}
-	console.log(n, p)
-
-	var xValues = []
-	var yValues = []
-	for (var i = 0; i <= n; i++) {
-		let pr_x = binomialPmf(n,p,i).toFixed(5)
-		xValues.push(i)
-		yValues.push(pr_x)
-	}
-	console.log(xValues, yValues)
-	let xLabel = 'Values that X can take on'
-	let yLabel = 'Probability'
-
-	var config = standardPMFConfig(xValues, yValues, xLabel, yLabel)
-	var ctx = document.getElementById(parentDivId).getContext('2d');
-	window.myBinLine = new Chart(ctx, config);
-}
-</script><div style="height: 20px"></div>
-
-<!--What is an indicator r.v.?-->
-<p>One way to think of the binomial is as the sum of $n$ <a href="../../part2/bernoulli">Bernoulli</a>
-    variables. Say that $Y_i \sim \Ber(p)$ is an indicator Bernoulli random variable which is 1 if experiment $i$ is a
-    success. Then if $X$ is the total number of successes in $n$ experiments, $X \sim \Bin(n, p)$:
-    $$
-    X = \sum_{i=1}^n Y_i
-    $$
-<p>Recall that the outcome of $Y_i$ will be 1 or 0, so one way to think of $X$ is as the sum of those 1s and 0s.
-<h2>Binomial PMF</h2>
-<p>The most important property to know about a binomial is its <a href="../../part2/pmf">PMF function</a>:
-<p>
-<center>
-    <img src="../../../img/chapters/binEquation2.png" class="mainFigure"></img>
-</center>
-</p>
-
-<p>Recall, we derived this formula in Part 1. There is a complete example on the probability of $k$ heads in $n$ coin
-    flips, where each flip is heads with probability $0.5$: <a
-            href="../../examples/many_flips">Many Coin Flips</a>. To briefly review, if you think of each
-    experiment as
-    being distinct, then there are ${n \choose k}$ ways of permuting $k$ successes from $n$ experiments. For any of the
-    mutually exclusive permutations, the probability of that permutation is $p^k \cdot (1-p)^{n-k}$.</p>
-
-<!--
-Perhaps include a small explanation or link to the wiki that explains why this term is related to coefficients at all.
- -->
-<p>The name binomial comes from the term ${n \choose k}$ which is formally called the binomial coefficient.</p>
-
-<h2>Expectation of Binomial</h2>
-
-<p>There is an easy way to calculate the expectation of a binomial and a hard way.
-
-    The easy way is to leverage the fact that a binomial is the sum of Bernoulli random variables. $X = \sum_{i=1}^{n}
-    Y_i$ where $Y_i \sim \Ber(p)$. Since the <a href="../../part2/expectation">expectation of the sum</a> of
-    random variables is the sum of expectations, we can add the expectation, $\E[Y_i] = p$, of each of the Bernoulli's:
-    $$
-    \begin{align}
-    \E[X] &= \E\Big[\sum_{i=1}^{n} Y_i\Big] && \text{Since }X = \sum_{i=1}^{n} Y_i \\
-    &= \sum_{i=1}^{n}\E[ Y_i] && \text{Expectation of sum} \\
-    &= \sum_{i=1}^{n}p && \text{Expectation of Bernoulli} \\
-    &= n \cdot p && \text{Sum $n$ times}
-    \end{align}
-    $$
-
-    The hard way is to use the definition of expectation:
-    $$
-    \begin{align}
-    \E[X] &= \sum_{i=0}^n i \cdot \p(X = i) && \text{Def of expectation} \\
-    &= \sum_{i=0}^n i \cdot {n \choose i} p^i(1-p)^{n-i} && \text{Sub in PMF} \\
-    & \cdots && \text{Many steps later} \\
-    &= n \cdot p
-    \end{align}
-    $$
-
-<h2>Binomial Distribution in Python</h2>
-
-<p>As you might expect, you can use binomial distributions in code. The standarized library for binomials is <code>scipy.stats.binom</code>. </p>
-
-<p>One of the most helpful methods that this package provides is a way to calculate the PMF. For example, say $X \sim \text{Bin}(n=5,p=0.6)$ and you want to find $\P(X=2)$ you could use the following code:</p>
-
-<pre class="language-python"><code>from scipy import stats
-
-# define variables for x, n, and p
-n = 5
-p = 0.6
-x = 2
-
-# use scipy to compute the pmf
-p_x = stats.binom.pmf(x, n, p)
-
-# use the probability for future work
-print(f'P(X = {x}) = {p_x}')</code></pre>
-<p>
-<div>Console:<br/><pre class="console"><code>P(X = 2) = 0.2304</code></pre></div>
-
-<p>Another particularly helpful function is the ability to generate a random sample from a binomial. For example, say $X \sim \Bin(n=10, p = 0.3)$ represents the number of requests to a website. We can draw 100 samples from this distrubtion using the following code:</p>
-
-<pre class="language-python"><code>from scipy import stats
-
-# define variables for x, n, and p
-n = 10
-p = 0.3
-x = 2
-
-# use scipy to compute the pmf
-samples = stats.binom.rvs(n, p, size=100)
-
-# use the probability for future work
-print(samples)</code></pre>
-
-<p>
-<div>Console:<br/><pre class="console"><code>[4 5 3 1 4 5 3 1 4 6 5 6 1 2 1 1 2 3 2 5 2 2 2 4 4 2 2 3 6 3 1 1 4 2 6 2 4
- 2 3 3 4 2 4 2 4 5 0 1 4 3 4 3 3 1 3 1 1 2 2 2 2 3 5 3 3 3 2 1 3 2 1 2 3 3
- 4 5 1 3 7 1 4 1 3 3 4 4 1 2 4 4 0 2 4 3 2 3 3 1 1 4]</code></pre></div>
- <p>You might be wondering what a random sample is! A random sample is a randomly chosen assignment to a our random variable. Above we have 100 such assignments. The probability that value $x$ is chosen is given by the PMF: $\p(X=x)$. You will notice that even though 8 is a possible assignment to the binomial above, in 100 samples we never saw the value 8. Why? Because $P(X=8) \approx 0.0014$. You would need to draw 1,000 samples before you would expect to see an 8.
-
-    <p>There are also functions for getting the mean, the variance, and more. You can read the scipy.stats.binom <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html">documentation</a>, especially the list of methods.</p>
-
+<p>What is the probability that the warriors win the series? Leave your answer to 3 decimal places</p>
 
                         
 
