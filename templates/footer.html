@@ -43,17 +43,14 @@
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
 
-        
+        //this highlights the link if the last two parts of url path and active link match
         let lastPart = getUrlKey()
-        console.log('lastpart', lastPart)
-        
-        // Bug: this code will highlight anything which matches with the last part
+        console.log("lastPart", lastPart)
         $("#sidebar").find('a').each(function(){
-            // find link which ends with last part and add style
             let currLink = $($(this)[0]).attr('href')
             let currLastPart = getLastPartOfUrl(currLink)
-            console.log('currlastpart', currLastPart)
             if (currLastPart === lastPart) {
+                console.log("currLastPart", currLastPart)
                 $($(this)[0]).addClass('active-link');
             }
         })
@@ -70,22 +67,16 @@
     }
 
     function getUrlKey() {
-        var path = window.location.pathname;
-        return getLastPartOfUrl(path)
+        let path = window.location.pathname;
+        return path.split("/").slice(2,-1).join("/")
         
     }
 
     function getLastPartOfUrl(path) {
-        let parts = path.split('/')
-        var currIndex = parts.length - 1
-        while(currIndex >= 0) {
-            let nextPart = parts[currIndex]
-            if(nextPart) {
-                return nextPart
-            }
-            currIndex -= 1
+        if (path) {
+            return path.split("/").slice(-2).join("/")
         }
-        return ''
+        return ""
     }
 
     function submitQuestion() {
