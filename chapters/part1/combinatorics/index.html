@@ -243,19 +243,19 @@ permute them. The selection remains unchanged.
 <p>
 <div class="purpleBox">
 
-<b>Part A:</b> How many ways are there to select 3 books from a set of 6?
-<b>Solution:</b> If each of the books are distinct, then this is another straightforward combination problem. There are $\binom{6}{3} = \frac{6!}{3!3!} = 20$ ways.
+<b>Part A:</b> How many ways are there to select 3 books from a set of 6?<br>
+<b>Solution:</b> If each of the books are distinct, then this is another straightforward combination problem. There are $\binom{6}{3} = \frac{6!}{3!(6-3)!} = 20$ ways.
 
 <hr/>
-<b>Part B:</b> How many ways are there to select 3 books if there are two books that should not both be chosen together? For example, if you are choosing 3 out of 6 probability books, don't choose both the 8th and 9th edition of the Ross textbook.
-<b>Solution:</b> This problem is easier to solve if we split it up into cases. Consider the following three different cases:
+<b>Part B:</b> How many ways are there to select 3 books if, in the set of 6, there are two books that we would not want to select both of? For example, if you are choosing 3 probability books out of a set of 6, you wouldn't want to choose both the 8th and 9th editions of the Ross textbook.<br>
+<b>Solution:</b>Consider the following three cases:
 
 <br/>
-Case 1: Select the 8th Ed. and 2 other non-9th Ed.: There are $\binom{4}{2}$ ways of doing so.<br/>
+Case 1: Select the 8th Ed. and 2 other non-9th Ed. books: There are $\binom{4}{2}$ ways of doing so.<br/>
 
-Case 2: Select the 9th Ed. and 2 other non-8th Ed.: There are $\binom{4}{2}$ ways of doing so.<br/>
+Case 2: Select the 9th Ed. and 2 other non-8th Ed. books: There are $\binom{4}{2}$ ways of doing so.<br/>
 
-Case 3: Select 3 from the books that are neither the 8th nor the 8th edition:	There are $\binom{4}{3}$ ways of doing so.<br/>
+Case 3: Select 3 books from the 4 remaining books that are neither the 8th nor the 9th edition:	There are $\binom{4}{3}$ ways of doing so.<br/>
 
 Using our old friend the Sum Rule of Counting, we can add the cases:
 $$
