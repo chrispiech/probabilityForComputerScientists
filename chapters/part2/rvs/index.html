@@ -6,11 +6,11 @@
 
 
 <p>
-A Random Variables (RV) is a variable that probabilistically takes on a value and they are one of the most important constructs in all of probability theory. You can think of an RV as
+A Random Variable (RV) is a variable that probabilistically takes on a value and they are one of the most important constructs in all of probability theory. You can think of an RV as
 being like a variable in a programming language, and in fact random variables are just as important to probability theory as variables are to programming. Random Variables take on values, have types and have domains over
 which they are applicable.</p>
 
-<p>Random variables work with all of the foundational theory we have build up to this point. We can define events that occur if the random variable takes one values that satisfy
+<p>Random variables work with all of the foundational theory we have built up to this point. We can define events that occur if the random variable takes on values that satisfy
 a numerical test (eg does the variable equal 5, is the variable less than 8).</p>
 <p>
 Lets look at a first example of a random variable. Say we flip three fair coins. We can define a random variable Y to be the total number
@@ -58,7 +58,7 @@ random variable types are discrete and continuous. Discrete random variables can
 
 <h2>Properties of random variables</h2>
 
-<p>There are many properties of a random variable of any random variable some of which we will dive into extensively. Here is a brief summary. Each random variable has:
+<p>There are many properties of a random variable some of which we will dive into extensively. Here is a brief summary. Each random variable has:
 
 <p>
 <table class="table">
@@ -162,4 +162,4 @@ $$
 \P(Y = y) = \frac{0.75}{y!(3-y)!} && \text{If } 0 \leq y \leq 3
 \end{align}
 $$
-	This statement above is a function which takes in a parameter $y$ as input and returns the numeric probability $\P(Y=y)$ as output. This particular expression allows us to talk about the probability that the number of heads is 0, 1, 2 or 3 all in one expression. You can plug in any one of those values for $y$ to get the corresponding probability. It is customary to use lower-case symbols for non-random values. The use of an equals sign in the "event" can be confusing. For example what does this expression say $\P(Y = 1) = 0.375$? It says that the probability that "$Y$ takes on the value 4" is 0.375. For discrete random variables this function is called the "<a href="{{pathToLang}}part2/pmf">probability mass function</a>" and it is the topic of our next chapter.</p>
+	This statement above is a function which takes in a parameter $y$ as input and returns the numeric probability $\P(Y=y)$ as output. This particular expression allows us to talk about the probability that the number of heads is 0, 1, 2 or 3 all in one expression. You can plug in any one of those values for $y$ to get the corresponding probability. It is customary to use lower-case symbols for non-random values. The use of an equals sign in the "event" can be confusing. For example what does this expression say $\P(Y = 1) = 0.375$? It says that the probability that "$Y$ takes on the value 1" is 0.375. For discrete random variables this function is called the "<a href="{{pathToLang}}part2/pmf">probability mass function</a>" and it is the topic of our next chapter.</p>
