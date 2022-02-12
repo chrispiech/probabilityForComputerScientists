@@ -71,7 +71,7 @@ Even though the visual example (with equally likely outcome spaces) is useful fo
 
 <h2>Conditional Probability Example</h2>
 
-<p>Let's use a real world example to better understand conditional probability: movie recommendation. Imagine a streaming service like Netflix wants to figure out the probability that a user will watch a movie $E$ (for example, <a href="https://en.wikipedia.org/wiki/Life_Is_Beautiful">Life is Beautiful</a>), based on knowing that they watched a different movie $F$ (say <a href="https://en.wikipedia.org/wiki/Am%C3%A9lie">Amélie</a>). To start lets answer the simpler question, what is the probability that a user watches movie Life is Beautiful, $E$? We can solve this problem using the definition of probability and a dataset of movie watching [<a href="https://www.kaggle.com/netflix-inc/netflix-prize-data">1</a>]:
+<p>Let's use a real world example to better understand conditional probability: movie recommendation. Imagine a streaming service like Netflix wants to figure out the probability that a user will watch a movie $E$ (for example, <a href="https://en.wikipedia.org/wiki/Life_Is_Beautiful">Life is Beautiful</a>), based on knowing that they watched a different movie $F$ (say <a href="https://en.wikipedia.org/wiki/Am%C3%A9lie">Amélie</a>). To start lets answer the simpler question, what is the probability that a user watches the movie Life is Beautiful, $E$? We can solve this problem using the definition of probability and a dataset of movie watching [<a href="https://www.kaggle.com/netflix-inc/netflix-prize-data">1</a>]:
 	$$
 	\begin{align}
 	\p(E) &= \lim_{n \rightarrow \infty} \frac{\text{count}(E)}{n} \approx \frac{\text{# people who watched movie $E$}}{\text{# people on Netflix}} \\
@@ -91,7 +91,7 @@ In fact we can do this for many movies $E$:
 </div>
 </p>
 
-<p>Now for a more interesting question. What is the What is the probability that a user will watch the movie
+<p>Now for a more interesting question. What is the probability that a user will watch the movie
 Life is Beautiful ($E$), given they watched Amelie ($F$)? We can use the definition of conditional probability.
 $$
 \begin{align}
@@ -118,7 +118,7 @@ If we let $F$ be the event that someone watches the movie Amélie, we can now ca
 </div>
 </p>
 
-<p>Why do some probabilities go up, some probabilities go down, and some probabilities are unchanged after we observe that the person has watched Amelie ($F$)? If you know someone watched Amelie, they are more likely to watch life is beautiful, and less likely to watch star wars. We have new information on the person!
+<p>Why do some probabilities go up, some probabilities go down, and some probabilities are unchanged after we observe that the person has watched Amelie ($F$)? If you know someone watched Amelie, they are more likely to watch Life is Beautiful, and less likely to watch Star Wars. We have new information on the person!
 
 <!-- <h2>Difference between <b>and</b> and conditionals</h2> -->
 
@@ -170,11 +170,11 @@ an event (in this case $G$):</p>
 
 	<h2>Conditioning on Multiple Events</h2>
 
-	<p>The conditional paradigm also applies to the definition of conditional probability! Again if we consistently condition on some event $G$ occuring, the rule still holds:
+	<p>The conditional paradigm also applies to the definition of conditional probability! Again if we consistently condition on some event $G$ occurring, the rule still holds:
 		$$
 \p(E |F, G) = \frac{\p(E \and F | G)}{\p(F | G)}
 		$$
-The term $\p(E | F, G)$ is new notation for conditioning on multiple events.  You should read that term as "The probability of E occuring, given that both F and G have occured". This equation states that the definition for conditional probability of $E | F$ still applies in the universe where $G$ has occured. Do you think that  $\p(E |F, G)$ should be equal to $\p(E |F)$? The answer is: sometimes yes and sometimes no. 
+The term $\p(E | F, G)$ is new notation for conditioning on multiple events.  You should read that term as "The probability of E occurring, given that both F and G have occurred". This equation states that the definition for conditional probability of $E | F$ still applies in the universe where $G$ has occurred. Do you think that  $\p(E |F, G)$ should be equal to $\p(E |F)$? The answer is: sometimes yes and sometimes no. 
 
 	
 
