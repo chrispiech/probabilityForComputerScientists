@@ -8,11 +8,11 @@
 
 <h2>From Discrete to Continuous</h2>
 
-<p>To make our transition from thinking about discrete random variable, to thinking about continuous random variables, lets start with a thought experiment: Imagine you are running to catch the bus. You know that you will arrive at 2:15pm but you don't know exactly when the bus will arrive, and want to think of the arrival time in minutes past 2pm as a random variable $T$ so that you can calculate the probability that you will have to wait more than five minutes $P(15 < T < 20)$.</p>
+<p>To make our transition from thinking about discrete random variables, to thinking about continuous random variables, lets start with a thought experiment: Imagine you are running to catch the bus. You know that you will arrive at 2:15pm but you don't know exactly when the bus will arrive, and want to think of the arrival time in minutes past 2pm as a random variable $T$ so that you can calculate the probability that you will have to wait more than five minutes $P(15 < T < 20)$.</p>
 
 <p>We immediately face a problem. For discrete distributions we would describe the probability that a random variable takes on exact values. This doesn't make sense for continuous values, like the time the bus arrives. As an example, what is the probability that the bus arrives at exactly 2:17pm and 12.12333911102389234 seconds? Similarly, if I were to ask you: what is the probability of a child being born with weight <i>exactly</i> equal to 3.523112342234 kilos, you might recognize that question as ridiculous. No child will have precisely that weight. Real values can have infinite precision and as such it is a bit mind boggling to think about the probability that a random variable takes on a specific value.</p>
 
-<p>Instead, let's start by discretizing time, our continuous variable, by breakint it into 5 minute chunks. We can now think about something like, the probability that the bus arrives between 2:00p and 2:05 as an event with some probability (see figure below on the left). Five minute chunks seem a bit coarse. You could imagine that instead, we could have discretized time into 2.5minute chunks (figure in the center). In this case the probability that the bus shows up between 15 mins and 20 mins after 2pm is the sum of two chunks, shown in orange. Why stop there? In the limit we could keep breaking time down into smaller and smaller pieces. Eventually we will be left with a derivative of probability at each moment of time, where the probability that $P(15 < T < 20)$ is the integral of that derivative between 15 and 20 (figure on the right).</p>
+<p>Instead, let's start by discretizing time, our continuous variable, by breaking it into 5 minute chunks. We can now think about something like, the probability that the bus arrives between 2:00p and 2:05 as an event with some probability (see figure below on the left). Five minute chunks seem a bit coarse. You could imagine that instead, we could have discretized time into 2.5 minute chunks (figure in the center). In this case the probability that the bus shows up between 15 mins and 20 mins after 2pm is the sum of two chunks, shown in orange. Why stop there? In the limit we could keep breaking time down into smaller and smaller pieces. Eventually we will be left with a derivative of probability at each moment of time, where the probability that $P(15 < T < 20)$ is the integral of that derivative between 15 and 20 (figure on the right).</p>
 
 <img class="mainFigureFull" src="{{pathToRoot}}img/chapters/discreteToContinuous.png"></img>
 
@@ -22,7 +22,7 @@
 $$
 f(X=x)  \quad \or \quad f(x)
 $$
-Where the notation on the right hand side is shorthand where the lowercase $x$ implies that we are talking about the relative likelihood of a continuous random variable which is the upper case $X$.
+Where the notation on the right hand side is shorthand and the lowercase $x$ implies that we are talking about the relative likelihood of a continuous random variable which is the upper case $X$.
 Like in the bus example, the PDF is the derivative of probability at all points of the random variable. This means that the PDF has the important property that you can integrate over it to find the probability that the random variable takes on values within a range $(a, b)$.</p>
 
 <p>
@@ -63,14 +63,16 @@ $$
 For a continuous random variable $X$ the Cumulative Distribution Function, written $F(x)$ is:
 $$
 \begin{align*}
-    &F(x) = P(X \leq x) = \int_{-\infty}^{x} f(y)\d y
+    &F(x) = P(X \leq x) = \int_{-\infty}^{x} f(x)\d x
 \end{align*}
 $$
 </div>
 </p>
 
 <p>
-Why is the CDF the probability that a random variable takes on a value \textbf{less than} the input value as opposed to greater than? It is a matter of convention. But it is a useful convention. Most probability questions can be solved simply by knowing the CDF (and taking advantage of the fact that the integral over the range $-\infty$ to $\infty$ is 1. Here are a few examples of how you can answer probability questions by just using a CDF:
+
+Why is the CDF the probability that a random variable takes on a value <b>less than</b> the input value as opposed to greater than? It is a matter of convention. But it is a useful convention. Most probability questions can be solved simply by knowing the CDF (and taking advantage of the fact that the integral over the range $-\infty$ to $\infty$ is 1. Here are a few examples of how you can answer probability questions by just using a CDF:
+
 \begin{align*}
  &\text{Probability Query} && \text{Solution} && \text{Explanation} \\
     &\P(X < a) && F(a) && \text{That is the definition of the CDF}\\
@@ -81,7 +83,7 @@ Why is the CDF the probability that a random variable takes on a value \textbf{l
 </p>
 
 <p>
-The continuous distribution also exists for discrete random variables, but there is less utility to a CDF in the discrete world as none of our discrete random variables had ``closed form" (eg without any summation) functions for the CDF:
+The continuous distribution also exists for discrete random variables, but there is less utility to a CDF in the discrete world as none of our discrete random variables had "closed form" (eg without any summation) functions for the CDF:
 \begin{align*}
     F_X(a) = \sum_{i = 1}^a P(X = i) 
 \end{align*}

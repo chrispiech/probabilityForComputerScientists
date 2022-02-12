@@ -24,7 +24,7 @@ https://www.youtube.com/watch?v=aGoYJDZ3fdo
 	Many interesting problems involve not one random variable, but rather several interacting with one another. In order to create interesting probabilistic <i>models</i> and to reason in real world situations, we are going to need to learn how to consider several random variables jointly.
 </p>
 
-<p>In this section we are going to use disease prediction as a working example to introduce you to the concepts involved in probabilistic models. The general question is: a person has a set of observed symptops. Given the symptoms what is the probability over each possible disease? </p>
+<p>In this section we are going to use disease prediction as a working example to introduce you to the concepts involved in probabilistic models. The general question is: a person has a set of observed symptons. Given the symptoms what is the probability over each possible disease? </p>
 
 <p>We have already considered events that co-occur and covered concepts such as independence and conditional probability. What is new about this section is (1) we are going to cover how to handle <i>random variables</i> which co-occur and (2) we are going to talk about how computers can reason under large probabilistic models.</p>
 
@@ -43,7 +43,7 @@ https://www.youtube.com/watch?v=aGoYJDZ3fdo
     \p(X=x,Y=y) && \text{Joint function for $X$ and $Y$}
     \end{align}
     $$
-    <p>You should read the comma as an "and" and as such this is saying the probability that $X=x$ and $Y=y$. Again like for single variables, as shorthand, we often write just the values and it implies that we are talking about the probability of the random variables taking on those values. This notation is convenient because it is shorter, and it makes it explicit that the function is operating over two parameters. It requires to to recall that the event is a <i>random variable</i> taking on the given value.
+    <p>You should read the comma as an "and" and as such this is saying the probability that $X=x$ and $Y=y$. Again like for single variables, as shorthand, we often write just the values and it implies that we are talking about the probability of the random variables taking on those values. This notation is convenient because it is shorter, and it makes it explicit that the function is operating over two parameters. It requires to recall that the event is a <i>random variable</i> taking on the given value.
     $$
     \begin{align}
     \p(x,y) && \text{Shorthand for }\p(X=x,Y=y)
@@ -164,7 +164,7 @@ P(F, S, D) = P(D) P(F | D) P(S | D)
 <p>
 	A few key observations:
 	<ul>
-		<li>Each cell in this table represents the probability of one assignment of variables. For example the probability that someone cant smell, $S=0$, has a low fever, $F=\text{low}$, and has the illness, $D=1$, can be directly read off the table: $P(D=1,S=0,F=\text{low}) = 0.005$. 
+		<li>Each cell in this table represents the probability of one assignment of variables. For example the probability that someone can't smell, $S=0$, has a low fever, $F=\text{low}$, and has the illness, $D=1$, can be directly read off the table: $P(D=1,S=0,F=\text{low}) = 0.005$. 
 		<li>These are joint probabilities <i>not</i> conditional probabilities. The value 0.005 is the value of illness, no smell and low fever. It is not the probability of no smell and low fever given illness. A table which stored conditional probabilities would be called a conditional probability table, this is a joint probability table.
 		<li>If you sum over all cells, the total will be 1. Each cell is a mutually exclusive combination of events and the cells are meant to span the entire space of possible outcomes.
 			<li>This table is large! We can count the number of cells using the <a href="{{pathToLang}}part1/counting">step rule of counting</a>. If $n_i$ is the number of different values that random variable $i$ can take on, the number of cells in the joint table is $\prod_i n_i$.
@@ -173,7 +173,7 @@ P(F, S, D) = P(D) P(F | D) P(S | D)
 
 <h2>Properties of Joint Distributions</h2>
 
-<p>There are many properties of a random variable of any random variable some of which we will dive into extensively. Here is a brief summary. Each random variable has:
+<p>There are many properties of a random variable of any joint distribution some of which we will dive into extensively. Here is a brief summary. Each random variable has:
 
 <p>
 <table class="table">

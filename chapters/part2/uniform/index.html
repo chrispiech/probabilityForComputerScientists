@@ -26,7 +26,7 @@ Notice how the density $1/(\beta - \alpha$) is exactly the same regardless of th
 <p><b>Example:</b> You are running to the bus stop. You don’t know exactly when the bus arrives. You believe all times between 2 and 2:30 are equally likely. You show up at 2:15pm. What is P(wait < 5 minutes)?
 </p>
 
-Let $T$ be the time, in minutes after 2p that the bus arrives. Because we think that all times are equally likely in this range, $T \sim \Uni(\alpha = 0, \beta = 30)$. The probability that you wait 5 minutes is equal to the probability that the bus shows up between 2:15 and 2:20. In other words $\p(15 < T < 20)$:
+Let $T$ be the time, in minutes after 2pm that the bus arrives. Because we think that all times are equally likely in this range, $T \sim \Uni(\alpha = 0, \beta = 30)$. The probability that you wait 5 minutes is equal to the probability that the bus shows up between 2:15 and 2:20. In other words $\p(15 < T < 20)$:
 \begin{align*}
     \p(\text{Wait under 5 mins}) &= \p(15 < T < 20) \\
     &= \int_{15}^{20} f_T(x) \partial x \\
