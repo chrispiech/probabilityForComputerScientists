@@ -87,7 +87,7 @@ $$
 
 % include('chapters/part2/pmf/sumDiceList.html')
 
-<p>Note that this data, on its own, represents an approximation for the probability mass function. If you wanted to approximate $\p(Y=5)$ you could simply count the number of times that "5" occurs in your data. This is an approximation based on the <a href="">definition of probability</a>. Here is the full <a href="https://en.wikipedia.org/wiki/Histogram">histogram</a> of the data, a count of times each value occurs:</p>
+<p>Note that this data, on its own, represents an approximation for the probability mass function. If you wanted to approximate $\p(Y=3)$ you could simply count the number of times that "3" occurs in your data. This is an approximation based on the <a href="">definition of probability</a>. Here is the full <a href="https://en.wikipedia.org/wiki/Histogram">histogram</a> of the data, a count of times each value occurs:</p>
 
 <p>
 	<center>
@@ -97,8 +97,8 @@ $$
 
 <p>A normalized histogram (where each value is divided by the length of your data list) is an approximation of the PMF. For a dataset of discrete numbers, a histogram shows the count of each value (in this case $y$). By the definition of probability, if you divide this count by the number of experiments run, you arrive at an approximation of the probability of the event $\p(Y=y)$. In our example, we have 10,000 elements in our dataset. The count of times that 3 occurs is 552. Note that:
 	$$\begin{align}
-	\frac{\text{count}(Y=5)}{n} &= \frac{552}{10000} = 0.0552 \\
-	\p(Y=5) &= \frac{4}{36} = 0.0555
+	\frac{\text{count}(Y=3)}{n} &= \frac{552}{10000} = 0.0552 \\
+	\p(Y=3) &= \frac{4}{36} = 0.0555
 	\end{align}
 	$$
 </p>

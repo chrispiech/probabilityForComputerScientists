@@ -7,7 +7,7 @@
 <p>Bayes' Theorem is one of the most ubiquitous results in probability for computer scientists. In a nutshell, Bayes' theorem  provides a way to convert a conditional probability from one direction, say $\p(E|F)$, to the other direction, $\p(F|E)$.</p> 
 
 <p>Bayes' theorem is a mathematical identity which we can
-derive ourselves. Start with the definition of conditional probability and then expanding the $\and$ term using the chain rule:
+derive ourselves. Start with the definition of conditional probability and then expand the $\and$ term using the chain rule:
 
 
 $$
@@ -50,7 +50,7 @@ This theorem makes no assumptions about $E$ or $F$ so it will apply for any two 
 
 
 <p>
-	There is a pattern here: in each example we care about knowing some unobservable -- or hard to observe -- state of the world. This state of the world "causes" some easy-to-observe evidence. For example: having the flu (something we would like to know) <b><i>causes</i></b> a fever (something we can easily observe), not the other way around. We often call the unobservable state the "belief" and the observable state the "evidence". For that reason lets rename the events! Lets call the unobservable thing we want to know $B$ for belief. Lets call the thing we have evidence of $E$ for evidence. This makes is clear that Bayes' theorem allows us to calculate an updated belief given evidence: $\p(B | E)$
+	There is a pattern here: in each example we care about knowing some unobservable -- or hard to observe -- state of the world. This state of the world "causes" some easy-to-observe evidence. For example: having the flu (something we would like to know) <b><i>causes</i></b> a fever (something we can easily observe), not the other way around. We often call the unobservable state the "belief" and the observable state the "evidence". For that reason lets rename the events! Lets call the unobservable thing we want to know $B$ for belief. Lets call the thing we have evidence of $E$ for evidence. This makes it clear that Bayes' theorem allows us to calculate an updated belief given evidence: $\p(B | E)$
 </p>
 
 </p>
@@ -70,7 +70,7 @@ This theorem makes no assumptions about $E$ or $F$ so it will apply for any two 
 "posterior": it is your updated belief of $B$ after you take into account evidence $E$. The term $\p(B)$ is often called the "prior": it was your belief before seeing any evidence. The term $\p(E|B)$ is called the update and $\p(E)$ is
 often called the normalization constant.</p>
 
-<p>There are several techniques for handling the case where the denominator is not know. One technique is to use the law of total probability to expand out the term, resulting in another formula, called <b>Bayes' Theorem with Law of Total Probability</b>:
+<p>There are several techniques for handling the case where the denominator is not known. One technique is to use the law of total probability to expand out the term, resulting in another formula, called <b>Bayes' Theorem with Law of Total Probability</b>:
 $$
 \p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E|B)\cdot \p(B) + \p(E|B\c) \cdot \p(B\c)} 
 $$
@@ -102,7 +102,7 @@ evidence.</p>
 
 	<h2>Bayes with the General Law of Total Probability</h2>
 
-	<p>A classic challenge when applying Bayes' theorm is to calculate the probability of the normalization constant $\p(E)$ in the denominator of Bayes' Theorem. One common strategy for calculating this probability is to use the law of total probability. Our expanded version of Bayes' Theorem uses the simple version of the total law of probability: $\p(E) = \p(E|F)\p(F) + \p(E|F^c)
+	<p>A classic challenge when applying Bayes' theorem is to calculate the probability of the normalization constant $\p(E)$ in the denominator of Bayes' Theorem. One common strategy for calculating this probability is to use the law of total probability. Our expanded version of Bayes' Theorem uses the simple version of the total law of probability: $\p(E) = \p(E|F)\p(F) + \p(E|F^c)
 	\p(F^c)$. Sometimes you will want the more expanded version of the <a href="{{pathToLang}}part1/law_total">law of total probability</a>: $\p(E) = \sum_i\p(E|B_i)\p(B_i)$. Recall that this only works if the events $B_i$ are mutually exclusive and cover the sample space.
 	</p>
 	<p>For example say we are trying to track a phone which could be in any one of $n$ discrete
@@ -145,7 +145,7 @@ $$
 }{
 	\frac{\p(E|B\c)\p(B\c)}{\p(E)}
 }
-&& \text{Apply Bayes' Theorm to both terms} \\
+&& \text{Apply Bayes' Theorem to both terms} \\
 &= \frac{
 	\p(E|B)\p(B)
 }{
