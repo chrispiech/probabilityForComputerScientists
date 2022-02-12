@@ -36,8 +36,8 @@ are indistinct. We will handle those cases shortly! Note that unique is a synony
 
 <p>
 	<div class="purpleBox">
-		<p><b><i>Example</i></b>: How many unique orderings of characters are possible for the string "BAYES"?
-<b><i>Solution</i></b>: Since the order of characters is important, we are considering all permutations of the 5 distinct
+		<p><b>Example</b>: How many unique orderings of characters are possible for the string "BAYES"?
+<b>Solution</b>: Since the order of characters is important, we are considering all permutations of the 5 distinct
 characters B, A, Y, E, and S: $5! = 120$. Here is the full list:</p>
 
 <p >BAYES, BAYSE, BAEYS, BAESY, BASYE, BASEY, BYAES, BYASE, BYEAS, BYESA, BYSAE, BYSEA, BEAYS, BEASY, BEYAS, BEYSA, BESAY, BESYA, BSAYE, BSAEY, BSYAE, BSYEA, BSEAY, BSEYA, ABYES, ABYSE, ABEYS, ABESY, ABSYE, ABSEY, AYBES, AYBSE, AYEBS, AYESB, AYSBE, AYSEB, AEBYS, AEBSY, AEYBS, AEYSB, AESBY, AESYB, ASBYE, ASBEY, ASYBE, ASYEB, ASEBY, ASEYB, YBAES, YBASE, YBEAS, YBESA, YBSAE, YBSEA, YABES, YABSE, YAEBS, YAESB, YASBE, YASEB, YEBAS, YEBSA, YEABS, YEASB, YESBA, YESAB, YSBAE, YSBEA, YSABE, YSAEB, YSEBA, YSEAB, EBAYS, EBASY, EBYAS, EBYSA, EBSAY, EBSYA, EABYS, EABSY, EAYBS, EAYSB, EASBY, EASYB, EYBAS, EYBSA, EYABS, EYASB, EYSBA, EYSAB, ESBAY, ESBYA, ESABY, ESAYB, ESYBA, ESYAB, SBAYE, SBAEY, SBYAE, SBYEA, SBEAY, SBEYA, SABYE, SABEY, SAYBE, SAYEB, SAEBY, SAEYB, SYBAE, SYBEA, SYABE, SYAEB, SYEBA, SYEAB, SEBAY, SEBYA, SEABY, SEAYB, SEYBA, SEYAB</p>
@@ -46,9 +46,9 @@ characters B, A, Y, E, and S: $5! = 120$. Here is the full list:</p>
 
 <p>
 	<div class="purpleBox">
-		<b><i>Example</i></b>: a smart-phone has a 4-digit passcode. Suppose there are 4 smudges over 4 digits on
+		<b>Example</b>: a smart-phone has a 4-digit passcode. Suppose there are 4 smudges over 4 digits on
 the screen. How many distinct passcodes are possible?<br/>
-<b><i>Solution</i></b>: Since the order of digits in the code is important, we should use permutations. And since
+<b>Solution</b>: Since the order of digits in the code is important, we should use permutations. And since
 there are exactly four smudges we know that each number in the passcode is distinct. Thus, we can plug in the
 permutation formula: 4! = 24.
 	</div>
@@ -76,8 +76,8 @@ $$</span></p>
 
 <p>
 	<div class="purpleBox">
-		<b><i>Example</i></b>: How many distinct bit strings can be formed from three 0’s and two 1’s?<br/>
-<b><i>Solution</i></b>: 5 total digits would give 5! permutations. But that is assuming the 0’s and 1’s are
+		<b>Example</b>: How many distinct bit strings can be formed from three 0’s and two 1’s?<br/>
+<b>Solution</b>: 5 total digits would give 5! permutations. But that is assuming the 0’s and 1’s are
 distinguishable (to make that explicit, let’s give each one a subscript). Here are the $3! \cdot 2! = 12$ different ways that we could have arrived at the identical string "01100" if we thought of each 0 and 1 as unique.
 <center>
 <table id="three0sTwo1s"></table>
@@ -145,7 +145,7 @@ $$
 <hr/>
 
 
-In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings are: $$\frac{11!}{1!4!4!2!} = 34,650$$
+<b>Solution:</b> In the case of the string "MISSISSIPPI", we should separate the characters into four distinct groups of indistinct characters: one "M", four "I"s, four "S"s, and two "P"s. The number of distinct orderings are: $$\frac{11!}{1!4!4!2!} = 34,650$$
 	</div>
 </p>
 
@@ -243,12 +243,15 @@ permute them. The selection remains unchanged.
 <p>
 <div class="purpleBox">
 
-<b>Part A:</b> How many ways are there to select 3 books from a set of 6?<br>
-<b>Solution:</b> If each of the books are distinct, then this is another straightforward combination problem. There are $\binom{6}{3} = \frac{6!}{3!(6-3)!} = 20$ ways.
+<b>Part A:</b> How many ways are there to select 3 books from a set of 6?
+<br>
+<b>Solution:</b> If each of the books are distinct, then this is another straightforward combination problem. There are $\binom{6}{3} = \frac{6!}{3!3!} = 20$ ways.
 
 <hr/>
-<b>Part B:</b> How many ways are there to select 3 books if, in the set of 6, there are two books that we would not want to select both of? For example, if you are choosing 3 probability books out of a set of 6, you wouldn't want to choose both the 8th and 9th editions of the Ross textbook.<br>
-<b>Solution:</b>Consider the following three cases:
+<b>Part B:</b> How many ways are there to select 3 books if there are two books that should not both be chosen together? For example, if you are choosing 3 out of 6 probability books, don't choose both the 8th and 9th edition of the Ross textbook.
+<br>
+<b>Solution:</b> This problem is easier to solve if we split it up into cases. Consider the following three different cases:
+
 
 <br/>
 Case 1: Select the 8th Ed. and 2 other non-9th Ed. books: There are $\binom{4}{2}$ ways of doing so.<br/>

@@ -4,7 +4,7 @@
 <center><h1>Poisson Distribution</h1></center>
 <hr/>
 
-<p>A Poisson random variable gives the probability of a given number of events in a fixed interval of time (or space). It make the Poisson assumption that  events occur with a known constant mean rate and independently of the time since the last event.
+<p>A Poisson random variable gives the probability of a given number of events in a fixed interval of time (or space). It makes the Poisson assumption that  events occur with a known constant mean rate and independently of the time since the last event.
 	</p>
 
 <%
@@ -15,7 +15,7 @@
 
 <p>In this section we show the intuition behind the Poisson derivation. It is both a great way to deeply understand the Poisson, as well as good practice with Binomial distributions.</p>
 
-<p>Let's work on the problem of predicting the chance of a given number of events occuring in a fixed time interval &mdash; the next minute. For example, imagine you are working on a ride sharing application and you care about the probability of how many requests you get from a particular area. From historical data, you know that the average requests per minute is $\lambda = 5$. What is the probability of getting 1, 2, 3, etc requests in a minute?</p>
+<p>Let's work on the problem of predicting the chance of a given number of events occurring in a fixed time interval &mdash; the next minute. For example, imagine you are working on a ride sharing application and you care about the probability of how many requests you get from a particular area. From historical data, you know that the average requests per minute is $\lambda = 5$. What is the probability of getting 1, 2, 3, etc requests in a minute?</p>
 
 <p><i class="fas fa-lightbulb"></i>: We could approximate a solution to this problem by using a binomial distribution! Lets say we split our minute into 60 seconds, and make each second an <a href="{{pathToLang}}part2/bernoulli">indicator Bernoulli</a> variable &mdash; you either get a request or you don't. If you get a request in a second, the indicator is 1. Otherwise it is 0. Here is a visualization of our 60 binary-indicators. In this example imagine we have requests at 2.75 and 7.12 seconds. the corresponding indicator variables are  <span class="blue">blue</span> filled in boxes:</p>
 	<center>1 minute</center>
@@ -23,7 +23,7 @@
 </div>
 
 <p>
-	The total number of requests received over the minute can be approximated as the sum of the sixty indicator variables, which conveniently matches the description of a <a href="{{pathToLang}}part2/binomial">binomial</a> &mdash; a sum of Bernoullis. Specifically define $X$ to be the number of requests in a minute. $X$ is a binomial with $n=60$ trials. What is the probability, $p$, of a success on a single trial? To make the expectation of $X$ equal the observed historical average $\lambda =5$ we should chose $p$ so that $\lambda = \E[X]$. 
+	The total number of requests received over the minute can be approximated as the sum of the sixty indicator variables, which conveniently matches the description of a <a href="{{pathToLang}}part2/binomial">binomial</a> &mdash; a sum of Bernoullis. Specifically define $X$ to be the number of requests in a minute. $X$ is a binomial with $n=60$ trials. What is the probability, $p$, of a success on a single trial? To make the expectation of $X$ equal the observed historical average $\lambda =5$ we should choose $p$ so that $\lambda = \E[X]$. 
 	$$
 	\begin{align}
 	\lambda &= \E[X] && \text{Expectation matches historical average} \\
@@ -31,7 +31,7 @@
 	p &= \frac{\lambda}{n} && \text{Solving for $p$}
 	\end{align}
 	$$
-	In this case since $\lambda=5$ and $n=60$, we should chose $p=5/60$ and state that $X \sim \Bin(n=60, p=5/60)$. Now that we have a form for $X$ we can answer probability questions about the number of requests by using the Binomial PMF:
+	In this case since $\lambda=5$ and $n=60$, we should choose $p=5/60$ and state that $X \sim \Bin(n=60, p=5/60)$. Now that we have a form for $X$ we can answer probability questions about the number of requests by using the Binomial PMF:
 
 	$$\p(X = x) = {n \choose x} p^x (1-p)^{n-x}$$
 	<center>So for example:</center>
@@ -41,7 +41,7 @@
 	</p>
 
 
-	Great! But don't forget that this was an approximation. We didn't account for the fact that there can be more than one event in a single second. One way to assuage this issue is to devide our minute into more fine-grained intervals (the choice to split it into 60 seconds was rather arbitrary). Instead lets divide our minute into 600 deciseconds, again with requests at 2.75 and 7.12 seconds:
+	Great! But don't forget that this was an approximation. We didn't account for the fact that there can be more than one event in a single second. One way to assuage this issue is to divide our minute into more fine-grained intervals (the choice to split it into 60 seconds was rather arbitrary). Instead lets divide our minute into 600 deciseconds, again with requests at 2.75 and 7.12 seconds:
 	<center>1 minute</center>
 <div id="poissonTimeDecaSec" class="d-flex mb-3" style="width:100%; border-style: solid; border-width: thin; height:50px">
 </div>
@@ -54,7 +54,7 @@ $$\p(X=1) = {600 \choose 1} (5/600)^1 (595/60)^{600-1} \approx 0.0333$$
 </p>
 
 <div class="purpleBox">
-<p>Chose any value of $n$, the number of buckets to divide our minute into: <input onchange="recalculatePoi()" type="number" class="form-control example-inline-input" id="poiInput" style="width:100px" value="0" step = "6000">
+<p>Choose any value of $n$, the number of buckets to divide our minute into: <input onchange="recalculatePoi()" type="number" class="form-control example-inline-input" id="poiInput" style="width:100px" value="0" step = "6000">
 <span id="poiResults">
 </span>
 
