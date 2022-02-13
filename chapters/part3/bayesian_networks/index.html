@@ -33,37 +33,37 @@
 <code>getProbXi(i, k, parents)</code> which returns the probability that $X_i$ (the random var with index <code>i</code>) takes on the value <code>k</code>  given a value for each of the parents of $X_i$ encoded by the list <code>parents</code>: $P(X_i = x_i | \text{Values of parents of }X_i)$
 
 <div class="bordered">
-<b><i>Deeper understanding</i></b>: The reason that a Bayes' Net is so useful is that the "joint" probability can be expressed in exponentially less space as the product of the probabilities of each random variable conditioned on its parents! Without loss of generality, let $X_i$ refer to the $i$th random variable (such that if $X_i$ is a parent of $X_j$ then $i < j$):
+<b><i>Deeper understanding</i></b>: The reason that a Bayes Net is so useful is that the "joint" probability can be expressed in exponentially less space as the product of the probabilities of each random variable conditioned on its parents! Without loss of generality, let $X_i$ refer to the $i$th random variable (such that if $X_i$ is a parent of $X_j$ then $i < j$):
 \begin{align*}
     P&(\text{Joint}) = P(X_1 = x_1, \dots, X_n = x_n) = \prod_i P(X_i = x_i | \text{Values of parents of }X_i )
 \end{align*} 
 
-What assumptions are implicit in a Bayes' Net? Using the chain rule we can decompose the <b>exact</b> joint probability for $n$ random variables. To make the following math easier to digest I am going to use $x_i$ as shorthand for the event that $X_i = x_i$:
+What assumptions are implicit in a Bayes Net? Using the chain rule we can decompose the <b>exact</b> joint probability for $n$ random variables. To make the following math easier to digest I am going to use $x_i$ as shorthand for the event that $X_i = x_i$:
 \begin{align*}
 P(x_1, \dots, x_n) 
 &= \prod_i P(x_i | x_{i-1}, \dots, x_1)\\
 \end{align*}
 
-By looking at the difference in the two equations, we can see that a Bayes' Net is assuming that 
+By looking at the difference in the two equations, we can see that a Bayes Net is assuming that 
 $$P(x_i | x_{i-1}, \dots, x_1) = P(x_i | \text{Values of parents of }X_i)$$
-This is a conditional independence statement. It is saying that once you know the value of the parents of a variable in your network, $X_i$, any further information about non-descendents will not change your belief in $X_i$. Formally we say that $X_i$ is conditionally independent of its non-descendents, given its parents. What is a non-descendent again? In a graph, a descendent of $X_i$ is anything which is in the subtree that starts at $X_i$. Everything else is a non-descendent. Non-descendents include the "ancestor" nodes of $X_i$ as well as nodes which are totally unconnected to $X_i$. When designing Bayes' Nets you don't have to think about this assumption directly. It turns out to be a naturally good assumption if the arrows between your nodes follow a causal path.
+This is a conditional independence statement. It is saying that once you know the value of the parents of a variable in your network, $X_i$, any further information about non-descendents will not change your belief in $X_i$. Formally we say that $X_i$ is conditionally independent of its non-descendents, given its parents. What is a non-descendent again? In a graph, a descendent of $X_i$ is anything which is in the subtree that starts at $X_i$. Everything else is a non-descendent. Non-descendents include the "ancestor" nodes of $X_i$ as well as nodes which are totally unconnected to $X_i$. When designing Bayes Nets you don't have to think about this assumption directly. It turns out to be a naturally good assumption if the arrows between your nodes follow a causal path.
 </div>
 
-<h2>Designing a Bayes' Net</h2>
+<h2>Designing a Bayes Net</h2>
 
-<p>There are several steps to designing a Bayes' Net. 
+<p>There are several steps to designing a Bayes Net. 
 <ol>
 <li>Choose your random variables, and make them nodes. 
 	<li>Add edges, often based off your assumptions about which nodes directly cause which others.
 		<li>Define $P(X_i = x_i | \text{Values of parents of }X_i )$ for all nodes.
 </ol>
 
-<p>As you might have guessed, we can do step (2) and (3) by hand, or, we can have computers try and perform those tasks based on data. The first task is called "structure learning" and the second is an instance of "machine learning." There are fully autonomous solutions to structure learning&mdash;but they only work well if you have a massive amount of data. Alternatively people will often compute a statistic called correlation between all pairs of random variables to help in the art form of designing a Bayes' net. 
+<p>As you might have guessed, we can do step (2) and (3) by hand, or, we can have computers try and perform those tasks based on data. The first task is called "structure learning" and the second is an instance of "machine learning." There are fully autonomous solutions to structure learning&mdash;but they only work well if you have a massive amount of data. Alternatively people will often compute a statistic called correlation between all pairs of random variables to help in the art form of designing a Bayes Net. 
 
 <p>In the next part of the reader we are going to talk about how we could learn $P(X_i = x_i | \text{Values of parents of }X_i )$ from data. For now let's start with the (reasonable) assumption that an expert can write down these functions in equations or as python: <code>getProbXi</code>. 
 
 <h2>Next Steps</h2>
 
-<p>Great! We have a feasible way to define a large network of random variables. First challenge complete. We haven't talked about continuous or multinomial random variables in Bayes' Nets. None of the theory changes: the expert will just have to define <code>getProbXi</code> to handle more values of <code>k</code> than 0 or 1.</p>
+<p>Great! We have a feasible way to define a large network of random variables. First challenge complete. We haven't talked about continuous or multinomial random variables in Bayes Nets. None of the theory changes: the expert will just have to define <code>getProbXi</code> to handle more values of <code>k</code> than 0 or 1.</p>
 
 <p>A Bayesian network is not very interesting to us unless we can use it to solve different conditional probability questions. How can we perform "inference" on a network as complex as a Bayesian network? 
