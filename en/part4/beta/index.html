@@ -565,7 +565,7 @@ function drawBetaPdf9heads(parentDivId, a, b) {
 
 <p>Let's repeat the derivation from the previous section, using non-random variables for the number of observed heads, $h$, and the number of tails, $t$, observed.
 
-<p>If we let $H =h $ be the event that we saw $h$ heads, and let $T=t$ be the even that we saw $t$ tails in $h+t$ coinflips. We want to calculate the probability density function $f(X=x|H=h,T=t)$. We can use the exam same series of steps, starting with Bayes Theorem:
+<p>If we let $H =h $ be the event that we saw $h$ heads, and let $T=t$ be the event that we saw $t$ tails in $h+t$ coinflips. We want to calculate the probability density function $f(X=x|H=h,T=t)$. We can use the exact same series of steps, starting with Bayes Theorem:
 \begin{align*}
     f(&X = x|H =h, T=t) \\
 &=  \frac{P(H =h, T=t|X=x)f(X=x)}{P(H =h, T=t)} && \text{Bayes Theorem}\\
@@ -601,7 +601,7 @@ A Beta distribution has $E[X] = \frac{a}{a + b}$ and $Var(X) = \frac{ab}{(a+b)^2
 <p>You can set $X \sim \Beta(a, b)$ as a prior to reflect how biased you think the coin is apriori to flipping it. This is a subjective judgment that represent $a+b- 2$ "imaginary" trials with $a-1$ heads and $b-1$ tails. If you then observe $h + t$ real trials with $h$ heads you can update your belief. Your new belief would be, $X \sim \Beta(a+h, b+t)$. Using the prior $\Beta(1,1) = \Uni(0, 1)$ is the same as saying we haven't seen any "imaginary" trials, so apriori we know nothing about the coin. Here is the proof for the distribution of $X$ when the prior was a Beta too:</p>
 
     <p><div class="bordered">
-If our prior belief for $X \sim \Beta(a, b)$, then our posterior is $\Beta(a+h, b+t)$:
+If our prior belief is $X \sim \Beta(a, b)$, then our posterior is $\Beta(a+h, b+t)$:
         \begin{align*}
     f(&X = x|H =h, T=t) \\
 &=  \frac{P(H =h, T=t|X=x)f(X=x)}{P(H =h, T=t)} && \text{Bayes Theorem}\\
