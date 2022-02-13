@@ -4,10 +4,11 @@
 <center><h1>Tracking in 2D</h1></center>
 <hr/>
 
+<div class="alert alert-info"><b>Warning: </b>After learning about joint distributions, and about inference, you have all the technical abilities necessary to follow this example. However this is very very difficult. Primarily because you need to understand three complex things at the same time: (1) how to represent a continuous joint distribution, (2) inference in probabilistic models and (3) a rather complex probability of observation calculation.</div>
 
-In this example we are going to explore the problem of tracking an object in 2D space. The object exists at some $(x, y)$ location, however we are not sure exactly where! Thus we are going to use random variables $X$ and $Y$ to represent location. 
 
-We have a prior belief about where the object is. In this example our prior both $X$ and $Y$ as normals which are independently distributed with mean 3 and variance 2. First let's write the prior belief as a joint probability density function
+<p>In this example we are going to explore the problem of tracking an object in 2D space. The object exists at some $(x, y)$ location, however we are not sure exactly where! Thus we are going to use random variables $X$ and $Y$ to represent location. 
+
 \begin{align*}
     f(X = x, Y = y) &= f(X = x) \cdot f(Y = y) && \text{In the prior X and Y are independent} \\
     &= 
@@ -21,7 +22,7 @@ This combinations of normals is called a bivariate distribution. Here is a visua
 <img class="mainFigureFull" src="{{pathToRoot}}img/chapters/tracking/2dtrackingprior.png"></img>
 
 
-The interesting part about tracking an object is the process of updating your belief about it's location based on an observation. Let's say that we get an instrument reading from a sonar that is sitting on the origin. The instrument reports that the object is 4 units away. Our instrument is not perfect: if the true distance was $t$ units away, than the instrument will give a reading which is normally distributed with mean $t$ and variance 1. Let's visualize the observation:
+<p>The interesting part about tracking an object is the process of updating your belief about it's location based on an observation. Let's say that we get an instrument reading from a sonar that is sitting on the origin. The instrument reports that the object is 4 units away. Our instrument is not perfect: if the true distance was $t$ units away, than the instrument will give a reading which is normally distributed with mean $t$ and variance 1. Let's visualize the observation:
 
 <img class="mainFigureFull" src="{{pathToRoot}}img/chapters/tracking/2dtrackingobservation.png"></img>
 
