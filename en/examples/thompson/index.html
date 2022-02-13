@@ -362,7 +362,9 @@
     
 <p>Here is an example:</p></p>
 
-<pre class="console"><code>Welcome to the drug simulator. There are two drugs
+<pre class="console"><code>Welcome to the drug simulator. 
+There are two drugs: 1 and 2.
+
 Next patient. Which drug? (1 or 2): 1
 Failure. Yikes!
 
@@ -395,7 +397,7 @@ Next patient. Which drug? (1 or 2): </code></pre>
 
 <h3>What You Know About The Choices</h3>
 
-<p>The first step in Thompson sampling is to express what you know (and what you do not know) about your choices. Let us revisit the example of the two drugs in the previous section. By the end we had tested drug 1 four times (with 1 success) and we had tested drug 2 four times (with 2 successes). A sophisticated way to represent our belief in the two hidden probabilites behind drug 1 and drug 2 is to use the Beta distribution. Let $X_1$ be the belief in the probability for 1 and let $X_2$ be the belief in the probability for drug 2.
+<p>The first step in Thompson sampling is to express what you know (and what you do not know) about your choices. Let us revisit the example of the two drugs in the previous section. By the end we had tested drug 1 four times (with 1 success) and we had tested drug 2 four times (with 2 successes). A sophisticated way to represent our belief in the two hidden probabilites behind drug 1 and drug 2 is to use the Beta distribution. Let $X_1$ be the belief in the probability for drug 1 and let $X_2$ be the belief in the probability for drug 2.
 
 $$
 \begin{align*}
