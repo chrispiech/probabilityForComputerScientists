@@ -3,7 +3,7 @@
 <center><h1>Definition of Probability</h1></center>
 <hr/>
 
-<p>What does it mean when someone makes a claim like "the probability that you find a pearl in an oyster is 1 in 5,000?" or "the probability that it will rain tomorrow is 52%?</p>
+<p>What does it mean when someone makes a claim like "the probability that you find a pearl in an oyster is 1 in 5,000?" or "the probability that it will rain tomorrow is 52%"?</p>
 
 <h2 id="events">Events and Experiments</h2>
 
@@ -11,7 +11,7 @@
 
 <p>
 	<div class="bordered">
-<b id="sampleSpace">Definition: Sample Space, $S$</b><br/> A Sample Space is set of all possible outcomes of an experiment. For example:
+<b id="sampleSpace">Definition: Sample Space, $S$</b><br/> A Sample Space is the set of all possible outcomes of an experiment. For example:
 <ul>
 <li> Coin flip: $S$ = {Heads, Tails}
 <li> Flipping two coins: $S$ = {(H, H), (H, T), (T, H), (T, T)}
@@ -27,7 +27,7 @@
 <b>Definition: Event, $E$</b><br/> An Event is some subset of $S$ that we ascribe meaning to. In set notation ($E ⊆ S$).For example:
 <ul>
 <li> Coin flip is heads: $E$ = {Heads}
-<li> Greater than 1 head on 2 coin flips = {(H, H), (H, T), (T, H)}
+<li> At least 1 head on 2 coin flips = {(H, H), (H, T), (T, H)}
 <li> Roll of die is 3 or less: E = {1, 2, 3}
 <li> You receive less than 20 emails in a day: $E = \{x|x ∈ Z,0 ≤ x < 20\}$ (non-neg. ints)
 <li> Wasted day (≥ 5 YouTube hours): $E = \{x|x ∈ R, 5 ≤ x ≤ 24\}$
@@ -51,17 +51,17 @@ Events can be represented as capital letters such as $E$ or $F$.
     $$</p>
 
 
-<p>In English this reads: lets say you perform $n$ trials of an "experiment" which could result in a particular "<a href="#events">Event</a>" occuring. The probability of the event occuring, $\p(\text{Event})$,
+<p>In English this reads: lets say you perform $n$ trials of an "experiment" which could result in a particular "<a href="#events">Event</a>" occurring. The probability of the event occurring, $\p(\text{Event})$,
 is the ratio of trials that result in the event, written as $\text{count}(\text{Event})$, to the number of trials performed, $n$.  In the limit, as your number of trials
-approaches infinity, the ratio will converve to the true probability. People also apply other semantics to the concept of a probability. One
+approaches infinity, the ratio will converge to the true probability. People also apply other semantics to the concept of a probability. One
 common meaning ascribed is that $\p(E)$ is a measure of the chance of event E occurring. </p>
                
 <p>
 % include('chapters/part1/probability/diceLimitExample.html')
 </p>
 
-<p><b>Measure of uncertainty</b>: It is tempting to think of probability as representing some natural randomness in the world. That might be the case. But perhaps the world isn't random. I propose a deeper way of thinking about probability. There is so much that we as humans don't know, and probability is our robust language for expressing my belief that an event will happen given my limited knowledge.
-This interpretation acknowledges that your own uncertainty of an event. Perhaps if you knew the position of every water molecule, you could perfectly predict tomorrow's weather. But we don't have such knowledge and as such we use probability to talk about the chance of rain tomorrow given the information that we have access to.</p>
+<p><b>Measure of uncertainty</b>: It is tempting to think of probability as representing some natural randomness in the world. That might be the case. But perhaps the world isn't random. I propose a deeper way of thinking about probability. There is so much that we as humans don't know, and probability is our robust language for expressing our belief that an event will happen given our limited knowledge.
+This interpretation acknowledges your own uncertainty of an event. Perhaps if you knew the position of every water molecule, you could perfectly predict tomorrow's weather. But we don't have such knowledge and as such we use probability to talk about the chance of rain tomorrow given the information that we have access to.</p>
 
 
 
@@ -93,7 +93,7 @@ approximately equal to the fraction of simulations that produced an outcome from
 of probability, as your number of simulations approaches infinity, the estimate becomes more accurate.
 
 <p>
-<b>Probabilities and percentages</b>: You might hear people refer to a probability as a percent. That the probability of rain tomorrow is 32%. The proper way to state this would be to say that 0.32 is the probability of rain. Percentages are simply probabilities multiplied by 100. "percent" is latin for "out of one hundred".  
+<b>Probabilities and percentages</b>: You might hear people refer to a probability as a percent. That the probability of rain tomorrow is 32%. The proper way to state this would be to say that 0.32 is the probability of rain. Percentages are simply probabilities multiplied by 100. "Percent" is latin for "out of one hundred".  
 </p>
 
 <div class="purpleBox">
@@ -109,7 +109,7 @@ of probability, as your number of simulations approaches infinity, the estimate 
 	    &\approx \frac{2,180}{3,070} \\
 	    &\approx 0.710\end{aligned}$$</p>
 
-	    <p>Since 3,000 is quite a bit less than infinity, this is an approximation. It turns out, however, to be a rather good one. A few important notes: there is no garuntee that our estimate applies to elephants outside Myanmar. Later in the class we will develop language for "how confident we can be in a number like 0.71 after 3,000 trials?" Using tools from later in class we can say that we have 98% confidence that the true probability is within 0.02 of 0.710.
+	    <p>Since 3,000 is quite a bit less than infinity, this is an approximation. It turns out, however, to be a rather good one. A few important notes: there is no guarantee that our estimate applies to elephants outside Myanmar. Later in the class we will develop language for "how confident we can be in a number like 0.71 after 3,000 trials?" Using tools from later in class we can say that we have 98% confidence that the true probability is within 0.02 of 0.710.
 </div>
 
 <h2>Axioms of Probability</h2>
@@ -147,7 +147,7 @@ space that is the same as the event) is 1.
 The third axiom is more complex and in this textbook we dedicate an entire chapter to understanding it: <a href="">Probability of or</a>. It applies to events that have a special property called "mutual exclusion": the events do not share any outcomes.
 
 
-<p>These axioms have great historical significance. In the early 1900s it was not clear if probability was somehow different than other fields of math -- perhaps the set of techniques and systems of proofs from other fields of mathematics couldn't apply.  Kolmogorov's great success was to show to the world that the tools of mathematics did infact apply to probability. From the foundation provided by this set of axioms mathematicians built the edifice of probability theory.</p>
+<p>These axioms have great historical significance. In the early 1900s it was not clear if probability was somehow different than other fields of math -- perhaps the set of techniques and systems of proofs from other fields of mathematics couldn't apply.  Kolmogorov's great success was to show to the world that the tools of mathematics did in fact apply to probability. From the foundation provided by this set of axioms mathematicians built the edifice of probability theory.</p>
 
 <h2>Provable Identities</h2>
 
@@ -169,7 +169,7 @@ axioms given above.</p>
 </div>
 </p>
 
-<p>This first identity is especially useful. For any event, you can calculate the probability of the event <i>not</i> occuring which we write in probability notation as $E\c$, if you know the probability of it occuring -- and vice versa. We can also use this identity to show you what it looks like to prove a theorem in probability.</p>
+<p>This first identity is especially useful. For any event, you can calculate the probability of the event <i>not</i> occurring which we write in probability notation as $E\c$, if you know the probability of it occurring -- and vice versa. We can also use this identity to show you what it looks like to prove a theorem in probability.</p>
 
 <div class="purpleBox">
 <p><b><i>Proof:</i></b> $\p(E\c) = 1 - \p(E)$
