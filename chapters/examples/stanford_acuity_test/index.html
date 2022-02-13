@@ -20,4 +20,11 @@ P(A=a|Y=0) &= \frac{P(Y=0|A=a)P(A=a)}{P(Y=0)} \\
 \end{align*}
 $$
 
+<pre class="language-python"><code>def update(belief, obs):
+    for a in support:
+        prior_a = belief[a]
+        likelihood = calc_likelihood(a, obs)
+        belief[a] = prior_a * likelihood
+    normalize(belief)</code></pre>
+
 <h3>Chosing the Next Font Size</h3>
