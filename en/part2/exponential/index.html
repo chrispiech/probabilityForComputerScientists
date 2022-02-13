@@ -447,7 +447,7 @@ function drawExponentialPdf(parentDivId, lambda) {
 	window.myExpLine = new Chart(ctx, config);
 }
 </script>
-<p>An exponential distribution is a great example of a continuous distribution where the <a href="../../part2/continuous#cdf">cumulative distribution funciton (CDF)</a> is much easier to work with as it allows you to answer probability questions without using integrals.
+<p>An exponential distribution is a great example of a continuous distribution where the <a href="../../part2/continuous#cdf">cumulative distribution function (CDF)</a> is much easier to work with as it allows you to answer probability questions without using integrals.
 
 <div class="purpleBox">
 <p><b>Example:</b> Based on historical data from the USGS, earthquakes of magnitude 8.0+ happen in a certain location at a rate of 0.002 per year. Earthquakes are known to occur via a poisson process. What is the probability of a major earthquake in the next 4 years?
@@ -467,7 +467,7 @@ Note that it is possible to answer this question using the PDF, but it will requ
 </div>
 
 <h2>Exponential is Memoryless</h2>
-<p>One way to gain intuition for what is meant by the "poisson process" is through the proof that the exponential distribution is <a href="https://en.wikipedia.org/wiki/Memorylessness">"memoryless"</a>. That means that the occurence (or lack of occurence) of events in the past does not change our belief as to how long until the next occurence. This can be stated formally. If $X \sim \Exp(\lambda)$ then for an interval of time until the start $s$, and a proceeding, query, interval of time $t$:
+<p>One way to gain intuition for what is meant by the "poisson process" is through the proof that the exponential distribution is <a href="https://en.wikipedia.org/wiki/Memorylessness">"memoryless"</a>. That means that the occurrence (or lack of occurrence) of events in the past does not change our belief as to how long until the next occurrence. This can be stated formally. If $X \sim \Exp(\lambda)$ then for an interval of time until the start $s$, and a proceeding, query, interval of time $t$:
 
 $$\p(X > s + t | X > s) = \p(X > t) $$
 

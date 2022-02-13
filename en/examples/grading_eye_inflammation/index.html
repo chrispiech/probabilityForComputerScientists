@@ -348,20 +348,20 @@
               
                         
  
-<center><h1>Grading Eye Inflamation</h1></center>
+<center><h1>Grading Eye Inflammation</h1></center>
 <hr/>
 
 <p>When a patient has eye inflammation, eye doctors "grade" the inflammation. When "grading" inflammation they randomly look at a single 1 millimeter by 1 millimeter square in the patient's eye and count how many "cells" they see. 
 
-<p>There is uncertainty in these counts. If the true average number of cells for a given patient's eye is 6, the doctor could get a different count (say 4, or 5, or 7) just by chance. As of 2021, modern eye medicine does not have a sense of uncertainty for their inflammation grades! In this problem we are going to change that. At the same time we are going to learn about \Poisson distributions over space.
+<p>There is uncertainty in these counts. If the true average number of cells for a given patient's eye is 6, the doctor could get a different count (say 4, or 5, or 7) just by chance. As of 2021, modern eye medicine does not have a sense of uncertainty for their inflammation grades! In this problem we are going to change that. At the same time we are going to learn about Poisson distributions over space.
 
 <center>
 	<img class="mainFigureLg" src="../../../img/chapters/gradingInflammation/eye.png"></img>
 </center>
 
-<p>Why is the number of cells observed in a 1x1 square governed by a \Poisson process?
+<p>Why is the number of cells observed in a 1x1 square governed by a Poisson process?
 
-        <p>We can approximate a distribution for the count by discretizing the square into a fixed number of equal sized buckets. Each bucket either has a cell or not. Therefore, the count of cells in the 1x1 square is a sum of Bernoulli random variables with equal $p$, and as such can be modeled as a binomial random variable. This is an approximation because it doesn't allow for two cells in one bucket. Just like with time, if we make the size of each bucket infinitely small, this limitation goes away and we converge on the true distribution of counts. The binomial in the limit, i.e. a binomial as $n \rightarrow \infty$, is truly represented by a \Poisson random variable. In this context, $\lambda$ represents the average number of cells per 1$\times$1  sample. See Figure 2.
+        <p>We can approximate a distribution for the count by discretizing the square into a fixed number of equal sized buckets. Each bucket either has a cell or not. Therefore, the count of cells in the 1x1 square is a sum of Bernoulli random variables with equal $p$, and as such can be modeled as a binomial random variable. This is an approximation because it doesn't allow for two cells in one bucket. Just like with time, if we make the size of each bucket infinitely small, this limitation goes away and we converge on the true distribution of counts. The binomial in the limit, i.e. a binomial as $n \rightarrow \infty$, is truly represented by a Poisson random variable. In this context, $\lambda$ represents the average number of cells per 1$\times$1  sample. See Figure 2.
     
   
   <p><center>

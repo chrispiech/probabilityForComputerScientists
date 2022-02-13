@@ -363,17 +363,18 @@
 
 <p>Use the <a href="#poi_approx">Poisson approximation</a> when $n$ is large (>20) and $p$ is small (<0.05). A slight dependence between results of each experiment is ok</p>
 
-<p>Use the <a href="#norm_approx">Normal approximation</a> when $n$ is large (>20), $p$ mid-ranged. Specifically it considered an accurate approximation when the variance is greater then 10, in other words: $np(1-p)>10$. There are situations where either a Poisson or a Normal can be used to approximate a Binomial. In that situation go with the Normal!
+<p>Use the <a href="#norm_approx">Normal approximation</a> when $n$ is large (>20), and $p$ is mid-ranged. Specifically it's considered an accurate approximation when the variance is greater then 10, in other words: $np(1-p)>10$. There are situations where either a Poisson or a Normal can be used to approximate a Binomial. In that situation go with the Normal!</p>
 
 <h2 id="poi_approx">Poisson Approximation</h2>
 
-<p>When defining the Poisson we proved that a Binomial in the limit as $n \rightarrow \infty$ and $p = \lambda/n$ is a Poisson. That same logic can be used to show that a Poisson is a great approximation for a Binomial when the Binomial has extreme values of $n$ and $p$. A Poisson random variable approximates Binomial where $n$ is large, $p$ is small, and $\lambda = np$ is “moderate”. Interestingly, to calculate the things we care about (PMF, expectation, variance) we no longer need to know $n$ and $p$. We only need to provide $\lambda$ which we call the rate. When approximating a Poisson with a Binomial always chose $\lambda = n \cdot p$.</p>
+<p>When defining the Poisson we proved that a Binomial in the limit as $n \rightarrow \infty$ and $p = \lambda/n$ is a Poisson. That same logic can be used to show that a Poisson is a great approximation for a Binomial when the Binomial has extreme values of $n$ and $p$. A Poisson random variable approximates Binomial where $n$ is large, $p$ is small, and $\lambda = np$ is “moderate”. Interestingly, to calculate the things we care about (PMF, expectation, variance) we no longer need to know $n$ and $p$. We only need to provide $\lambda$ which we call the rate. When approximating a Poisson with a Binomial, always choose $\lambda = n \cdot p$.</p>
+
 
 <p>
 There are different interpretations of "moderate". The accepted ranges are $n > 20$ and $p < 0.05$ or $n > 100$ and $p < 0.1$.</p>
 
 <div class="purpleBox">
-Let's say you want to send a bit string of length $n = 10^4$ where each bit is independently corrupted with $p = 10^{-6}$. What is the probability that the message will arrive uncorrupted? You can solve this using a Poisson with $\lambda = np = 10^4 10^{-6} = 0.01$. Let $X \sim Poi(0.01)$ be the number of corrupted bits. Using the PMF for Poisson:
+Let's say you want to send a bit string of length $n = 10^4$ where each bit is independently corrupted with $p = 10^{-6}$. What is the probability that the message will arrive uncorrupted? You can solve this using a Poisson with $\lambda = np = 10^4 10^{-6} = 0.01$. Semantically, $\lambda = 0.01$ means that we expect $0.01$ corrupt bits per string, assuming bits are continuous. Let $X \sim Poi(0.01)$ be the number of corrupted bits. Using the PMF for Poisson:
 \begin{align*}
     P(X = 0) &= \frac{\lambda^i}{i!}e^{-\lambda}\\
     &= \frac{0.01^0}{0!}e^{-0.01}\\
@@ -384,14 +385,15 @@ We could have also modelled X as a binomial such that $X \sim Bin(10^4, 10^{-6})
 
 <h2 id="norm_approx">Normal Approximation</h2>
 
-<p>For a Binomial where $n$ is large and $p$ is mid-ranged, a Normal can be used to approximate the Binomial. Let's take a side by side view of a normal and a binomial:
+<p>For a Binomial where $n$ is large and $p$ is mid-ranged, a Normal can be used to approximate the Binomial. Let's take a side by side view of a normal and a binomial:</p>
 
 <img style="width:100%" src="../../../img/chapters/normalApproxBinomial.png"></img>
 
-<p>Lets say our binomial is a random variable $X \sim \text{Bin}(100, 0.5)$ and we want to calculate $P(X \geq 55)$. We could cheat by using the closest fit normal (in this case $Y \sim N(50, 25)$). How did we chose that particular Normal? Simply select one with a mean and variance that matches the Binomial expectation and variance. The binomial expectation is $np = 100 \cdot 0.5 = 50$. The Binomial variance is $np(1-p) = 100 \cdot 0.5 \cdot 0.5 = 25$.
+<p>Lets say our binomial is a random variable $X \sim \text{Bin}(100, 0.5)$ and we want to calculate $P(X \geq 55)$. We could cheat by using the closest fit normal (in this case $Y \sim N(50, 25)$). How did we choose that particular Normal? Simply select one with a mean and variance that matches the Binomial expectation and variance. The binomial expectation is $np = 100 \cdot 0.5 = 50$. The Binomial variance is $np(1-p) = 100 \cdot 0.5 \cdot 0.5 = 25$.
 
 
-<p>You can use a Normal distribution to approximate a Binomial $X\sim \Bin(n,p)$. To do so define a normal $Y \sim (E[X], Var(X))$. Using the Binomial formulas for expectation and variance, $Y \sim (np, np(1-p))$. This approximation holds for large $n$ and moderate $p$. That gets you very close. However since a Normal is continuous and Binomial is discrete we have to use a continuity correction to discretize the Normal.
+
+<p>You can use a Normal distribution to approximate a Binomial $X\sim \Bin(n,p)$. To do so define a normal $Y \sim (E[X], Var(X))$. Using the Binomial formulas for expectation and variance, $Y \sim (np, np(1-p))$. This approximation holds for large $n$ and moderate $p$. That gets you very close. However since a Normal is continuous and Binomial is discrete we have to use a continuity correction to discretize the Normal.</p>
 
 
 <img style="width:100%" src="../../../img/chapters/normalApproxBinomialZoomed.png"></img>
@@ -418,7 +420,7 @@ You should get comfortable deciding what continuity correction to use. Here are 
 \end{align*}
 
 <div class="purpleBox">
-<p><b>Example:</b> 100 visitors to your website are given a new design. Let $X$ = \# of people who were given the new design and spend more time on your website. Your CEO will endorse the new design if $X \geq 65$. What is $P(\text{CEO endorses change}|\text{it has no effect})$?</p>
+<p><b>Example:</b> 100 visitors to your website are given a new design. Let $X$ = # of people who were given the new design and spend more time on your website. Your CEO will endorse the new design if $X \geq 65$. What is $P(\text{CEO endorses change}|\text{it has no effect})$?</p>
 
 $E[X] = np = 50$. $\Var(X) = np(1-p) = 25$. $\sigma = \sqrt{\Var(X)} = 5$. We can thus use a Normal approximation: $Y \sim \mathcal{N}(\mu = 50, \sigma^2 = 25)$.
 \begin{align*}
@@ -430,7 +432,8 @@ $E[X] = np = 50$. $\Var(X) = np(1-p) = 25$. $\sigma = \sqrt{\Var(X)} = 5$. We ca
 
 
 <div class="purpleBox">
-<p><b>Example:</b> Stanford accepts 2480 students and each student has a 68\% chance of attending. Let $X$ = \# students who will attend. $X\sim \Bin(2480, 0.68)$. What is $P(X > 1745)$?</p>
+<p><b>Example:</b> Stanford accepts 2480 students and each student has a 68% chance of attending. Let $X$ = # students who will attend. $X\sim \Bin(2480, 0.68)$. What is $P(X > 1745)$?</p>
+
 
 $E[X] = np = 1686.4$. $\var(X) = np(1-p) = 539.7$. $\sigma = \sqrt{\Var(X)} = 23.23$. We can thus use a Normal approximation: $Y \sim \mathcal{N}(\mu = 1686.4, \sigma^2 = 539.7)$.
 \begin{align*}
@@ -440,6 +443,7 @@ $E[X] = np = 1686.4$. $\var(X) = np(1-p) = 539.7$. $\sigma = \sqrt{\Var(X)} = 23
 \end{align*}
 
 </div>
+
 
                         
 

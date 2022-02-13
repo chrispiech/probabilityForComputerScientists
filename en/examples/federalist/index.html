@@ -352,10 +352,10 @@
 <hr/>
 
 <p>
-Let's write a program to decide whether or not James Madison or Alexander Hamilton wrote Fedaralist Paper 49. Both men have claimed to be have written it, and hence the authorship is in dispute. First we used historical essays to estimate $p_i$, the probability that Hamilton generates the word $i$ (independent of all previous and future choices or words). Similarly we estimated $q_i$, the probability that Madison generates the word $i$. For each word $i$ we observe the number of times that word occurs in Fedaralist Paper 49 (we call that count $c_i$). We assume that, given no evidence, the paper is equally likely to be written by Madison or Hamilton.
+Let's write a program to decide whether or not James Madison or Alexander Hamilton wrote Federalist Paper 49. Both men have claimed to have written it, and hence the authorship is in dispute. First we used historical essays to estimate $p_i$, the probability that Hamilton generates the word $i$ (independent of all previous and future choices of words). Similarly we estimated $q_i$, the probability that Madison generates the word $i$. For each word $i$ we observe the number of times that word occurs in Federalist Paper 49 (we call that count $c_i$). We assume that, given no evidence, the paper is equally likely to be written by Madison or Hamilton.
 </p>
 <p>
-Define three events: $H$ is the event that Hamilton wrote the paper, $M$ is the event that Madison wrote the paper, and $D$ is the event that a paper has the collection of words observed in Fedaralist Paper 49. We would like to know whether $P(H|D)$ is larger than $P(M|D)$. This is equivalent to trying to decide if $P(H|D)/P(M|D)$ is larger than 1.
+Define three events: $H$ is the event that Hamilton wrote the paper, $M$ is the event that Madison wrote the paper, and $D$ is the event that a paper has the collection of words observed in Federalist Paper 49. We would like to know whether $P(H|D)$ is larger than $P(M|D)$. This is equivalent to trying to decide if $P(H|D)/P(M|D)$ is larger than 1.
 </p>
 <p>
 The event $D|H$ is a multinomial parameterized by the values $p$. The event $D|M$ is also a multinomial, this time parameterized by the values $q$.
@@ -380,7 +380,7 @@ This seems great! We have our desired probability statement expressed in terms o
       &= \sum_i \text{log}(p_i^{c_i}) -  \sum_i \text{log}(q_i^{c_i}) \\
       &= \sum_i c_i\text{log}(p_i) -  \sum_i c_i \text{log}(q_i) 
 \end{align*}
-This expression is ``numerically stable" and my computer returned that the answer was a negative number. We can use exponentiation to solve for $P(H|D)/P(M|D)$. Since the exponent of a negative number is a number smaller than 1, this implies that $P(H|D)/P(M|D)$ is smaller than 1. As a result, we conclude that Madison was more likely to have written Federalist Paper 49. That is the standing assuption currently made by historians!
+This expression is "numerically stable" and my computer returned that the answer was a negative number. We can use exponentiation to solve for $P(H|D)/P(M|D)$. Since the exponent of a negative number is a number smaller than 1, this implies that $P(H|D)/P(M|D)$ is smaller than 1. As a result, we conclude that Madison was more likely to have written Federalist Paper 49. That is the standing assumption currently made by historians!
 
 
                         

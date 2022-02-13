@@ -351,10 +351,10 @@
 <center><h1>Fairness in Artificial Intelligence</h1></center>
 <hr/>
 
-<p>Artificial Intelligence often gives the impression that it is objective and "fair". However, algorithms are made by humans and trained by data which may be biased. There are several examples of AI algorithms, deployed, have been shown to make decisions that were biased based on gender, race or other protected demographics --  even when
-there is no intention for it.</p>
+<p>Artificial Intelligence often gives the impression that it is objective and "fair". However, algorithms are made by humans and trained by data which may be biased. There are several examples of deployed AI algorithms that have been shown to make decisions that were biased based on gender, race or other protected demographics &mdash; even when
+there was no intention for it.</p>
 
-<p>These examples have also led to a necessary research into a growing field of algorithmic fairness. How can we demonstrate, or proove, that an algorithm is behaving in a way that we think is appropriate? What is fair? Clearly these are complex questions and are deserving of a complete conversation. This example is simple for the purpose of giving an introduction to the topic.</p> 
+<p>These examples have also led to a necessary research into a growing field of algorithmic fairness. How can we demonstrate, or prove, that an algorithm is behaving in a way that we think is appropriate? What is fair? Clearly these are complex questions and are deserving of a complete conversation. This example is simple for the purpose of giving an introduction to the topic.</p> 
 <p>
 <center>
 	<img class="mainFigureLg" src="../../../img/chapters/fairnessHistory.png"/><br/>
@@ -440,7 +440,7 @@ there is no intention for it.</p>
 	</div>
 	</div>
 
-<p>Recall that cell $D=i,G=j,T=k$ contains the probability $\P(D=i,G=j,T=k)$. A joint probability table gives the probability of all combination of events. Recall that since each cell is mutually exclusive, the $\sum_i \sum_j \sum_k \P(D=i,G=j,T=k) = 1$. Note that this assumption of mutual exclusion could be problematic for demographic variables (some people are mixed ethnicity, etc) which gives you a hint that we are just scratching the surface in our conversation about fairness. Lets use this joint probability to learn about some of the common definitions of fairness. </p>
+<p>Recall that cell $D=i,G=j,T=k$ contains the probability $\P(D=i,G=j,T=k)$. A joint probability table gives the probability of all combination of events. Recall that since each cell is mutually exclusive, the $\sum_i \sum_j \sum_k \P(D=i,G=j,T=k) = 1$. Note that this assumption of mutual exclusion could be problematic for demographic variables (some people are mixed ethnicity, etc) which gives you a hint that we are just scratching the surface in our conversation about fairness. Let's use this joint probability to learn about some of the common definitions of fairness. </p>
 
 <p><b>Practice with joint marginalization</b><br/>What is $\p(D=0)$? What is $\p(D=1)$? <br/>
 Probabilities with assignments to a subset of the random variables in the joint distribution can be calculated by a process called <i>marginalization</i>: sum the probability from all cells where that assignment is true.</p>
@@ -460,7 +460,7 @@ $$
 
 <p>Note that $\p(D=0) + \p(D=1) = 1$. That implies that the demographics are mututally exclusive.</p>
 
-<p><div class="bordered"><b>Fairness definition #1: Parity</b><br/>An algorithm satisfies “parity” if the probability that the algorithm makes a positive prediction ($G$ = 1) is the same regardless of begin conditioned on demographic variable.</div></p>
+<p><div class="bordered"><b>Fairness definition #1: Parity</b><br/>An algorithm satisfies “parity” if the probability that the algorithm makes a positive prediction ($G$ = 1) is the same regardless of being conditioned on demographic variable.</div></p>
 <p>Does this algorithm satisfy parity?</p>
 $$
 \begin{align}
@@ -532,12 +532,12 @@ Yes: $P(G = 1 | D = 0, T = 1) = P(G = 1 | D = 1, T = 1)$
 
 
 
-<p>Which of these definitions seems right to you? One can prove that you cant satisfy all of the above simultaneously. For a deeper treatment of the subject, here is a useful summary of the latest research <a href="https://arxiv.org/pdf/2001.09784.pdf">Pessach et al. Algorithmic Fairness</a>.
+<p>Which of these definitions seems right to you? One can prove that you can't satisfy all of the above simultaneously. For a deeper treatment of the subject, here is a useful summary of the latest research <a href="https://arxiv.org/pdf/2001.09784.pdf">Pessach et al. Algorithmic Fairness</a>.
 
 	<h2>Gender Shades</h2>
 
 	<p>
-		In 2018, Joy Buolamwini and Timnit Gebru had a breakthrough result called "gender shades" published in the first conference on Fairness, Accountability and Transparency in ML [1]. They showed that facial recognition algorithms, which had been deployed to be used by Facebook, IBM and Microsoft, were substantially better at making predicitons (in this case classifying gender) when looking at lighter skinned men than darker skinned women. Their work exposed several shortcomings in production AI: biased datasets, optimizing for average accuracy (which means that the majority demographic gets most weight) lack of awarness of intersectionality, and more. Let's take a look at some of their results.
+		In 2018, Joy Buolamwini and Timnit Gebru had a breakthrough result called "gender shades" published in the first conference on Fairness, Accountability and Transparency in ML [1]. They showed that facial recognition algorithms, which had been deployed to be used by Facebook, IBM and Microsoft, were substantially better at making predicitons (in this case classifying gender) when looking at lighter skinned men than darker skinned women. Their work exposed several shortcomings in production AI: biased datasets, optimizing for average accuracy (which means that the majority demographic gets most weight) lack of awareness of intersectionality, and more. Let's take a look at some of their results.
 	</p>
 
 	<p>
@@ -547,7 +547,7 @@ Yes: $P(G = 1 | D = 0, T = 1) = P(G = 1 | D = 1, T = 1)$
 	</center>
 	</p>
 
-	<p>Timnit and Joy looked at three classifiers trained to predict gender, and computed several statistics. Lets take a look at one statistic, accuracy, for one of the facial recognition classifiers, IBMs:
+	<p>Timnit and Joy looked at three classifiers trained to predict gender, and computed several statistics. Let's take a look at one statistic, accuracy, for one of the facial recognition classifiers, IBMs:
 
 	<table class="table" style="text-align: center">
 		<thead class="">
@@ -575,9 +575,9 @@ Yes: $P(G = 1 | D = 0, T = 1) = P(G = 1 | D = 1, T = 1)$
 		$$\p(G=T|D = \text{Woman}) \neq \p(G=T|D = \text{Man})$$
 		$$\p(G=T|D = \text{Lighter}) \neq \p(G=T|D = \text{Darker})$$
 
-		<p>Why should we care about callibration and not the other definitions of fairness? In the case the classifier was making a prediction of gender where a positive prediction (say predicting women) doesn't have directly associated reward as in our above example, where we were predicting if someone should receive a loan. As such the most salient idea is: is the algorithm just as accurate for different genders (callibration)?</p>
+		<p>Why should we care about calibration and not the other definitions of fairness? In this case the classifier was making a prediction of gender where a positive prediction (say predicting women) doesn't have a directly associated reward as in our above example, where we were predicting if someone should receive a loan. As such the most salient idea is: is the algorithm just as accurate for different genders (calibration)?</p>
 
-	<p>The lack of callibration between men/women and lighter/darker skined photos is an issue. What Joy and Timnit showed next was that the problem becomes even worse when you look at intersectional demographics.</p>
+	<p>The lack of calibration between men/women and lighter/darker skinned photos is an issue. What Joy and Timnit showed next was that the problem becomes even worse when you look at intersectional demographics.</p>
 
 	<table class="table" style="text-align: center">
 		<thead class="">
@@ -599,7 +599,7 @@ Yes: $P(G = 1 | D = 0, T = 1) = P(G = 1 | D = 1, T = 1)$
 	</table>
 
 	<p>
-		If the algorithms were "fair" according to the callibration you would expect the accuracy to be the same regardness of demographics. Instead there is alomst a 34.2 percentage point difference! $\p(G=T|D = \text{Darker Woman})$ = 65.3 compared to $\p(G=T|D = \text{Ligher Man}) = 99.7$
+		If the algorithms were "fair" according to the calibration you would expect the accuracy to be the same regardless of demographics. Instead there is almost a 34.2 percentage point difference! $\p(G=T|D = \text{Darker Woman})$ = 65.3 compared to $\p(G=T|D = \text{Ligher Man}) = 99.7$
 	</p>
 
 	<p>[1] <a href="http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf"> Buolamwini, Gebru. Gender Shades. 2018</a></p>

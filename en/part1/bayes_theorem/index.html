@@ -354,7 +354,7 @@
 <p>Bayes' Theorem is one of the most ubiquitous results in probability for computer scientists. In a nutshell, Bayes' theorem  provides a way to convert a conditional probability from one direction, say $\p(E|F)$, to the other direction, $\p(F|E)$.</p> 
 
 <p>Bayes' theorem is a mathematical identity which we can
-derive ourselves. Start with the definition of conditional probability and then expanding the $\and$ term using the chain rule:
+derive ourselves. Start with the definition of conditional probability and then expand the $\and$ term using the chain rule:
 
 
 $$
@@ -397,7 +397,7 @@ This theorem makes no assumptions about $E$ or $F$ so it will apply for any two 
 
 
 <p>
-	There is a pattern here: in each example we care about knowing some unobservable -- or hard to observe -- state of the world. This state of the world "causes" some easy-to-observe evidence. For example: having the flu (something we would like to know) <b><i>causes</i></b> a fever (something we can easily observe), not the other way around. We often call the unobservable state the "belief" and the observable state the "evidence". For that reason lets rename the events! Lets call the unobservable thing we want to know $B$ for belief. Lets call the thing we have evidence of $E$ for evidence. This makes is clear that Bayes' theorem allows us to calculate an updated belief given evidence: $\p(B | E)$
+	There is a pattern here: in each example we care about knowing some unobservable -- or hard to observe -- state of the world. This state of the world "causes" some easy-to-observe evidence. For example: having the flu (something we would like to know) <b><i>causes</i></b> a fever (something we can easily observe), not the other way around. We often call the unobservable state the "belief" and the observable state the "evidence". For that reason lets rename the events! Lets call the unobservable thing we want to know $B$ for belief. Lets call the thing we have evidence of $E$ for evidence. This makes it clear that Bayes' theorem allows us to calculate an updated belief given evidence: $\p(B | E)$
 </p>
 
 </p>
@@ -417,7 +417,7 @@ This theorem makes no assumptions about $E$ or $F$ so it will apply for any two 
 "posterior": it is your updated belief of $B$ after you take into account evidence $E$. The term $\p(B)$ is often called the "prior": it was your belief before seeing any evidence. The term $\p(E|B)$ is called the update and $\p(E)$ is
 often called the normalization constant.</p>
 
-<p>There are several techniques for handling the case where the denominator is not know. One technique is to use the law of total probability to expand out the term, resulting in another formula, called <b>Bayes' Theorem with Law of Total Probability</b>:
+<p>There are several techniques for handling the case where the denominator is not known. One technique is to use the law of total probability to expand out the term, resulting in another formula, called <b>Bayes' Theorem with Law of Total Probability</b>:
 $$
 \p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E|B)\cdot \p(B) + \p(E|B\c) \cdot \p(B\c)} 
 $$
@@ -455,15 +455,16 @@ evidence.</p>
 <label for="exampleInputEmail1">Natural % of population with illness:</label>
 <input onchange="recalculate()" type="number" class="form-control example-inline-input" id="priorInput" value="13" >			  
 
-<label for="exampleInputPassword1">Probability of a positive result given the patient has illness</label>
+<label for="exampleInputPassword1">Probability of a positive result given the patient has the illness</label>
 <input onchange="recalculate()" type="number" class="form-control example-inline-input" id="condInput" value="0.92" step = "0.01">
 				  
-<label for="exampleInputPassword1">Probability of a positive result given the patient does not have illness</label>
+<label for="exampleInputPassword1">Probability of a positive result given the patient does not have the illness</label>
 <input onchange="recalculate()" type="number" class="form-control example-inline-input mb-3" id="condNegInput" value="0.10" step = "0.01">
 
 				  <!--<p><button id="calcButton" class="btn btn-success" onclick="recalculate();">Recalculate probability of disease given positive test result</button></p>-->
 				  
-<p>The numbers in this example are from the Mamogram test for breast cancer. The seriousness of cancer underscores the potential for bayesian probability to be applied to important contexts. The natural occurence of breast cancer is 8%. The mamogram test returns a positive result 95% of the time for patients who have breast cancer. The test resturns a positive result 7% of the time for people who do not have breast cancer. In this demo you can enter different input numbers and it will reclaculate.</p>
+
+<p>The numbers in this example are from the Mammogram test for breast cancer. The seriousness of cancer underscores the potential for bayesian probability to be applied to important contexts. The natural occurrence of breast cancer is 8%. The mammogram test returns a positive result 95% of the time for patients who have breast cancer. The test resturns a positive result 7% of the time for people who do not have breast cancer. In this demo you can enter different input numbers and it will recalculate.</p>
 
  <hr/> 
 
@@ -511,11 +512,12 @@ evidence.</p>
 
 			<h2>Natural Frequency Intuition</h2>
 				<p>
-							One way to build intuition for Bayes Theorem is to think about "natural frequences". Let's take another approach at answer the probability question in the above example on belief of illness given a test. In this take, we are going to imagine we have a population of 1000 people. Let's think about how many of those have the illness and test positive and how many don't have the illness and test positive. This visualization is based off the numbers in the fields above. Feel free to change them!
+							One way to build intuition for Bayes Theorem is to think about "natural frequences". Let's take another approach to answer the probability question in the above example on belief of illness given a test. In this take, we are going to imagine we have a population of 1000 people. Let's think about how many of those have the illness and test positive and how many don't have the illness and test positive. This visualization is based off the numbers in the fields above. Feel free to change them!
+
 						</p>
 
 						<p>
-							There are many possibilities for how many people have the illness, but one very plaussible number is 1000, the number of people in our population, multiplied by the probability of the disease.</p>
+							There are many possibilities for how many people have the illness, but one very plausible number is 1000, the number of people in our population, multiplied by the probability of the disease.</p>
 						<p class="indent">
 							$1000 \times \p(\text{Illness})$ people have the illness<br/>
 							$1000 \times (1- \p(\text{Illness}))$ people do not have the illness.
@@ -673,7 +675,7 @@ evidence.</p>
 
 	<h2>Bayes with the General Law of Total Probability</h2>
 
-	<p>A classic challenge when applying Bayes' theorm is to calculate the probability of the normalization constant $\p(E)$ in the denominator of Bayes' Theorem. One common strategy for calculating this probability is to use the law of total probability. Our expanded version of Bayes' Theorem uses the simple version of the total law of probability: $\p(E) = \p(E|F)\p(F) + \p(E|F^c)
+	<p>A classic challenge when applying Bayes' theorem is to calculate the probability of the normalization constant $\p(E)$ in the denominator of Bayes' Theorem. One common strategy for calculating this probability is to use the law of total probability. Our expanded version of Bayes' Theorem uses the simple version of the total law of probability: $\p(E) = \p(E|F)\p(F) + \p(E|F^c)
 	\p(F^c)$. Sometimes you will want the more expanded version of the <a href="../../part1/law_total">law of total probability</a>: $\p(E) = \sum_i\p(E|B_i)\p(B_i)$. Recall that this only works if the events $B_i$ are mutually exclusive and cover the sample space.
 	</p>
 	<p>For example say we are trying to track a phone which could be in any one of $n$ discrete
@@ -693,7 +695,7 @@ $$
 \begin{align}
 \p(B_i | E) &= \frac{\p(E|B_i) \cdot \p(B_i)}{\p(E)}
 && \text{Bayes Theorem. What to do about $\p(E)$?} \\
- &= \frac{\p(E|B_i) \cdot \p(B_i)}{\sum_{i=1}^n \p(E|B_i) \cdot \p(B_i)}
+ &= \frac{\p(E|B_i) \cdot \p(B_i)}{\sum_{j=1}^n \p(E|B_j) \cdot \p(B_j)}
 && \text{Use General Law of Total Probability for $\p(E)$} \\
 \end{align}
 $$
@@ -716,7 +718,7 @@ $$
 }{
 	\frac{\p(E|B\c)\p(B\c)}{\p(E)}
 }
-&& \text{Apply Bayes' Theorm to both terms} \\
+&& \text{Apply Bayes' Theorem to both terms} \\
 &= \frac{
 	\p(E|B)\p(B)
 }{
@@ -764,6 +766,7 @@ If you look closely at the last line, you will notice that we have simply found 
 	
 <!-- 
 	<h2>Unknown Prior, $\p(B)$</h2> -->
+
 
                         
 
