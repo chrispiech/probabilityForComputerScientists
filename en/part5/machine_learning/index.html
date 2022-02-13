@@ -411,24 +411,19 @@
 
         
         let lastPart = getUrlKey()
-        console.log('lastpart', lastPart)
         
         // Bug: this code will highlight anything which matches with the last part
         $("#sidebar").find('a').each(function(){
             // find link which ends with last part and add style
             let currLink = $($(this)[0]).attr('href')
             let currLastPart = getLastPartOfUrl(currLink)
-            console.log('currlastpart', currLastPart)
             if (currLastPart === lastPart) {
                 $($(this)[0]).addClass('active-link');
             }
         })
-
-        
     });
 
     function getScrollTop() {
-        console.log('here')
         if(typeof(Storage) !== "undefined") {
             return Number(localStorage.scrollTop)
         }
@@ -619,6 +614,55 @@ function standardPDFConfig(xValues, yValues, xLabel, yLabel){
       }]
     },
     options: {
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          type: 'linear',
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFsConfig(datasets, xValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      datasets: datasets
+    },
+    options: {
 
       steppedLine: false,
       responsive: true,
@@ -662,6 +706,7 @@ function standardPDFConfig(xValues, yValues, xLabel, yLabel){
   };
 }
 
+
 function addSearchIndexData(data) {
   var idx = lunr(function () {
     this.ref('name')
@@ -671,14 +716,12 @@ function addSearchIndexData(data) {
 
     documents.forEach(function (doc) {
       this.add(doc)
-      console.log(doc)
     }, this)
 
     $("#probability-for-digital-world-search").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             let query = $("#probability-for-digital-world-search").val()
             let results = idx.search(query)
-            console.log(results)
         }
     });
   })

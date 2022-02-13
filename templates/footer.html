@@ -45,24 +45,19 @@
 
         
         let lastPart = getUrlKey()
-        console.log('lastpart', lastPart)
         
         // Bug: this code will highlight anything which matches with the last part
         $("#sidebar").find('a').each(function(){
             // find link which ends with last part and add style
             let currLink = $($(this)[0]).attr('href')
             let currLastPart = getLastPartOfUrl(currLink)
-            console.log('currlastpart', currLastPart)
             if (currLastPart === lastPart) {
                 $($(this)[0]).addClass('active-link');
             }
         })
-
-        
     });
 
     function getScrollTop() {
-        console.log('here')
         if(typeof(Storage) !== "undefined") {
             return Number(localStorage.scrollTop)
         }

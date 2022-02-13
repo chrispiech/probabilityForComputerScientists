@@ -183,6 +183,55 @@ function standardPDFConfig(xValues, yValues, xLabel, yLabel){
       }]
     },
     options: {
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          type: 'linear',
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFsConfig(datasets, xValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      datasets: datasets
+    },
+    options: {
 
       steppedLine: false,
       responsive: true,
@@ -226,6 +275,7 @@ function standardPDFConfig(xValues, yValues, xLabel, yLabel){
   };
 }
 
+
 function addSearchIndexData(data) {
   var idx = lunr(function () {
     this.ref('name')
@@ -235,14 +285,12 @@ function addSearchIndexData(data) {
 
     documents.forEach(function (doc) {
       this.add(doc)
-      console.log(doc)
     }, this)
 
     $("#probability-for-digital-world-search").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
             let query = $("#probability-for-digital-world-search").val()
             let results = idx.search(query)
-            console.log(results)
         }
     });
   })

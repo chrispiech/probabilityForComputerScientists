@@ -9,6 +9,179 @@
 <img class="mainFigureLg"src="{{pathToRoot}}img/chapters/thompson.png"></img></center>
 </p>
 
-<div class="alert alert-warning"><b>Warning:</b> This chapter is a stub. Come back later and hopefully someone has had a chance to finish it. </div>
 
-<p>Let me present you with a seemingly simple problem that has a suprisingly complex solution. Imagine that you have two brand new drugs for a serious illness. You don't know how effective each drug is. You want to know which drug is the most effective, but at the same time, there are costs to <i>exploration</i> &mdash; there are high stakes.</p>
+
+<p>Imagine having to make the following series of decisions. You have two drugs you can administer, drug A, or drug B. Initially you have no idea which drug is better. You want to know which drug is the most effective, but at the same time, there are costs to <i>exploration</i> &mdash; the stakes are high. </p>
+    
+<p>Here is an example:</p></p>
+
+<pre class="console"><code>Welcome to the drug simulator. There are two drugs
+Next patient. Which drug? (a or b): a
+Failure. Yikes!
+
+Next patient. Which drug? (a or b): b
+Success. Patient lives!
+
+Next patient. Which drug? (a or b): b
+Failure. Yikes!
+
+Next patient. Which drug? (a or b): a
+Failure. Yikes!
+
+Next patient. Which drug? (a or b): a
+Success. Patient lives!
+
+Next patient. Which drug? (a or b): a
+Failure. Yikes!
+
+Next patient. Which drug? (a or b): b
+Success. Patient lives!
+
+Next patient. Which drug? (a or b): b
+Failure. Yikes!
+
+Next patient. Which drug? (a or b): </code></pre>
+
+<p>This problem is suprisingly complex. It sometimes goes by the name "the <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit" target="_blank">multi-armed bandit</a> problem"! In fact, the perfect answer to this question can be exponentially hard to calculate. There are many approximate solutions and it is an active area of research. </p>
+
+<p>One solution has risen to be a rather popular option: Thompson Sampling. It is easy to implement, elegant to understand, has provable garuntees [<a href="https://www.jmlr.org/papers/volume17/14-087/14-087.pdf" target="_blank">1</a>], and in practice does very well [<a href="https://proceedings.neurips.cc/paper/2011/file/e53a0a2978c28872a4505bdb51db06dc-Paper.pdf" target="_blank">2</a>].</p>
+
+<h3>What You Know About The Choices</h3>
+
+<p>The first step in Thompson sampling is to express what you know (and what you do not know) about your choices. Let us revisit the example of the two drugs in the previous section. By the end we had tested drug A 4 times (with 1 success) and we had tested drug B 4 times (with 2 successes). A sophisticated way to represent our belief in the two hidden probabilites behind drug A and drug B is to use the Beta distribution. Let $X_a$ be the belief in the probability for A and let $X_b$ be the belief in the probability for drug B.
+
+$$
+\begin{align*}
+X_a \sim \Beta(a = 2, b = 4)\\
+X_b \sim \Beta(a = 3, b = 3)
+\end{align*}
+$$
+
+<p>Recall that in the Beta distribution with a uniform prior the first parameter, $a$, is number of observed successes + 1. The second parameter, $b$, is the number of observed fails + 1. It is helpful to look at these two distributions graphically:
+
+<p><canvas id="betaExamplePdf" style="max-height: 400px"></canvas></p>
+
+<p>If we had to guess, drug B is looking better, but there is still a lot of uncertainty, represented by the high variance in these beliefs. That is a helpful representation. But how can we use this information to make a good decision of the next drug.</p>
+
+
+<h3>Making a Choice</h3>
+
+<p>It is hard to know what is the right choice! If you only had one more patient, then it is clear what you should do. You should calculate the probability that $X_b > X_a$ and if that probability is over 0.5 then you should chose $a$. However, if you need to continually administer the pills then it is less clear what is the right choice. If you chose $a$, you miss out on the chance to learn more about $b$. What should we do? We need to balance this need for "exploring" and the need to take advantage of what we already know.
+
+    <p>The simple idea behind Thompson Sampling is to randomly make your choice according to its probability of being optimal. In this case we should chose A with the probability that A is > B. How do people do this in practice? They have a very simple formula. Take a random sample from each Beta distribution. Chose the option which has a larger value for its sample.
+
+<pre class="language-python"><code>sample_a = sample_beta(2, 4)
+sample_b = sample_beta(3, 3)
+if sample_a > sample_b:
+    choose choice a 
+else:
+    choose choice b
+</code></pre>
+
+<p>What does it mean to take a sample? It means to chose a value according to the probability density (or probability mass) function. So in our example above, we might sample 0.4 for drug A, and sample 0.35 for drug B. In which case we would go with drug A. 
+
+    <p>At the start Thompson Sampling "explores" quite a lot of time. As it gets more confident that one drug is better than another, it will start to chose that drug most of the time. Eventually it will converge to knowing which drug is best, and it will always chose that drug.
+
+<script>
+
+$(document).ready(function(){
+	redrawNormalPdf()
+})
+
+function redrawNormalPdf() {
+	let parentDivId = 'betaExamplePdf'
+	let mu = 5
+	let sigma = 1
+	drawBetaPdf(parentDivId, mu, sigma)
+}
+
+function drawBetaPdf(parentDivId, mu, sigma) {
+	if(window.myNormalLine) {
+		window.myNormalLine.destroy()
+	}
+	var xValues = []
+	var yValuesA = []
+	var yValuesB = []
+
+	var min_i = mu - 3 * sigma
+	var max_i = mu + 3 * sigma
+	var step = (max_i - min_i) / 100
+	for (var i = 0; i <= 1.01; i+= 0.01) {
+		let pr_a_x = jStat.beta.pdf(i, 2, 4)
+		let pr_b_x = jStat.beta.pdf(i, 3, 3)
+		xValues.push(i.toFixed(2))
+		yValuesA.push(pr_a_x.toFixed(5))
+		yValuesB.push(pr_b_x.toFixed(5))
+	}
+	let xLabel = 'Probability that the drug gives a success'
+	let yLabel = 'Probability Density'
+
+
+    // var config = standardPDFsConfig(datasets, xValues, xLabel, yLabel)
+
+    var config = {
+		type: 'line',
+		data: {
+			labels: xValues,
+			datasets: [{
+				label: `X_a ~ Beta(a = 2, b = 4)`,
+				fill: false,
+				backgroundColor: 'blue',
+				borderColor: 'blue',
+				data: yValuesA,
+				pointRadius:1,
+				maxBarThickness:100
+			}, {
+				label: 'X_b ~ Beta(a = 3, b = 3)',
+				fill: false,
+				backgroundColor: 'purple',
+				borderColor: 'purple',
+				data: yValuesB,
+				pointRadius:1,
+				maxBarThickness:100
+			}]
+		},
+		options: {
+
+			steppedLine: false,
+			responsive: true,
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest'
+			},
+			legend: {
+	            display: false
+	         },
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: xLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: yLabel
+					},
+					ticks: {
+                        beginAtZero: true
+                    }
+				}]
+			}
+		}
+	};
+
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myNormalLine = new Chart(ctx, config);
+    console.log('done')
+}
+</script>
