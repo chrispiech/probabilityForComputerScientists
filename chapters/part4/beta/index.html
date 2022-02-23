@@ -93,7 +93,7 @@ include('templates/functions/betaPdf.html', a=10, b=2,id='9heads')
 \begin{align*}
     f(&X = x|H =h, T=t) \\
 &=  \frac{P(H =h, T=t|X=x)f(X=x)}{P(H =h, T=t)} && \text{Bayes Theorem}\\
-&= \frac{ { {h+t} \choose h} x^n(1-x)^h}{P(H =h, T=t)} && \text{Binomial PMF, Uniform PDF}\\
+&= \frac{ { {h+t} \choose h} x^h(1-x)^t}{P(H =h, T=t)} && \text{Binomial PMF, Uniform PDF}\\
 &= \frac{ { {h+t} \choose h}}{P(H =h, T=t)}x^h(1-x)^t && \text{Moving terms around}\\
 &= \frac{1}{c} \cdot x^h(1-x)^t && \text{where } c = \int_0^1 x^h(1-x)^t dx
 \end{align*}
