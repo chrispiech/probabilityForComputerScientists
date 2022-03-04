@@ -1,14 +1,14 @@
 
-% rebase('templates/chapter.html', title="Poisson Distribution")
+% rebase('templates/chapter.html', title="Erlang Distribution")
  
-<center><h1>Poisson Distribution</h1></center>
+<center><h1>Erlang Distribution</h1></center>
 <hr/>
 
-<p>A Poisson random variable gives the probability of a given number of events in a fixed interval of time (or space). It makes the Poisson assumption that  events occur with a known constant mean rate and independently of the time since the last event.
+<p> An Erlang random variable measures the amount of time until the $k^{th}$ event occurs. The random variable is the summation of $k$ IID exponential random variables.
 	</p>
 
 <%
-  include('templates/rvCards/poisson.html')
+  include('templates/rvCards/erlang.html')
 %>
 
 <h2>Poisson Intuition</h2>

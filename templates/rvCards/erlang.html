@@ -1,0 +1,104 @@
+<!-- Template that renders a single random variable card -->
+
+<div class="bordered">
+<p><b>Erlang Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:</td>
+		<td>$X \sim {\rm Erlang}(k, \lambda)$</td>
+	</tr>
+	<tr>
+		<th>Description:</td>
+		<td>Time until $k^{th}$ event occurs if (a) the events occur with a constant mean rate and (b) they occur independently of time since last event.</td>
+	</tr>
+	<tr>
+		<th>Parameters:</td>
+		<td>$k \in \{1, 2, \dots\}$, occurrence of event <br/>
+			$\lambda \in \{0, 1, \dots\}$, the constant average rate.</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:</td>
+		<td>$x \in \mathbb{R}^+$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \frac{\lambda^{k}x^{k-1}e^{- \lambda x}}{(k-1)!}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$F(x) = 1 - \sum_{n=0}^{k-1}{\frac{1}{n!} e^{-\lambda x} (\lambda x )^{n}}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = k/\lambda$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = k/\lambda^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $k$: <input onchange="redrawErlangPdf()" type="number" class="form-control example-inline-input mb-3" id="erlangPdfK" min="1" max="130" value="5" step = "1">
+</div>
+	<div class="mr-2">
+Parameter $\lambda$: <input onchange="redrawErlangPdf()" type="number" class="form-control example-inline-input mb-3" id="erlangPdfLambda" min="0" max="130" value="5" step = "1">
+</div>
+</div>
+<canvas id="exponentialPdf" style="max-height: 400px"></canvas>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	redrawErlangPdf()
+})
+
+function redrawErlangPdf() {
+	let parentDivId = 'exponentialPdf'
+	let k = parseFloat($("#erlangPdfK").val())
+	let lambda = parseFloat($("#erlangPdfLambda").val())
+	drawErlangPdf(parentDivId, k, lambda)
+}
+
+function drawErlangPdf(parentDivId, k, lambda) {
+	if(window.myExpLine) {
+		window.myExpLine.destroy()
+	}
+
+	var expectation = k / lambda
+	var xValues = []
+	var yValues = []
+	var i = 0
+	if (k < 1 || lambda <= 0) {
+		xValues.push(0)
+		yValues.push(0)
+	}
+	else {
+		while (true) {
+			let pr_x = jStat.gamma.pdf(i, k, 1 / lambda).toFixed(5)
+			xValues.push(i.toFixed(3))
+			yValues.push(pr_x)
+			i += expectation / 100
+			if (pr_x < 0.001 && expectation < i) {
+				break;
+			}
+		}
+	}
+	let xLabel = 'Values that X can take on'
+	let yLabel = 'Probability'
+
+	var config = standardPDFConfig(xValues, yValues, xLabel, yLabel)
+	var ctx = document.getElementById(parentDivId).getContext('2d');
+	window.myExpLine = new Chart(ctx, config);
+}
+</script>
