@@ -279,7 +279,7 @@
 <li>
     <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part4_examples">
-        <li><a href="../../examples/thompson">Thompson Sampling</a></li>
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li><li><a href="../../examples/p_hacking">P-Hacking</a></li>
     </ul>
 </li>
 </li>
@@ -360,7 +360,7 @@
 <p>We made the assumption that our data are identically distributed. This means that they must have either the same probability mass function (if the data are discrete) or the same probability density function (if the data are continuous). To simplify our conversation about parameter estimation we are going to use the notation $f(X|\theta)$ to refer to this shared PMF or PDF. Our new notation is interesting in two ways. First, we have now included a conditional on $\theta$ which is our way of indicating that the likelihood of different values of $X$ depends on the values of our parameters. Second, we are going to use the same symbol $f$ for both discrete and continuous distributions.
 
 
-<p>What does likelihood mean and how is ``likelihood" different than  ``probability"? In the case of discrete distributions, likelihood is a synonym for the joint probability of your data. In the case of continuous distribution, likelihood refers to the joint probability density of your data.
+<p>What does likelihood mean and how is "likelihood" different than  "probability"? In the case of discrete distributions, likelihood is a synonym for the probability mass, or joint probability mass, of your data. In the case of continuous distribution, likelihood refers to the probability density of your data.
 
 <p>Since we assumed that each data point is independent, the likelihood of all of our data is the product of the likelihood of each data point. Mathematically, the likelihood of our data give parameters $\theta$ is:
 \begin{align*}

@@ -98,7 +98,8 @@
 			#"bounds":"Probability Bounds"
 		},
 		"examples": {
-			"thompson":"Thompson Sampling"
+			"thompson":"Thompson Sampling",
+			"p_hacking":"P-Hacking"
 		}
 	},
 	"part5":{
