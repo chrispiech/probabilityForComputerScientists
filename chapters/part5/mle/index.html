@@ -90,7 +90,7 @@ L(\theta) &= \prod_{i=1}^n f(Y_i, X_i | \theta) && \text{Let's break up this joi
  LL(\theta) &= \log L(\theta) \\
  &= \log \prod_{i=1}^n \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{(Y_i - \theta X_i)^2}{2\sigma^2}} f(X_i) &&\text{Substitute in }L(\theta)\\
  &= \sum_{i=1}^n \log \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{(Y_i - \theta X_i)^2}{2\sigma^2}} + \sum_{i=1}^n \log f(X_i) &&\text{Log of a product is the sum of logs}\\
- &=n \log \frac{1}{\sqrt{2\pi}} - \frac{1}{2\sigma^2} \sum_{i=1}^n (Y_i - \theta X_i)^2 + \sum_{i=1}^n \log f(X_i )
+ &=n \log \frac{1}{\sqrt{2\pi}\sigma} - \frac{1}{2\sigma^2} \sum_{i=1}^n (Y_i - \theta X_i)^2 + \sum_{i=1}^n \log f(X_i )
 \end{align*}
 
 <p>Remove constant multipliers and terms that don't include $\theta$. We are left with trying to find a value of $\theta$ that maximizes:
