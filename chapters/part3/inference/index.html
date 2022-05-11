@@ -23,7 +23,7 @@ The conditional probability mass function (PMF) for the discrete case:
     \P(X=x|Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)}
 \end{align*}
 
-<p><b><i>Def:</i></b> Bayes' theorem with discrete random variables.</p>
+<p><b><i>Def:</i></b> Bayes' Theorem with discrete random variables.</p>
 
 \begin{align*}
     \P(X=x|Y=y)=\frac{P(Y=y|X=x)P(X=x)}{P(Y=y)}
@@ -50,18 +50,18 @@ Here is a neat result: this last term can be rewritten, by a clever manipulation
     &= \sum_{x\leq a} \P(X=x|Y=y) 
 \end{align*}
 
-<p>In fact it becomes straight forward to translate the rules of probability (such as bayes theorem, law of total probability, etc) to the language of discrete random variables: we simply need to recall that every relational operator applied to a random variable <a href="{{pathToLang}}part2/rvs/#rv_vs_event">defines an event</a>.
+<p>In fact it becomes straight forward to translate the rules of probability (such as Bayes' Theorem, law of total probability, etc) to the language of discrete random variables: we simply need to recall that every relational operator applied to a random variable <a href="{{pathToLang}}part2/rvs/#rv_vs_event">defines an event</a>.
 
 
 <h2>Mixing Discrete and Continuous</h2>
 
-<p>What happens when we want to reason about <i>continuous</i> random variables using our rules of probability (such as Bayes theoreom, law of total probability, chain rule, etc)? There is a simple practical answer: the rules still apply, but we have to replace probability terminology with probability <i>density</i> functions. As a concrete example let's look at Bayes' Theorem with one continuous random variable.</p>
+<p>What happens when we want to reason about <i>continuous</i> random variables using our rules of probability (such as Bayes' Theorem, law of total probability, chain rule, etc)? There is a simple practical answer: the rules still apply, but we have to replace probability terminology with probability <i>density</i> functions. As a concrete example let's look at Bayes' Theorem with one continuous random variable.</p>
 
 
 <div class="bordered">
     <p><b><i>Def:</i></b> Bayes' Theorem with mixed discrete and continuous.</p>
 
-Let $X$ be continuous random variable and let $N$ be a discrete random variable. The conditional probabilities of $X$ given $N$ and $N$ given $X$ respectively are:
+Let $X$ be a continuous random variable and let $N$ be a discrete random variable. The conditional probabilities of $X$ given $N$ and $N$ given $X$ respectively are:
 \begin{align*}
     f(X=x|N=n) =  \frac{\P(N=n|X=x)f(X=x)}{\p(N=n)} &&
 \end{align*}
