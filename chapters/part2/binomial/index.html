@@ -59,12 +59,12 @@ Perhaps include a small explanation or link to the wiki that explains why this t
  -->
 <p>The name binomial comes from the term ${n \choose k}$ which is formally called the binomial coefficient.</p>
 
-<h2>Expectation of Binomial</h2>
+<h2 id="binomialExpectation">Expectation of Binomial</h2>
 
 <p>There is an easy way to calculate the expectation of a binomial and a hard way.
 
-    The easy way is to leverage the fact that a binomial is the sum of Bernoulli random variables. $X = \sum_{i=1}^{n}
-    Y_i$ where $Y_i \sim \Ber(p)$. Since the <a href="{{pathToLang}}part2/expectation">expectation of the sum</a> of
+    The easy way is to leverage the fact that a binomial is the sum of Bernoulli <a href="{{pathToLang}}part2/bernoulli#indicator">indicator</a> random variables. $X = \sum_{i=1}^{n}
+    Y_i$ where $Y_1$ is an indicator of whether the $i$th experiment was a success: $Y_i \sim \Ber(p)$. Since the <a href="{{pathToLang}}part2/expectation">expectation of the sum</a> of
     random variables is the sum of expectations, we can add the expectation, $\E[Y_i] = p$, of each of the Bernoulli's:
     $$
     \begin{align}

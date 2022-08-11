@@ -703,13 +703,13 @@ $$
 
 <h2>Unknown Normalization Constant</h2>
 
-<p>There are times when we would like to use Bayes' Theorem to update a belief, but we don't know the probability of $E$, $\p(E)$. All hope is not lost. This term is called the "normalization constant" because it is the same regardless of whether or not the event $B$ happens. The most traditional solution is to use the law of total probability: $\p(E) = \p(E |B) \p(B) + \p(E|B\c)\p(B\c)$. Here are some other useful "tricks" for dealing with $\p(E)$. </p>
+<p>There are times when we would like to use Bayes' Theorem to update a belief, but we don't know the probability of $E$, $\p(E)$. All hope is not lost. This term is called the "normalization constant" because it is the same regardless of whether or not the event $B$ happens. The solution that we used above was the law of total probability: $\p(E) = \p(E |B) \p(B) + \p(E|B\c)\p(B\c)$. This allows us to calculate $\p(E)$.</p>
 
 
 
 
 <p>
-	We can make the normalization cancel out by calculating the ratio of $\frac{\p(B|E)}{\p(B\c|E)}$. This fraction tells you how many times more likely it is that $B$ will happen given $E$ than not $B$:
+	Here is another strategy for dealing with an unknown $\p(E)$. We can make it cancel out by calculating the ratio of $\frac{\p(B|E)}{\p(B\c|E)}$. This fraction tells you how many times more likely it is that $B$ will happen given $E$ than not $B$:
 $$
 \begin{align}
 \frac{\p(B|E)}{\p(B\c|E)} 
@@ -729,7 +729,7 @@ $$
 $$
 	</p>
 
-	<p>
+	<!-- <p>
 We can always use the fact that either $B$ will happen or it won't when consistently conditioned on $E$:  $\p(B |E) + \p(B\c|E) =1$ to compute $\p(E)$. Note that this is the simply the <a href="../../part1/cond_prob/#cond_paradigm">first identity of probability</a>, consistently conditioning:
 $$
 \begin{align}
@@ -749,7 +749,7 @@ $$
 && \text{Rearrange terms}
 \end{align}
 $$
-If you look closely at the last line, you will notice that we have simply found a new way to derive the total law of probability for $E$. The law of total probability is truly a great way of dealing with $\p(E)$.
+If you look closely at the last line, you will notice that we have simply found a new way to derive the total law of probability for $E$. The law of total probability is truly a great way of dealing with $\p(E)$. -->
 	</p>
 
 

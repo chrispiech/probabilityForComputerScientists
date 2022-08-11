@@ -75,8 +75,19 @@
 </div>
 </p>
 
-<h2>Indicator</h2>
+<h2 id="indicator">Indicator Random Variable</h2>
 
-<p>Bernoulli random variables and indicator variables are two aspects of the same concept. A random variable $I$ is an
-    indicator variable for an event $A$ if $I = 1$ when $A$ occurs and $I = 0$ if $A$ does not occur. $\P(I=1)=\P(A)$
-    and $\E[I]=\P(A)$. Indicator random variables are Bernoulli random variables, with $p=\P(A)$.</p>
+<p>
+    <div class="bordered">
+        <p><b><i>Definition</i></b>: Indivator Random Variable</p>
+        <p>An indicator variable is a Bernoulli random variable which takes on the value 1 if an underlying event occurs, and 0 otherwise.
+    </div>
+    </p>
+
+<p>Indicator random variables are a convenient way to convert the "true/false" outcome of an event into a number. That number may be easier to incoporate into an equation. See the <a href="{{pathToLang}}part2/binomial#binomialExpectation">binomial expectation derivation</a> for an example.</p>
+
+<p>A random variable $I$ is an
+    indicator variable for an event $A$ if $I = 1$ when $A$ occurs and $I = 0$ if $A$ does not occur. Indicator random variables are Bernoulli random variables, with $p=\P(A)$. $I$ is a common choice of name for an indicator random variable.</p>
+
+    <p>Here are some properties of indicator random variables: $\P(I=1)=\P(A)$
+        and $\E[I]=\P(A)$. </p>

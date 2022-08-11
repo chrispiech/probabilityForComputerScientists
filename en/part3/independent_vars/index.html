@@ -385,11 +385,11 @@ More generally, if you can factor the joint density function then your random va
 (X|N) &\sim \Bin(N,p)\\
 (Y|N) &\sim \Bin(N, 1-p)
 \end{align*}
-To get started we need to first write an expression for the join probability of $X$ and $Y$. To do so, we use the chain rule:
+To get started we need to first write an expression for the joint probability of $X$ and $Y$. To do so, we use the chain rule:
 \begin{align*}
     \P(X=x,Y=y) = \P(X = x, Y=y|N = x+y)\P(N = x+y)
 \end{align*}
-We can calculate each term in this expression. The first term is the PMF of the binomial $X|N$ having $x$ ``successes."" The second term is the probability that the Poisson $N$ takes on the value $x+y$ :
+We can calculate each term in this expression. The first term is the PMF of the binomial $X|N$ having $x$ "successes". The second term is the probability that the Poisson $N$ takes on the value $x+y$ :
  \begin{align*}
    &\P(X = x, Y=y|N = x+y) = { {x + y} \choose x}p^x(1-p)^y \\
    &\P(N = x + y) = e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} 
@@ -408,7 +408,7 @@ At this point we have derived the joint distribution over $X$ and $Y$. In order 
    &= \frac{p^x \cdot \lambda^x}{x!} \cdot \frac{(1-p)^y \cdot \lambda ^{y}}{y!}  \cdot e^{-\lambda} && \text{Rearrange} \\
 \end{align*}
 
-Because the joint can be factered into a term that only has $x$ and a term that only has $y$, the random variables are independent.
+Because the joint can be factored into a term that only has $x$ and a term that only has $y$, the random variables are independent.
 </div>
 
 <h2>Symmetry of Independence</h2>

@@ -353,7 +353,7 @@
 
 <p>At this point in the reader we have developed tools for analytically solving for probabilities. We can calculate the likelihood of random variables taking on values, even if they are interacting with other random variables (which we have called multi-variate models, or we say the random variables are jointly distributed). We have also started to study samples and sampling. 
 
-<p>Consider the WebMd Symptom Checker. WebMD have built a probabilistic model with random variables which roughly fall under three categories: symptoms, risk factors and diseases. For any combination of observed symptoms and risk factors, they can calculate the probability of any disease. For example, they can calculate the probability that I have influenza given that I am a 21-year-old female who has a fever and who is tired: $P(I = 1 | A = 21, G = 1, T = 1, F = 1)$. Or they could calculate the probability that I have a cold given that I am a 30-year-old with a runny nose: $P(C = 1 | A = 30, R = 1)$. At first blush this might not seem difficult. But as we dig deeper we will realize just how hard it is.  There are two challenges: (1) Modelling: sufficiently specifying the probabilistic model and (2) Inference: calculating any desired probability.
+<p>Consider the WebMD Symptom Checker. WebMD has built a probabilistic model with random variables which roughly fall under three categories: symptoms, risk factors and diseases. For any combination of observed symptoms and risk factors, they can calculate the probability of any disease. For example, they can calculate the probability that I have influenza given that I am a 21-year-old female who has a fever and who is tired: $P(I = 1 | A = 21, G = 1, T = 1, F = 1)$. Or they could calculate the probability that I have a cold given that I am a 30-year-old with a runny nose: $P(C = 1 | A = 30, R = 1)$. At first blush this might not seem difficult. But as we dig deeper we will realize just how hard it is.  There are two challenges: (1) Modelling: sufficiently specifying the probabilistic model and (2) Inference: calculating any desired probability.
 
 <h2>Bayesian Networks</h2>
 
@@ -385,33 +385,33 @@
     P&(\text{Joint}) = P(X_1 = x_1, \dots, X_n = x_n) = \prod_i P(X_i = x_i | \text{Values of parents of }X_i )
 \end{align*} 
 
-What assumptions are implicit in a Bayes' Net? Using the chain rule we can decompose the <b>exact</b> joint probability for $n$ random variables. To make the following math easier to digest I am going to use $x_i$ as shorthand for the event that $X_i = x_i$:
+What assumptions are implicit in a Bayes Net? Using the chain rule we can decompose the <b>exact</b> joint probability for $n$ random variables. To make the following math easier to digest I am going to use $x_i$ as shorthand for the event that $X_i = x_i$:
 \begin{align*}
 P(x_1, \dots, x_n) 
 &= \prod_i P(x_i | x_{i-1}, \dots, x_1)\\
 \end{align*}
 
-By looking at the difference in the two equations, we can see that a Bayes' Net is assumping that 
+By looking at the difference in the two equations, we can see that a Bayes Net is assuming that 
 $$P(x_i | x_{i-1}, \dots, x_1) = P(x_i | \text{Values of parents of }X_i)$$
-This is a conditional independence statement. It is saying that once you know the value of the parents of a variable in your network, $X_i$, any further information about non-descendents will not change your belief in $X_i$. Formally we say that $X_i$ is conditionally independent of its non-descendents, given its parents. What is a non-descendent again? In a graph, a descendent of $X_i$ is anything which is in the subtree that starts at $X_i$. Everything else is a non-descendent. Non-descendents include the "ancestor" nodes of $X_i$ as well as nodes which are totally unconnected to $X_i$. When designing Bayes' Nets you don't have to think about this assumption directly. It turns out to be a naturally good assumption if the arrows between your nodes follow a causal path.
+This is a conditional independence statement. It is saying that once you know the value of the parents of a variable in your network, $X_i$, any further information about non-descendents will not change your belief in $X_i$. Formally we say that $X_i$ is conditionally independent of its non-descendents, given its parents. What is a non-descendent again? In a graph, a descendent of $X_i$ is anything which is in the subtree that starts at $X_i$. Everything else is a non-descendent. Non-descendents include the "ancestor" nodes of $X_i$ as well as nodes which are totally unconnected to $X_i$. When designing Bayes Nets you don't have to think about this assumption directly. It turns out to be a naturally good assumption if the arrows between your nodes follow a causal path.
 </div>
 
 <h2>Designing a Bayes Net</h2>
 
 <p>There are several steps to designing a Bayes Net. 
 <ol>
-<li>Chose you random variables, and make them nodes. 
+<li>Choose your random variables, and make them nodes. 
 	<li>Add edges, often based off your assumptions about which nodes directly cause which others.
 		<li>Define $P(X_i = x_i | \text{Values of parents of }X_i )$ for all nodes.
 </ol>
 
-<p>As you might have guessed, we can do step (2) and (3) by hand, or, we can have computers try and perform those tasks based on data. The first task is called "structure learning" and the second is an instance of "machine learning." There are fully autonomous solutions to structure learning -- but they only work well if you have a massive amount of data. Alternatively people will often compute a statistic called correlation between all pairs of random variables to help in the art form of designing a Bayes' net. 
+<p>As you might have guessed, we can do step (2) and (3) by hand, or, we can have computers try and perform those tasks based on data. The first task is called "structure learning" and the second is an instance of "machine learning." There are fully autonomous solutions to structure learning&mdash;but they only work well if you have a massive amount of data. Alternatively people will often compute a statistic called correlation between all pairs of random variables to help in the art form of designing a Bayes Net. 
 
-<p>In the next part of the reader we are going to talk about how we could learn $P(X_i = x_i | \text{Values of parents of }X_i )$ from data. For now let's start with the (reasonable) assumption that an expert can write down these functions in equation or as python: <code>getProbXi</code>. 
+<p>In the next part of the reader we are going to talk about how we could learn $P(X_i = x_i | \text{Values of parents of }X_i )$ from data. For now let's start with the (reasonable) assumption that an expert can write down these functions in equations or as python: <code>getProbXi</code>. 
 
 <h2>Next Steps</h2>
 
-<p>Great! We have a feasible way to define a large network of random variables. First challenge complete. We haven't talked about continuous of multinomial random variables in Bayes Nets. None of the theory changes: the expert will just have to define <code>getProbXi</code> to handle more values of <code>k</code> than 0 or 1.</p>
+<p>Great! We have a feasible way to define a large network of random variables. First challenge complete. We haven't talked about continuous or multinomial random variables in Bayes Nets. None of the theory changes: the expert will just have to define <code>getProbXi</code> to handle more values of <code>k</code> than 0 or 1.</p>
 
 <p>A Bayesian network is not very interesting to us unless we can use it to solve different conditional probability questions. How can we perform "inference" on a network as complex as a Bayesian network? 
 
