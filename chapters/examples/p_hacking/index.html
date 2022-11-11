@@ -74,11 +74,9 @@ The sum (or difference) of independent normals is still normal: \fbox{$Y \sim N(
 
 </div>
 
-\item (8 points) What is the smallest difference in means, $k$, that would look statistically significant if there were only two populations? In other words, the probability of seeing a difference in means of $k$ or greater is < 0.05. 
+(8 points) What is the smallest difference in means, $k$, that would look statistically significant if there were only two populations? In other words, the probability of seeing a difference in means of $k$ or greater is < 0.05. 
 
-\iftoggle{soln}
-{
-\begin{shaded}
+<div class="purpleBox">
 One tricky part of this problem is to recognize the double sidedness to distance. We would consider it a significant distance if $P(Y<-k)$ or $P(Y > k)$.
 \begin{align*}
     P(Y < -k) + P(Y > k) &= 0.05  \\
@@ -94,21 +92,12 @@ Now we need the inverse $\Phi$ to get the value of $k$ out.
     \Phi^{-1}(0.975) &= \frac{k}{\sqrt{v/10}} \\
     k &= \Phi^{-1}(0.975)\sqrt{v/10}
 \end{align*}
+</div>
 
-\end{shaded}
-}
-{
-\vspace{5cm}
-}
+(5 points) Give an expression for the probability that the smallest sample mean among 5 random populations is less than 0.2.
 
 
-    
-\item (5 points) Give an expression for the probability that the smallest sample mean among 5 random populations is less than 0.2.
-
-\iftoggle{soln}
-{
-\begin{shaded}
-
+<div class="purpleBox">
 Let $X_i$ be the sample mean of population $i$.
 
 \begin{align*}
@@ -120,15 +109,11 @@ Let $X_i$ be the sample mean of population $i$.
     &= 1 - \prod_{i=1}^5 1 - \Phi\Big(\frac{0.2 - 0.5}{\sqrt{v/20}}\Big) \\
 \end{align*}
 
-\end{shaded}
-}
-{
-\vspace{5cm}
-}
+</div>
 
-\item (7 points) Use the following functions to write code that estimates the probability that among 5 populations you find a difference of means which would be considered significant (using the bootstrapping method designed to compare 2 populations). Run at least 10,000 simulations to estimate your answer. You may use the following helper functions. Write pseudocode:
+(7 points) Use the following functions to write code that estimates the probability that among 5 populations you find a difference of means which would be considered significant (using the bootstrapping method designed to compare 2 populations). Run at least 10,000 simulations to estimate your answer. You may use the following helper functions.
 
-\begin{lstlisting}[language=Python]
+<pre>
 # the smallest difference in means that would look statistically significant
 k = calculate_k()
 
@@ -143,36 +128,20 @@ max_mean_col = get_max_mean_col(matrix)
 
 # calculate the p-value between two lists using bootstrapping (like in pset5)
 p_value = bootstrap(list1, list2)
+</pre>
 
 
+Write pseudocode:
+<pre class="language-python">
+n_significant = 0
+k = calculate_k()
+for i in range(N_TRIALS): 
+    dataset = random_matrix(20, 5)
+    col_max = get_max_mean_col(dataset)
+    col_min = get_min_mean_col(dataset)}
+    diff = np.mean(col_max) - np.mean(col_min)}
+    if diff >= k: 
+        n_significant += 1}
 
-\end{lstlisting}
-
-\iftoggle{soln}
-{
-\begin{shaded}
-\texttt{n\_significant = 0}
-
-\texttt{k = calculate\_k()}
-
-\texttt{for i in range(N\_TRIALS): }
-
-\texttt{\hspace{1cm}dataset = random\_matrix(20, 5)}
-
-\hspace{1cm}\texttt{col\_max = get\_max\_mean\_col(dataset)}
-
-\hspace{1cm}\texttt{col\_min = get\_min\_mean\_col(dataset)}
-
-\hspace{1cm}\texttt{diff = np.mean(col\_max) - np.mean(col\_min)}
-
-\hspace{1cm}\texttt{if diff >= k: n\_significant += 1}
-
-\texttt{print(n\_significant / N\_TRIALS)}
-\end{shaded}
-}
-{
-\vspace{6cm}
-}
-\end{enumerate}
-
-				
+print(n_significant / N_TRIALS)
+</pre>

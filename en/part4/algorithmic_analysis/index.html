@@ -363,6 +363,70 @@
 	\end{align*}
 </div>
 
+<h2>Distributed File System</h2>
+
+<p>Imagine the task of loading a large file from your computer at Stanford, over the interet. Your file is stored in a distributed file system. In a distributed file system, the closest instance of your file might be on one of several computers at different locations in the world. Imagine you know the probability that the file is in one of a few locations $l$: $\P(L=l)$, and for each location the expected time, $T$, to get the file, $\E[T|L=l]$, given it is in that location:</p>
+
+<table class="table table-bordered">
+	<tr><th>Location</th><th>$P(L = l)$</th><th>$\E[T| L = l]$</th></tr>
+	<tr><td>SoCal</td><td>0.5</td><td>0.3 seconds</td></tr>
+	<tr><td>New York</td><td>0.2</td><td>20.7 seconds</td></tr>
+	<tr><td>Japan</td><td>0.3</td><td>96.3 seconds</td></tr>
+</table>
+
+<p>The Law of Total Expectation gives a straightforward way to compute $\E[T]$:</p>
+
+\begin{align*}
+\E[T] 
+&= \sum_l \E[T|L=l] \p(L=l)\\
+&= 0.5 \cdot 0.3 + 0.2 \cdot 20.7 +  0.3 \cdot 96.7\\
+&= 33.3 \text{ seconds}
+\end{align*}
+
+<h2>Toy Example of Recursive Code</h2>
+
+In theoretical computer science, there are many times where you want to analyze the expected runtime of an algorithm. To practice this technique let's try to solve a simple recursive function. Let Y be the value returned by <code>recurse()</code>. What is $E[Y]$?
+
+
+<p><pre class="language-python"><code>def recurse():
+    x = random.choice([1, 2, 3])  # Equally likely values
+	if x == 1: 
+		return 3;
+	else if (x == 2):
+		return 5 + recurse()
+	else:
+		return 7 + recurse()</code></pre></p>
+
+<p>In order to solve this problem we are going to need to use the law of total expectation considering $X$ as your background variable.</p>
+
+\begin{align*}
+\E[Y] 
+= &\sum_{i \in \{1,2,3\}} \E[Y|X=i] \P(X=i)\\
+=&\E[Y|X=1] \P(X=1) \\& + \E[Y|X=2] \P(X=2) \\&+ \E[Y|X=3] \P(X=3) 
+\end{align*}
+
+We know the probability $\P(X=x) = \frac{1}{3}$ for $x \in \{1,2,3\}$. How can we compute a value such as $\E[Y|X=2]$? Well that is the expectation of your return, in the world where $X=2$. In that case you will return 5 + recurse(). The expectation of that is $5 + \E[Y]$. Plugging a similar result for each case we can continue our solution:
+
+\begin{align*}
+E[Y|X=1] &= 3\\
+E[Y|X=2] &= 5 + \E[Y]\\
+E[Y|X=3] &= 7 + \E[Y]\\
+\end{align*}
+
+Now we can just plug values into the law of total expectation:
+
+\begin{align*}
+\E[Y] 
+= &\sum_{i \in \{1,2,3\}} \E[Y|X=i] \P(X=i)\\
+=&\E[Y|X=1] \P(X=1) \\& + \E[Y|X=2] \P(X=2) \\&+ \E[Y|X=3] \P(X=3)  \\
+=&3 \cdot 1/3 \\
+ &+ (5 + \E[Y]) \cdot 1/3\\
+ &+ (7 + \E[Y]) \cdot 1/3\\
+= &(15 + 2\E[Y]) \cdot 1/3 \\
+1/3 \cdot \E[Y] = &5 \\
+\E[Y] = &15
+\end{align*}
+
                         
 
 
