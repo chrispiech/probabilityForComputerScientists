@@ -115,6 +115,7 @@
 		},
 		"examples": {
 			"mle_demo":"MLE Normal Demo",
+			"mle_pareto":"MLE Pareto Distribution",
 			"mixture_models":"MLE Mixture Model",
 		}
 	},
