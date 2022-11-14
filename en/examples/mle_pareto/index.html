@@ -375,7 +375,76 @@ Data = observations = [1.677, 3.812, 1.463, 2.641, 1.256, 1.678, 1.157,
 
 <p>Derive a formula for the MLE estimate of $\alpha$ based on the data you have collected.</p>
 
+<h3>Writing the Log Likihood Function</h3>
 
+<p>The first major objective in MLE is to come up with a log likelihood expression for our data. To do so we start by writing how likely our dataset looks, if we are told the value of $\alpha$:
+\begin{aligned}
+L(\alpha) = f(x_1\dots x_n) = \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}}
+\end{aligned}
+</p>
+
+<p>Optimization will be much easier if we instead try to optimize the log liklihood:
+    \begin{aligned}
+LL(\alpha) 
+&= \log L(\alpha) = \log \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}} \\
+&= \sum_{i=1}^n \log \frac{\alpha}{x_i^{\alpha+1}} \\
+&= \sum_{i=1}^n \log \alpha - (\alpha +1)\log x_i \\
+&=  n \log \alpha - (\alpha +1) \sum_{i=1}^n\log x_i \\
+\end{aligned}
+</p>
+
+<h3>Selecting $\alpha$</h3>
+
+<p>We are going to select $\alpha$ to be the value  which maximizes the log likelihood. To do so we are going to need the derivative of LL w.r.t. $\alpha$
+
+\begin{aligned}
+\frac{\partial LL(\alpha)}{\partial \alpha} 
+&= \frac{\partial LL(\alpha)}{\partial \alpha} \Big(
+ n \log \alpha - (\alpha +1) \sum_{i=1}^n\log x_i \Big) \\
+&= \frac{n}{\alpha} - \sum_{i=1}^n\log x_i
+\end{aligned}
+</p>
+
+<p>One way to optimize is to take the derivative and set it equal to zero:
+
+    \begin{aligned}
+ 0=\frac{n}{\alpha} - \sum_{i=1}^n\log x_i\\
+ \sum_{i=1}^n\log x_i = \frac{n}{\alpha} \\
+ \alpha = \frac{n}{ \sum\limits_{i=1}^n\log x_i}
+\end{aligned}
+</p>
+
+<p>At this point we have a formula that we can use to calculate $\alpha$! Wahoo</p>
+
+<h3>Putting it into code</h3>
+
+<pre class="language-python"><code>import math
+
+    def estimate_alpha(observations):
+        # This code computes the MLE estimate of alpha
+        log_sum = 0
+        for x_i in observations:
+            log_sum += math.log(x_i)
+        n = len(observations)
+        return n / log_sum
+    
+    def main():
+        observations = [1.677, 3.812, 1.463, 2.641, 1.256, 1.678, 1.157, 1.146, 
+        1.323, 1.029, 1.238, 1.018, 1.171, 1.123, 1.074, 1.652, 1.873, 1.314, 
+        1.309, 3.325, 1.045, 2.271, 1.305, 1.277, 1.114, 1.391, 3.728, 1.405, 
+        1.054, 2.789, 1.019, 1.218, 1.033, 1.362, 1.058, 2.037, 1.171, 1.457, 
+        1.518, 1.117, 1.153, 2.257, 1.022, 1.839, 1.706, 1.139, 1.501, 1.238, 
+        2.53 , 1.414, 1.064, 1.097, 1.261, 1.784, 1.196, 1.169, 2.101, 1.132, 
+        1.193, 1.239, 1.518, 2.764, 1.053, 1.267, 1.015, 1.789, 1.099, 1.25 , 
+        1.253, 1.418, 1.494, 1.015, 1.459, 2.175, 2.044, 1.551, 4.095, 1.396, 
+        1.262, 1.351, 1.121, 1.196, 1.391, 1.305, 1.141, 1.157, 1.155, 1.103, 
+        1.048, 1.918, 1.889, 1.068, 1.811, 1.198, 1.361, 1.261, 4.093, 2.925, 
+        1.133, 1.573]
+        alpha = estimate_alpha(observations)
+        print(alpha)
+    
+    if __name__ == '__main__':
+        main()</code></pre>
 
 </script>
 
