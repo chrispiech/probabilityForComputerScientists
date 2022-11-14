@@ -1,0 +1,52 @@
+
+% rebase('templates/chapter.html', title="Differential Privacy")
+ 
+<center><h1>Differential Privacy</h1></center>
+<hr/>
+
+<p>Recently, many organizations have released machine learning models trained on massive datasets (GPT-3, YOLO, etc...). This is a great contribution to science and streamlines modern AI research. However, publicizing these models allows for the potential ``reverse engineering'' of models to uncover the training data for the model. Specifically, an attacker can download a model, look at the parameter values and then try to reconstruct the original training data. This is particularly bad for models trained on sensetive data like health information. In this section we are going to use randomness as a method to defend against algorithmic ``reverse engineering.'' </p>
+
+<h2>Injecting Randomness</h2>
+<p>One way to combat algorithmic reverse engineering is to add some random element to an already existing dataset. Let</p>
+
+\begin{align*}
+X_1, \dots, X_i \overset{\text{i.i.d}} \sim \text{Bern}(p)
+\end{align*}
+
+<p>represent a set of real human data. Consider the following snippet of code:</p>
+
+<pre class="language-python"><code>def calculateXi(Xi): 
+	return Xi</code></pre>
+
+<p>Quite simply, an attacker can call the above for all 100 samples and uncover all 100 data points. Instead, we can inject an element of randomness: </p>
+
+<pre class="language-python"><code>def calculateYi(Xi): 
+	obfuscate = random() # Bern with parameter p=0.5
+	if obfuscate:
+		return indicator(random())
+	else:
+		return Xi</code></pre>
+
+<p>The attacker can in expectation call the new function 100 times and get the correct values for 50 of them (but they wont know which 50).</p>
+
+<p> Now consider if we publish the function calculateYi, how could a researcher who is interested in the mean of the samples get useful data? They can look at:</p>
+
+\begin{align*}
+    Z = \sum^{100}_{n=1} Y_i.
+\end{align*}
+
+<p> Which has expectation: </p>
+
+\begin{align*}
+    E[Z] = E\left[\sum^{100}_{n=1} Y_i\right] = \sum^{100}_{n=1} E[Y_i] = \sum^{100}_{n=1}\left(\frac{p}{2} + \frac{1}{4}\right) = 50p + 25
+\end{align*}
+
+<p> Then to uncover an estimate, the scientist can do, </p>
+
+\begin{align*}
+    p \approx \frac{Z - 25}{50}
+\end{align*}
+
+<p> And proceed to conduct more research! </p>
+
+<p> (Why do we use Gaussian Obfuscation? Because it is easily isolateable in optimization methods like linear regression.) </p>
