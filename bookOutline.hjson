@@ -99,7 +99,8 @@
 		},
 		"examples": {
 			"thompson":"Thompson Sampling",
-			"p_hacking":"P-Hacking"
+			"p_hacking":"P-Hacking",
+			"differential_privacy":"Differential Privacy"
 		}
 	},
 	"part5":{

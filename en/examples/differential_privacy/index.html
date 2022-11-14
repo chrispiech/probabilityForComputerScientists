@@ -5,7 +5,7 @@
 <head>
     
 
-<title>CS109 Logo</title>
+<title>Differential Privacy</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -346,311 +346,57 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
               
-                         
+                        
+ 
+<center><h1>Differential Privacy</h1></center>
+<hr/>
 
-<h1>
-						CS109 Logo
-					</h1>
-				<hr/>
-				<p>
-					To generate the CS109 logo, we are going to throw half a million darts at a picture of the Stanford seal. We only keep the pixels that are hit by at least one dart. Each dart has it's x-pixel and y-pixel chosen at random from gaussian distributions. Let $X$ be a random variable which represent the x-pixel, $Y$ be a random variable which represents the y-pixel and $S$ be a constant that equals the size of the logo (its width is equal to its height). $X \sim \mathcal{N}\left(\frac{S}{2}, \frac{S}{2}\right)$ and $Y \sim \mathcal{N}\left(\frac{S}{3},\frac{S}{5}\right)$
-				</p>
+<p>Recently, many organizations have released machine learning models trained on massive datasets (GPT-3, YOLO, etc...). This is a great contribution to science and streamlines modern AI research. However, publicizing these models allows for the potential ``reverse engineering'' of models to uncover the training data for the model. Specifically, an attacker can download a model, look at the parameter values and then try to reconstruct the original training data. This is particularly bad for models trained on sensetive data like health information. In this section we are going to use randomness as a method to defend against algorithmic ``reverse engineering.'' </p>
 
-		<div class="row">
-			<div class="col-sm-12">
-				<h3>Darts thrown: <span id="dartNum">0</span></h3>
-			</div>
-		</div>
+<h2>Injecting Randomness</h2>
+<p>One way to combat algorithmic reverse engineering is to add some random element to an already existing dataset. Let</p>
 
-		<div class="row">
-			<div class="col-sm-6">
-				<h2>Dart Results</h2>
-				<canvas style="width:370px; height:370px;" id="imgCanvas"></canvas>
-			</div>
+\begin{align*}
+X_1, \dots, X_i \overset{\text{i.i.d}} \sim \text{Bern}(p)
+\end{align*}
 
-			<div class="col-sm-6">
-				<h2>Dart Probability Density</h2>
-				<canvas style="width:370px; height:370px;" id="distCanvas"></canvas>
-			</div>
-		</div>
+<p>represent a set of real human data. Consider the following snippet of code:</p>
 
-		<div class="row">
-			<div class="col-sm-6">
-				<h2>X Distribution</h2>
-				<div style="width:370px; height:370px;" id="xDist"></div>
-			</div>
+<pre class="language-python"><code>def calculateXi(Xi): 
+	return Xi</code></pre>
 
-			<div class="col-sm-6">
-				<h2>Y Distribution</h2>
-				<div style="width:370px; height:370px;" id="yDist"></div>
-			</div>
-		</div>
+<p>Quite simply, an attacker can call the above for all 100 samples and uncover all 100 data points. Instead, we can inject an element of randomness: </p>
 
-		
-		
-		
-				
-		<script>
-			function stdToVar(std) {
-				return std * std;
-			}
+<pre class="language-python"><code>def calculateYi(Xi): 
+	obfuscate = random() # Bern with parameter p=0.5
+	if obfuscate:
+		return indicator(random())
+	else:
+		return Xi</code></pre>
 
-			var LOGO_SIZE = 900;
-			var DARTS = 500000;
-			var TIMEOUT_START = 50;
-			var TIMEOUT_END = 1;
-			var TIMEOUT_SWITCH = 50000;
+<p>The attacker can in expectation call the new function 100 times and get the correct values for 50 of them (but they wont know which 50).</p>
 
-			var xDist = gaussian(LOGO_SIZE/2, stdToVar(LOGO_SIZE/2));
-			var yDist = gaussian(LOGO_SIZE/3, stdToVar(LOGO_SIZE/5));
-			function getProbability(x, y) {
-		    	var xProb = xDist.pdf(x);
-		    	var yProb = yDist.pdf(y);
-		    	return xProb * yProb;
-		    }
+<p> Now consider if we publish the function calculateYi, how could a researcher who is interested in the mean of the samples get useful data? They can look at:</p>
 
-		    function drawDistribution() {
-			    var canvas = document.getElementById("distCanvas");
-			    canvas.width = LOGO_SIZE;
-				canvas.height = LOGO_SIZE;
-				var ctx=canvas.getContext("2d");
-				var imgData=ctx.createImageData(LOGO_SIZE,LOGO_SIZE);
-				var data = imgData.data;
-				var maxP = 0;
-				for (var r = 0; r < LOGO_SIZE; r++) {
-			    	for(var c = 0; c < LOGO_SIZE; c++) {
-			    		var p = getProbability(c, r);
-			    		maxP = Math.max(maxP, p);
-			    	}
-			    }
-			    console.log(maxP)
-				for (var r = 0; r < LOGO_SIZE; r++) {
-			    	for(var c = 0; c < LOGO_SIZE; c++) {
-						var i = (r * LOGO_SIZE + c) * 4;
-						
-						var p = getProbability(c, r);
-						var value = (1- p/maxP) * 256;
-						data[i + 0] = value; // red
-						data[i + 1] = value; // green
-						data[i + 2] = value; // blue
-						data[i + 3] = 255; // alpha
-			    	}
-			    }
-				ctx.putImageData(imgData,0,0);
-			}
+\begin{align*}
+    Z = \sum^{100}_{n=1} Y_i.
+\end{align*}
 
-			function drawLogo() {
-				var canvas = document.getElementById('imgCanvas');
-				canvas.width = LOGO_SIZE;
-				canvas.height = LOGO_SIZE;
-				var ctx = canvas.getContext('2d');
-				logo = new Image();
-				logo.onload = function(){
-				    ctx.drawImage(logo, 0, 0, logo.width, logo.height, 0, 0, LOGO_SIZE, LOGO_SIZE);
-				    var imageData = ctx.getImageData(0, 0, LOGO_SIZE, LOGO_SIZE);
-				    var data = imageData.data;
-				    for (var r = 0; r < LOGO_SIZE; r++) {
-				    	for(var c = 0; c < LOGO_SIZE; c++) {
-				    		var i = (r * LOGO_SIZE + c) * 4;
-				    		data[i + 3] = 0; // alpha
-				    	}
-				    }
+<p> Which has expectation: </p>
 
+\begin{align*}
+    E[Z] = E\left[\sum^{100}_{n=1} Y_i\right] = \sum^{100}_{n=1} E[Y_i] = \sum^{100}_{n=1}\left(\frac{p}{2} + \frac{1}{4}\right) = 50p + 25
+\end{align*}
 
-				    var dartsThrown = 0;
+<p> Then to uncover an estimate, the scientist can do, </p>
 
-				    function throwDart() {
-				    	if(dartsThrown < DARTS) {
-				    		var delta = 500;
-				    		for(var j = 0; j < delta; j++) {
-						    	var col = Math.round(xDist.ppf(Math.random()));
-						    	var row = Math.round(yDist.ppf(Math.random()));
-						    	var index = (row * LOGO_SIZE + col) * 4;
-						    	data[index + 3] = 256; // alpha 
-						    }
-					    	ctx.putImageData(imageData, 0, 0);
-					    	dartsThrown += delta;
-					    	$("#dartNum").html(dartsThrown);
-					    	var timeout = TIMEOUT_START
-					    	if(dartsThrown > TIMEOUT_SWITCH) {
-					    		timeout = TIMEOUT_END
-					    	}
-					    	setTimeout(throwDart, timeout);
-					    }
-				    }
-				    throwDart();
-				    
-				}
-				logo.src = '../../../img/logo.gif';
-			}
+\begin{align*}
+    p \approx \frac{Z - 25}{50}
+\end{align*}
 
-			window.onload = function() {
-				drawDistribution();
-				drawLogo();
-			}
+<p> And proceed to conduct more research! </p>
 
-		    drawNormalPDF("#xDist", xDist, "pixel x");
-		    drawNormalPDF("#yDist", yDist, "pixel y");
-
-		    function drawNormalPDF(parentDivId, normal, xAxisName) {
-		    	//setting up empty data array
-				var data = [];
-				var maxP = 0;
-				var parentDiv = $(parentDivId)
-				getData(); // popuate data 
-		    	// line chart based on http://bl.ocks.org/mbostock/3883245
-				var margin = {
-			        top: 10,
-			        right: 10,
-			        bottom: 50,
-			        left: 70
-			    };
-		    	width = parentDiv.width() - margin.left - margin.right,
-			    height = parentDiv.height() - margin.bottom - margin.top;
-
-				var x = d3.scale.linear()
-				    .range([0, width]);
-
-				var y = d3.scale.linear()
-				    .range([height, 0]);
-
-				var xAxis = d3.svg.axis()
-				    .scale(x)
-				    .orient("bottom")
-				    .tickValues(range(0, LOGO_SIZE, 100))
-				    
-				var yTicks = range(0, maxP, maxP/9)
-				var yAxis = d3.svg.axis()
-				    .scale(y)
-				    .orient("left")
-				    .tickValues(yTicks);
-
-				var line = d3.svg.line()
-				    .x(function(d) {
-				        return x(d.q);
-				    })
-				    .y(function(d) {
-				        return y(d.p);
-				    });
-
-				var svg = d3.select(parentDivId).append("svg")
-				    .attr("width", width + margin.left + margin.right)
-				    .attr("height", height + margin.top + margin.bottom)
-				    .append("g")
-				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-				x.domain(d3.extent(data, function(d) {
-				    return d.q;
-				}));
-				y.domain(d3.extent(yTicks, function(d) {
-				    return d;
-				}));
-				console.log("here")
-
-				svg.append("g")
-				    .attr("class", "x axis")
-				    .attr("transform", "translate(0," + height + ")")
-				    .call(xAxis);
-
-				
-				svg.append("g")
-				    .attr("class", "y axis")
-				    .call(yAxis);
-
-				// text label for the x axis
-				svg.append("text")      
-			        .attr("x", width / 2 )
-			        .attr("y",  height + 40 )
-			        .style("text-anchor", "middle")
-			        .text(xAxisName);
-
-			    // text label for the y axis
-			 	var padding = 9 -margin.left
-				svg.append("text")
-		            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-		            .attr("transform", "translate("+ padding +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-		            .text("Probability Density");
-
-				svg.append("path")
-				    .datum(data)
-				    .attr("class", "line")
-				    .attr("d", line);
-
-				function getData() {
-					// loop to populate data array with 
-					// probabily - quantile pairs
-					maxP = 0
-					for (var i = 0; i < LOGO_SIZE; i++) {
-						var x = i;
-					    var p = normal.pdf(x) // calc prob of rand draw
-					    el = {
-					        "q": x,
-					        "p": p
-					    }
-					    if(p > maxP) maxP = p;
-					    data.push(el)
-					};
-
-					// need to sort for plotting
-					//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-					data.sort(function(x, y) {
-					    return x.q - y.q;
-					});	
-				}
-		    }
-		    function range(start, end, step) {
-			    var range = [];
-			    var typeofStart = typeof start;
-			    var typeofEnd = typeof end;
-
-			    if (step === 0) {
-			        throw TypeError("Step cannot be zero.");
-			    }
-
-			    if (typeofStart == "undefined" || typeofEnd == "undefined") {
-			        throw TypeError("Must pass start and end arguments.");
-			    } else if (typeofStart != typeofEnd) {
-			        throw TypeError("Start and end arguments must be of same type.");
-			    }
-
-			    typeof step == "undefined" && (step = 1);
-
-			    if (end < start) {
-			        step = -step;
-			    }
-
-			    if (typeofStart == "number") {
-
-			        while (step > 0 ? end >= start : end <= start) {
-			            range.push(start);
-			            start += step;
-			        }
-
-			    } else if (typeofStart == "string") {
-
-			        if (start.length != 1 || end.length != 1) {
-			            throw TypeError("Only strings with one character are supported.");
-			        }
-
-			        start = start.charCodeAt(0);
-			        end = end.charCodeAt(0);
-
-			        while (step > 0 ? end >= start : end <= start) {
-			            range.push(String.fromCharCode(start));
-			            start += step;
-			        }
-
-			    } else {
-			        throw TypeError("Only string and number types are supported");
-			    }
-
-			    return range;
-
-			}
-		    
-
-			
-		</script>
+<p> (Why do we use Gaussian Obfuscation? Because it is easily isolateable in optimization methods like linear regression.) </p>
 
                         
 

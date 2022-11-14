@@ -279,7 +279,7 @@
 <li>
     <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
     <ul class="collapse list-unstyled show" id="part4_examples">
-        <li><a href="../../examples/thompson">Thompson Sampling</a></li><li><a href="../../examples/p_hacking">P-Hacking</a></li>
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li><li><a href="../../examples/p_hacking">P-Hacking</a></li><li><a href="../../examples/differential_privacy">Differential Privacy</a></li>
     </ul>
 </li>
 </li>
@@ -482,7 +482,7 @@ function drawPoissonPmf(parentDivId, lambda) {
 </div>
 
 <p>
-Now $n=600$, $p=5/600$ and $X \sim \Bin(n=600, p=5/600)$. We can repeat our example calculations using this better approximation:
+Now $n=600$, $p=5/600$ and $X \sim \Bin(n=600, p=6/600)$. We can repeat our example calculations using this better approximation:
 $$\p(X=1) = {600 \choose 1} (5/600)^1 (595/60)^{600-1} \approx 0.0333$$
 	$$\p(X=2) = {600 \choose 2} (5/600)^2 (595/600)^{600-2} \approx 0.0837$$
 	$$\p(X=3) = {600 \choose 3} (5/600)^3 (595/600)^{600-3} \approx 0.1402$$
