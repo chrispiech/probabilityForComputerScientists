@@ -1,0 +1,259 @@
+
+% rebase('templates/chapter.html', title="Bayesian Carbon Dating")
+ 
+<center><h1>Bayesian Carbon Dating</h1></center>
+<hr/>
+<p>We are able to know the age of ancient artefacts using a process called carbon dating. This process involves a lot of uncertainty! You observe a measurement of 90% of natural C14 molecules in a sample. What is your belief distribution over the age of the sample? This task requires probabilistic models because we have to think about two random variables together: the age $A$ of the sample, and $M$ the remaining C14 molecules.</p> 
+
+<p><center><img class="mainFigureFull" src="{{pathToRoot}}img/chapters/carbonDating.jpeg"></img><br/><i>Carbon dating allows us to know the age of things that used to be alive, like dinosaur bones.</i></center></p>
+
+
+<h3>Carbon Dating Demo</h3>
+
+<p>Imagine you have just taken a sample from your artifact. For the sample size you took, a living organism would have had 1000 molecules of C14. Use this demo to explore the relationship between how much C14 is left and your belief ditribution for how old your artifact is.  </p>
+
+<p><div class="content">
+    <div class="form-group row"/>
+
+    <label for="c14" class="col-sm-3 col-form-label">Remaining C14: </label>
+    <div class="col-sm-9">
+    <input onchange="runCarbonDating()" class="form-control" type="number" min="350" max="1000" step="1" value="900" id="c14" style="display:inline-block;width:200px"> <span id="inputStatus"></span><br/>
+    </div>
+
+    </div>
+      </div></p>
+    
+      <canvas id="carbonDatingPMF" ></canvas>
+
+
+<p><i>Note: this demo was created in 2022 and the age reported is relative to that year! This chapter only has historical C14 rates from 10,000 years ago and as such is not able to estimate age when there are fewer than 350 molecules of C14 in the sample.</i></p>
+
+
+<h3>Understanding Decay of C14 molecule</h3>
+
+<p>All living things have a constant proportion of a radioactive molecule called C14 in them. When living things die those molecules start to decay radioactively. Specifically, the time to decay in years, $T$, of a single C14 molecule is distributed as an exponential, $T \sim \text{Exp}(\lambda = 1/8267)$ where 8267 is the mean life of C14.</p>
+
+<p>Consider a single C14 molecule. What is the probability that it decays within 750 years?</p>
+
+
+<p><div class="bordered">
+\begin{align*}P(T \leq 750) &= 1-e^{-\lambda \cdot 750} &&\text{Exp. CDF}\\
+&= 1 - e^{-\frac{1}{8267}\cdot 750} \\
+&= 0.0867
+\end{align*}
+</div></p>
+
+<p>That is only for a single molecule. Since C14 molecules decay independently, it is not much harder to think of how many are left out of a larger initial count of C14. A particular sample started with 1000 molecules. What is the probability that exactly 900 are left after 750 years? </p>
+
+<p><div class="bordered">
+\begin{align*}X &\sim \Bin(n=1000, p = 0.0867) \\
+\P(X = 100)& = {1000 \choose 100}0.0867^{100}(1-0.0867)^{900} \\
+&\approx 0.0144
+\end{align*}
+</div></p>
+
+<p>In general, the probability of having $m$ remaining C14 molecules given that the artifact is $i$ years old will be equal to $\P(X=n-m)$ where $n$ is the starting number of C14 molecules, $p = 1- e^{-i/8267}$ and $X \sim \Bin(n, p)$.</p>
+
+<!-- <p>Next, we should generalize the above equation to a variable number of years. Calculate $\P(M = m | A = \texttt{age})$, the probability that exactly $\texttt{m}$ molecules are left out of the original 1000 after exactly $\texttt{age}$ number of years. </p> -->
+
+
+<h3>Inferring Age From C14</h3>
+
+<p>You observe a measurement of 900 C14 molecules in a sample. You assume that the sample originally had 1000 C14 molecules when it died. Infer $P(A=i | M = 900)$.  $A = i$ is the event that the sample organism died $i$ years ago. Note that age is a discrete random variable which takes on whole numbers of years. You will need use $P(M = m | A = \texttt{age})$ from the previous part</p> 
+
+<p>For your prior belief: you know that the sample must be between $A = 100$ and $A = 10000$ inclusive and you assume that every year in that range is equally likely.</p>
+
+<p><div class="bordered">
+    This is a perfect case for Bayes theorem. However instead of updating our belief in an event, like we did in <a href="{{pathToLang}}part1/bayes_theorem">Part 1</a>, we are updating the belief over all the values that a random variable can take on, a process called <a href="{{pathToLang}}part3/inference/">inference</a>. Here is the generalized version of Bayes' theorem for infering age, $A$:
+
+    \begin{align*}
+    P(A = i | M= 900) 
+    &= \frac{\P(M=900|A=i) \P(A = i)}{\P(M=900)} \\
+    &= \P(M=900|A=i) \cdot \frac{\P(A = i)}{\P(M=900)} \\
+    &= \P(M=900|A=i) \cdot K
+
+    \end{align*}
+
+    The critical part of the last line was to recognize that $\frac{\P(A = i)}{\P(M=900)}$ is a constant with respect to $i$. The term $\P(A=i)$ is constant as our prior over $A$ was uniform. We could compute the value of $\P(M=900)$ explicitely using  the law of total probability. In code this is most easily implemented by computing all values of $\P(M=900|A=i)$ and normalizing as $K$ will  be the value that makes all of the values $\P(A=i|M=900)$ sum to 1.
+    </div></p>
+
+
+
+
+<h3>Fluctuating History</h3>
+
+<p>The amount of C14 in the atmosphere fluctuates over time; it is not a constant baseline! Here is the delta C14 (per 1000 molecules) that you would have found if the object died different number of years ago. To incorporate this information we simply start our binomial with 1000 molecules plus the delta for the year, downloaded from a public dataset [1]:</p>
+
+<canvas id="historicalC14Canvas" ></canvas>
+<p>This offset gives the result a really interesting shape (see the demo).</p>
+
+<h3>Python Code</h3>
+
+<p>The math, derived above, leads to the following python code for a function <code>inference(m)</code> which returns the probability mass function for age $A$, given an observation of $m$ C14 molecules in a sample that should have 1000 molecules, were it alive today. Notice the use of normalization to avoid explicitely computing the prior or $\P(M=m)$ from Bayes Theorem.</p>
+
+<p><pre class="language-python"><code>from scipy import stats
+import math
+    
+C14_MEAN_LIFE = 8267
+    
+def inference(m = 900):
+    """
+    Returns a dictionary A, where A[i] contains the 
+    corresponding probability, P(A = i| M = m).
+    m is the number of C14 molecules remaining and i 
+    is age in years. 
+    """
+    A = {}
+    for i in range(100,10000+1):
+        pr = calc_likelihood(m, i) # P(M = m | A = i)
+        A[i] = pr
+    # implicitly computes the normalization constant
+    normalize(A)
+
+def calc_likelihood(m, age):
+    """
+    Computes P(M = m | A = age), the probability of
+    having m molecules left given the sample is age
+    years old. Uses the exponential decay of C14
+    """
+    n_original = 1000 + delta_start(age)
+    n_decayed = n_original - m
+    p_single = 1 - math.exp(-age/C14_MEAN_LIFE)
+    return stats.binom.pmf(n_decayed, n_original, p_single)
+
+def normalize(prob_dict):
+    # first compute the sum of the probability
+    sum = 0
+    for key, pr in prob_dict.items():
+        sum += pr
+    # then divide each probability by that sum
+    for key, pr in prob_dict.items():
+        prob_dict[key] = pr / sum
+    # now the probabilities sum to 1 (aka are normalized)
+
+def delta_start(age):
+    """
+    The amount of atmospheric C14 is not the same every
+    year. If the sample died "age" years ago, then it would
+    have started with slightly more, or slightly less than
+    1000 C14 molecules. We can look this value up from the
+    IntCal database. See the next section!
+    """
+    return historical_c14_delta[age]</code></pre></p>
+    
+
+<h3>Inustry Strength Bayesian Carbon Dating</h3>
+
+<p>
+    There are other sources of uncertainty in Carbon Dating which we have not considered. For example a common source of uncertainty is laboraty error: if the same sample were sent to a lab several times, different results would come back. 
+</p>
+<p>Perhaps the most fascinating extension is modelling "stratigraphic" relationships. Often in archeological sites, you can know relative age of artifacts based on their position in sediment. This requires a joint model of the age of each artifact with the constraint that you *know* some are older than others. Inference can then be performed using a General Inference technique (often MCMC) and will be much more accurate.</p>
+
+<h3>Binomial Approximations?</h3>
+<p>Could we have used an approximation for the binomial PMF calculation? In Bayesian Carbon dating both a normal and a poisson approximation are appropriate. Our Binomial is well approximated by a Poisson with $\lambda = n \cdot p$ or a Gaussian with $\mu=n\cdot p$ and $\sigma^2 = n \cdot p \cdot (1-p)$. This could be used to speed up calculations. Let's rework the example where we had $X\sim \Bin(n=1000, p=0.0867)$. We computed that $\P(X=100) = 0.0144$</p>
+
+<p><div class="bordered">
+    Poisson Approximation:
+    \begin{align*}Y &\sim \Poi(\lambda=86.7) \\
+    \P(X = 100)& \approx \P(Y=100)\\
+    &= \texttt{scipy.stats.poi.pmf}(100, 86.7) \\
+    &\approx 0.0151
+    \end{align*}
+
+    Normal Approximation:
+    \begin{align*}Y &\sim \N(\mu=86.7, \sigma^2 = 79.2) \\
+    \P(X = 100)& \approx \P(Y>100.5) - \P(Y>99.5)\\
+    &\approx 0.0146
+    \end{align*}
+    </div></p>
+
+    <p></p>
+    <hr/>
+
+    [1] <a href="http://intcal.org/JS/JSintcal20/index.html?xscale=ADBC&yscale=D14C&Sets%5B%5D=1">IntCal Historical Atmospheric C14</a>
+
+<script>
+
+    const charts = {}
+    var historicalData = null
+
+    $.getJSON("{{pathToRoot}}chapters/examples/bayesian_carbon_dating/historical_c14.json", function(json) {
+        // data = json;
+        // 
+        historicalData= json
+        runCarbonDating()
+        drawHistoricalC14()
+    });
+
+    function drawHistoricalC14(){
+        let data = []
+        for(var age in historicalData) {
+            let delta = historicalData[age]["deltaC14"]
+            data.push([age, delta])
+        }
+        drawGraph(charts, 'historicalC14Canvas', data, 'years ago', 'C14 Delta per 1000 Samples', 'line')
+    }
+
+    function getPrObsGivenAge(age, nRemaining){
+        // we need to look up the delta c14
+        const delta = historicalData[age]["deltaC14"]
+        console.log(delta)
+
+        const N = 1000 + delta
+        const nDecayed = N - nRemaining
+        const pSingle = 1 - Math.exp(-age/8267)
+        const pN = binomialPmf(N,pSingle,nDecayed)
+        return pN
+    }
+
+    function runCarbonDating() {
+        if(historicalData == null) return
+
+        let nRemaining = parseInt($("#c14").val())
+        if(nRemaining < 350){
+            drawGraph(charts, 'carbonDatingPMF', [], 'i', 'Pr(Age = i)')
+            return
+        }
+
+        let minAge = 100
+        let maxAge = 10001
+        let deltaYears = 1
+        let numerator = []
+
+        // keep track of if you think you are at the end of the distribution
+        let maxPr = 0
+        let lastPr = 0
+        for(currYear = 100; currYear < maxAge; currYear += deltaYears) {
+            let pr = getPrObsGivenAge(currYear, nRemaining)
+            if(pr > maxPr) {
+                maxPr = pr
+            }
+            numerator.push(pr)
+            lastPr = pr
+        }
+
+
+        let passedMax = false
+        let reduced = []
+        for(var i = 0; i < numerator.length; i++) {
+            let y = numerator[i]
+            if(y == maxPr) passedMax = true
+            console.log(y, maxPr, passedMax)
+            if(passedMax && y < 0.0001 && i > 400) break
+            reduced.push(y)
+        }
+        
+
+
+        normalize([reduced])
+
+
+        let data = []
+        for(var i = 0; i < reduced.length; i++) {
+            let x = minAge+i * deltaYears
+            let y = reduced[i]
+            data.push([x, y])
+        }
+        drawGraph(charts, 'carbonDatingPMF', data, 'x', 'P(Age = x)')
+    }
+</script>

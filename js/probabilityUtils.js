@@ -110,7 +110,12 @@ function normalize(data) {
     }
 }
 
-function drawGraph(charts, parentDivId, data, xLabel = 'x', yLabel='Pr'){
+
+/**
+ * Draws a bar graph in the given parentDiv (which must be a canvas type)
+ */
+function drawGraph(charts, parentDivId, data, xLabel = 'x', yLabel='Pr', chartType='bar'){
+
 	if(charts[parentDivId]) {
 		charts[parentDivId].destroy()
 	}
@@ -125,7 +130,7 @@ function drawGraph(charts, parentDivId, data, xLabel = 'x', yLabel='Pr'){
 	}
 
 	var config = {
-		type: 'bar',
+		type: chartType,
 		data: {
 			labels: xValues,
 			datasets: [{

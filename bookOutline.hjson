@@ -76,13 +76,13 @@
 			"computational_inference":"General Inference",
 		},
 		"examples": {
-			"dart_logo":"CS109 Logo",
 			"fairness":"Fairness in AI",
 			"federalist":"Federalist Paper Authorship",
 			"name2age":"Name to Age",
+			"bayesian_carbon_dating":"Bayesian Carbon Dating",
 			"bridge_distribution":"Bridge Distribution",
+			"dart_logo":"CS109 Logo",
 			"tracking_in_2D":"Tracking in 2D"
-
 		}
 	},
 	"part4":{
@@ -99,6 +99,7 @@
 		},
 		"examples": {
 			"thompson":"Thompson Sampling",
+			"night_sight":"Night Sight",
 			"p_hacking":"P-Hacking",
 			"differential_privacy":"Differential Privacy"
 		}

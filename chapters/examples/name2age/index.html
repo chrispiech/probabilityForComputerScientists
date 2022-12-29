@@ -7,7 +7,19 @@
 <p>
 Because of shifting patterns in name popularity, a person's name is a hint as to their age. The United States publishes a data which contains counts of how many US residents were born with a given name in a given year, based off Social Security applications. We can use inference to compute the reverse probability distribution: an updated belief in a person's age, given their name. As a reminder, if I know the year someone was born, I can calculate their age within one year.
 
-<center><img class="mainFigureLg" src="{{pathToRoot}}img/chapters/name2age.png"></img></center>
+
+<p><div class="content">
+Query Name: <input onchange="runName2Age()" class="form-control" value="Katherine" id="queryName" style="display:inline-block;width:200px"> <span id="inputStatus"></span>
+  </div></p>
+
+  <div class="loader" id="dataLoader"></div>
+  <canvas id="babyNamePMF" style="max-height: 400px;display:none"></canvas>
+
+  <p>Records with name: <span id="totalCount"></span>
+
+  	<p>This demo is based on real data from US Social Security applications between 1914 and 2014. Thank you to <a href="https://www.kaggle.com/kaggle/us-baby-names">https://www.kaggle.com/kaggle/us-baby-names</a> for compiling the data. <a href="{{pathToRoot}}data/babyNames/count_map.json" download="countMap.json" class="btn btn-secondary btn-sm">Download Data</a>.</p>
+
+<h3>Computation</h3>
 
 <p> The US Social Security applications data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
 	$$
@@ -16,7 +28,9 @@ Because of shifting patterns in name popularity, a person's name is a hint as to
 	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
 	$$
 
-<p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary? We can get started by applying the definition of conditional probability for random variables:
+<p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary?</p>
+
+	We can get started by applying the definition of conditional probability for random variables:
 
 		\begin{align*}
 		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})}
@@ -88,20 +102,6 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 	<li>The US census is not perfect. It does not capture all people who are resident in the US, and there are demographics which are underrepresented. This will also skew our results.</li>
 </ol>
 
-<h3>Demo</h3>
-
-
-
-<p><div class="content">
-Query Name: <input onchange="runName2Age()" class="form-control" value="Katherine" id="queryName" style="display:inline-block;width:200px"> <span id="inputStatus"></span>
-  </div></p>
-
-  <div class="loader" id="dataLoader"></div>
-  <canvas id="babyNamePMF" style="max-height: 400px;display:none"></canvas>
-
-  <p>Records with name: <span id="totalCount"></span>
-
-  	<p>This demo is based on real data from US Social Security applications between 1914 and 2014. Thank you to <a href="https://www.kaggle.com/kaggle/us-baby-names">https://www.kaggle.com/kaggle/us-baby-names</a> for compiling the data. <a href="{{pathToRoot}}data/babyNames/count_map.json" download="countMap.json" class="btn btn-secondary btn-sm">Download Data</a>.</p>
 
 <h3>Names that Give Away Your Age</h3>
 

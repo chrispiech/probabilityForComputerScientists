@@ -1,0 +1,981 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+
+<title>Bayesian Carbon Dating</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+ <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<!-- D3 CDN -->
+<script src="https://d3js.org/d3.v3.js"></script>
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- Chart CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js" integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- PDF JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous"></script>
+
+<!-- Lunr CDN -->
+ <script src="https://unpkg.com/lunr@2.0.4/lunr.js"></script>
+
+<!-- Firebase CDN -->
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../../css/style.css">
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
+
+   
+
+<!-- Java Script -->
+<script src="../../../plugins/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Python highlighting -->
+<script src="../../../plugins/prism/prism.js"></script>
+<link href="../../../plugins/prism/prism.css" rel="stylesheet" />
+
+<!-- Probability Packages -->
+<script src="../../../js/probabilityUtils.js"></script>
+<script src="../../../plugins/probability/gaussian.js"></script>
+<script src="../../../plugins/color.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js'></script>
+
+
+<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<!-- Stanford -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+
+<!-- Math Jax -->
+<!-- <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script> -->
+<script type="text/javascript">
+  MathJax = {
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "action.js"]
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+	"fast-preview": {
+	  disabled: true
+	}
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<script src="../../../plugins/math.min.js"></script>
+
+
+
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+ <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script src="../../../plugins/jquery.mCustomScrollbar.js"></script>
+
+</head>
+
+<script>
+  Chart.defaults.font.family = 'Times New Roman';
+  Chart.defaults.font.size = 18;
+</script>
+
+
+<!-- I declare a few math operators I often use in equations -->
+<div style="display:none">
+  $\DeclareMathOperator{\p}{P}$
+  $\DeclareMathOperator{\P}{P}$
+  $\DeclareMathOperator{\c}{^C}$
+  $\DeclareMathOperator{\or}{  or}$
+  $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\var}{Var}$
+  $\DeclareMathOperator{\Var}{Var}$
+  $\DeclareMathOperator{\Std}{Std}$
+  $\DeclareMathOperator{\E}{E}$
+  $\DeclareMathOperator{\std}{Std}$
+  $\DeclareMathOperator{\Ber}{Bern}$
+  $\DeclareMathOperator{\Bin}{Bin}$
+  $\DeclareMathOperator{\Poi}{Poi}$
+  $\DeclareMathOperator{\Uni}{Uni}$
+  $\DeclareMathOperator{\Geo}{Geo}$
+  $\DeclareMathOperator{\NegBin}{NegBin}$
+  $\DeclareMathOperator{\Beta}{Beta}$
+  $\DeclareMathOperator{\Exp}{Exp}$
+  $\DeclareMathOperator{\N}{N}$
+  $\DeclareMathOperator{\R}{\mathbb{R}}$
+  $\DeclareMathOperator*{\argmax}{arg\,max}$
+  $\newcommand{\d}{\, d}$
+  
+</div>
+
+<body class="greyBackground">
+
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!-- <div></div> -->
+        <a style="text-align:center" href="../../index.html"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
+    </div>
+
+    <div> 
+        <!-- Put a link back to cs109 -->
+    
+
+        <!-- This adds a search bar! -->
+        <div class="searchCol" style="font-family: 'Source Sans Pro', sans-serif;">
+            
+            <input type="text" class="form-control bookSearch" id="probability-for-digital-world-search" aria-describedby="search box" placeholder="🔍 Search book..."/>
+        </div>
+        
+    </div>
+
+<!-- intro -->
+<ul class="list-unstyled components">
+<li>
+<a id=sidebar-notation href="../../intro/notation">Notation Reference</a>
+<a id=sidebar-all_distributions href="../../intro/all_distributions">Random Variable Reference</a>
+<a id=sidebar-calculators href="../../intro/calculators">Calculators</a>
+</li>
+</ul>
+
+<!-- part1 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part1">Part 1: Core Probability</p></li>
+<li>
+<a id=sidebar-counting href="../../part1/counting">Counting</a>
+<a id=sidebar-combinatorics href="../../part1/combinatorics">Combinatorics</a>
+<a id=sidebar-probability href="../../part1/probability">Definition of Probability</a>
+<a id=sidebar-equally_likely href="../../part1/equally_likely">Equally Likely Outcomes</a>
+<a id=sidebar-prob_or href="../../part1/prob_or">Probability of <b>or</b></a>
+<a id=sidebar-cond_prob href="../../part1/cond_prob">Conditional Probability</a>
+<a id=sidebar-independence href="../../part1/independence">Independence</a>
+<a id=sidebar-prob_and href="../../part1/prob_and">Probability of <b>and</b></a>
+<a id=sidebar-law_total href="../../part1/law_total">Law of Total Probability</a>
+<a id=sidebar-bayes_theorem href="../../part1/bayes_theorem">Bayes' Theorem</a>
+<a id=sidebar-log_probabilities href="../../part1/log_probabilities">Log Probabilities</a>
+<a id=sidebar-many_flips href="../../part1/many_flips">Many Coin Flips</a>
+
+<li>
+    <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part1_examples">
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part2 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part2">Part 2: Random Variables</p></li>
+<li>
+<a id=sidebar-rvs href="../../part2/rvs">Random Variables</a>
+<a id=sidebar-pmf href="../../part2/pmf">Probability Mass Functions</a>
+<a id=sidebar-expectation href="../../part2/expectation">Expectation</a>
+<a id=sidebar-variance href="../../part2/variance">Variance</a>
+<a id=sidebar-bernoulli href="../../part2/bernoulli">Bernoulli Distribution</a>
+<a id=sidebar-binomial href="../../part2/binomial">Binomial Distribution</a>
+<a id=sidebar-poisson href="../../part2/poisson">Poisson Distribution</a>
+<a id=sidebar-continuous href="../../part2/continuous">Continuous Distribution</a>
+<a id=sidebar-uniform href="../../part2/uniform">Uniform Distribution</a>
+<a id=sidebar-exponential href="../../part2/exponential">Exponential Distribution</a>
+<a id=sidebar-normal href="../../part2/normal">Normal Distribution</a>
+<a id=sidebar-binomial_approx href="../../part2/binomial_approx">Binomial Approximation</a>
+
+<li>
+    <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part2_examples">
+        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part3 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part3">Part 3: Probabilistic Models</p></li>
+<li>
+<a id=sidebar-joint href="../../part3/joint">Joint Probability</a>
+<a id=sidebar-multinomial href="../../part3/multinomial">Multinomial</a>
+<a id=sidebar-continuous_joint href="../../part3/continuous_joint">Continuous Joint</a>
+<a id=sidebar-inference href="../../part3/inference">Inference</a>
+<a id=sidebar-bayesian_networks href="../../part3/bayesian_networks">Bayesian Networks</a>
+<a id=sidebar-independent_vars href="../../part3/independent_vars">Independence in Variables</a>
+<a id=sidebar-correlation href="../../part3/correlation">Correlation</a>
+<a id=sidebar-computational_inference href="../../part3/computational_inference">General Inference</a>
+
+<li>
+    <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part3_examples">
+        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part4 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part4">Part 4: Uncertainty Theory</p></li>
+<li>
+<a id=sidebar-beta href="../../part4/beta">Beta Distribution</a>
+<a id=sidebar-summation_vars href="../../part4/summation_vars">Adding Random Variables</a>
+<a id=sidebar-clt href="../../part4/clt">Central Limit Theorem</a>
+<a id=sidebar-samples href="../../part4/samples">Sampling</a>
+<a id=sidebar-bootstrapping href="../../part4/bootstrapping">Bootstrapping</a>
+<a id=sidebar-algorithmic_analysis href="../../part4/algorithmic_analysis">Algorithmic Analysis</a>
+
+<li>
+    <a href="#part4_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part4_examples">
+        <li><a href="../../examples/thompson">Thompson Sampling</a></li><li><a href="../../examples/night_sight">Night Sight</a></li><li><a href="../../examples/p_hacking">P-Hacking</a></li><li><a href="../../examples/differential_privacy">Differential Privacy</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+<!-- part5 -->
+<ul class="list-unstyled components">
+<li><p href="{pathToLang}part5">Part 5: Machine Learning</p></li>
+<li>
+<a id=sidebar-parameter_estimation href="../../part5/parameter_estimation">Parameter Estimation</a>
+<a id=sidebar-mle href="../../part5/mle">Maximum Likelihood Estimation</a>
+<a id=sidebar-map href="../../part5/map">Maximum A Posteriori</a>
+<a id=sidebar-machine_learning href="../../part5/machine_learning">Machine Learning</a>
+<a id=sidebar-naive_bayes href="../../part5/naive_bayes">Naïve Bayes</a>
+<a id=sidebar-log_regression href="../../part5/log_regression">Logistic Regression</a>
+
+<li>
+    <a href="#part5_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <ul class="collapse list-unstyled show" id="part5_examples">
+        <li><a href="../../examples/mle_demo">MLE Normal Demo</a></li><li><a href="../../examples/mle_pareto">MLE Pareto Distribution</a></li><li><a href="../../examples/mixture_models">MLE Mixture Model</a></li>
+    </ul>
+</li>
+</li>
+</ul>
+
+
+
+    <!-- <ul class="list-unstyled components">
+        
+         <li>
+            <p>Part ?: Misfits</p>
+        </li>
+        <li>
+             <a href="../../examples/probBabies.html">Probability and babies</a>
+            
+             <a href="../../">Sampling from a likelihood function</a>
+             <a href="../../">Law of Total Expectation</a>
+            
+        </li>
+    </ul> -->
+
+
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            Ⓒ Chris Piech, Stanford University
+            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
+        </li>
+    </ul>
+</nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+<button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark">
+    <i class="fas fa-align-left"></i>
+    <span></span>
+</button>
+            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
+              <span style="font-size:150%">I'm Curious</span>
+              <span></span>
+          </button> -->
+            
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col handout" >
+              
+                        
+ 
+<center><h1>Bayesian Carbon Dating</h1></center>
+<hr/>
+<p>We are able to know the age of ancient artefacts using a process called carbon dating. This process involves a lot of uncertainty! You observe a measurement of 90% of natural C14 molecules in a sample. What is your belief distribution over the age of the sample? This task requires probabilistic models because we have to think about two random variables together: the age $A$ of the sample, and $M$ the remaining C14 molecules.</p> 
+
+<p><center><img class="mainFigureFull" src="../../../img/chapters/carbonDating.jpeg"></img><br/><i>Carbon dating allows us to know the age of things that used to be alive, like dinosaur bones.</i></center></p>
+
+
+<h3>Carbon Dating Demo</h3>
+
+<p>Imagine you have just taken a sample from your artifact. For the sample size you took, a living organism would have had 1000 molecules of C14. Use this demo to explore the relationship between how much C14 is left and your belief ditribution for how old your artifact is.  </p>
+
+<p><div class="content">
+    <div class="form-group row"/>
+
+    <label for="c14" class="col-sm-3 col-form-label">Remaining C14: </label>
+    <div class="col-sm-9">
+    <input onchange="runCarbonDating()" class="form-control" type="number" min="350" max="1000" step="1" value="900" id="c14" style="display:inline-block;width:200px"> <span id="inputStatus"></span><br/>
+    </div>
+
+    </div>
+      </div></p>
+    
+      <canvas id="carbonDatingPMF" ></canvas>
+
+
+<p><i>Note: this demo was created in 2022 and the age reported is relative to that year! This chapter only has historical C14 rates from 10,000 years ago and as such is not able to estimate age when there are fewer than 350 molecules of C14 in the sample.</i></p>
+
+
+<h3>Understanding Decay of C14 molecule</h3>
+
+<p>All living things have a constant proportion of a radioactive molecule called C14 in them. When living things die those molecules start to decay radioactively. Specifically, the time to decay in years, $T$, of a single C14 molecule is distributed as an exponential, $T \sim \text{Exp}(\lambda = 1/8267)$ where 8267 is the mean life of C14.</p>
+
+<p>Consider a single C14 molecule. What is the probability that it decays within 750 years?</p>
+
+
+<p><div class="bordered">
+\begin{align*}P(T \leq 750) &= 1-e^{-\lambda \cdot 750} &&\text{Exp. CDF}\\
+&= 1 - e^{-\frac{1}{8267}\cdot 750} \\
+&= 0.0867
+\end{align*}
+</div></p>
+
+<p>That is only for a single molecule. Since C14 molecules decay independently, it is not much harder to think of how many are left out of a larger initial count of C14. A particular sample started with 1000 molecules. What is the probability that exactly 900 are left after 750 years? </p>
+
+<p><div class="bordered">
+\begin{align*}X &\sim \Bin(n=1000, p = 0.0867) \\
+\P(X = 100)& = {1000 \choose 100}0.0867^{100}(1-0.0867)^{900} \\
+&\approx 0.0144
+\end{align*}
+</div></p>
+
+<p>In general, the probability of having $m$ remaining C14 molecules given that the artifact is $i$ years old will be equal to $\P(X=n-m)$ where $n$ is the starting number of C14 molecules, $p = 1- e^{-i/8267}$ and $X \sim \Bin(n, p)$.</p>
+
+<!-- <p>Next, we should generalize the above equation to a variable number of years. Calculate $\P(M = m | A = \texttt{age})$, the probability that exactly $\texttt{m}$ molecules are left out of the original 1000 after exactly $\texttt{age}$ number of years. </p> -->
+
+
+<h3>Inferring Age From C14</h3>
+
+<p>You observe a measurement of 900 C14 molecules in a sample. You assume that the sample originally had 1000 C14 molecules when it died. Infer $P(A=i | M = 900)$.  $A = i$ is the event that the sample organism died $i$ years ago. Note that age is a discrete random variable which takes on whole numbers of years. You will need use $P(M = m | A = \texttt{age})$ from the previous part</p> 
+
+<p>For your prior belief: you know that the sample must be between $A = 100$ and $A = 10000$ inclusive and you assume that every year in that range is equally likely.</p>
+
+<p><div class="bordered">
+    This is a perfect case for Bayes theorem. However instead of updating our belief in an event, like we did in <a href="../../part1/bayes_theorem">Part 1</a>, we are updating the belief over all the values that a random variable can take on, a process called <a href="../../part3/inference/">inference</a>. Here is the generalized version of Bayes' theorem for infering age, $A$:
+
+    \begin{align*}
+    P(A = i | M= 900) 
+    &= \frac{\P(M=900|A=i) \P(A = i)}{\P(M=900)} \\
+    &= \P(M=900|A=i) \cdot \frac{\P(A = i)}{\P(M=900)} \\
+    &= \P(M=900|A=i) \cdot K
+
+    \end{align*}
+
+    The critical part of the last line was to recognize that $\frac{\P(A = i)}{\P(M=900)}$ is a constant with respect to $i$. The term $\P(A=i)$ is constant as our prior over $A$ was uniform. We could compute the value of $\P(M=900)$ explicitely using  the law of total probability. In code this is most easily implemented by computing all values of $\P(M=900|A=i)$ and normalizing as $K$ will  be the value that makes all of the values $\P(A=i|M=900)$ sum to 1.
+    </div></p>
+
+
+
+
+<h3>Fluctuating History</h3>
+
+<p>The amount of C14 in the atmosphere fluctuates over time; it is not a constant baseline! Here is the delta C14 (per 1000 molecules) that you would have found if the object died different number of years ago. To incorporate this information we simply start our binomial with 1000 molecules plus the delta for the year, downloaded from a public dataset [1]:</p>
+
+<canvas id="historicalC14Canvas" ></canvas>
+<p>This offset gives the result a really interesting shape (see the demo).</p>
+
+<h3>Python Code</h3>
+
+<p>The math, derived above, leads to the following python code for a function <code>inference(m)</code> which returns the probability mass function for age $A$, given an observation of $m$ C14 molecules in a sample that should have 1000 molecules, were it alive today. Notice the use of normalization to avoid explicitely computing the prior or $\P(M=m)$ from Bayes Theorem.</p>
+
+<p><pre class="language-python"><code>from scipy import stats
+import math
+    
+C14_MEAN_LIFE = 8267
+    
+def inference(m = 900):
+    """
+    Returns a dictionary A, where A[i] contains the 
+    corresponding probability, P(A = i| M = m).
+    m is the number of C14 molecules remaining and i 
+    is age in years. 
+    """
+    A = {}
+    for i in range(100,10000+1):
+        pr = calc_likelihood(m, i) # P(M = m | A = i)
+        A[i] = pr
+    # implicitly computes the normalization constant
+    normalize(A)
+
+def calc_likelihood(m, age):
+    """
+    Computes P(M = m | A = age), the probability of
+    having m molecules left given the sample is age
+    years old. Uses the exponential decay of C14
+    """
+    n_original = 1000 + delta_start(age)
+    n_decayed = n_original - m
+    p_single = 1 - math.exp(-age/C14_MEAN_LIFE)
+    return stats.binom.pmf(n_decayed, n_original, p_single)
+
+def normalize(prob_dict):
+    # first compute the sum of the probability
+    sum = 0
+    for key, pr in prob_dict.items():
+        sum += pr
+    # then divide each probability by that sum
+    for key, pr in prob_dict.items():
+        prob_dict[key] = pr / sum
+    # now the probabilities sum to 1 (aka are normalized)
+
+def delta_start(age):
+    """
+    The amount of atmospheric C14 is not the same every
+    year. If the sample died "age" years ago, then it would
+    have started with slightly more, or slightly less than
+    1000 C14 molecules. We can look this value up from the
+    IntCal database. See the next section!
+    """
+    return historical_c14_delta[age]</code></pre></p>
+    
+
+<h3>Inustry Strength Bayesian Carbon Dating</h3>
+
+<p>
+    There are other sources of uncertainty in Carbon Dating which we have not considered. For example a common source of uncertainty is laboraty error: if the same sample were sent to a lab several times, different results would come back. 
+</p>
+<p>Perhaps the most fascinating extension is modelling "stratigraphic" relationships. Often in archeological sites, you can know relative age of artifacts based on their position in sediment. This requires a joint model of the age of each artifact with the constraint that you *know* some are older than others. Inference can then be performed using a General Inference technique (often MCMC) and will be much more accurate.</p>
+
+<h3>Binomial Approximations?</h3>
+<p>Could we have used an approximation for the binomial PMF calculation? In Bayesian Carbon dating both a normal and a poisson approximation are appropriate. Our Binomial is well approximated by a Poisson with $\lambda = n \cdot p$ or a Gaussian with $\mu=n\cdot p$ and $\sigma^2 = n \cdot p \cdot (1-p)$. This could be used to speed up calculations. Let's rework the example where we had $X\sim \Bin(n=1000, p=0.0867)$. We computed that $\P(X=100) = 0.0144$</p>
+
+<p><div class="bordered">
+    Poisson Approximation:
+    \begin{align*}Y &\sim \Poi(\lambda=86.7) \\
+    \P(X = 100)& \approx \P(Y=100)\\
+    &= \texttt{scipy.stats.poi.pmf}(100, 86.7) \\
+    &\approx 0.0151
+    \end{align*}
+
+    Normal Approximation:
+    \begin{align*}Y &\sim \N(\mu=86.7, \sigma^2 = 79.2) \\
+    \P(X = 100)& \approx \P(Y>100.5) - \P(Y>99.5)\\
+    &\approx 0.0146
+    \end{align*}
+    </div></p>
+
+    <p></p>
+    <hr/>
+
+    [1] <a href="http://intcal.org/JS/JSintcal20/index.html?xscale=ADBC&yscale=D14C&Sets%5B%5D=1">IntCal Historical Atmospheric C14</a>
+
+<script>
+
+    const charts = {}
+    var historicalData = null
+
+    $.getJSON("../../../chapters/examples/bayesian_carbon_dating/historical_c14.json", function(json) {
+        // data = json;
+        // 
+        historicalData= json
+        runCarbonDating()
+        drawHistoricalC14()
+    });
+
+    function drawHistoricalC14(){
+        let data = []
+        for(var age in historicalData) {
+            let delta = historicalData[age]["deltaC14"]
+            data.push([age, delta])
+        }
+        drawGraph(charts, 'historicalC14Canvas', data, 'years ago', 'C14 Delta per 1000 Samples', 'line')
+    }
+
+    function getPrObsGivenAge(age, nRemaining){
+        // we need to look up the delta c14
+        const delta = historicalData[age]["deltaC14"]
+        console.log(delta)
+
+        const N = 1000 + delta
+        const nDecayed = N - nRemaining
+        const pSingle = 1 - Math.exp(-age/8267)
+        const pN = binomialPmf(N,pSingle,nDecayed)
+        return pN
+    }
+
+    function runCarbonDating() {
+        if(historicalData == null) return
+
+        let nRemaining = parseInt($("#c14").val())
+        if(nRemaining < 350){
+            drawGraph(charts, 'carbonDatingPMF', [], 'i', 'Pr(Age = i)')
+            return
+        }
+
+        let minAge = 100
+        let maxAge = 10001
+        let deltaYears = 1
+        let numerator = []
+
+        // keep track of if you think you are at the end of the distribution
+        let maxPr = 0
+        let lastPr = 0
+        for(currYear = 100; currYear < maxAge; currYear += deltaYears) {
+            let pr = getPrObsGivenAge(currYear, nRemaining)
+            if(pr > maxPr) {
+                maxPr = pr
+            }
+            numerator.push(pr)
+            lastPr = pr
+        }
+
+
+        let passedMax = false
+        let reduced = []
+        for(var i = 0; i < numerator.length; i++) {
+            let y = numerator[i]
+            if(y == maxPr) passedMax = true
+            console.log(y, maxPr, passedMax)
+            if(passedMax && y < 0.0001 && i > 400) break
+            reduced.push(y)
+        }
+        
+
+
+        normalize([reduced])
+
+
+        let data = []
+        for(var i = 0; i < reduced.length; i++) {
+            let x = minAge+i * deltaYears
+            let y = reduced[i]
+            data.push([x, y])
+        }
+        drawGraph(charts, 'carbonDatingPMF', data, 'x', 'P(Age = x)')
+    }
+</script>
+
+
+                        
+
+
+
+<script type="text/javascript">
+    // const firebase = require("firebase");
+    // Required for side-effects
+    // require("firebase/firestore");
+
+    $(document).ready(function () {
+        console.log('ready')
+        const scrollTop = getScrollTop()
+        console.log(scrollTop)
+        $("#sidebar").scrollTop(scrollTop)
+        $("#sidebar").scroll(function() {
+          localStorage.scrollTop = $("#sidebar").scrollTop()
+        })
+        // $("#sidebar").mCustomScrollbar({
+        //     theme: "minimal",
+        //     mouseWheel: {preventDefault: true},
+        //     advanced:{
+        //      autoScrollOnFocus: false,
+        //      updateOnContentResize: true
+        //     },
+        //     scrollInertia:0,
+        //     contentTouchScroll:1,
+        //     mouseWheel: {
+        //         scrollAmount:1000
+        //     },
+        //     setTop:scrollTop + 'px',
+        //     callbacks:{
+        //         onScroll:function(){
+        //             if(hasStorage) {
+
+        //                 localStorage.scrollTop = this.mcs.top;
+        //                 console.log(localStorage.scrollTop)
+        //             }
+        //         }
+        //     } 
+        // });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+        
+        let lastPart = getUrlKey()
+        
+        // Bug: this code will highlight anything which matches with the last part
+        $("#sidebar").find('a').each(function(){
+            // find link which ends with last part and add style
+            let currLink = $($(this)[0]).attr('href')
+            let currLastPart = getLastPartOfUrl(currLink)
+            if (currLastPart === lastPart) {
+                $($(this)[0]).addClass('active-link');
+            }
+        })
+    });
+
+    function getScrollTop() {
+        if(typeof(Storage) !== "undefined") {
+            return Number(localStorage.scrollTop)
+        }
+        return 0;
+    }
+
+    function getUrlKey() {
+        var path = window.location.pathname;
+        return getLastPartOfUrl(path)
+        
+    }
+
+    function getLastPartOfUrl(path) {
+        let parts = path.split('/')
+        var currIndex = parts.length - 1
+        while(currIndex >= 0) {
+            let nextPart = parts[currIndex]
+            if(nextPart) {
+                return nextPart
+            }
+            currIndex -= 1
+        }
+        return ''
+    }
+
+    function submitQuestion() {
+        firebase.initializeApp({
+          apiKey: "AIzaSyBqZVV7Qrp0DT3aBCCTCTMUCrPJO0pb3tY",
+          authDomain: "probability-digital-world.firebaseapp.com",
+          projectId: "probability-digital-world"
+        });
+
+        var db = firebase.firestore();
+
+        db.collection("questions").add({
+            email: $("#question-email").val(),
+            question: "Lovelace",
+            page: getUrlKey()
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            alert('success')
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+        // // // Generate a new push ID for the new post
+        // var questionListRef = db.child("questions")
+        // var newQuestionRef = questionListRef.push();
+        // newQuestionRef.set({
+        //     'title':'test'
+        // });
+        
+    }
+
+    function onCuriosity() {
+        Swal.fire({
+          title: 'Curious?',
+          position: 'bottom-end',
+          allowOutsideClick:false,
+          backdrop:false,
+          confirmButtonText: 'Submit',
+          input: 'textarea',
+          html:
+            '<p>We are trying to make this book better. Let us know if you find something confusing. If you ask a question we will try to answer it. If you find a mistake we will fix it. </p>' +
+            '<input placeholder="Your email (optional)..." id="question-email" class="swal2-input">',
+          inputPlaceholder: 'Type your question or message here...',
+          inputAttributes: {
+            'aria-label': 'Type your question or message here'
+          },
+          showCancelButton: true,
+          preConfirm: () => submitQuestion()
+        })
+    }
+</script>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+$(document).ready(function() {
+  //addH2Numbers()
+  enableSearch()
+})
+
+function addH2Numbers() {
+  $("h2").each(function(i){
+    let title = $(this).html()
+    title = `${i+1}. ${title}`
+    $(this).html(title)
+  })
+}
+
+function enableSearch() {
+  $("#probability-for-digital-world-search").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+          let query = $("#probability-for-digital-world-search").val()
+          
+          window.location = `../../search.html?q=${query}`
+      }
+  });
+  // $.ajax({
+  //     type: "GET",
+  //     url: "../../../searchIndex.json",
+  //     dataType: "text",
+  //     success: function(data) {addSearchIndexData(data);}
+  //  });
+}
+
+function standardPMFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'bar',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'P(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100,
+        pointHitRadius: 20
+      }]
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          type: 'linear',
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFConfig(xValues, yValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      labels: xValues,
+      datasets: [{
+        label: 'f(x)',
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: 'blue',
+        data: yValues,
+        pointRadius:1,
+        maxBarThickness:100,
+        pointHitRadius: 20
+      }]
+    },
+    options: {
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          type: 'linear',
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+function standardPDFsConfig(datasets, xValues, xLabel, yLabel){
+  return {
+    type: 'line',
+    data: {
+      datasets: datasets
+    },
+    options: {
+
+      steppedLine: false,
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      animation: {
+            duration: 0
+        },
+      plugins: {
+        legend: {
+              display: false
+           },
+         },
+      scales: {
+        x: {
+          display: true,
+          type: 'linear',
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: yLabel
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+  };
+}
+
+
+function addSearchIndexData(data) {
+  var idx = lunr(function () {
+    this.ref('name')
+    this.field('text')
+
+    let documents = JSON.parse(data)
+
+    documents.forEach(function (doc) {
+      this.add(doc)
+    }, this)
+
+    $("#probability-for-digital-world-search").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            let query = $("#probability-for-digital-world-search").val()
+            let results = idx.search(query)
+        }
+    });
+  })
+}
+
+    </script>
+
+</body>
+
+
+
+
+</html>

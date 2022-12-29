@@ -68,8 +68,11 @@
 
 			var i = 0
 			var ctx = null;
+			const delay = 500
+			let timeoutId = null
 
 		    function simulate() {
+				clearTimeout(timeoutId)
 		    	CANVAS_WIDTH = 770
 		    	CANVAS_HEIGHT = 100
 			    var canvas = document.getElementById("simCanvas");
@@ -78,7 +81,7 @@
 				ctx=canvas.getContext("2d");
 
 				i = 0;
-				setTimeout(simulateSingle, 1000);
+				simulateSingle()
 
 				
 				
@@ -86,7 +89,6 @@
 			}
 
 			function simulateSingle() {
-				console.log(i)
 				if(i < 12) {
 					var color = "purple"
 					if(Math.random() < (60/1000)) {
@@ -97,7 +99,7 @@
 					var y = r + 5
 					drawCircle(x, y, r, color)
 					i += 1
-					setTimeout(simulateSingle, 1000);
+					timeoutId = setTimeout(simulateSingle, delay);
 				}
 			}
 
