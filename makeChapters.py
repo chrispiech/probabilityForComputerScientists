@@ -15,7 +15,7 @@ INDEX_TEMPLATE = '''
 
 EXAMPLE_TEMPLATE = '''
 <li>
-    <a href="#{uid}" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Worked Examples</a>
+    <a href="#{uid}" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="{uid}">
         {example_html}
     </ul>

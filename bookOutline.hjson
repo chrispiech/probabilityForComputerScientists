@@ -30,6 +30,7 @@
 		"examples": {
 			"enigma":"Enigma Machine",
 			"serendipity":"Serendipity",
+			"random_shuffles":"Random Shuffles",
 			"bacteria_evolution":"Bacteria Evolution"
 		}
 	},

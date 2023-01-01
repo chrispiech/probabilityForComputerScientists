@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Notation Reference</title>
+<title>Random Shuffles</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -347,193 +347,111 @@
                     <div class="col handout" >
               
                         
+
  
-<center><h1>Notation Reference</h1></center>
+<center><h1>Random Shuffles</h1></center>
 <hr/>
 
-<h3>Core Probability</h3>
+<p>Here is a suprising claim. If you shuffle a standard deck of cards seven times, with almost total certainty you can claim that the exact ordering of cards has never been seen! Wow! Let's explore. We can ask this question formally as: What is the probability that in the $n$ shuffles seen since the start of time, yours is unique?
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col" style="width:170px">Notation</th>
-      <th scope="col">Meaning</th>
-    </tr>
-  </thead>
-  <tr>
-  	<td>$E \text{ or } F$</td>
-  	<td>Capital letters can denote events</td>
-  </tr>
-  <tr>
-  	<td>$A \text{ or } B$</td>
-  	<td>Sometimes they denote sets</td>
-  </tr>
-  <tr>
-  	<td>$|E| $</td>
-  	<td>Size of an event or set</td>
-  </tr>
-   <tr>
-  	<td>$E^C$</td>
-  	<td>Complement of an event or set</td>
-  </tr>
-   <tr>
-  	<td>$EF$</td>
-  	<td>And  of events (aka intersection)</td>
-  </tr>
-  <tr>
-  	<td>$ E \and F$</td>
-  	<td>And  of events (aka intersection)</td>
-  </tr>
-  <tr>
-  	<td>$ E \cap F$</td>
-  	<td>And  of events (aka intersection)</td>
-  </tr>
-  <tr>
-  	<td>$ E \or F$</td>
-  	<td>Or  of events (aka union)</td>
-  </tr>
-  <tr>
-  	<td> $ E \cup F$</td>
-  	<td>Or  of events (aka union)</td>
-  </tr>
-  <tr>
-  	<td>$\p(E)$</td>
-  	<td>The probability of an event  $E$</td>
-  </tr>
-  <tr>
-  	<td>$\p(E|F)$</td>
-  	<td>The conditional probability of an event $E$ given $F$</td>
-  </tr>
-  <tr>
-  	<td>$\p(E,F)$</td>
-  	<td>The  probability of event $E$ and $F$</td>
-  </tr>
-  <tr>
-  	<td>$\p(E|F,G)$</td>
-  	<td>The conditional probability of an event $E$ given both $F$ and $G$</td>
-  </tr>
-  <tr>
-  	<td>$n!$</td>
-  	<td>$n$ factorial</td>
-  </tr>
-  <tr>
-  	<td>${n \choose k}$</td>
-  	<td>Binomial coefficient</td>
-  </tr>
-  <tr>
-  	<td>${n \choose {r_1,r_2,r_3} }$</td>
-  	<td><a href="../../part1/combinatorics/#bucketing_fixed">Multinomial coefficient</a></td>
-  </tr>
-</table>
+<h3>Orderings of 52 Cards</h3>
 
+<p>Our adventure starts with a simple observation: there are <b>very</b> many ways to order 52 cards. But exactly how many unique orderings of a standard deck are there?</p>
 
-<h3>Random Variables</h3>
-<table class="table">
-	 <thead>
-    <tr>
-      <th scope="col" style="width:170px">Notation</th>
-      <th scope="col">Meaning</th>
-    </tr>
-  </thead>
-  <tr>
-  	<td>$x \text{ or } y \text{ or } i$</td>
-  	<td>Lower case letters denote regular variables</td>
-  </tr>
-  <tr>
-  	<td>$X \text{ or } Y$</td>
-  	<td>Capital letters are used to denote random variables</td>
-  </tr>
-  <tr>
-  	<td>$K$</td>
-  	<td>Capital $K$ is reserved for constants</td>
-  </tr>
-  <tr>
-  	<td>$\E[X]$</td>
-  	<td>Expectation of $X$</td>
-  </tr>
-   <tr>
-  	<td>$\Var(X)$</td>
-  	<td>Variance of $X$</td>
-  </tr>
-   <tr>
-  	<td>$\p(X=x)$</td>
-  	<td>Probability mass function (PMF) of $X$, evaluated at $x$</td>
-  </tr>
-  <tr>
-  	<td>$\p(x)$</td>
-  	<td>Probability mass function (PMF) of $X$, evaluated at $x$</td>
-  </tr>
-  <tr>
-  	<td>$f(X=x)$</td>
-  	<td>Probability density function (PDF) of $X$, evaluated at $x$</td>
-  </tr>
-  <tr>
-  	<td>$f(x)$</td>
-  	<td>Probability density function (PDF) of $X$, evaluated at $x$</td>
-  </tr>
-  <tr>
-  	<td>$f(X=x,Y=y)$</td>
-  	<td>Joint probability density</td>
-  </tr>
-  <tr>
-  	<td>$f(X=x|Y=y)$</td>
-  	<td>Conditional probability density</td>
-  </tr>
-  <tr>
-  	<td>$F_X(x)$ or $F(x)$</td>
-  	<td>Cumulative distribution function (CDF) of  $X$</td>
-  </tr>
-  <tr>
-  	<td>IID</td>
-  	<td>Independent and Identically Distributed</td>
-  </tr>
-	</table>
+<div class="bordered">There are 52! ways to order a standard deck of cards. Since each card is unique (each card has a unique suit, value combination) then we can apply the rule for <a href="../../part1/combinatorics/#perm_distinct">Permutations of Distinct Objects</a>:
 
-<h3>Parametric Distributions</h3>
+\begin{align*}
+    \text{Num. Unique Orderings} 
+    &= 52! 
+\end{align*}
+<span style="word-wrap: break-word;">That seems reasonable. That is a humongous number. 52! equals 80658175170943878571660636856403766975289505440883277824000000000000.<br/> That is over $8 \cdot 10^{67}$. Recall that it is estimated that there are around $10^{82}$ atoms in the observable universe</span>
+</a></div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col" style="width:170px">Notation</th>
-      <th scope="col">Meaning</th>
-    </tr>
-  </thead>
-  <tr>
-  	<td>$X \sim \Ber(p)$</td>
-  	<td>$X$ is a Bernoulli random variable</td>
-  </tr>
-  <tr>
-  	<td>$X \sim \Bin(n,p)$</td>
-  	<td>$X$ is a Binomial random variable</td>
-  </tr>
-  <tr>
-  	<td>$X \sim \Poi(p)$</td>
-  	<td>$X$ is a Poisson random variable</td>
-  </tr>
-  <tr>
-  	<td>$X \sim \Geo(p)$</td>
-  	<td>$X$ is a Geometric random variable</td>
-  </tr>
-   <tr>
-  	<td>$X \sim \NegBin(r, p)$</td>
-  	<td>$X$ is a Negative Binomial random variable</td>
-  </tr>
-   <tr>
-  	<td>$X \sim \Uni(a,b)$</td>
-  	<td>$X$ is a Uniform random variable</td>
-  </tr>
-  <tr>
-  	<td>$X \sim \Exp(\lambda)$</td>
-  	<td>$X$ is a Exponential random variable</td>
-  </tr>
-  <tr>
-  	<td>$X \sim \Beta(a,b)$</td>
-  	<td>$X$ is a Beta random variable</td>
-  </tr>
-  
-</table>
+<h3>Number of Shuffles Ever Seen</h3>
+
+<p>Of course we don't know what the value of $n$ is &mdash; nobody has been counting how many times humans have shuffled cards. We can come up with a reasonable overestimate. Assume $k$ = 7 billion people have been shuffling cards once a second since cards were invented. Playing cards may have been invented as far back as the Tang dynasty in the 9th century. To the best of my knowledge the oldest set of 52 cards is the <a href="https://cards.old.no/1500-mamluk/">Topkapı deck</a> of cards in Istanbul around the 15th century ad. That is about $s$ = 16,472,828,422 seconds ago. As such our overestimate is $n = s \cdot k \approx 10^{20}$. </p>
+</p>
+
+<p>Next let's calculate the probability that none of those $n$ historical shuffles matches your particular ordering of 52 cards. There are two valid approaches: using equally likely outcomes, and using independence.</p>
+
+<h3>Equally Likely Outcomes</h3>
+
+<p>One way to the probability that your ordering of 52 cards is unique in history is to use <a href="../../part1/equally_likely/">Equally Likely Outomces</a>. Consider the sample space of all the possible ordering of all the cards ever dealt. Each outcome in this set will have $n$ card decks each with their own ordering. As such the size of the sample space is $|S| = (52!)^{n}$. Note that all outcomes in the sample space are equally likely &mdash; we can convince ourselves of this by symmetry &mdash; no ordering is more likely than any other. Out of that sample space we want to count the number of outcomes where none of the orderings matches yours. There are $52! - 1$ ways to order 52 cards that are not yours. We can construct the event space by steps: for each of the $n$ shuffles in history select any one of those $52! - 1$ orderings. Thus $|E| =  (52!-1)^n$. </p>
+
+<p><div class="bordered">
+    Let $U$ be the event that your particular ordering of 52 cards is unique
+
+    \begin{align*}
+    \P(U) 
+    &= \frac{|E|}{|S|} && \text{Equally Likely Outcomes}\\
+    &= \frac{(52!-1)^n}{(52!)^n} \\
+    &= \frac{(52!-1)^{10^{20}}}{(52!)^{10^{20}}} && n = 10^{20} \\
+    &= \Big(\frac{52!-1}{52!}\Big) ^{10^{20}}
+    
+    \end{align*}
+
+    In theory that is the correct answer, but those numbers are so big, its not clear how to evaluate it, even when using a computer. One good idea is to first take the log:
+
+    \begin{align*}
+    \log \P(U) &= \log \Big[\Big(\frac{52!-1}{52!}\Big) ^{10^{20}}\Big] \\
+    &= 10^{20} \cdot \log \Big(\frac{52!-1}{52!}\Big) \\
+    &= 10^{20} \cdot \Big[ \log (52!-1) - \log(52!) \Big] \\
+    &< 10^{20} \cdot 10^{-45} \\
+    &< 10^{-25} 
+    \end{align*}
+
+Now if we undo the log:
+\begin{align*}
+\P(U) &= e^{10^{-25} } \\
+&= \Big(e^{10} \Big) ^{-25} \\
+&= \Big(22026 \Big) ^{-25} \\
+&< 1 \cdot 10^{-108}
+    \end{align*} 
+
+<p>So in English, the probability that someone has ever seen your cards is less than 0.0 followed by 100 zeros before a 1. It is safe to say your ordering is unique. </p>
+
+</div></p>
+
+<p>In python, you can use a special library called decimal to compute very small probabilities. Here is an example of how to compute $\log \frac{52!-1}{52!}$:
+    <pre class="language-python"><code>from decimal import *
+import math
+
+n = math.pow(10, 20)
+card_perms = math.factorial(52)
+denominator = card_perms
+numerator = card_perms - 1
+
+# decimal library because these are tiny numbers
+log_numer = Decimal(math.log(numerator))
+log_denom = Decimal(math.log(denominator))
+log_pr = log_numer - log_denom
+
+# 0E-45
+print(log_pr)</code></pre>
+    </p>
 
 
+<h3>Independence</h3>
+
+
+<p>Another approach is to define events $D_i$ that the $i$th card shuffle is different than yours. Because we assume each shuffle is independent, then $P(U) = \prod_i P(D_i)$. What is the probability of $(D_i)$? If you think of the sample space of $D_i$, it is 52! ways of ordering a deck cards. The event space is the 52! - 1 outcomes which are not your ordering.
+</p>
+
+<div class="bordered">
+    \begin{align*}
+\P(U) &= \prod_{i=1}^n \P(D_i) \\
+\log \P(U) &= \sum_{i=1}^n \log \P(D_i) \\
+&= n \cdot \log \P(D_i) \\
+&= 10^{20} \cdot \log \frac{52!-1}{52!}\\
+&< 10^{20} \cdot 10^{-45} &&\text{See prev. section}
+\end{align*}
+Which is the same answer we got with the other approach for $\log \P(U) $
+</p>
+</div>
+
+<h3>How Random is your Shuffle?</h3>
+
+<p>A final question we can look into. How do you get a truly random ordering of cards? Dave Bayer and Persi Diaconis in 1992 worked through this problem and published their results in the article <a href="https://www.projecteuclid.org/journals/annals-of-applied-probability/volume-2/issue-2/Trailing-the-Dovetail-Shuffle-to-its-Lair/10.1214/aoap/1177005705.full">Trailing the Dovetail Shuffle to its Lair</a>. They showed that if you shuffle a deck of cards seven times using a <a href="https://en.wikipedia.org/wiki/Shuffling">riffle shuffle</a> also known as the dovetail shuffle, you are almost garunteed a random ordering of cards. The methodology used paved the way for studying psuedo random numbers produced by computers.</p>
 
                         
 
