@@ -17,30 +17,112 @@
 	$$
 	\p(E | F) = \p(E)
 	$$
-
-	This definition is <a href="https://en.wikipedia.org/wiki/Symmetric_relation">symmetric</a>. If $E$ is independent of $F$, then $F$ is independent of $E$:
-	$$
-	\p(F | E) = \p(F)
-$$</a>
 </div>
 </p>
 
-<h2>How to establish independence</h2>
+
+
+<h2>Alternative Definition</h2>
+
+<p>Another definition of independence can be derived by using an equation called the <a href="{{pathToLang}}part1/prob_and/">chain rule</a>, which we will learn about later, in the context where two events are independent. Consider two indepedent events $A$ and $B$:
+	\begin{align*}
+	\P(A,B)
+	&= \p(A) \cdot \p(B|A) && \href{ {{pathToLang}}part1/prob_and/}{\text{Chain Rule}} \\
+	&= \p(A) \cdot \p(B) && \text{Independence}
+	\end{align*}
+</p>
+
+<h2>Independence is Symmetric</h2>
+
+<p>This definition is <a href="https://en.wikipedia.org/wiki/Symmetric_relation">symmetric</a>. If $E$ is independent of $F$, then $F$ is independent of $E$. We can prove that $\p(F | E) = \p(F)$ implies $\p(E | F) = \p(E)$ starting with a law called <a href="{{pathToLang}}part1/bayes_theorem/">Bayes' Theorem</a> which we will cover shortly:
+\begin{align*}
+\p(E | F) 
+&= \frac{\p(F|E) \cdot \p(E)}{\p(F)} && \text{Bayes Theorem} \\
+&= \frac{\p(F) \cdot \p(E)}{\p(F)} && \p(F | E) = \p(F) \\
+&= \p(E) && \text{Cancel}
+\end{align*}</p>
+
+<h2>Generalized Independence</h2>
+
+<p>Events $E_1 , E_2 , \dots , E_n$ are independent if for every subset
+with $r$ elements (where $r \leq n$):
+
+$$
+\p(E_{1'}, E_{2'}, \dots, E_{r'}) = \prod_{i=1}^r \p(E_i')
+$$</p>
+
+<p>As an example, consider the probability of getting 5 heads on 5 coin flips where we assume that each coin flip is independent of one another. 
+	
+<div class="bordered">Let $H_i$ be the event that the $i$th coin flip is a heads:
+\begin{align*}
+\p(H_1,H_2,H_3,H_4,H_5)  
+&= \p(H_1) \cdot \p(H_2) \cdots \p(H_5) && \text{Independence} \\
+&= \prod_{i=1}^5 \p(H_i) \\
+&= \prod_{i=1}^5 \frac{1}{2} \\
+&= \frac{1}{2}^5 \\
+&= 0.03125
+\end{align*}
+</div>
+</p>
+
+
+<h2>How to Establish Independence</h2>
 
 <p>
 	How can you show that two or more events are independent? The default option is to show it mathematically. If you can show that $\p(E | F) = \p(E)$ then you have proven that the two events are independent. When working with probabilities that come from data,
 very few things will exactly match the mathematical definition of independence. That can happen for two reasons:
 first, events that are calculated from data or simulation are not perfectly precise and it can be impossible to know if a discrepancy between $\p(E)$ and $\p(E |F)$ is due to innacuracy in estimating probabilities, or dependence of events. Second, in our complex
 world many things actually influence each other, even if just a tiny amount. Despite that we often make the
-wrong, but useful, independence assumption. Since independence makes it so much easier for humans and machines to calculate composite probabilities, you may declare the events to be independent. It could mean your resulting calculation is slightly incorrect -- but this "modelling assumption" might make it feasible to come up with a result.
+wrong, but useful, independence assumption. Since independence makes it so much easier for humans and machines to calculate composite probabilities, you may declare the events to be independent. It could mean your resulting calculation is slightly incorrect &mdash; but this "modelling assumption" might make it feasible to come up with a result.
 </p>
 
+<p>Independence is a property which is often "assumed" if you think it is reasonable that one event is unlikely to influence your belief that the other will occur (or if the influence is negligible). Let's work through an example to better understand.</p>
 
-<p>Independence is a property which is often "assumed" if you think it is reasonable that one event is unlikely to influence your belief that the other will occur (or if the influence is negligible). Let's work through a few examples to better understand:</p>
+<h2>Example: Parallel Networks</h2>
+
+Over networks, such as the internet, computers can send information. Often there are multiple paths (mediated by routers) between two computers and as long as one path is functional, information can be sent. Consider the following parallel network with 
+$n$ <b><i>independent</i></b> routers, each with
+probability $p_i$ of functioning (where 1 ≤ $𝑖$ ≤ $𝑛$). Let 
+$E$ be the event that there is a functional path from $A$ to $B$.
+What is $\p(E).?
 
 
-<table>
-	</table>
+<p>
+	<center>
+		<img class="mainFigure" src="{{pathToRoot}}img/chapters/parallelNetworks.jpg"></img><br/>
+		<i>A simple network that connects two computers, A and B.</i>
+	</center>
+	</p>
+
+<div class="bordered">
+
+	Let $F_i$ be the event that router $i$ fails. Note that the problem states that routers are indepenent, and as such we assume that the events $F_i$ are all independent of one another.
+
+	\begin{align*}
+
+\p(E)
+&= \p(\text{At least one router works}) \\
+&= 1 - \p(\text{All routers fail}) \\
+&= 1 - \p(F_1 \text{ and } F_2 \text{ and } \dots \text{ and } F_n) \\
+&= 1 - \prod_{i=1}^n \p(F_i) && \text{Independence of } F_i\\
+&= 1 - \prod_{i=1}^n 1 - p_i
+	\end{align*}
+
+Where $p_i$ is the probability that router $i$ is functional.
+</div>
+
+<h2>Independence and Compliments</h2>
+
+<p>Given independent events $A$ and $B$, we can prove that $A$ and  $B^C$ are independent. Formally we want to show that: $\P( A B^C) = \P( A)\P(B^C)$.
+
+\begin{align*}
+\P (AB^C ) &= \P (A) - \P (AB) && \href{ {{pathToLang}}part1/law_total/}{\text{LOTP}} \\
+&= \P (A) - \P (A)\P (B) &&\text{Independence}\\
+&= \P (A)[1 - \P (B)]&&\text{Algebra}\\
+&= \P (A)\P(B^C)&&\href{ {{pathToLang}}/part1/probability/}{\text{Identity 1}}\\
+\end{align*}</p>
+
+
 
 
 	<h2>Conditional Independence</h2>
