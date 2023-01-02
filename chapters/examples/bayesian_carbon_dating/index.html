@@ -1,7 +1,6 @@
 
 % rebase('templates/chapter.html', title="Bayesian Carbon Dating")
  
-<div class="alert alert-info">Note to self: update the graphs to </div>
 
 <center><h1>Bayesian Carbon Dating</h1></center>
 <hr/>
@@ -110,6 +109,7 @@ def inference(m = 900):
         A[i] = calc_likelihood(m, i) # P(M = m | A = i)
     # implicitly computes the normalization constant
     normalize(A)
+    return A
 
 def calc_likelihood(m, age):
     """

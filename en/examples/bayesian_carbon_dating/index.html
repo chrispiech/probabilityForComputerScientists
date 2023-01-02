@@ -348,6 +348,7 @@
               
                         
  
+
 <center><h1>Bayesian Carbon Dating</h1></center>
 <hr/>
 <p>We are able to know the age of ancient artefacts using a process called carbon dating. This process involves a lot of uncertainty! You observe a measurement of 90% of natural C14 molecules in a sample. What is your belief distribution over the age of the sample? This task requires probabilistic models because we have to think about two random variables together: the age $A$ of the sample, and $M$ the remaining C14 molecules.</p> 
@@ -448,14 +449,14 @@ def inference(m = 900):
     Returns a dictionary A, where A[i] contains the 
     corresponding probability, P(A = i| M = m).
     m is the number of C14 molecules remaining and i 
-    is age in years. 
+    is age in years. i is in the range 100 to 10000
     """
     A = {}
     for i in range(100,10000+1):
-        pr = calc_likelihood(m, i) # P(M = m | A = i)
-        A[i] = pr
+        A[i] = calc_likelihood(m, i) # P(M = m | A = i)
     # implicitly computes the normalization constant
     normalize(A)
+    return A
 
 def calc_likelihood(m, age):
     """
