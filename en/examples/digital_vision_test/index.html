@@ -187,6 +187,7 @@
 <li>
 <a id=sidebar-notation href="../../intro/notation">Notation Reference</a>
 <a id=sidebar-all_distributions href="../../intro/all_distributions">Random Variable Reference</a>
+<a id=sidebar-python href="../../intro/python">Python Reference</a>
 <a id=sidebar-calculators href="../../intro/calculators">Calculators</a>
 </li>
 </ul>
@@ -604,7 +605,7 @@
 
 <h3>Infering Ability</h3>
 
-<p>One of the major tasks that we have to accomplish is to update our probability mass function for $A$ based on an observation. First let us consider how to update our belief in ability to see from a single observation $\text{Obs}_1$. </p>
+<p>One of the major tasks that we have to accomplish is to update our probability mass function for $A$ based on an observation. First let us consider how to update our belief in ability to see from a single observation $\text{Obs}_1$. We can use <a href="../../part3/inference/">Bayes' Theory for random variables</a> </p>
 
 $$
 \begin{align*}
@@ -613,7 +614,7 @@ $$
 
 <p>We already have values for the prior $\p(A=a)$. In the next section we will talk about how to calculate the likelihood term, $\P(\text{Obs}_1|A=a)$. We could compute the denominator exactly: 
     \begin{align*}
-    \P(\text{Obs}_1) &= \sum_x \P(\text{Obs}_1, A=x) && \text{LOTP} \\
+    \P(\text{Obs}_1) &= \sum_x \P(\text{Obs}_1, A=x) && \href{ ../../part1/law_total/}{\text{LOTP}} \\
     &= \sum_x P(\text{Obs}_1 | A=x)P(A=x)
     \end{align*}
 Alternatively we could recognize that  all the terms in the denominator are repeats of terms that show up in the numerator. As such we can calculate the numerators, and normalize the numerators. Normalization is a two step process where you first compute the sum of all the values, and then divide each value by its sum.</p>
