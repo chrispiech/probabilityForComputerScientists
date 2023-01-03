@@ -237,7 +237,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
     </ul>
 </li>
 </li>
@@ -259,7 +259,7 @@
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/digital_vision_test">Digital Vision Test</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -610,6 +610,75 @@ P(X + Y < 0.5) &= P(2 + Y < 0.5) \\
 We made no assumption about the value of $\mu$ or the value of $\sigma$ so this will apply to every single normal random variable. Since it uses the Normal CDF this doesn't apply to other types of random variables.
 	</div>
 </p>
+
+<h2>CDF Calculator</h2>
+<p>
+	To calculate the Cumulative Density Function (CDF) for a normal (aka Gaussian) random variable at a value $x$, also writen as $F(x)$, you can transform your distribution to the "standard normal" and look up the corresponding value in the standard normal CDF. However, most programming libraries will provide a normal cdf funciton:
+<div class="bordered">
+<b>Norm CDF Calculator</b>
+
+<table>
+	<tr>
+		<td style="width:50px">x</td>
+		<td><input onchange="calculateNormCdf()" type="number" class="form-control" id="normCdfX" value="0.0"></td>
+	</tr>
+	<tr>
+		<td>mu</td>
+		<td><input onchange="calculateNormCdf()" type="number" class="form-control" id="normCdfMu" value="0"></td>
+	</tr>
+	<tr>
+		<td>std</td>
+		<td><input onchange="calculateNormCdf()" type="number" class="form-control" id="normCdfStd" value="1"></td>
+	</tr>
+</table>
+
+<p>
+  <button class="btn btn-primary mt-3" onclick="calculateNormCdf()" style="font-family:monospace">norm.cdf(x, mu, std)</button> 
+</p>
+
+<p id="normCdfResult">&nbsp;</p>
+
+</div>
+<script>
+
+function calculateNormCdf() {
+	var x = $("#normCdfX").val()
+	var mu = $("#normCdfMu").val()
+	var std = $("#normCdfStd").val()
+
+	$("#normCdfStd").removeClass("is-invalid")
+
+	if(std <= 0.0) {
+	  let xField = $("#normCdfStd")
+	  xField.addClass("is-invalid")
+      xField.attr('placeholder', 'Must be positive')
+      xField.val('')
+      return
+	}
+
+	var dist = gaussian(mu, std * std);
+	var result = dist.cdf(x).toFixed(5);
+	$("#normCdfResult").html(result)
+}
+</script></p>
+
+<p>In python you can calculate these values using the <code>scipy</code> library
+<pre class="language-python"><code>from scipy import stats
+
+# get the input values
+mean = 1.0
+std_dev = 0.5
+query = 0.1 # aka x
+
+# calc the CDF in two lines
+X = stats.norm(mean, std_dev)
+p = X.cdf(query)
+
+# calc the CDF in one line
+p = stats.norm.cdf(query, mean, std_dev)
+</code></pre>
+
+It is important to note that in the python library, the second parameter for the Normal distribution is standard deviation <b>not</b> variance, as it is typically defined in math notation. Recall that standard deviation is the square root of variance.
 
                         
 

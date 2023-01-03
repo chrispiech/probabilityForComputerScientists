@@ -237,7 +237,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/norm_cdf_calculator">Gaussian CDF Calculator</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
+        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li>
     </ul>
 </li>
 </li>
@@ -259,7 +259,7 @@
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/digital_vision_test">Digital Vision Test</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -460,7 +460,7 @@ Where $p_i$ is the probability that router $i$ is functional.
 
 <h2>Independence and Compliments</h2>
 
-<p>Given independent events $A$ and $B$, we can prove that $A$ and  $B^C$ are independent. Formally we want to show that: $\P( A B^C) = \P( A)\P(B^C)$.
+<p>Given independent events $A$ and $B$, we can prove that $A$ and  $B^C$ are independent. Formally we want to show that: $\P( A B^C) = \P( A)\P(B^C)$. This starts with a rule called the <a href="../../part1/law_total/">Law of Total Probability</a> which we will cover shortly.
 
 \begin{align*}
 \P (AB^C ) &= \P (A) - \P (AB) && \href{ ../../part1/law_total/}{\text{LOTP}} \\
@@ -473,8 +473,20 @@ Where $p_i$ is the probability that router $i$ is functional.
 
 
 	<h2>Conditional Independence</h2>
-<p>We saw earlier that the laws of probability still held if you consistently conditioned on an event. While the rules stay the same, the independence property might change. Events that were dependent can become independent when conditioning on an event. Events that were independent can become dependent.
+<p>We saw earlier that the laws of probability still held if you consistently conditioned on an event. So for example, you may see someone say that events $E_1, E_2, E_3$ are conditionally independent given event $F$. This implies that 
+
+	$$
+\p(E_1, E_2, E_3 | F) = P(E_1|F) \cdot P(E_2|F) \cdot P(E_3|F)
+$$
+Which can be written more succinctly in product notation
+$$
+\p(E_1, E_2, E_3 | F) = \prod_{i=1}^3 P(E_i|F)
+$$
+
 </p>
+
+<p><div class="alert alert-warning"><b>Warning:</b> While the rules of probability stay the same when conditioning on an event, the independence <i>property</i> between events might change. Events that were dependent can become independent when conditioning on an event. Events that were independent can become dependent.</div></p>
+
 
 
                         

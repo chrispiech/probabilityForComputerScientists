@@ -1,0 +1,425 @@
+
+% rebase('templates/chapter.html', title="Digital Vision Test")
+ 
+<center><h1>Digital Vision Test</h1></center>
+<hr/>
+
+<div class="alert alert-primary"><b>The Story:</b> This problem was initially posed as a CS109 Final exam problem in Spring 2017.  This grew into a collaboration with a former student, Ali Malik, as well as a Stanford eye doctor Charles Lin. We realized that it was actually a much more accurate way of measuring visual acuity. The algorithm, which is called the Stanford Acuity Test, or StAT, has since been published as an article for AAAI and covered by Science Magazine and The Lancet. To the best of our knowledge, the algorithm is still the worlds most accurate visual acuity test.</div>
+
+<h3>Digital Vision Tests</h3>
+
+<p>The goal of a digital vision test is to estimate how well a patient can see. You can give the patient a series of vision tests, observe their responses and then based on those responses eventually make your diagnosis. In this chapter we consider the Tumbling E tasks. The patient is presented an E at a chosen font size. The E will be randomly written up, down, left or right and the patient must say which direction it is facing. Their guess will either be correct, or incorrect. The patient will have a series of 20 of these tasks. Vision tests as useful for people who need glasses, but can be critical for folks with eye disease who need to closely monitor for subtle decreases in vision.</p>
+
+<p>There are two primary tasks in a digital vision test: (1) based on the patient responses, infer their ability to see and (2) select the next font size to show to the patient.</p>
+
+<h3>How to Represent Ability to See?</h3>
+
+<p>Ability is a random variable! To be exact, we define $A$ to represent the ability of someone to see. $A$ takes on values between 0.0 (representing legal blindness) and 1.0 (representing standard vision). While ability to see is in theory a continuous random variable, we are going to represent ability to see as discretized into one hundreths. As such $A \in \{0.00, 0.01, \dots, 0.99\}$. As a small aside, visual acuity can be represented in many different units. The units you will see in papers is a log based unit called LogMAR. </p>
+
+<p>The prior probability mass function for $A$, written as $\p(A=a)$, represents our belief that $A$ takes on the value of $a$, <i>before</i> we have seen any observations about the patient. This prior belief comes from the natural distribution of how well people can see. To make our algorithm most accurate, the prior should best reflect our patient population. Since our eye test is built for doctors in an eye hospital, we used historical data from eye hospital visits to build our prior. Here is $P(A=a)$ as a graph: </p>
+
+<p>
+	<center>
+		<img class="mainFigureLg" src="{{pathToRoot}}img/visionTest/prior.jpg"></img><br/><i>The prior belief on ability to see</i>
+	</center>
+	</p>
+
+<p>Here is that exact same probability mass function written as a table. A table representation is possible because of our choice to discretize $A$. In code we can access $\p(A=a)$ as a dictionary lookup, <code>belief[a]</code> where <code>belief</code> stores the whole probability mass function:
+    <table class="table table-sm">
+        <tr>
+          <td>$a$</td>
+          <td>$\P(A=a)$</td>
+          <td></td>
+          <td>$a$</td>
+          <td>$\P(A=a)$</td>
+          <td></td>
+          <td>$a$</td>
+          <td>$\P(A=a)$</td>
+        </tr>
+        <tr>
+          <td>0.00</td>
+          <td>0.0020</td>
+          <td></td>
+          <td>0.20</td>
+          <td>0.0037</td>
+          <td></td>
+          <td colspan="2" style="text-align: center;">$\cdots$</td>
+        </tr>
+        <tr>
+          <td>0.01</td>
+          <td>0.0021</td>
+          <td></td>
+          <td>0.21</td>
+          <td>0.0038</td>
+          <td></td>
+          <td>0.81</td>
+          <td>0.0171</td>
+        </tr>
+        <tr>
+          <td>0.02</td>
+          <td>0.0021</td>
+          <td></td>
+          <td>0.22</td>
+          <td>0.0040</td>
+          <td></td>
+          <td>0.82</td>
+          <td>0.0173</td>
+        </tr>
+        <tr>
+          <td>0.03</td>
+          <td>0.0022</td>
+          <td></td>
+          <td>0.23</td>
+          <td>0.0041</td>
+          <td></td>
+          <td>0.83</td>
+          <td>0.0175</td>
+        </tr>
+        <tr>
+          <td>0.04</td>
+          <td>0.0023</td>
+          <td></td>
+          <td>0.24</td>
+          <td>0.0042</td>
+          <td></td>
+          <td>0.84</td>
+          <td>0.0177</td>
+        </tr>
+        <tr>
+          <td>0.05</td>
+          <td>0.0023</td>
+          <td></td>
+          <td>0.25</td>
+          <td>0.0043</td>
+          <td></td>
+          <td>0.85</td>
+          <td>0.0180</td>
+        </tr>
+        <tr>
+          <td>0.06</td>
+          <td>0.0024</td>
+          <td></td>
+          <td>0.26</td>
+          <td>0.0045</td>
+          <td></td>
+          <td>0.86</td>
+          <td>0.0181</td>
+        </tr>
+        <tr>
+          <td>0.07</td>
+          <td>0.0025</td>
+          <td></td>
+          <td>0.27</td>
+          <td>0.0046</td>
+          <td></td>
+          <td>0.87</td>
+          <td>0.0183</td>
+        </tr>
+        <tr>
+          <td>0.08</td>
+          <td>0.0026</td>
+          <td></td>
+          <td>0.28</td>
+          <td>0.0048</td>
+          <td></td>
+          <td>0.88</td>
+          <td>0.0185</td>
+        </tr>
+        <tr>
+          <td>0.09</td>
+          <td>0.0026</td>
+          <td></td>
+          <td>0.29</td>
+          <td>0.0049</td>
+          <td></td>
+          <td>0.89</td>
+          <td>0.0186</td>
+        </tr>
+        <tr>
+          <td>0.10</td>
+          <td>0.0027</td>
+          <td></td>
+          <td>0.30</td>
+          <td>0.0050</td>
+          <td></td>
+          <td>0.90</td>
+          <td>0.0188</td>
+        </tr>
+        <tr>
+          <td>0.11</td>
+          <td>0.0028</td>
+          <td></td>
+          <td>0.31</td>
+          <td>0.0052</td>
+          <td></td>
+          <td>0.91</td>
+          <td>0.0189</td>
+        </tr>
+        <tr>
+          <td>0.12</td>
+          <td>0.0029</td>
+          <td></td>
+          <td>0.32</td>
+          <td>0.0054</td>
+          <td></td>
+          <td>0.92</td>
+          <td>0.0190</td>
+        </tr>
+        <tr>
+          <td>0.13</td>
+          <td>0.0030</td>
+          <td></td>
+          <td>0.33</td>
+          <td>0.0055</td>
+          <td></td>
+          <td>0.93</td>
+          <td>0.0191</td>
+        </tr>
+        <tr>
+          <td>0.14</td>
+          <td>0.0031</td>
+          <td></td>
+          <td>0.34</td>
+          <td>0.0057</td>
+          <td></td>
+          <td>0.94</td>
+          <td>0.0192</td>
+        </tr>
+        <tr>
+          <td>0.15</td>
+          <td>0.0032</td>
+          <td></td>
+          <td>0.35</td>
+          <td>0.0058</td>
+          <td></td>
+          <td>0.95</td>
+          <td>0.0192</td>
+        </tr>
+        <tr>
+          <td>0.16</td>
+          <td>0.0033</td>
+          <td></td>
+          <td>0.36</td>
+          <td>0.0060</td>
+          <td></td>
+          <td>0.96</td>
+          <td>0.0192</td>
+        </tr>
+        <tr>
+          <td>0.17</td>
+          <td>0.0034</td>
+          <td></td>
+          <td>0.37</td>
+          <td>0.0062</td>
+          <td></td>
+          <td>0.97</td>
+          <td>0.0193</td>
+        </tr>
+        <tr>
+          <td>0.18</td>
+          <td>0.0035</td>
+          <td></td>
+          <td>0.38</td>
+          <td>0.0064</td>
+          <td></td>
+          <td>0.98</td>
+          <td>0.0192</td>
+        </tr>
+        <tr>
+          <td>0.19</td>
+          <td>0.0036</td>
+          <td></td>
+          <td>0.39</td>
+          <td>0.0066</td>
+          <td></td>
+          <td>0.99</td>
+          <td>0.0192</td>
+        </tr>
+      </table></p>
+
+<h3>Observations</h3>
+
+<p>Once the patient starts the test, you will begin collecting observations. Consider this first observation, $\text{Obs}_1$ where the user was shown a letter with font size 0.7 and answered the question incorrectly:</p>
+<p>
+	<center>
+		<img class="mainFigureLg" src="{{pathToRoot}}img/visionTest/observation.jpg"></img><br/>
+	</center>
+	</p>
+
+<p>We can represent this observation as a tuple with font size and correctness. Mathematically this could be written as $\text{Obs}_1 = [0.7, 0]$. In code this observation could be stored as a dictionary
+<pre class="language-python"><code>obs_1 = {
+   "font_size":0.7,
+   "is_correct":False
+}</code></pre>
+</p>
+
+<p>Eventually we will have 20 of these observations: $[\text{Obs}_1, \text{Obs}_2, \dots, \text{Obs}_{20}]$. </p>
+
+<h3>Infering Ability</h3>
+
+<p>One of the major tasks that we have to accomplish is to update our probability mass function for $A$ based on an observation. First let us consider how to update our belief in ability to see from a single observation $\text{Obs}_1$. </p>
+
+$$
+\begin{align*}
+\P(A=a|\text{Obs}_1) &= \frac{\P(\text{Obs}_1|A=a)P(A=a)}{\P(\text{Obs}_1)}\end{align*}
+$$
+
+<p>We already have values for the prior $\p(A=a)$. In the next section we will talk about how to calculate the likelihood term, $\P(\text{Obs}_1|A=a)$. We could compute the denominator exactly: 
+    \begin{align*}
+    \P(\text{Obs}_1) &= \sum_x \P(\text{Obs}_1, A=x) && \text{LOTP} \\
+    &= \sum_x P(\text{Obs}_1 | A=x)P(A=x)
+    \end{align*}
+Alternatively we could recognize that  all the terms in the denominator are repeats of terms that show up in the numerator. As such we can calculate the numerators, and normalize the numerators. Normalization is a two step process where you first compute the sum of all the values, and then divide each value by its sum.</p>
+
+<pre class="language-python"><code>def update_belief(belief, obs):
+    """
+    Take in a prior belief (stored as a dictionary) for a random 
+    variable representing how well someone can see based on a single
+    observation (obs). Update the belief based using Bayes' Theorem
+    """
+
+    # loop over every value in the support of the belief RV
+    for a in belief:
+        # the prior belief P(A = a)
+        prior_a = belief[a]
+        # the obs probability P(obs | A = a)
+        likelihood = calc_likelihood(a, obs)
+        # numerator of Bayes' Theorem
+        belief[a] = prior_a * likelihood
+    # calculate the denominator of Bayes' Theorem
+    normalize(belief)</code></pre>
+
+
+
+    <p>
+        Since this patient got a rather large letter incorrect, e think they can't see very well, though we have a lot of uncertainty as it has only been one observation. This is expressed in our updated probability mass function for $A$, $\p(A = a | \text{Obs}_1)$. This updated belief is called the posterior. Here is what the posterior looks like for the observation in our previous section: a user was shown a letter with font size = 0.7 and got it incorrect:
+        <center>
+            <img class="mainFigureLg" src="{{pathToRoot}}img/visionTest/posterior.jpg"></img><br/>
+            <i>The posterior belief on ability to see given a patient incorrectly identified a letter with font size 0.7. It shows a belief that the patient can't see very well.</i>
+        </center>
+        </p>
+
+        <p>What if you have multiple observations? For multiple observations the only term that will change will be the likelihood term $\p(\text{Observations}|A=a)$. We assume that each observation is independent, conditioned on ability to see. Formally $$\p(\text{Obs}_1, \dots, \text{Obs}_{20} |A=a) = \prod_i \p(\text{Obs}_i|A=a)$$ As such the likelihood of all observations will be the product of the likelihood of each observation on its own. This is equivalent mathematically to calculating the posterior for one observation and calling the posterior your new prior.</p>
+
+<h3>Likelihood Function</h3>
+
+<p>The one major missing piece is an expression for $\p(\text{Obs}_i|A=a)$. In Bayes' Theorem this term called the likelihood because it is the likelihood of our observation given the underlying true state of the world. When computing this term we no longer have to estimate $A$. In this term we are told exactly how well the person can see. Their vision is truly $a$. Likelhood will be a function which will return back different values for different inputs of $a$ and $\text{Obs}_i$. In python this will be a function <code>calc_likelihood(a, obs)</code>. We could imagine a concrete call to this function with $a=0.5$:
+    <pre class="language-python"><code># get an observation
+obs = {
+    "font_size":0.7,
+    "is_correct":False
+}
+# calculate likelihood for a given a
+calc_likelihood(a = 0.5, obs)</code></pre>
+</p>
+
+<p>Defining the likelihood function involves more opthomology and testing theory than probability theory. You don't need to know either for this course! As such, let's consider a simple version, with the intention of giving you the full end to end system. A very classic testing theory model, called "<a href="https://en.wikipedia.org/wiki/Item_response_theory">Item Response Theory</a>" is the simplest exam likelihood model. It makes the assumption that the probability that a student with ability $a$ gets a question with difficulty $d$ correct is:
+    $$ \p(\text{Correct}|a,d) = \frac{1}{1+e^{-(a-d)}}$$
+where $e$ is the <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">natural base</a>. We can define the difficulty of a letter with font size $f$ to be $d = 1-f$ to account for the fact that large font sizes are easier. As such we can modify Item Response Theory for eye exams:
+$$ \p(\text{Correct}|a,f) = \frac{1}{1+e^{-(a+f-1)}}$$
+This equation incorporates the "sigmoid function", $\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$, which plays the role of squashing transforming input to be in the range $[0, 1]$. As such our function could be rewritten as $\p(\text{Correct}|a,f) = \text{sigmoid}(a+f-1)$. In code it would look like this:
+<pre class="language-python"><code>def calc_likelihood(a, obs):
+    # returns P(obs | A = a) using Item Response Theory
+    f = obs["font_size"]
+    p_correct = sigmoid(a + f - 1)
+    if obs["is_correct"]:
+        return p_correct
+    else:
+        return 1 - p_correct
+
+def sigmoid(x):
+    # the classic squashing function. All outputs are [0,1]
+    return 1 / (1 + math.exp(-x))
+</code></pre>
+Note that Item Response Theory returns the probability that a a patient answers a letter correctly. The probability that they answer incorrectly is simply: $$\p(\text{Incorrect}|a,f) = 1-\p(\text{Correct}|a,f)$$</p>
+
+<p>In the Stanford Acuity Test we extend Item Response Theory in several ways. We have a term for the probability that a users gets the answer correct by guessing (seeing as there are only four options) as well as a term that they make a mistake, aka "slip", even though they know the correct answer. We also observed that a Floored Exponential seems to be a more accurate function than the sigmoid.
+</p>
+
+<h3>The Full Code</h3>
+<p>Here is the full code for inference of ability to see given observations, minus the user interface functions and the file reading for the prior belief:
+<pre class="language-python"><code>
+def main():
+    """
+    Compute your belief in how well someone can see based 
+    off an eye exam with 20 questions at different fonts
+    """
+    belief_a = load_prior_from_file()
+    observations = get_observations()
+    for obs in observations:
+        update_belief(belief_a,obs)
+    plot(belief_a)
+
+def update_belief(belief, obs):
+    """
+    Take in a prior belief (stored as a dictionary) for a random 
+    variable representing how well someone can see based on a single
+    observation (obs). Update the belief based using Bayes' Theorem
+    """
+
+    # loop over every value in the support of the belief RV
+    for a in belief:
+        # the prior belief P(A = a)
+        prior_a = belief[a]
+        # the obs probability P( obs | A = a)
+        likelihood = calc_likelihood(a, obs)
+        # numerator of Bayes' Theorem
+        belief[a] = prior_a * likelihood
+    # calculate the denominator of Bayes' Theorem
+    normalize(belief)
+
+def calc_likelihood(a, obs):
+    # returns P(obs | A = a) using Item Response Theory
+    f = obs["font_size"]
+    p_correct = sigmoid(a + f - 1)
+    if obs["is_correct"]:
+        return p_correct
+    else:
+        return 1 - p_correct
+
+# ----------- Helper Functions -----------
+
+def sigmoid(x):
+    # the classic squashing function. All outputs are [0,1]
+    return 1 / (1 + math.exp(-x))
+
+def normalize(belief):
+    # in place normalization of a belief dictionary
+    total = belief_sum(belief)
+    for key in belief:
+        belief[key] /= total
+
+def belief_sum(belief):
+    # get the sum of probability mass for a discrete belief
+    total = 0
+    for key in belief:
+        total += belief[key]
+    return total</code></pre></p>
+
+<h3>Chosing the Next Font Size</h3>
+
+<p>At this point, we have a way to calculate a formal expression (as a probability mass function) of our belief in how well the patient can see at any point in our test. This leaves one more question for us to answer. In a digital eye test, we can <i>select</i> the next font size to show to the patient. Instead of showing a predetermined set, we could make a choice which could be informed by our current belief in how well they can see. We were inspired by Thompson Sampling, an algorithm which is able to balance exploring uncertainty and narrowing in on your most confident belief. When chosing a font size we simply take a sample from our current belief $A$ and then chose the font size that we think a person with ability with that sampled value could see with 80% accuracy. We chose the value 80% so that the eye test would not be too painful. There is always a better way. The Stanford Eye Test, which started in CS109, is just a step on the journey. Have an idea?</p>
+
+
+<hr/>
+
+
+<p>
+    Publications and press coverage:
+    <table class="table table-sm">
+        
+    <tr>
+    <td style="border-top: none !important;">[1]</td>
+    <td style="border-top: none !important;"> <a target="_blank" href="https://ojs.aaai.org/index.php/AAAI/article/view/5384/5240">The Stanford Acuity Test: A Precise Vision Test Using
+        Bayesian Techniques and a Discovery in Human Visual Response</a>. Association for the Advancement of Artificial Intelligence</td></tr>
+    <tr>
+        <td style="border-top: none !important;">[2]</td> <td style="border-top: none !important;"><a target="_blank" href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)02149-8/fulltext">Digitising the vision test</a>. The Lancet Journal. </td></tr>
+<tr><td style="border-top: none !important;">[3]</td><td style="border-top: none !important;"><a target="_blank" href="https://www.science.org/content/article/eye-robot-artificial-intelligence-dramatically-improves-accuracy-classic-eye-exam">Eye, robot: Artificial intelligence dramatically improves accuracy of classic eye exam</a>. Science Magazine.</td></tr>
+</table>
+Special thanks to Ali Malik who co-invented the Stanford Acuity Test
+ </p>
+
+
+
+
+

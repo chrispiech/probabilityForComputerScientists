@@ -56,8 +56,7 @@
 			"100_binomial_problems":"100 Binomial Problems",
 			"winning_series":"Winning Series",
 			"jury":"Jury Selection",
-			"grading_eye_inflammation":"Grading Eye Inflamation"
-			"norm_cdf_calculator":"Gaussian CDF Calculator",
+			"grading_eye_inflammation":"Grading Eye Inflamation",
 			"grades_not_normal":"Grades are Not Normal",
 			"curse_of_dimensionality":"Curse of Dimensionality"
 			"prob_baby_delivery":"Probability of Baby Delivery",
@@ -81,6 +80,7 @@
 			"federalist":"Federalist Paper Authorship",
 			"name2age":"Name to Age",
 			"bayesian_carbon_dating":"Bayesian Carbon Dating",
+			"digital_vision_test":"Digital Vision Test",
 			"bridge_distribution":"Bridge Distribution",
 			"dart_logo":"CS109 Logo",
 			"tracking_in_2D":"Tracking in 2D"

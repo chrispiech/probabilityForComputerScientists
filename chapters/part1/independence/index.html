@@ -113,7 +113,7 @@ Where $p_i$ is the probability that router $i$ is functional.
 
 <h2>Independence and Compliments</h2>
 
-<p>Given independent events $A$ and $B$, we can prove that $A$ and  $B^C$ are independent. Formally we want to show that: $\P( A B^C) = \P( A)\P(B^C)$.
+<p>Given independent events $A$ and $B$, we can prove that $A$ and  $B^C$ are independent. Formally we want to show that: $\P( A B^C) = \P( A)\P(B^C)$. This starts with a rule called the <a href="{{pathToLang}}part1/law_total/">Law of Total Probability</a> which we will cover shortly.
 
 \begin{align*}
 \P (AB^C ) &= \P (A) - \P (AB) && \href{ {{pathToLang}}part1/law_total/}{\text{LOTP}} \\
@@ -126,5 +126,17 @@ Where $p_i$ is the probability that router $i$ is functional.
 
 
 	<h2>Conditional Independence</h2>
-<p>We saw earlier that the laws of probability still held if you consistently conditioned on an event. While the rules stay the same, the independence property might change. Events that were dependent can become independent when conditioning on an event. Events that were independent can become dependent.
+<p>We saw earlier that the laws of probability still held if you consistently conditioned on an event. So for example, you may see someone say that events $E_1, E_2, E_3$ are conditionally independent given event $F$. This implies that 
+
+	$$
+\p(E_1, E_2, E_3 | F) = P(E_1|F) \cdot P(E_2|F) \cdot P(E_3|F)
+$$
+Which can be written more succinctly in product notation
+$$
+\p(E_1, E_2, E_3 | F) = \prod_{i=1}^3 P(E_i|F)
+$$
+
 </p>
+
+<p><div class="alert alert-warning"><b>Warning:</b> While the rules of probability stay the same when conditioning on an event, the independence <i>property</i> between events might change. Events that were dependent can become independent when conditioning on an event. Events that were independent can become dependent.</div></p>
+

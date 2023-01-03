@@ -105,3 +105,29 @@ P(X + Y < 0.5) &= P(2 + Y < 0.5) \\
 We made no assumption about the value of $\mu$ or the value of $\sigma$ so this will apply to every single normal random variable. Since it uses the Normal CDF this doesn't apply to other types of random variables.
 	</div>
 </p>
+
+<h2>CDF Calculator</h2>
+<p>
+	To calculate the Cumulative Density Function (CDF) for a normal (aka Gaussian) random variable at a value $x$, also writen as $F(x)$, you can transform your distribution to the "standard normal" and look up the corresponding value in the standard normal CDF. However, most programming libraries will provide a normal cdf funciton:
+<%
+include('chapters/intro/calculators/normCdf.html')
+%>
+</p>
+
+<p>In python you can calculate these values using the <code>scipy</code> library
+<pre class="language-python"><code>from scipy import stats
+
+# get the input values
+mean = 1.0
+std_dev = 0.5
+query = 0.1 # aka x
+
+# calc the CDF in two lines
+X = stats.norm(mean, std_dev)
+p = X.cdf(query)
+
+# calc the CDF in one line
+p = stats.norm.cdf(query, mean, std_dev)
+</code></pre>
+
+It is important to note that in the python library, the second parameter for the Normal distribution is standard deviation <b>not</b> variance, as it is typically defined in math notation. Recall that standard deviation is the square root of variance.
