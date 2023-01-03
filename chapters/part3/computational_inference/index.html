@@ -1,7 +1,7 @@
 
 % rebase('templates/chapter.html', title="General Inference")
  
-<center><h1>Computational Inference</h1></center>
+<center><h1>General Inference</h1></center>
 <hr/>
 
 <p>A Bayesian Network gives us a reasonable way to specify the joint probability of a network of many random variables. Before we celebrate, realize that we still don't know how to use such a network to answer probability questions. There are many techniques for doing so. I am going to introduce you to one of the great ideas in probability for computer science: we can use sampling to solve inference questions on Bayesian networks. Sampling is frequently used in practice because it is relatively easy to understand and easy to implement.
@@ -11,11 +11,12 @@
 <p>As a warmup consider what it would take to sample an assignment to each of the random variables in our Bayes net. Such a sample is often called a "joint sample" or a "particle" (as in a particle of sand). To sample a particle, simply sample a value for each random variable one at a time based on the value of the random variable's parents. This means that if $X_i$ is a parent of $X_j$, you will have to sample a value for $X_i$ before you sample a value for $X_j$.
 
 <p>Let's work through an example of sampling a "particle" for the Simple Disease Model in the Bayes Net section:<br/>
-1. Sample from $P(\text{Uni} = 1)$: Bern$(0.8)$. Sampled value for Uni is 1.<br/>
-2. Sample from $P(\text{Influenza} = 1 | \text{Uni} = 1)$: Bern$(0.2)$. Sampled value for Influenza is 0.<br/>
-3. Sample from $P(\text{Fever} = 1 | \text{Influenza} = 0)$: Bern$(0.05)$. Sampled value for Fever is 0.<br/>
-4. Sample from $P(\text{Tired} = 1 | \text{Uni} = 1, \text{Influenza} = 0)$: Bern$(0.8)$. Sampled value for Tired is 0.<br/>
+<ol> <li>Sample from $P(\text{Uni} = 1)$: Bern$(0.8)$. Sampled value for Uni is 1.<br/>
+    <li> Sample from $P(\text{Influenza} = 1 | \text{Uni} = 1)$: Bern$(0.2)$. Sampled value for Influenza is 0.<br/>
+        <li> Sample from $P(\text{Fever} = 1 | \text{Influenza} = 0)$: Bern$(0.05)$. Sampled value for Fever is 0.<br/>
+            <li> Sample from $P(\text{Tired} = 1 | \text{Uni} = 1, \text{Influenza} = 0)$: Bern$(0.8)$. Sampled value for Tired is 0.</ol><br/>
 Thus the sampled particle is: [Uni = 1, Influenza = 0, Fever = 0, Tired = 0]. If we were to run the process again we would get a new particle (with likelihood determined by the joint probability).
+
 
 <p>Now our strategy is simple: we are going to generate $N$ samples where $N$ is in the hundreds of thousands (if not millions). Then we can compute probability queries by counting. Let $N(\textbf{X} = \textbf{k})$ be notation for the number of particles where random variables $\textbf{X}$ take on values $\textbf{k}$. Recall that the bold notation $\textbf{X}$ means that  $\textbf{X}$ is a vector with one or more elements. By the "frequentist" definition of probability: 
 \begin{align*}
