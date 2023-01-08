@@ -474,7 +474,7 @@ Where $p_i$ is the probability that router $i$ is functional.
 
 
 	<h2>Conditional Independence</h2>
-<p>We saw earlier that the laws of probability still held if you consistently conditioned on an event. So for example, you may see someone say that events $E_1, E_2, E_3$ are conditionally independent given event $F$. This implies that 
+<p>We saw earlier that the laws of probability still held if you consistently conditioned on an event. As such, the definition of independence also transfers to the universe of conditioned events. We use the terminology "conditional independence" to refer to events that are independent when consistently conditioned. For example if someone claims that events $E_1, E_2, E_3$ are conditionally independent given event $F$. This implies that 
 
 	$$
 \p(E_1, E_2, E_3 | F) = P(E_1|F) \cdot P(E_2|F) \cdot P(E_3|F)
@@ -486,7 +486,11 @@ $$
 
 </p>
 
-<p><div class="alert alert-warning"><b>Warning:</b> While the rules of probability stay the same when conditioning on an event, the independence <i>property</i> between events might change. Events that were dependent can become independent when conditioning on an event. Events that were independent can become dependent.</div></p>
+<p><div class="alert alert-warning"><b>Warning:</b> While the rules of probability stay the same when conditioning on an event, the independence <i>property</i> between events might change. Events that were dependent can become independent when conditioning on an event. Events that were independent can become dependent. For example, if events $E_1, E_2, E_3$ are conditionally independent given event $F$ it is not necessarilty true that
+$$
+\p(E_1,E_2,E_3) = \prod_{i=1}^3 P(E_i)
+$$
+As we are no longer conditioning on $F$.</div></p>
 
 
 
