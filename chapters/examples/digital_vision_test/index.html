@@ -341,7 +341,7 @@ calc_likelihood(a = 0.5, obs)</code></pre>
  &= \frac{1}{1+e^{-(a-d)}} \\
 
  \end{align*}
-where $e$ is the <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">natural base</a> constant and   $\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$. The <a href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid function</a> is a handy function which takes in any real valued input and returns a value in the range $[0, 1]$.</p>
+where $e$ is the <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">natural base</a> constant and   $\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$. The <a href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid function</a> is a handy function which takes in any real valued input and returns a corresponding value in the range $[0, 1]$.</p>
 
 <p>This IRT model introduces a new variable: difficulty of a letter $d$. How difficult is it to correctly respond to a letter with a given font size? The simplest way to model difficulty, while accounting for the fact that large font sizes are easier than small ones, is to define the difficulty of a letter with font size $f$ to be $d = 1-f$. Plugging this in:
   \begin{align*} 
