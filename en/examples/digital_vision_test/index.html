@@ -364,7 +364,7 @@
 
 <h3>How to Represent Ability to See?</h3>
 
-<p>Ability is a random variable! To be exact, we define $A$ to represent the ability of someone to see. $A$ takes on values between 0.0 (representing legal blindness) and 1.0 (representing standard vision). While ability to see is in theory a continuous random variable, we are going to represent ability to see as discretized into one hundreths. As such $A \in \{0.00, 0.01, \dots, 0.99\}$. As a small aside, visual acuity can be represented in many different units. The units you will see in papers is a log based unit called LogMAR. </p>
+<p>Ability is a random variable! We define $A$ to represent the ability of someone to see. $A$ takes on values between 0.0 (representing legal blindness) and 1.0 (representing standard vision). While ability to see is in theory a continuous random variable, we are going to represent ability to see as discretized into one hundreths. As such $A \in \{0.00, 0.01, \dots, 0.99\}$. As a small aside, visual acuity can be represented in many different units (such as a log based unit called LogMAR). We chose this 0 to 1 scale as it makes the math easier to explain. </p>
 
 <p>The prior probability mass function for $A$, written as $\p(A=a)$, represents our belief that $A$ takes on the value of $a$, <i>before</i> we have seen any observations about the patient. This prior belief comes from the natural distribution of how well people can see. To make our algorithm most accurate, the prior should best reflect our patient population. Since our eye test is built for doctors in an eye hospital, we used historical data from eye hospital visits to build our prior. Here is $P(A=a)$ as a graph: </p>
 
@@ -596,7 +596,7 @@
 	</center>
 	</p>
 
-<p>We can represent this observation as a tuple with font size and correctness. Mathematically this could be written as $\text{obs}_1 = [0.7, 0]$. In code this observation could be stored as a dictionary
+<p>We can represent this observation as a tuple with font size and correctness. Mathematically this could be written as $\text{obs}_1 = [0.7, \text{False}]$. In code this observation could be stored as a dictionary
 <pre class="language-python"><code>obs_1 = {
    "font_size":0.7,
    "is_correct":False
@@ -607,15 +607,15 @@
 
 <h3>Infering Ability</h3>
 
-<p>Our first major task is to write code which can update our probability mass function for $A$ based on observations. First let us consider how to update our belief in ability to see from a single observation, $\text{obs}$ (formally this the event that random variable $\text{Obs}$ takes on the value $\text{obs}$). We can use <a href="../../part3/inference/">Bayes' Theory for random variables</a>: 
+<p>Our first major task is to write code which can update our probability mass function for $A$ based on observations. First let us consider how to update our belief in ability to see from a single observation, $\text{obs}$ (aside: formally this the event that random variable $\text{Obs}$ takes on the value $\text{obs}$). We can use <a href="../../part3/inference/">Bayes' Theory for random variables</a>: 
 \begin{align*}
 \P(A=a|\text{obs}) &= \frac{\P(\text{obs}|A=a)P(A=a)}{\P(\text{obs})}\end{align*}
-This will be computed for all assignments $a$ to ability to see. To do so we will need a way to compute each of the terms. We already have values for the prior $\p(A=a)$ and we can compute the denominator $\p(\text{obs})$ using the Law of Total Probability: 
+This will be computed inside a <code>for</code> loop for each assignment $a$ to ability to see. How can we compute each term in the Bayes' Theorem expression? We already have values for the prior $\p(A=a)$ and we can compute the denominator $\p(\text{obs})$ using the Law of Total Probability: 
     \begin{align*}
     \P(\text{obs}) &= \sum_x \P(\text{obs}, A=x) && \href{ ../../part1/law_total/}{\text{LOTP}} \\
-    &= \sum_x P(\text{obs} | A=x)P(A=x)
+    &= \sum_x P(\text{obs} | A=x)P(A=x)&&\text{Chain Rule}
     \end{align*}
-Notice how the terms in the expression for $\p(\text{obs})$ already show up in the numerator of our Bayes' Theorem equation. As such, in code we are going to (1) compute the numerator for every value of $a$, store it as the value of belief, (2) compute the sum of all of those terms and (3) devide each value of belief by the sum. The process of doing steps 2 and 3 is also known as normalization:</p>
+Notice how the terms in this new expression for $\p(\text{obs})$ already show up in the numerator of our Bayes' Theorem equation. As such, in code we are going to (1) compute the numerator for every value of $a$, store it as the value of belief, (2) compute the sum of all of those terms and (3) devide each value of belief by the sum. The process of doing steps 2 and 3 is also known as normalization:</p>
 
 <pre class="language-python"><code>def update_belief(belief, obs):
     """
@@ -648,10 +648,10 @@ Notice how the terms in the expression for $\p(\text{obs})$ already show up in t
     return total</code></pre>
 
 
-        <p>At this point we have an expression, and corresponding code, to update our belief in ability to see given an observation. However we are <b>missing</b> a way to compute $\p(\text{Obs}|A=a)$. In our code this expression is the currently undefined <code>calc_likelihood(a, obs)</code> function. In the next section we will go over how to compute this "likelihood" function. Before we do so, let's take a look at the result of applying <code>update_belief</code> for a patient with the single observation <code>obs_1</code> defined above.</p>
+        <p>At this point we have an expression, and corresponding code, to update our belief in ability to see given an observation. However we are <b>missing</b> a way to compute $\p(\text{obs}|A=a)$. In our code this expression is the currently undefined <code>calc_likelihood(a, obs)</code> function. In the next section we will go over how to compute this "likelihood" function. Before we do so, let's take a look at the result of applying <code>update_belief</code> for a patient with the single observation <code>obs_1</code> defined above.</p>
 
     <p>
-        Since <code>obs_1</code> says that this patient got a rather large letter incorrect, we think they can't see very well, though we have a lot of uncertainty as it has only been one observation. This is expressed in our updated probability mass function for $A$, $\p(A = a | \text{obs}_1)$. This updated belief is called the posterior. Here is what the posterior looks like for the observation in our previous section: a patient was shown a letter with font size = 0.7 and got it incorrect. Note that the posterior $\p(A=a|\text{obs}_1)$ is still represented in code as a dictionary, as in the prior, $\p(A=a)$:
+        <code>obs_1</code> says that this patient got a rather large letter (font-size of 0.7) incorrect. As such in our posterior we think they can't see very well, though we have a lot of uncertainty as it has only been one observation. This belief is expressed in our updated probability mass function for $A$, $\p(A = a | \text{obs}_1)$, called the posterior. Here is what the posterior looks like for <code>obs_1</code>. Note that the posterior $\p(A=a|\text{obs}_1)$ is still represented in code as a dictionary, as in the prior, $\p(A=a)$:
         <center>
             <img class="mainFigureLg" src="../../../img/visionTest/posterior.jpg"></img><br/>
             <i>The posterior belief on ability to see given a patient incorrectly identified a letter with font size 0.7. It shows a belief that the patient can't see very well.</i>
@@ -674,7 +674,13 @@ calc_likelihood(a = 0.5, obs)</code></pre>
 
 <p><b>Note 1:</b> When computing the likelihood term, $\p(\text{obs}|A=a)$, we do not have to estimate $A$ as it shows up on the right hand size of the conditional. In the likelihood term we are told <i>exactly</i> how well the person can see. Their vision is truly $a$. Do not be fooled by the fact that $a$ is a (non-random) variable. When computing the likelihood function this varaible will have a numeric value. 
 
-<p><b>Note 2:</b> The variable <code>obs</code> represents a single patient interaction. It has two parts: a font-size and a correctness. However, only correctness is a random variable. Font-size is known as it was chosen by the algorithm. As such $\p(\text{obs}|A=a)$ is actually $\p(\text{correct}|A=a)$ in the context of a fixed font-size, $f$.  correct has the value <code>True</code> if the patient answered correctly and <code>False</code> otherwise.</p>
+<p><b>Note 2:</b> The variable <code>obs</code> represents a single patient interaction. It has two parts: a font-size and a boolean for whether the patient got the letter correct. However, we don't think of font-size as being a random variable. Instead we think of it as a contant which has been fixed by the computer. As such $\p(\text{obs}|A=a)$ can be simplified to $\p(\text{correct}|A=a)$. "correct" is short hand for the event that a random variable Correct takes on the  <code>True</code> or <code>False</code> value correct:
+  \begin{align*}
+\p(&\text{obs}|A=a) \\
+  &= \p(\text{correct}, f|A=a) && \text{obs is a tuple} \\
+  &= \p(\text{correct}|A=a) && f \text{ is a constant } 
+  \end{align*}
+</p>
 
 
 <p>Defining the likelihood function  $\p(\text{correct}|A=a)$ involves more medical and education theory than probability theory. You don't need to know either for this course! But it is still neat to learn and without the likelihood function we won't have complete code. So, let's dive in.</p>
@@ -684,16 +690,16 @@ calc_likelihood(a = 0.5, obs)</code></pre>
 
 
  \begin{align*} 
- \p(&\text{Correct} = \text{True}|a,d)  \\
- &= \text{sigmoid}(a-d)\\
+ \p(&\text{Correct} = \text{True}|a)  \\
+ &= \text{sigmoid}(a-d) && d \text{ is difficulty} \\
  &= \frac{1}{1+e^{-(a-d)}} \\
 
  \end{align*}
 where $e$ is the <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">natural base</a> constant and   $\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$. The <a href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid function</a> is a handy function which takes in any real valued input and returns a corresponding value in the range $[0, 1]$.</p>
 
-<p>This IRT model introduces a new variable: difficulty of a letter $d$. How difficult is it to correctly respond to a letter with a given font size? The simplest way to model difficulty, while accounting for the fact that large font sizes are easier than small ones, is to define the difficulty of a letter with font size $f$ to be $d = 1-f$. Plugging this in:
+<p>This IRT model introduces a new constant: difficulty of a letter $d$. How difficult is it to correctly respond to a letter with a given font size? The simplest way to model difficulty, while accounting for the fact that large font sizes are easier than small ones, is to define the difficulty of a letter with font size $f$ to be $d = 1-f$. Plugging this in:
   \begin{align*} 
-  \p(&\text{Correct} = \text{True}|a,f)\\
+  \p(&\text{Correct} = \text{True}|a)\\
   &= \text{sigmoid}(a-[1-f])\\  
   &= \text{sigmoid}(a-1+f)\\  
   &= \frac{1}{1+e^{-(a-1+f)}}
@@ -785,7 +791,7 @@ def belief_sum(belief):
 
 <p>At this point, we have a way to calculate a probability mass function of our belief in how well the patient can see, at any point in our test. This leaves one more task for us to perform: In a digital eye test, we <i>select</i> the next font size to show to the patient. Instead of showing a predetermined set, we should make a choice which is informed by our current belief in how well the patient can see. We were inspired by Thompson Sampling, an algorithm which is able to balance exploring uncertainty and narrowing in on your most confident belief. When chosing a font size we simply take a sample from our current belief $A$ and then chose the font size that we think a person with ability with that sampled value could see with 80% accuracy. We chose the  80% constant so that the eye test would not be too painful.</p>
 
-<p>One of the neat take aways from this application is that there are many problems where you could take the knowledge learned from this course and improve on the current state of the art! Often the most creative task is to recognize where computer based probability could be usefully applied. Even for eye tests this is not the end of the story. The Stanford Eye Test, which started in CS109, is just a step on the journey to a more accurate digital eye test. There is always a better way. Have an idea?</p>
+<p>One of the neat take aways from this application is that there are many problems where you could take the knowledge learned from this course and improve on the current state of the art! Often the most creative task is to recognize where computer based probability could be usefully applied. Even for eye tests this is not the end of the story. The Stanford Eye Test, which started in CS109, is just a step on the journey to a more accurate digital eye test. There is ./always a better way. Have an idea?</p>
 
 
 <hr/>
