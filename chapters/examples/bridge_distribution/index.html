@@ -7,11 +7,74 @@
 <p>
 	<div>
 
-<div class="alert alert-primary"><b>Stub</b>: This section is not complete. Parts might not be fully written</div>
 		
-		<p> <a href="https://en.wikipedia.org/wiki/Contract_bridge">Bridge</a> is one of the most popular collaborative card games. It is played with four players in two teams. A few interesting probability problems come up in this game. You do not need to know the rules of bridge to follow this example.
+		<p> <a href="https://en.wikipedia.org/wiki/Contract_bridge">Bridge</a> is one of the most popular collaborative card games. It is played with four players in two teams. A few interesting probability problems come up in this game. You do not need to know the rules of bridge to follow this example. I focus on a set of probability problems which are most important for game strategy.
 
-		<h2>Distribution of Suit Splits</h2>
+		
+
+<p>
+	<div class="">
+		<h3>Distribution of Hand Strength</h3>
+
+		<p>The way folks play bridge is that they make a calculation about their "hand strength" and then make decisions based off that number. The strength of your hand is a number which is equal to 4 times the number of "aces", 3 times the number of "kings", 2 times the number of "queens" and 1 times the number of "jacks" in your hand. No other cards contribute to your hand strength. Lets consider your hand strength to be a random variable and compute its distribution. It seems complex to compute by hand -- but perhaps we could run a simulation? Here we simulate a million deals of bridge hands and calculate the hand strengths. Let $X$ be the strength of a hand. From the <a target="_blank" href="{{pathToLang}}part1/probability/">Definition of Probability</a>:
+			$$
+			\p(X=x) \approx \frac{\text{count}(x)}{100000}
+			$$
+<canvas id="bridgePoints" style="max-height: 500px"></canvas>
+
+<!-- <p>Here is the pseudo code used to simulate</p>
+<pre class="language-python"><code></code></pre> -->
+
+<p><div class="purpleBox"><b>Wait! Is that a Poisson?</b><br/>
+	
+	<p>If you pay very close attention might notice that this PMF looks a lot like a poisson PMF with rate $\lambda = 10$. There is a nice explanation for why the rate might be 10. Let $H$ be the value of your hand. Let $X_i$ be the points of the $i$th card in your hand, which has 13 cards. $H = \sum_{i=1}^{13} X_i$.</p>
+	
+	First we compute $\E[X_i]$, the expectation of points for the $i$th card in your hand &mdash; without considering the other cards . A card can take on four non zero values $X_i \in \{1, 2, 3, 4\}$. For each value there are four cards out of 52 with that value, eg  $\p(X_i=1) = \frac{4}{52}$. Thus 
+	
+	\begin{align*}
+	\E[X_i] &= \sum_x x \cdot \p(X_i=x) \\
+	&= (1+2+3+4)\frac{1}{13} \\
+	&= \frac{10}{13}  
+	\end{align*}
+
+We can then calculate $\E[H]$ by using the fact that the expectation of the sum of random variables is the sum of expectations, regardless of independence:	
+	\begin{align}\E[H] 
+	&= \sum_{i=1}^{13} \E[X_i] \\
+	&= 13 \cdot \E[X_i] \\
+	&= 13 \cdot \frac{10}{13} \\
+	&= 10\end{align}
+Saying that $H$ is approximately $\sim \Poi(\lambda=10)$ is an interesting claim. It suggests that points in a hand come at a constant rate, and that the next point in your hand is independent of when you got your last point. Of course this second part of the assumption is mildly violated. There are a fixed set of cards so getting one card changes the probabilities of others. For this reason the poisson is a close, but not perfect approximation.</div>
+
+<h3>Joint Distribution of Hand Strength Among Two Hands</h3>
+<p>It doesn't just matter how strong your hand is, but the relative strength of your hand and your partners hand (recall that in Bridge you play with a partner). We know that the two hands are not independent of each other. If I tell you that your partner has a strong hand, that means there are fewer "high value" cards that can be in your hand, and as such my belief in your strength has changed.  If you think about each player's hand strength as a random variable, we care about the joint distribution of hand strength. In the joint distribution bellow the x-axis is your partner's hand strength and on the y-axis is your hand strength. The value is $\p(\text{Partner} = x, \text{YourPoints} = y)$. This joint distribution was calculated by simulating a million randomly dealt hands:
+<p>
+	<div style=""id="my_dataviz"></div>
+</p>
+
+<p>From this joint distribution we can compute conditional probabilities. For example we can compute the conditional distribution of your partner's points given your points using lookups from the joint:
+\begin{align*}
+\p(&\text{Partner} = x | \text{YourPoints} = y) \\
+&= \frac
+{ \p(\text{Partner} = x, \text{YourPoints} = y) }
+{\p(\text{YourPoints} = y)} 
+&& \text{Cond. Prob.}
+\\
+&= \frac
+{ \p(\text{Partner} = x, \text{YourPoints} = y) }
+{\sum_z \p(\text{Partner} = z, \text{YourPoints} = y)} 
+&& \href{ {{pathToLang}}part1/law_total/}{\text{LOTP} }
+\end{align*}
+</p>
+
+<p>Here is a working demo of the result</p>
+
+<p>Your points: <input onchange="redrawCondGraph()" type="number" class="form-control example-inline-input mb-3" id="yourPoints" min="0" max="26" value="13" step = "1">
+<canvas id="partnerPoints" style="max-height: 500px"></canvas>
+
+	</div>
+</p>
+
+<h3>Distribution of Suit Splits</h3>
 
 
 
@@ -29,7 +92,7 @@ $k$, the number of cards in each player's hand: <input onchange="redrawGraph()" 
 
 $n$, the number of cards of particular suit among the two hands: <input onchange="redrawGraph()" type="number" class="form-control example-inline-input" id="n" min="0" max="13" value="5" step = "1">
 </p>
-<p>A few notes: If there are $k$ cards in each of the 2 hands there are $2 k$ cards total. At the start of a game of bridge $k=13$. It must be the case that $n \leq 2  k$ because you can't have more cards of the suit left than number of cards! If there are $n$ of a suit, then there are $2k -n$ of other suits. This problem assumes that the cards are properly shuffled.
+<p>A few notes: If there are $k$ cards in each of the 2 hands there are $2 k$ cards total bewteen the two players. At the start of a game of bridge $k=13$. It must be the case that $n \leq 2  k$ because you can't have more cards of the suit left than number of cards! If there are $n$ of a suit, then there are $2k -n$ of other suits. This problem assumes that the cards are properly shuffled.
 
 </p>
 
@@ -39,11 +102,11 @@ $n$, the number of cards of particular suit among the two hands: <input onchange
 $$\p(Y = i) = \frac
 	{ {n \choose i} \cdot {2\cdot k-n \choose k-i} }
 	{ {2\cdot k \choose k}}$$
-	<p>Can you figure out how we came up with that formula? It uses equally likely outcomes where each element in the sample set is a chosen set of $k$ cards  to be dealt to one player (out of $2k$ cards which go to both). For $k = $<span class="valueK">13</span> and $n = $<span class="valueN">5</span> here is the PMF over splits:</p>
+	<p>Each outcome in the sample set is a chosen set of $k$ distinct cards  to be dealt to one player (out of the $2k$ cards). To create an outcome in the event space we first chose the $i$ cards from the $n$ cards of the given suit. We then chose $k-i$ from the cards of other suits. For $k = $<span class="valueK">13</span> and $n = $<span class="valueN">5</span> here is the PMF over splits:</p>
 <canvas id="bridgeGraphEqual" style="max-height: 500px"></canvas>
 
 <p>
-	If we want to think about the probability of a given split, it is sufficient to chose one hand (call it "hand one") and think about the probability of the number of the given suit in that hand. Though there are two hands, if I tell you how many of a suit are in one hand, you can automatically figure out how many of the suit are in the other hand: recall that the number of the suit sums to $n$. 
+	If we want to think about the probability of a given split, it is sufficient to chose one hand (call it "hand one"). If I tell you how many of a suit are in one hand, you can automatically figure out how many of the suit are in the other hand: recall that the number of the suit sums to $n$. 
 	</p>
 
 
@@ -54,35 +117,6 @@ $$\p(Y = i) = \frac
 $$\p(X \geq j) = 1 - \sum_{i=n-j+1}^{j - 1}\p(Y= i)$$
 <canvas id="bridgeGraphOver" style="max-height: 500px"></canvas>
 </div>
-</p>
-
-<p>
-	<div class="">
-		<h2>Distribution of Hand Strength</h2>
-
-		<p>The way folks play bridge is that they make a calculation about their "hand strength" and then make decisions based off that number. The strength of your hand is a number which is equal to 4 times the number of "aces", 3 times the number of "kings", 2 times the number of "queens" and 1 times the number of "jacks" in your hand. No other cards contribute to your hand strength. Lets consider your hand strength to be a random variable and compute its distribution. It seems complex to compute by hand -- but perhaps we could run a simulation? Here we simulate a million deals of bridge hands, calculate the hand strengths, and use that to approximate the the distribution of hand strengths:
-<canvas id="bridgePoints" style="max-height: 500px"></canvas>
-
-<!-- <p>Here is the pseudo code used to simulate</p>
-<pre class="language-python"><code></code></pre> -->
-
-<p>You might notice that at first blush this looks a lot like a poisson with rate $\lambda = 10$. First, lets consider why the rate might be 10. Let $X_i$ be the points of a given card $i$.  Since each card value is equally likely $\p(X_i=x) = \frac{1}{13}$. The expectation of points for each card is $\E[X] = \sum_x x \cdot \p(X_i=x) = (1+2+3+4)\frac{1}{13}$. Let $H$ be the value of a hand. The value of a hand is the sum of the value of each card: 
-	$$
-	\begin{align}\E[H] &= \sum_{i\in \{1 \dots 13\}} \E[X_i] \\&= 13 \cdot \E[X_i] \\&= 13 \cdot (1+2+3+4)\frac{1}{13} = 10\end{align}$$
-Saying that $H$ is approximately $\sim \Poi(\lambda=10)$ is an interesting claim. It suggests that points in a hand come at a constant rate, and that the next point in your hand is independent of when you got your last point. Of course this second part of the assumption is mildly violated. There are a fixed set of cards so getting one card changes the probabilities of others. For this reason the poisson is a close, but not perfect approximation.
-
-<h2>Joint distribution of hand strength among two hands</h2>
-<p>In most card games it doesn't just matter how strong your hand is, but the relative strength of your hand and another hand. In bridge, you play with a partner. We know that the two hands are not independent of each other. If I tell you that your partner has a strong hand, that means there are fewer "high value" cards that can be in your hand, and as such by belief in your strength has changed.  If you think about each player's hand strength as a random variable, we care about the joint distribution of hand strength.
-<p>
-	<div style=""id="my_dataviz"></div>
-</p>
-
-<p>Finally lets consider the conditional distribution of your partner's points given your points:</p>
-
-Your points: <input onchange="redrawCondGraph()" type="number" class="form-control example-inline-input mb-3" id="yourPoints" min="0" max="26" value="13" step = "1">
-<canvas id="partnerPoints" style="max-height: 500px"></canvas>
-
-	</div>
 </p>
 
 <script>
@@ -110,7 +144,7 @@ function redrawCondGraph() {
 		let pr = partnerDist[i]
 		dataCond.push([i, pr.toFixed(5)])
 	}
-	drawGraph(charts, 'partnerPoints', dataCond, 'x', 'Pr(Partner = x)')
+	drawGraph(charts, 'partnerPoints', dataCond, 'x', `P(Partner = x | YourPoints = ${yourPoints})`)
 
 }
 
