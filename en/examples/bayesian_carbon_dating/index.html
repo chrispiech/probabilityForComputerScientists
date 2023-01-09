@@ -373,7 +373,7 @@
       <canvas id="carbonDatingPMF" ></canvas>
 
 
-<p><i>Note: this demo was created in 2022 and the age reported is relative to that year! This chapter only has historical C14 rates from 10,000 years ago and as such is not able to estimate age when there are fewer than 350 molecules of C14 in the sample.</i></p>
+<p><i>Note: this demo was created in 2023 and the age reported is relative to that year! This chapter only has historical C14 rates from 10,000 years ago and as such is not able to estimate age when there are fewer than 350 molecules of C14 in the sample.</i></p>
 
 <p><center><img class="mainFigureFull" target="blank" src="../../../img/chapters/carbonDating.jpeg"></img><br/><i>Carbon dating allows us to know the age of things that used to be alive, like dinosaur bones.</i></center></p>
 
@@ -391,7 +391,7 @@
 \end{align*}
 </div></p>
 
-<p>That is only for a single molecule. Since C14 molecules decay independently, it is not much harder to think of how many are left out of a larger initial count of C14. A particular sample started with 1000 molecules. What is the probability that exactly 900 are left after 750 years? </p>
+<p>That is only for a single molecule. Since C14 molecules decay independently, it is not much harder to think of how many are left out of a larger initial count of C14. A particular sample started with 1000 molecules. What is the probability that exactly 900 are left after 750 years? This is equivalently to the event that 100 molecules have decayed. </p>
 
 <p><div class="bordered">
 \begin{align*}X &\sim \Bin(n=1000, p = 0.0867) \\
@@ -400,16 +400,16 @@
 \end{align*}
 </div></p>
 
-<p>In general, the probability of having $m$ remaining C14 molecules given that the artifact is $i$ years old will be equal to $\P(X=n-m)$ where $n$ is the starting number of C14 molecules, $p = 1- e^{-i/8267}$ and $X \sim \Bin(n, p)$.</p>
+<p>Let's generalize. Define $M$ to be a random variable for the number of molecules left, and $A$ to be the age of the sample. The probability $\p(M=m|A=i)$ of having $m$ remaining C14 molecules given that the artifact is $i$ years old will be equal to $\P(X=n-m)$ where $n$ is the starting number of C14 molecules, $p = 1- e^{-i/8267}$ and $X \sim \Bin(n, p)$ is the count of decayed C14 molecules.</p>
 
 <!-- <p>Next, we should generalize the above equation to a variable number of years. Calculate $\P(M = m | A = \texttt{age})$, the probability that exactly $\texttt{m}$ molecules are left out of the original 1000 after exactly $\texttt{age}$ number of years. </p> -->
 
 
 <h3>Inferring Age From C14</h3>
 
-<p>You observe a measurement of 900 C14 molecules in a sample. You assume that the sample originally had 1000 C14 molecules when it died. Infer $P(A=i | M = 900)$.  $A = i$ is the event that the sample organism died $i$ years ago. Note that age is a discrete random variable which takes on whole numbers of years. You will need use $P(M = m | A = \texttt{age})$ from the previous part</p> 
+<p>You observe a measurement of 900 C14 molecules in a sample. You assume that the sample originally had 1000 C14 molecules when it died. Infer $P(A=i | M = 900)$ where  $A = i$ is the event that the sample organism died $i$ years ago. Note that age is a discrete random variable which takes on whole numbers of years. You will need use $P(M = m | A = i)$ from the previous part.</p> 
 
-<p>For your prior belief: you know that the sample must be between $A = 100$ and $A = 10000$ inclusive and you assume that every year in that range is equally likely.</p>
+<p>For your prior belief you know that the sample must be between $A = 100$ and $A = 10000$ inclusive and you assume that every year in that range is equally likely.</p>
 
 <p><div class="bordered">
     This is a perfect case for Bayes theorem. However instead of updating our belief in an event, like we did in <a href="../../part1/bayes_theorem">Part 1</a>, we are updating the belief over all the values that a random variable can take on, a process called <a href="../../part3/inference/">inference</a>. Here is the generalized version of Bayes' theorem for infering age, $A$:
@@ -433,7 +433,7 @@
 <p>The amount of C14 in the atmosphere fluctuates over time; it is not a constant baseline! Here is the delta C14 (per 1000 molecules) that you would have found if the object died different number of years ago. To incorporate this information we simply start our binomial with 1000 molecules plus the delta for the year, downloaded from a public dataset [1]:</p>
 
 <canvas id="historicalC14Canvas" ></canvas>
-<p>This offset gives the result a really interesting shape (see the demo).</p>
+<p>This offset is archeology theory not probability theory. We include it in this chapter because otherwise our code will give an incorrect preiction. Also, it gives the posterior a really interesting shape (see the demo). </p>
 
 <h3>Python Code</h3>
 
@@ -498,7 +498,7 @@ def delta_start(age):
 <p>Perhaps the most fascinating extension is modelling "stratigraphic" relationships. Often in archeological sites, you can know relative age of artifacts based on their position in sediment. This requires a joint model of the age of each artifact with the constraint that you *know* some are older than others. Inference can then be performed using a General Inference technique (often MCMC) and will be much more accurate.</p>
 
 <h3>Binomial Approximations?</h3>
-<p>Could we have used an approximation for the binomial PMF calculation? In Bayesian Carbon dating both a normal and a poisson approximation are appropriate. Our Binomial is well approximated by a Poisson with $\lambda = n \cdot p$ or a Gaussian with $\mu=n\cdot p$ and $\sigma^2 = n \cdot p \cdot (1-p)$. This could be used to speed up calculations. Let's rework the example where we had $X\sim \Bin(n=1000, p=0.0867)$. We computed that $\P(X=100) = 0.0144$</p>
+<p>Could we have used an approximation for the binomial PMF calculation? In Bayesian Carbon dating <i>both</i> a normal and a poisson approximation are appropriate. The decay binomial $X\sim \Bin(n,p)$ is well approximated by either a Poisson with $\lambda = n \cdot p$ or a Gaussian with $\mu=n\cdot p$ and $\sigma^2 = n \cdot p \cdot (1-p)$. This could be used to speed up calculations. Let's rework the example where we had $X\sim \Bin(n=1000, p=0.0867)$. We computed that $\P(X=100) = 0.0144$</p>
 
 <p><div class="bordered">
     Poisson Approximation:
@@ -515,7 +515,6 @@ def delta_start(age):
     \end{align*}
     </div></p>
 
-    <p></p>
     <hr/>
 
     [1] <a href="http://intcal.org/JS/JSintcal20/index.html?xscale=ADBC&yscale=D14C&Sets%5B%5D=1">IntCal Historical Atmospheric C14</a>
