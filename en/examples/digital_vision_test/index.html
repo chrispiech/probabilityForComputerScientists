@@ -694,6 +694,7 @@ where $e$ is the <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant
 <p>This IRT model introduces a new variable: difficulty of a letter $d$. How difficult is it to correctly respond to a letter with a given font size? The simplest way to model difficulty, while accounting for the fact that large font sizes are easier than small ones, is to define the difficulty of a letter with font size $f$ to be $d = 1-f$. Plugging this in:
   \begin{align*} 
   \p(&\text{Correct} = \text{True}|a,f)\\
+  &= \text{sigmoid}(a-[1-f])\\  
   &= \text{sigmoid}(a-1+f)\\  
   &= \frac{1}{1+e^{-(a-1+f)}}
   \end{align*}
@@ -714,7 +715,7 @@ def sigmoid(x):
 </code></pre>
 Note that Item Response Theory returns the probability that a a patient answers a letter <i>correctly</i>. In the code above, notice what we do if the patient instead guesses the letter incorrectly: $$\p(\text{Correct} = \text{False}|a,f) = 1-\p(\text{Correct} = \text{True}|a,f)$$</p>
 
-<p>In the published version of the Stanford Acuity Test we extend Item Response Theory in several ways. We have a term for the probability that a patient gets the answer correct by guessing (seeing as there are only four options) as well as a term that they make a mistake, aka "slip", even though they know the correct answer. We also observed that a Floored Exponential seems to be a more accurate function than the sigmoid. These extensions are beyond the scope of this chapter as they are not central to the probability insight.
+<p>In the published version of the Stanford Acuity Test we extend Item Response Theory in several ways. We have a term for the probability that a patient gets the answer correct by random guessing as well as a term that they make a mistake, aka "slip", even though they know the correct answer. We also observed that a Floored Exponential seems to be a more accurate function than the sigmoid. These extensions are beyond the scope of this chapter as they are not central to the probability insight. For more details see the original paper [1].
 </p>
 
 <h3>Multiple Observations</h3>
@@ -782,7 +783,9 @@ def belief_sum(belief):
 
 <h3>Chosing the Next Font Size</h3>
 
-<p>At this point, we have a way to calculate a formal expression (as a probability mass function) of our belief in how well the patient can see at any point in our test. This leaves one more question for us to answer. In a digital eye test, we can <i>select</i> the next font size to show to the patient. Instead of showing a predetermined set, we could make a choice which could be informed by our current belief in how well they can see. We were inspired by Thompson Sampling, an algorithm which is able to balance exploring uncertainty and narrowing in on your most confident belief. When chosing a font size we simply take a sample from our current belief $A$ and then chose the font size that we think a person with ability with that sampled value could see with 80% accuracy. We chose the value 80% so that the eye test would not be too painful. There is always a better way. The Stanford Eye Test, which started in CS109, is just a step on the journey. Have an idea?</p>
+<p>At this point, we have a way to calculate a probability mass function of our belief in how well the patient can see, at any point in our test. This leaves one more task for us to perform: In a digital eye test, we <i>select</i> the next font size to show to the patient. Instead of showing a predetermined set, we should make a choice which is informed by our current belief in how well the patient can see. We were inspired by Thompson Sampling, an algorithm which is able to balance exploring uncertainty and narrowing in on your most confident belief. When chosing a font size we simply take a sample from our current belief $A$ and then chose the font size that we think a person with ability with that sampled value could see with 80% accuracy. We chose the  80% constant so that the eye test would not be too painful.</p>
+
+<p>One of the neat take aways from this application is that there are many problems where you could take the knowledge learned from this course and improve on the current state of the art! Often the most creative task is to recognize where computer based probability could be usefully applied. Even for eye tests this is not the end of the story. The Stanford Eye Test, which started in CS109, is just a step on the journey to a more accurate digital eye test. There is always a better way. Have an idea?</p>
 
 
 <hr/>
