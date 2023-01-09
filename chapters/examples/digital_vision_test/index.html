@@ -4,7 +4,7 @@
 <center><h1>Digital Vision Test</h1></center>
 <hr/>
 
-<div class="alert alert-primary"><b>The Story:</b> This problem was initially posed as a CS109 Final exam problem in Spring 2017.  This grew into a collaboration with a former student, Ali Malik, as well as a Stanford eye doctor Charles Lin. We realized that it was actually a much more accurate way of measuring visual acuity. The algorithm, which is called the Stanford Acuity Test, or StAT, has since been published as an article for AAAI and covered by Science Magazine and The Lancet. To the best of our knowledge, the algorithm is still the worlds most accurate visual acuity test.</div>
+<div class="alert alert-primary"><b>The Story:</b> This problem was initially posed as a CS109 Final exam problem in Spring 2017.  This grew into a collaboration with a former student, Ali Malik, as well as a Stanford Ophthalmology doctor Charles Lin. We realized that it was actually a much more accurate way of measuring visual acuity. The algorithm, which is called the Stanford Acuity Test, or StAT, has since been published as an article for AAAI and covered by Science Magazine and The Lancet. To the best of our knowledge, the algorithm is still the most acurate way to infer ability to see from an optotype based test.</div>
 
 <p>You can find a demo of the Stanford Acuity Test here: <a href="https://myeyes.ai/measure">https://myeyes.ai/</a>. Look out for the bar icon <i class="fas fa-signal"></i> to see the belief distribution change as the test progresses.</p>
 
@@ -241,37 +241,33 @@
 
 <h3>Observations</h3>
 
-<p>Once the patient starts the test, you will begin collecting observations. Consider this first observation, $\text{Obs}_1$ where the user was shown a letter with font size 0.7 and answered the question incorrectly:</p>
+<p>Once the patient starts the test, you will begin collecting observations. Consider this first observation, $\text{obs}_1$ where the patient was shown a letter with font size 0.7 and answered the question incorrectly:</p>
 <p>
 	<center>
 		<img class="mainFigureLg" src="{{pathToRoot}}img/visionTest/observation.jpg"></img><br/>
 	</center>
 	</p>
 
-<p>We can represent this observation as a tuple with font size and correctness. Mathematically this could be written as $\text{Obs}_1 = [0.7, 0]$. In code this observation could be stored as a dictionary
+<p>We can represent this observation as a tuple with font size and correctness. Mathematically this could be written as $\text{obs}_1 = [0.7, 0]$. In code this observation could be stored as a dictionary
 <pre class="language-python"><code>obs_1 = {
    "font_size":0.7,
    "is_correct":False
 }</code></pre>
 </p>
 
-<p>Eventually we will have 20 of these observations: $[\text{Obs}_1, \text{Obs}_2, \dots, \text{Obs}_{20}]$. </p>
+<p>Eventually we will have 20 of these observations: $[\text{obs}_1, \text{obs}_2, \dots, \text{obs}_{20}]$. </p>
 
 <h3>Infering Ability</h3>
 
-<p>One of the major tasks that we have to accomplish is to update our probability mass function for $A$ based on an observation. First let us consider how to update our belief in ability to see from a single observation $\text{Obs}_1$. We can use <a href="{{pathToLang}}part3/inference/">Bayes' Theory for random variables</a> </p>
-
-$$
+<p>Our first major task is to write code which can update our probability mass function for $A$ based on observations. First let us consider how to update our belief in ability to see from a single observation, $\text{obs}$ (formally this the event that random variable $\text{Obs}$ takes on the value $\text{obs}$). We can use <a href="{{pathToLang}}part3/inference/">Bayes' Theory for random variables</a>: 
 \begin{align*}
-\P(A=a|\text{Obs}_1) &= \frac{\P(\text{Obs}_1|A=a)P(A=a)}{\P(\text{Obs}_1)}\end{align*}
-$$
-
-<p>We already have values for the prior $\p(A=a)$. In the next section we will talk about how to calculate the likelihood term, $\P(\text{Obs}_1|A=a)$. We could compute the denominator exactly: 
+\P(A=a|\text{obs}) &= \frac{\P(\text{obs}|A=a)P(A=a)}{\P(\text{obs})}\end{align*}
+This will be computed for all assignments $a$ to ability to see. To do so we will need a way to compute each of the terms. We already have values for the prior $\p(A=a)$ and we can compute the denominator $\p(\text{obs})$ using the Law of Total Probability: 
     \begin{align*}
-    \P(\text{Obs}_1) &= \sum_x \P(\text{Obs}_1, A=x) && \href{ {{pathToLang}}part1/law_total/}{\text{LOTP}} \\
-    &= \sum_x P(\text{Obs}_1 | A=x)P(A=x)
+    \P(\text{obs}) &= \sum_x \P(\text{obs}, A=x) && \href{ {{pathToLang}}part1/law_total/}{\text{LOTP}} \\
+    &= \sum_x P(\text{obs} | A=x)P(A=x)
     \end{align*}
-Alternatively we could recognize that  all the terms in the denominator are repeats of terms that show up in the numerator. As such we can calculate the numerators, and normalize the numerators. Normalization is a two step process where you first compute the sum of all the values, and then divide each value by its sum.</p>
+Notice how the terms in the expression for $\p(\text{obs})$ already show up in the numerator of our Bayes' Theorem equation. As such, in code we are going to (1) compute the numerator for every value of $a$, store it as the value of belief, (2) compute the sum of all of those terms and (3) devide each value of belief by the sum. The process of doing steps 2 and 3 is also known as normalization:</p>
 
 <pre class="language-python"><code>def update_belief(belief, obs):
     """
@@ -279,7 +275,6 @@ Alternatively we could recognize that  all the terms in the denominator are repe
     variable representing how well someone can see based on a single
     observation (obs). Update the belief based using Bayes' Theorem
     """
-
     # loop over every value in the support of the belief RV
     for a in belief:
         # the prior belief P(A = a)
@@ -289,54 +284,94 @@ Alternatively we could recognize that  all the terms in the denominator are repe
         # numerator of Bayes' Theorem
         belief[a] = prior_a * likelihood
     # calculate the denominator of Bayes' Theorem
-    normalize(belief)</code></pre>
+    normalize(belief)
+  
+  def normalize(belief):
+    # in place normalization of a belief dictionary
+    total = belief_sum(belief)
+    for key in belief:
+        belief[key] /= total
+      
+  def belief_sum(belief):
+    # get the sum of probability mass for a discrete belief
+    total = 0
+    for key in belief:
+        total += belief[key]
+    return total</code></pre>
 
 
+        <p>At this point we have an expression, and corresponding code, to update our belief in ability to see given an observation. However we are <b>missing</b> a way to compute $\p(\text{Obs}|A=a)$. In our code this expression is the currently undefined <code>calc_likelihood(a, obs)</code> function. In the next section we will go over how to compute this "likelihood" function. Before we do so, let's take a look at the result of applying <code>update_belief</code> for a patient with the single observation <code>obs_1</code> defined above.</p>
 
     <p>
-        Since this patient got a rather large letter incorrect, e think they can't see very well, though we have a lot of uncertainty as it has only been one observation. This is expressed in our updated probability mass function for $A$, $\p(A = a | \text{Obs}_1)$. This updated belief is called the posterior. Here is what the posterior looks like for the observation in our previous section: a user was shown a letter with font size = 0.7 and got it incorrect:
+        Since <code>obs_1</code> says that this patient got a rather large letter incorrect, we think they can't see very well, though we have a lot of uncertainty as it has only been one observation. This is expressed in our updated probability mass function for $A$, $\p(A = a | \text{obs}_1)$. This updated belief is called the posterior. Here is what the posterior looks like for the observation in our previous section: a patient was shown a letter with font size = 0.7 and got it incorrect. Note that the posterior $\p(A=a|\text{obs}_1)$ is still represented in code as a dictionary, as in the prior, $\p(A=a)$:
         <center>
             <img class="mainFigureLg" src="{{pathToRoot}}img/visionTest/posterior.jpg"></img><br/>
             <i>The posterior belief on ability to see given a patient incorrectly identified a letter with font size 0.7. It shows a belief that the patient can't see very well.</i>
         </center>
         </p>
 
-        <p>What if you have multiple observations? For multiple observations the only term that will change will be the likelihood term $\p(\text{Observations}|A=a)$. We assume that each observation is independent, conditioned on ability to see. Formally $$\p(\text{Obs}_1, \dots, \text{Obs}_{20} |A=a) = \prod_i \p(\text{Obs}_i|A=a)$$ As such the likelihood of all observations will be the product of the likelihood of each observation on its own. This is equivalent mathematically to calculating the posterior for one observation and calling the posterior your new prior.</p>
+       
 
 <h3>Likelihood Function</h3>
 
-<p>The one major missing piece is an expression for $\p(\text{Obs}_i|A=a)$. In Bayes' Theorem this term called the likelihood because it is the likelihood of our observation given the underlying true state of the world. When computing this term we no longer have to estimate $A$. In this term we are told exactly how well the person can see. Their vision is truly $a$. Likelhood will be a function which will return back different values for different inputs of $a$ and $\text{Obs}_i$. In python this will be a function <code>calc_likelihood(a, obs)</code>. We could imagine a concrete call to this function with $a=0.5$:
-    <pre class="language-python"><code># get an observation
+<p>We are not done yet! We have not yet said how we will compute $\p(\text{obs}|A=a)$. In Bayes' Theorem this term is called the "likelihood." The likelhood for our eye exam will be function that returns back probabilities for inputs of $a$ and $\text{obs}$. In python this will be a function <code>calc_likelihood(a, obs)</code>. In this function <code>obs</code> is a single observation such as <code>obs_1</code> described above. Imagine a concrete call to the likelihood function bellow. This call will return back the probability a person who has true ability to see of 0.5 would get a letter of font-size 0.7 incorrect.
+  <pre class="language-python"><code># get an observation
 obs = {
-    "font_size":0.7,
-    "is_correct":False
+  "font_size":0.7,
+  "is_correct":False
 }
-# calculate likelihood for a given a
+# calculate likelihood for obs given a, P(obs | A = a)
 calc_likelihood(a = 0.5, obs)</code></pre>
-</p>
+</p>Before going any further, let's make two critical notes about the likelihood function:</p>
 
-<p>Defining the likelihood function involves more opthomology and testing theory than probability theory. You don't need to know either for this course! As such, let's consider a simple version, with the intention of giving you the full end to end system. A very classic testing theory model, called "<a href="https://en.wikipedia.org/wiki/Item_response_theory">Item Response Theory</a>" is the simplest exam likelihood model. It makes the assumption that the probability that a student with ability $a$ gets a question with difficulty $d$ correct is:
-    $$ \p(\text{Correct}|a,d) = \frac{1}{1+e^{-(a-d)}}$$
-where $e$ is the <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">natural base</a>. We can define the difficulty of a letter with font size $f$ to be $d = 1-f$ to account for the fact that large font sizes are easier. As such we can modify Item Response Theory for eye exams:
-$$ \p(\text{Correct}|a,f) = \frac{1}{1+e^{-(a+f-1)}}$$
-This equation incorporates the "sigmoid function", $\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$, which plays the role of squashing transforming input to be in the range $[0, 1]$. As such our function could be rewritten as $\p(\text{Correct}|a,f) = \text{sigmoid}(a+f-1)$. In code it would look like this:
+<p><b>Note 1:</b> When computing the likelihood term, $\p(\text{obs}|A=a)$, we do not have to estimate $A$ as it shows up on the right hand size of the conditional. In the likelihood term we are told <i>exactly</i> how well the person can see. Their vision is truly $a$. Do not be fooled by the fact that $a$ is a (non-random) variable. When computing the likelihood function this varaible will have a numeric value. 
+
+<p><b>Note 2:</b> The variable <code>obs</code> represents a single patient interaction. It has two parts: a font-size and a correctness. However, only correctness is a random variable. Font-size is known as it was chosen by the algorithm. As such $\p(\text{obs}|A=a)$ is actually $\p(\text{correct}|A=a)$ in the context of a fixed font-size, $f$.  correct has the value <code>True</code> if the patient answered correctly and <code>False</code> otherwise.</p>
+
+
+<p>Defining the likelihood function,  $\p(\text{correct}|A=a)$, involves more medical and education theory than probability theory. You don't need to know either for this course! But it is still neat to know and without the likelihood function we won't have complete code. So, let's dive in.</p>
+
+<p>A very practical starting point for the likelihood function for a vision test comes from a  classic education model called "<a href="https://en.wikipedia.org/wiki/Item_response_theory">Item Response Theory</a>", also known as IRT. IRT <i>assumes</i> the probability that a student with ability $a$ gets a question with difficulty $d$ correct is governed by the easy to compute function:
+ 
+
+
+ \begin{align*} 
+ \p(&\text{Correct} = \text{True}|a,d)  \\
+ &= \text{sigmoid}(a-d)\\
+ &= \frac{1}{1+e^{-(a-d)}} \\
+
+ \end{align*}
+where $e$ is the <a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)">natural base</a> constant and   $\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$. The <a href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid function</a> is a handy function which takes in any real valued input and returns a value in the range $[0, 1]$.</p>
+
+<p>This IRT model introduces a new variable: difficulty of a letter $d$. How difficult is it to correctly respond to a letter with a given font size? The simplest way to model difficulty, while accounting for the fact that large font sizes are easier than small ones, is to define the difficulty of a letter with font size $f$ to be $d = 1-f$. Plugging this in:
+  \begin{align*} 
+  \p(&\text{Correct} = \text{True}|a,f)\\
+  &= \text{sigmoid}(a-1+f)\\  
+  &= \frac{1}{1+e^{-(a-1+f)}}
+  \end{align*}
+
+We now have a complete, if simplistic, liklihood function!  In code it would look like this:
 <pre class="language-python"><code>def calc_likelihood(a, obs):
     # returns P(obs | A = a) using Item Response Theory
     f = obs["font_size"]
-    p_correct = sigmoid(a + f - 1)
+    p_correct_true = sigmoid(a + f - 1)
     if obs["is_correct"]:
-        return p_correct
+        return p_correct_true
     else:
-        return 1 - p_correct
+        return 1 - p_correct_true
 
 def sigmoid(x):
     # the classic squashing function. All outputs are [0,1]
     return 1 / (1 + math.exp(-x))
 </code></pre>
-Note that Item Response Theory returns the probability that a a patient answers a letter correctly. The probability that they answer incorrectly is simply: $$\p(\text{Incorrect}|a,f) = 1-\p(\text{Correct}|a,f)$$</p>
+Note that Item Response Theory returns the probability that a a patient answers a letter <i>correctly</i>. In the code above, notice what we do if the patient instead guesses the letter incorrectly: $$\p(\text{Correct} = \text{False}|a,f) = 1-\p(\text{Correct} = \text{True}|a,f)$$</p>
 
-<p>In the Stanford Acuity Test we extend Item Response Theory in several ways. We have a term for the probability that a users gets the answer correct by guessing (seeing as there are only four options) as well as a term that they make a mistake, aka "slip", even though they know the correct answer. We also observed that a Floored Exponential seems to be a more accurate function than the sigmoid.
+<p>In the published version of the Stanford Acuity Test we extend Item Response Theory in several ways. We have a term for the probability that a patient gets the answer correct by guessing (seeing as there are only four options) as well as a term that they make a mistake, aka "slip", even though they know the correct answer. We also observed that a Floored Exponential seems to be a more accurate function than the sigmoid. These extensions are beyond the scope of this chapter as they are not central to the probability insight.
 </p>
+
+<h3>Multiple Observations</h3>
+
+<p>What if you have multiple observations? For multiple observations the only term that will change will be the likelihood term $\p(\text{Observations}|A=a)$. We assume that each observation is independent, conditioned on ability to see. Formally $$\p(\text{obs}_1, \dots, \text{obs}_{20} |A=a) = \prod_i \p(\text{obs}_i|A=a)$$ As such the likelihood of all observations will be the product of the likelihood of each observation on its own. This is equivalent mathematically to calculating the posterior for one observation and calling the posterior your new prior.</p>
 
 <h3>The Full Code</h3>
 <p>Here is the full code for inference of ability to see given observations, minus the user interface functions and the file reading for the prior belief:
@@ -358,7 +393,6 @@ def update_belief(belief, obs):
     variable representing how well someone can see based on a single
     observation (obs). Update the belief based using Bayes' Theorem
     """
-
     # loop over every value in the support of the belief RV
     for a in belief:
         # the prior belief P(A = a)
@@ -418,7 +452,7 @@ def belief_sum(belief):
         <td style="border-top: none !important;">[2]</td> <td style="border-top: none !important;"><a target="_blank" href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)02149-8/fulltext">Digitising the vision test</a>. The Lancet Journal. </td></tr>
 <tr><td style="border-top: none !important;">[3]</td><td style="border-top: none !important;"><a target="_blank" href="https://www.science.org/content/article/eye-robot-artificial-intelligence-dramatically-improves-accuracy-classic-eye-exam">Eye, robot: Artificial intelligence dramatically improves accuracy of classic eye exam</a>. Science Magazine.</td></tr>
 </table>
-Special thanks to Ali Malik who co-invented the Stanford Acuity Test
+Special thanks to Ali Malik who co-invented the Stanford Acuity Test.
  </p>
 
 
