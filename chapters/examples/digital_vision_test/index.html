@@ -16,7 +16,7 @@
 
 <h3>How to Represent Ability to See?</h3>
 
-<p>Ability is a random variable! To be exact, we define $A$ to represent the ability of someone to see. $A$ takes on values between 0.0 (representing legal blindness) and 1.0 (representing standard vision). While ability to see is in theory a continuous random variable, we are going to represent ability to see as discretized into one hundreths. As such $A \in \{0.00, 0.01, \dots, 0.99\}$. As a small aside, visual acuity can be represented in many different units. The units you will see in papers is a log based unit called LogMAR. </p>
+<p>Ability is a random variable! We define $A$ to represent the ability of someone to see. $A$ takes on values between 0.0 (representing legal blindness) and 1.0 (representing standard vision). While ability to see is in theory a continuous random variable, we are going to represent ability to see as discretized into one hundreths. As such $A \in \{0.00, 0.01, \dots, 0.99\}$. As a small aside, visual acuity can be represented in many different units (such as a log based unit called LogMAR). We chose this 0 to 1 scale as it makes the math easier to explain. </p>
 
 <p>The prior probability mass function for $A$, written as $\p(A=a)$, represents our belief that $A$ takes on the value of $a$, <i>before</i> we have seen any observations about the patient. This prior belief comes from the natural distribution of how well people can see. To make our algorithm most accurate, the prior should best reflect our patient population. Since our eye test is built for doctors in an eye hospital, we used historical data from eye hospital visits to build our prior. Here is $P(A=a)$ as a graph: </p>
 
@@ -248,7 +248,7 @@
 	</center>
 	</p>
 
-<p>We can represent this observation as a tuple with font size and correctness. Mathematically this could be written as $\text{obs}_1 = [0.7, 0]$. In code this observation could be stored as a dictionary
+<p>We can represent this observation as a tuple with font size and correctness. Mathematically this could be written as $\text{obs}_1 = [0.7, \text{False}]$. In code this observation could be stored as a dictionary
 <pre class="language-python"><code>obs_1 = {
    "font_size":0.7,
    "is_correct":False
@@ -437,7 +437,7 @@ def belief_sum(belief):
 
 <p>At this point, we have a way to calculate a probability mass function of our belief in how well the patient can see, at any point in our test. This leaves one more task for us to perform: In a digital eye test, we <i>select</i> the next font size to show to the patient. Instead of showing a predetermined set, we should make a choice which is informed by our current belief in how well the patient can see. We were inspired by Thompson Sampling, an algorithm which is able to balance exploring uncertainty and narrowing in on your most confident belief. When chosing a font size we simply take a sample from our current belief $A$ and then chose the font size that we think a person with ability with that sampled value could see with 80% accuracy. We chose the  80% constant so that the eye test would not be too painful.</p>
 
-<p>One of the neat take aways from this application is that there are many problems where you could take the knowledge learned from this course and improve on the current state of the art! Often the most creative task is to recognize where computer based probability could be usefully applied. Even for eye tests this is not the end of the story. The Stanford Eye Test, which started in CS109, is just a step on the journey to a more accurate digital eye test. There is always a better way. Have an idea?</p>
+<p>One of the neat take aways from this application is that there are many problems where you could take the knowledge learned from this course and improve on the current state of the art! Often the most creative task is to recognize where computer based probability could be usefully applied. Even for eye tests this is not the end of the story. The Stanford Eye Test, which started in CS109, is just a step on the journey to a more accurate digital eye test. There is ./always a better way. Have an idea?</p>
 
 
 <hr/>
