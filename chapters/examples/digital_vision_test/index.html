@@ -329,7 +329,7 @@ calc_likelihood(a = 0.5, obs)</code></pre>
 <p><b>Note 2:</b> The variable <code>obs</code> represents a single patient interaction. It has two parts: a font-size and a correctness. However, only correctness is a random variable. Font-size is known as it was chosen by the algorithm. As such $\p(\text{obs}|A=a)$ is actually $\p(\text{correct}|A=a)$ in the context of a fixed font-size, $f$.  correct has the value <code>True</code> if the patient answered correctly and <code>False</code> otherwise.</p>
 
 
-<p>Defining the likelihood function,  $\p(\text{correct}|A=a)$, involves more medical and education theory than probability theory. You don't need to know either for this course! But it is still neat to know and without the likelihood function we won't have complete code. So, let's dive in.</p>
+<p>Defining the likelihood function,  $\p(\text{correct}|A=a)$, involves more medical and education theory than probability theory. You don't need to know either for this course! But it is still neat to learn and without the likelihood function we won't have complete code. So, let's dive in.</p>
 
 <p>A very practical starting point for the likelihood function for a vision test comes from a  classic education model called "<a href="https://en.wikipedia.org/wiki/Item_response_theory">Item Response Theory</a>", also known as IRT. IRT <i>assumes</i> the probability that a student with ability $a$ gets a question with difficulty $d$ correct is governed by the easy to compute function:
  
