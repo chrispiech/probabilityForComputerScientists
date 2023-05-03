@@ -49,19 +49,18 @@
     \log \P(U) &= \log \Big[\Big(\frac{52!-1}{52!}\Big) ^{10^{20}}\Big] \\
     &= 10^{20} \cdot \log \Big(\frac{52!-1}{52!}\Big) \\
     &= 10^{20} \cdot \Big[ \log (52!-1) - \log(52!) \Big] \\
-    &< 10^{20} \cdot 10^{-45} \\
-    &< 10^{-25} 
+    &= 10^{20} \cdot (-1.24 \times 10^{-68}) \\
+    &= -1.24 \times 10^{-48}
     \end{align*}
 
-Now if we undo the log:
+Now if we undo the log (and use the fact that $e^{-x}$ is very close to $1 - x$ for small values of $x$):
+
 \begin{align*}
-\P(U) &= e^{10^{-25} } \\
-&= \Big(e^{10} \Big) ^{-25} \\
-&= \Big(22026 \Big) ^{-25} \\
-&< 1 \cdot 10^{-108}
+\P(U) &= e^{-1.24 \times 10^{-48}} \\
+&\approx 1 - 1.24 \times 10^{-48}
     \end{align*} 
 
-<p>So in English, the probability that someone has ever seen your cards is less than 0.0 followed by 100 zeros before a 1. It is safe to say your ordering is unique. </p>
+<p>So the probability that your particular ordering is unique is very close to $1$, and the probability that someone else got the same ordering, $1 - P(U)$, is a number with 47 zeros after the decimal point. It is safe to say your ordering is unique. </p>
 
 </div></p>
 
@@ -75,13 +74,29 @@ denominator = card_perms
 numerator = card_perms - 1
 
 # decimal library because these are tiny numbers
-log_numer = Decimal(math.log(numerator))
-log_denom = Decimal(math.log(denominator))
+getcontext().prec = 100 # increase precision
+log_numer = Decimal(numerator).ln()
+log_denom = Decimal(denominator).ln()
 log_pr = log_numer - log_denom
 
-# 0E-45
+# approximately -1.24E-68
 print(log_pr)</code></pre>
     </p>
+
+<p>We can also check our result using the <a href="https://en.wikipedia.org/wiki/Binomial_approximation">binomial approximation</a>.</p>
+
+<p><div class="bordered">For small values of $x$, the value $(1 - x)^n$ is very close to $1 - nx$, and this gives us another way to compute $P(U)$:
+
+\begin{align*}
+\P(U) &= \frac{(52!-1)^n}{(52!)^n} \\
+&= \Big(1 - \frac{1}{52!}\Big)^{10^{20}} && n = 10^{20} \\
+&\approx 1 - \frac{10^{20}}{52!} \\
+&\approx 1 - 1.24 \times 10^{-48}
+\end{align*}
+
+<p>This agrees with the result we got using python's decimal library.</p>
+
+</div></p>
 
 
 <h3>Independence</h3>
@@ -96,7 +111,7 @@ print(log_pr)</code></pre>
 \log \P(U) &= \sum_{i=1}^n \log \P(D_i) \\
 &= n \cdot \log \P(D_i) \\
 &= 10^{20} \cdot \log \frac{52!-1}{52!}\\
-&< 10^{20} \cdot 10^{-45} &&\text{See prev. section}
+&\approx 10^{20} \cdot -1.24 \times 10^{-68}
 \end{align*}
 Which is the same answer we got with the other approach for $\log \P(U) $
 </p>
