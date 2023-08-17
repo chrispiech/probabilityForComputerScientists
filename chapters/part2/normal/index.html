@@ -1,10 +1,10 @@
 
 % rebase('templates/chapter.html', title="Normal Distribution")
- 
+
 <center><h1>Normal Distribution</h1></center>
 <hr/>
 
-<p>The single most important random variable type is the Normal (aka Gaussian) random variable, parametrized by a mean ($\mu$) and variance ($\sigma^2$), or sometimes equivalently written as mean and variance ($\sigma^2$). If $X$ is a normal variable we write $X \sim N(\mu, \sigma^2)$. The normal is important for many reasons: it is generated from the summation of independent random variables and as a result it occurs often in nature. Many things in the world are not distributed normally but data scientists and computer scientists model them as Normal distributions anyways. Why? Because it is the most entropic (conservative) modelling decision that we can make for a random variable while still matching a particular expectation (average value) and variance (spread). 
+<p>The single most important random variable type is the Normal (aka Gaussian) random variable, parametrized by a mean ($\mu$) and variance ($\sigma^2$), or sometimes equivalently written as mean and variance ($\sigma^2$). If $X$ is a normal variable we write $X \sim N(\mu, \sigma^2)$. The normal is important for many reasons: it is generated from the summation of independent random variables and as a result it occurs often in nature. Many things in the world are not distributed normally but data scientists and computer scientists model them as Normal distributions anyways. Why? Because it is the most entropic (conservative) modelling decision that we can make for a random variable while still matching a particular expectation (average value) and variance (spread).
 
 <p>The Probability Density Function (PDF) for a Normal $X \sim N(\mu, \sigma^2)$ is:
 \begin{align*}
@@ -12,7 +12,7 @@
 \end{align*}
 Notice the $x$ in the exponent of the PDF function. When $x$ is equal to the mean ($\mu$) then e is raised to the power of $0$ and the PDF is maximized.
 
-<p>By definition a Normal has $\E[X] = \mu$ and $\var(X) = \sigma^2$. 
+<p>By definition a Normal has $\E[X] = \mu$ and $\var(X) = \sigma^2$.
 
 <p>There is no closed form for the integral of the Normal PDF, and as such there is no closed form CDF. However we can use a transformation of any normal to a normal with a precomputed CDF. The result of this mathematical gymnastics is that the CDF for a Normal $X \sim N(\mu, \sigma^2)$ is:
 \begin{align*}
@@ -38,7 +38,7 @@ Where $\Phi$ is a precomputed function that represents that CDF of the Standard 
 \begin{align*}
 W &= \frac{X -\mu}{\sigma} && \text{ Transform X: Subtract by $\mu$ and diving by $\sigma$} \\
   & = \frac{1}{\sigma}X - \frac{\mu}{\sigma} && \text{ Use algebra to rewrite the equation}\\
-  & = aX + b && \text{ Linear transform where $a = \frac{1}{\mu}$, $b = - \frac{\mu}{\sigma}$ }\\
+  & = aX + b && \text{ Linear transform where $a = \frac{1}{\sigma}$, $b = - \frac{\mu}{\sigma}$ }\\
    &\sim N(a\mu + b, a^2\sigma^2) && \text{ The linear transform of a Normal is another Normal}\\
  &\sim N(\frac{\mu}{\sigma} - \frac{\mu}{\sigma}, \frac{\sigma^2}{\sigma^2}) && \text{ Substituting values in for $a$ and $b$}\\
  &\sim N(0, 1) && \text{ The standard normal}
@@ -82,7 +82,7 @@ P(X + Y < 0.5) &= P(2 + Y < 0.5) \\
 		<p><b><i>Example</i></b>: The 67% rule of a normal within one standard deviation. What is the probability that a normal variable $X \sim \N(\mu, \sigma)$ has a value within one standard deviation of its mean?</p>
 		$$
 		\begin{align}
-		\p(\text{Within one }\sigma \text{ of } \mu) 
+		\p(\text{Within one }\sigma \text{ of } \mu)
 			&= \p(\mu - \sigma < X < \mu + \sigma)
 				 \\
 			&= \p(X < \mu + \sigma) - \p(X < \mu - \sigma)
@@ -100,7 +100,7 @@ P(X + Y < 0.5) &= P(2 + Y < 0.5) \\
 				&& \text{Plug into $\Phi$}
 
 		\end{align}
-		
+
 		$$
 We made no assumption about the value of $\mu$ or the value of $\sigma$ so this will apply to every single normal random variable. Since it uses the Normal CDF this doesn't apply to other types of random variables.
 	</div>
