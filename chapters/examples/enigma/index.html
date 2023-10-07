@@ -30,7 +30,7 @@ is not considered distinct from a wire from ‘L’ to ’K’.  We are going to
 <p>
 	<center>
 		<img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Enigma-plugboard.jpg" class="mainFigure"/><br/>
-		<i>The engima plugboard. For electical reasons each letter has two jacks and each plug has two prongs. Semantically this is equivalent to one plug location per letter.</i>
+		<i>The engima plugboard. For electrical reasons, each letter has two jacks and each plug has two prongs. Semantically this is equivalent to one plug location per letter.</i>
 	</center>
 	</p>
 
@@ -74,7 +74,7 @@ $$
 \text{Total} = \frac{ {26 \choose 2} \cdot {24 \choose 2} \cdot {22 \choose 2}}{3!} = 3,453,450
 $$ 
 
-There is another way to arrive at the same answer. First we are going to chose the letters to be paired, then we are going to pair them off. There are ${26 \choose 6}$
+There is another way to arrive at the same answer. First we are going to choose the letters to be paired, then we are going to pair them off. There are ${26 \choose 6}$
 ways to select the letters that are
 being wired up. We then need to pair off those letters. One way to think about pairing the
 letters off is to first permute them (6! ways) and then pair up the first two letters, the next two,
@@ -127,7 +127,7 @@ $$
 	</div>
 </p> 
 
-<p>The actual Enigma used in ww2 had exactly 10 wires connecting 20 letters allowing for 150,738,274,937,250 unique configuration. The enigma machine also chose the three rotors from a set of five adding another factor of ${5 \choose 3} = 60$.
+<p>The actual Enigma used in WW2 had exactly 10 wires connecting 20 letters allowing for 150,738,274,937,250 unique configuration. The enigma machine also chose the three rotors from a set of five adding another factor of ${5 \choose 3} = 60$.
 
 <p>When you combine the number of ways of setting the rotors, with the number of ways you could set the plug board you get the total number of configurations of an enigma machine. Thinking of this as two steps we can multiply the two numbers we earlier calculated: 17,576 · 150,738,274,937,250 · 60  $\approx 159 \cdot 10^{18}$ unique settings. So, Alan Turing and his team at Blechly Park went on to build a machine which could help test many configurations -- a predecessor to the first computers. 
 </p>
