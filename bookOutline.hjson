@@ -8,6 +8,7 @@
 			"all_distributions":"Random Variable Reference",
 			"python":"Python Reference",
 			"calculators": "Calculators",
+			"core_probability":"Core Probability Reference"
 			# "prob_code": "Probability in Code"
 		}
 	},
