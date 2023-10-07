@@ -2,3 +2,198 @@
  
 <center><h1>Core Probability Reference</h1></center>
 <hr/>
+
+<p>
+	<div class="bordered">
+
+    <p><b><i>Definition:</i></b> Empirical Definition of Probability </p>
+
+    The probability of any event $E$ can be defined as:
+
+<p>$$ \p(E) 
+  = \lim_{n \rightarrow \infty}
+    \frac
+        {\text{count}(E)}
+        {n} 
+    $$</p>
+
+    Where $\text{count}(E)$ is the number of times that $E$ occured in $n$ experiments.
+  </div>
+</p>
+
+
+<p>
+  <div class="bordered">
+
+    <p><b><i>Definition:</i></b> Core Identities </p>
+
+    <p>For an event $E$ and a sample space $S$</p>
+  <table  style="vertical-align: top">
+    <tr style="height:50px; vertical-align: top">
+      <td style="width:350px">$0 ≤ \p(E) ≤ 1$</td>
+      <td>All probabilities are numbers between 0 and 1.</td>
+    </tr>
+    <tr style="height:50px; vertical-align: top">
+      <td><b>$\p(S) = 1$</td>
+      <td>All outcomes must be from the Sample Space.</td>
+    </tr>
+    <tr style="height:60px; vertical-align: top">
+      <td >$\P(E) = 1 - \P(E^\c)$</td>
+      <td>The probability of an event from its complement.</td>
+    </tr>
+  </table>
+  </div>
+  </p>
+
+<p>
+	<div class="bordered">
+
+		<p><b><i>Definition:</i></b> Probability of Equally Likely Outcomes </p>
+
+		If $S$ is a sample space with equally likely outcomes, for an
+event $E$ that is a subset of the outcomes in $S$:
+$$
+\begin{align}
+\p(E) &= \frac{\text{number of outcomes in $E$}}{\text{number of outcomes in $S$}} 
+= \frac{|E|}{|S|}
+\end{align}
+$$
+
+	</div>
+	</p>
+
+  <p>
+    <div class="bordered">
+  
+  <b><i>Definition</i></b>: Conditional Probability.<br/>
+  
+  <p>The probability of $E$ given that (aka conditioned on) event $F$ already happened:
+  $$
+  \p(E |F) = \frac{\p(E \and F)}{\p(F)}
+  $$
+  </p>
+    </div>
+    </p>
+
+    <p>
+      <div class="bordered">
+        <b><i>Definition</i></b>: Probability of <b>or</b> with Mututally Exclusive Events<br/>
+        <p>If two events $E$ and $F$ are mutually exclusive then the probability of $E$ <b><i>or</i></b> $F$ occurring is:
+          $$
+          \p(E \or F) = \p(E) + \p(F)
+          $$
+        </p>
+        <p>For $n$ events $E_1, E_2, \dots E_n$ where each
+    event is mutually exclusive of one another (in other words, no outcome is in more than one event). Then:
+    $$
+          \p(E_1 \or E_2 \or \dots \or E_n) = \p(E_1) + \p(E_2) + \dots + \p(E_n) = \sum_{i=1}^n \p(E_i)
+          $$</p>
+      </div>
+      </p>
+
+      <p>
+        <div class="bordered">
+        <b><i>Definition</i></b>: General Probability of <b>or</b> (Inclusion-Exclusion)<br/>
+        <p>For any two events $E$ and $F$:
+        $$
+        \p(E \or F) = \p(E) + \p(F) − \p(E \and F)
+        $$</p>
+        <p>For three events, $E$, $F$, and $G$ the formula is:
+          $$
+          \begin{align}
+          \p(E \or F \or G) =& \text{ }\p(E) + \p(F) + \p(G) \\
+        & −\p(E \and F) − \p(E \and G)−P(F \and G) \\
+        & +\p(E \and F \and G)
+          \end{align}
+          $$
+        </p>
+        For more than three events see the chapter of <a href="{{pathToLang}}part1/prob_or">probability of or</a>.
+        </div>
+      </p>
+
+
+      <p>
+        <div class="bordered">
+          <b><i>Definition</i></b>: Probability of <b>and</b> for Independent Events.<br/>
+      
+          <p>If two events: $E$, $F$ are independent then the probability of $E$ <b><i>and</i></b> $F$ occurring is:
+            $$
+            \p(E \and F) = \p(E) \cdot \p(F)
+            $$
+          </p> 
+          <p>For $n$ events $E_1, E_2, \dots E_n$ that are independent of one another:
+      $$
+      \p(E_1 \and E_2 \and \dots \and E_n) = \prod_{i=1}^n \p(E_i)
+      $$
+      </p>
+      <p></p>
+        </div>
+      </p>
+
+      <p>
+        <div class="bordered">
+      
+      <b><i>Definition</i></b>: General Probability of <b>and</b> (The Chain Rule)<br/>
+      
+      <p>For any two events $E$ and $F$:
+      $$
+      \p(E \and F) = \p(E | F) \cdot \p(F)
+      $$
+      </p>
+      
+      
+      <p>
+        For $n$ events $E_1, E_2, \dots E_n$:
+      $$
+      \begin{align}
+      \p(E_1 \and E_2 \and \dots \and E_n) = &\p(E_1) \cdot \p(E_2|E_1) \cdot \p(E_3 |E_1 \and E_2) \dots  \\  &\p(E_n|E_1 \dots E_{n−1})
+      \end{align}
+      $$
+        </div>
+        </p>
+
+
+        <p>
+          <div class="bordered">
+            <b><i>Definition</i></b>: The Law of Total Probability<br/>
+        For any two events $E$ and $F$:
+        $$
+        \begin{align}
+        \p(E) &= \p(E \and F) + \p(E \and F\c)\\
+        &=\p(E | F) \p(F) + \p(E | F\c) \p(F\c)
+        \end{align}
+        $$
+        
+        <p>For
+        <a href="{{pathToLang}}part1/prob_or/">mutually exclusive</a> events: $B_1, B_2, \dots B_n$ such that every outcome in the sample space falls into one of those
+        events:
+        $$
+        \begin{align}
+        \p(E) 
+        &= \sum_{i=1}^n \p(E \and B_i) && \text{Extension of our observation}\\
+        &= \sum_{i=1}^n \p(E | B_i) \p(B_i) && \text{Using chain rule on each term}
+        \end{align}
+        $$</p>
+          </div>
+          </p>
+
+
+          <p>
+            <div class="bordered">
+              <b><i>Definition</i></b>: Bayes' Theorem <br/>
+            
+              <p> The most common form of Bayes' Theorem is 
+                <b>Bayes' Theorem Classic</b>:
+                $$
+                \p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E)} 
+                $$
+              </p>
+            
+              <p>Bayes' Theorem combined with the Law of Total Probability:
+            $$
+            \p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E|B)\cdot \p(B) + \p(E|B\c) \cdot \p(B\c)} 
+            $$
+            </p>
+            
+            </div>
+            </p>

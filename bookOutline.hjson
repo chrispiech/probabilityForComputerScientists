@@ -5,10 +5,12 @@
 			# "intro":"Introduction",
 			# "free_book":"A Free Online Textbook",
 			"notation": "Notation Reference",
+			"core_probability_ref":"Core Probability Reference",
 			"all_distributions":"Random Variable Reference",
 			"python":"Python Reference",
-			"calculators": "Calculators",
-			"core_probability":"Core Probability Reference"
+			
+			
+			"calculators": "Calculators"
 			# "prob_code": "Probability in Code"
 		}
 	},

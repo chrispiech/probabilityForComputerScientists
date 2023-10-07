@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Random Variables</title>
+<title>Core Probability Reference</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -348,171 +348,204 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col handout" >
               
-                        
- 
-<center><h1>Random Variables</h1></center>
+                         
+<center><h1>Core Probability Reference</h1></center>
 <hr/>
 
-
 <p>
-A Random Variable (RV) is a variable that probabilistically takes on a value and they are one of the most important constructs in all of probability theory. You can think of an RV as
-being like a variable in a programming language, and in fact random variables are just as important to probability theory as variables are to programming. Random Variables take on values, have types and have domains over
-which they are applicable.</p>
+	<div class="bordered">
 
-<p>Random variables work with all of the foundational theory we have built up to this point. We can define events that occur if the random variable takes on values that satisfy
-a numerical test (eg does the variable equal 5, is the variable less than 8).</p>
-<p>
-Lets look at a first example of a random variable. Say we flip three fair coins. We can define a random variable Y to be the total number
-of “heads” on the three coins. We can ask about the probability of Y taking on different values using the
-following notation:
+    <p><b><i>Definition:</i></b> Empirical Definition of Probability </p>
+
+    The probability of any event $E$ can be defined as:
+
+<p>$$ \p(E) 
+  = \lim_{n \rightarrow \infty}
+    \frac
+        {\text{count}(E)}
+        {n} 
+    $$</p>
+
+    Where $\text{count}(E)$ is the number of times that $E$ occured in $n$ experiments.
+  </div>
 </p>
 
-<p>
-	<div class="purpleBox">
-<table>
-	<tr>
-
-<td style="min-width:200px">Let $Y$ be the number of heads on three coin flips</td>
-</tr>
-	<tr>
-
-<td style="min-width:200px">$\p(Y = 0)$ = 1/8 <td>(T, T, T)</td>
-</tr>
-<tr>
-<td>$\p(Y = 1)$ = 3/8 <td>(H, T, T), (T, H, T), (T, T, H)</td>
-</tr>
-<tr>
-<td>$\p(Y = 2)$ = 3/8 <td>(H, H, T), (H, T, H), (T, H, H)</td>
-</tr>
-<tr>
-<td>$\p(Y = 3)$ = 1/8 <td>(H, H, H)</td>
-</tr>
-<tr>
-<td>$\p(Y ≥ 4)$ = 0</td>
-</tr>
-</table>
-</div>
-</p>
-
-<p>Even though we use the same notation for random variables and for events (both use capital letters) they
-are distinct concepts. An event is a scenario, a random variable is an object. The scenario where a random
-variable takes on a particular value (or range of values) is an event. When possible, I will try and use letters
-E,F,G for events and X,Y,Z for random variables.</p>
-
-<p>Using random variables is a convenient notation technique that assists in decomposing problems. There are
-many different types of random variables (indicator, binary, choice, Bernoulli, etc). The two main families of
-random variable types are discrete and continuous. Discrete random variables can only take on integer values. Continuous random variables can take on decimal values. We are going to develop our intuitions using discrete random variable and then introduce continuous.</p>
-
-
-
-<h2>Properties of random variables</h2>
-
-<p>There are many properties of a random variable some of which we will dive into extensively. Here is a brief summary. Each random variable has:
 
 <p>
-<table class="table">
-	<thead>
-		<tr>
-			<th>Property</th>
-			<th>Notation Example</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tr>
-		<td>Meaning</td>
-		<td></td>
-		<td>A semantic description of the random variable</td>
-	</tr>
-	<tr>
-		<td>Symbol</td>
-		<td>$X$</td>
-		<td>A letter used to denote the random variable</td>
-	</tr>
-	<tr>
-		<td>Support or Range</td>
-		<td>$\{0, 1, \dots, 3\}$</td>
-		<td>the values the random variable can take on</td>
-	</tr>
-	<tr>
-		<td><a href="../../part2/pmf">Distribution Function</a> (PMF or PDF)</td>
-		<td>$\P(X=x)$</td>
-		<td>A function which maps values the RV can take on to likelihood.</td>
-	</tr>
-	<tr>
-		<td><a href="../../part2/expectation">Expectation</a></td>
-		<td>$\E[X]$</td>
-		<td>A weighted average</td>
-	</tr>
-	<tr>
-		<td><a href="../../part2/variance">Variance</a></td>
-		<td>$\var(X)$</td>
-		<td>A measure of spread</td>
-	</tr>
-	<tr>
-		<td><a href="../../part2/variance/#standard_deviation">Standard Deviation</td>
-		<td>$\std(X)$</td>
-		<td>The square root of variance</td>
-	</tr>
-	<tr>
-		<td>Mode</td>
-		<td></td>
-		<td>The most likely value of the random variable</td>
-	</tr>
-</table>
-</p>
+  <div class="bordered">
 
-<p>You should set a goal of deeply understanding what each of these properties mean. There are many more properties than the ones in the table above: properties like <a href="https://en.wikipedia.org/wiki/Entropy_(information_theory)">entropy</a>, <a href="https://en.wikipedia.org/wiki/Median">median</a>, <a href="https://en.wikipedia.org/wiki/Skewness">skew</a>, <a href="https://en.wikipedia.org/wiki/Kurtosis">kurtosis</a>.
+    <p><b><i>Definition:</i></b> Core Identities </p>
 
-<!-- <p>Random variables have a name</p>
+    <p>For an event $E$ and a sample space $S$</p>
+  <table  style="vertical-align: top">
+    <tr style="height:50px; vertical-align: top">
+      <td style="width:350px">$0 ≤ \p(E) ≤ 1$</td>
+      <td>All probabilities are numbers between 0 and 1.</td>
+    </tr>
+    <tr style="height:50px; vertical-align: top">
+      <td><b>$\p(S) = 1$</td>
+      <td>All outcomes must be from the Sample Space.</td>
+    </tr>
+    <tr style="height:60px; vertical-align: top">
+      <td >$\P(E) = 1 - \P(E^\c)$</td>
+      <td>The probability of an event from its complement.</td>
+    </tr>
+  </table>
+  </div>
+  </p>
 
 <p>
-	Useful random variables also often have semantic meaning.
-	</p>
+	<div class="bordered">
 
-<p>
-	For random variables there are numbers called "summary statistics" which tell you about key properties of the random variable. While they don't
-</p> -->
+		<p><b><i>Definition:</i></b> Probability of Equally Likely Outcomes </p>
 
-<h2 id="rv_vs_event">Random variables vs Events </h2>
-
-<p>
-Random variables and events are two different concepts. An event is an outcome, or a set of outcomes, to an experiment. A random variable is a more like an experiment -- it will take on an outcome eventually. Probabilities are over events, so if you want to talk about probability in the context of a random variable, you must construct an event. You can make events by using any of the <a href="https://en.wikipedia.org/wiki/Relational_operator">Relational Operators</a>: 
-<, ≤, >, ≥, =, or ≠ (not equal to). This is analogous to coding where you can use relational operators to create boolean expressions from numbers. </p>
-
-<p>
-	Lets continue our example of the random variable $Y$ which represents the number of heads on three coin flips. Here are some events using the variable $Y$:
-	
-	<table class="table">
-		<thead>
-		<tr>
-			<th>Event</th><th>Meaning</th><th>Probability Statement</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-			<td>$Y= 1$</td><td>$Y$ takes on the value 1 (there was one heads)</td><td>$\p(Y=1)$</td>
-		</tr>
-		<tr>
-			<td>$Y< 2$</td><td>$Y$ takes on 0 or 1 (note this $Y$ can't be negative)</td><td>$\p(Y<2)$</td>
-		</tr>
-		<tr>
-			<td>$X > Y$</td><td>$X$ takes on a value greater than the value $Y$ takes on.</td><td>$\p(X>Y)$</td>
-		</tr>
-		<tr>
-			<td>$Y= y$</td><td>$Y$ takes on a value represented by non-random variable $y$</td><td>$\p(Y = y)$</td>
-		</tr>
-		</tbody>
-	</table>
-	</p>
-
-	<p>You will see many examples like this last one, $\p(Y=y)$, in this text book as well as in scientific and math research papers. It allows us to talk about the likelihood of $Y$ taking on a value, in general. For example, later in this book we will derive that for three coin flips where $Y$ is the number of heads, the probability of getting exactly $y$ heads is:
+		If $S$ is a sample space with equally likely outcomes, for an
+event $E$ that is a subset of the outcomes in $S$:
 $$
 \begin{align}
-\P(Y = y) = \frac{0.75}{y!(3-y)!} && \text{If } 0 \leq y \leq 3
+\p(E) &= \frac{\text{number of outcomes in $E$}}{\text{number of outcomes in $S$}} 
+= \frac{|E|}{|S|}
 \end{align}
 $$
-	This statement above is a function which takes in a parameter $y$ as input and returns the numeric probability $\P(Y=y)$ as output. This particular expression allows us to talk about the probability that the number of heads is 0, 1, 2 or 3 all in one expression. You can plug in any one of those values for $y$ to get the corresponding probability. It is customary to use lower-case symbols for non-random values. The use of an equals sign in the "event" can be confusing. For example what does this expression say $\P(Y = 1) = 0.375$? It says that the probability that "$Y$ takes on the value 1" is 0.375. For discrete random variables this function is called the "<a href="../../part2/pmf">probability mass function</a>" and it is the topic of our next chapter.</p>
 
+	</div>
+	</p>
+
+  <p>
+    <div class="bordered">
+  
+  <b><i>Definition</i></b>: Conditional Probability.<br/>
+  
+  <p>The probability of $E$ given that (aka conditioned on) event $F$ already happened:
+  $$
+  \p(E |F) = \frac{\p(E \and F)}{\p(F)}
+  $$
+  </p>
+    </div>
+    </p>
+
+    <p>
+      <div class="bordered">
+        <b><i>Definition</i></b>: Probability of <b>or</b> with Mututally Exclusive Events<br/>
+        <p>If two events $E$ and $F$ are mutually exclusive then the probability of $E$ <b><i>or</i></b> $F$ occurring is:
+          $$
+          \p(E \or F) = \p(E) + \p(F)
+          $$
+        </p>
+        <p>For $n$ events $E_1, E_2, \dots E_n$ where each
+    event is mutually exclusive of one another (in other words, no outcome is in more than one event). Then:
+    $$
+          \p(E_1 \or E_2 \or \dots \or E_n) = \p(E_1) + \p(E_2) + \dots + \p(E_n) = \sum_{i=1}^n \p(E_i)
+          $$</p>
+      </div>
+      </p>
+
+      <p>
+        <div class="bordered">
+        <b><i>Definition</i></b>: General Probability of <b>or</b> (Inclusion-Exclusion)<br/>
+        <p>For any two events $E$ and $F$:
+        $$
+        \p(E \or F) = \p(E) + \p(F) − \p(E \and F)
+        $$</p>
+        <p>For three events, $E$, $F$, and $G$ the formula is:
+          $$
+          \begin{align}
+          \p(E \or F \or G) =& \text{ }\p(E) + \p(F) + \p(G) \\
+        & −\p(E \and F) − \p(E \and G)−P(F \and G) \\
+        & +\p(E \and F \and G)
+          \end{align}
+          $$
+        </p>
+        For more than three events see the chapter of <a href="../../part1/prob_or">probability of or</a>.
+        </div>
+      </p>
+
+
+      <p>
+        <div class="bordered">
+          <b><i>Definition</i></b>: Probability of <b>and</b> for Independent Events.<br/>
+      
+          <p>If two events: $E$, $F$ are independent then the probability of $E$ <b><i>and</i></b> $F$ occurring is:
+            $$
+            \p(E \and F) = \p(E) \cdot \p(F)
+            $$
+          </p> 
+          <p>For $n$ events $E_1, E_2, \dots E_n$ that are independent of one another:
+      $$
+      \p(E_1 \and E_2 \and \dots \and E_n) = \prod_{i=1}^n \p(E_i)
+      $$
+      </p>
+      <p></p>
+        </div>
+      </p>
+
+      <p>
+        <div class="bordered">
+      
+      <b><i>Definition</i></b>: General Probability of <b>and</b> (The Chain Rule)<br/>
+      
+      <p>For any two events $E$ and $F$:
+      $$
+      \p(E \and F) = \p(E | F) \cdot \p(F)
+      $$
+      </p>
+      
+      
+      <p>
+        For $n$ events $E_1, E_2, \dots E_n$:
+      $$
+      \begin{align}
+      \p(E_1 \and E_2 \and \dots \and E_n) = &\p(E_1) \cdot \p(E_2|E_1) \cdot \p(E_3 |E_1 \and E_2) \dots  \\  &\p(E_n|E_1 \dots E_{n−1})
+      \end{align}
+      $$
+        </div>
+        </p>
+
+
+        <p>
+          <div class="bordered">
+            <b><i>Definition</i></b>: The Law of Total Probability<br/>
+        For any two events $E$ and $F$:
+        $$
+        \begin{align}
+        \p(E) &= \p(E \and F) + \p(E \and F\c)\\
+        &=\p(E | F) \p(F) + \p(E | F\c) \p(F\c)
+        \end{align}
+        $$
+        
+        <p>For
+        <a href="../../part1/prob_or/">mutually exclusive</a> events: $B_1, B_2, \dots B_n$ such that every outcome in the sample space falls into one of those
+        events:
+        $$
+        \begin{align}
+        \p(E) 
+        &= \sum_{i=1}^n \p(E \and B_i) && \text{Extension of our observation}\\
+        &= \sum_{i=1}^n \p(E | B_i) \p(B_i) && \text{Using chain rule on each term}
+        \end{align}
+        $$</p>
+          </div>
+          </p>
+
+
+          <p>
+            <div class="bordered">
+              <b><i>Definition</i></b>: Bayes' Theorem <br/>
+            
+              <p> The most common form of Bayes' Theorem is 
+                <b>Bayes' Theorem Classic</b>:
+                $$
+                \p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E)} 
+                $$
+              </p>
+            
+              <p>Bayes' Theorem combined with the Law of Total Probability:
+            $$
+            \p(B|E) = \frac{\p(E | B) \cdot \p(B)}{\p(E|B)\cdot \p(B) + \p(E|B\c) \cdot \p(B\c)} 
+            $$
+            </p>
+            
+            </div>
+            </p>
 
                         
 
