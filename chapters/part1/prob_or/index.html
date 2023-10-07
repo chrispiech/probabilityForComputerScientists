@@ -95,7 +95,81 @@ $$</p>
 
 <p>Note that the inclusion exclusion principle also applies for mutually exclusive events. If two events are mutually exclusive $\p(E \and F) = 0$ since its not possible for both $E$ and $F$ to occur. As such the formula $\p(E) + \p(F) - \p(E \and F)$ reduces to $\p(E) + \p(F)$.</p>
 
+<h2>Inclusion-Exclusion with Three Events</h2>
+
+<p>What does the inclusion exclusion property look like if we have three events, that are not mutually exclusive, and we want to know the probability of or, $
+	\P(E_1 \or \E_2 \or E_3)?
+	$</p>
+
+
+
+<p>Recall that if they are mutually exclusive, we simply add the probabilities. If they are not mutually exclusive, you need to use the inclusion exclusion formula for three events:</p>
+
+$$
+\begin{aligned}
+\P(E_1 &\or \E_2 \or E_3) = \\
+& + \P(E_1) \\
+&+ \P(E_2) \\
+&+ \P(E_3) \\
+ & -\P(E_1 \and E_2) \\
+ &-\P(E_1 \and E_3) \\
+ &-\P(E_2 \and E_3) \\
+ & +\P(E_1 \and E_2 \and E_3)
+\end{aligned}
+$$
+
+<p>In words, to get the probability of three events, you: (1) add the probability of the events on their own. (2) Then you need to subtract off the probability of every <i>pair</i> of events co-occuring. (3) Finally, you add in the probability of all three events co-occuring.</p>
+
+
+
+<h2>Inclusion-Exclusion with $n$ Events</h2>
+
+<p>Before we explore the general formula, lets look at one more example. Inclusion-exclusion with four events:</p>
+
+$$
+\begin{aligned}
+\P(&E_1 \or E_2 \or E_3 \or E_4) =\\
+&+ \P(E_1)\\
+&+ \P(E_2)\\
+&+ \P(E_3)\\
+&+ \P(E_4)\\
+&- \P(E_1 \and E_2) \\
+&- \P(E_1 \and E_3) \\
+&- \P(E_1 \and E_4) \\
+&- \P(E_2 \and E_3) \\
+&- \P(E_2 \and E_4) \\
+&- \P(E_3 \and E_4) \\
+&+ \P(E_1 \and E_2 \and E_3)\\
+&+ \P(E_1 \and E_2 \and E_4)\\
+&+ \P(E_1 \and E_3 \and E_4)\\
+&+ \P(E_2 \and E_3 \and E_4)\\
+&- \P(E_1 \and E_2 \and E_3 \and E_4)
+\end{aligned}
+$$
+
+<!-- <p>Change the number of events and see how the formula changes</p>
+<label for="numberEvents">Number of events:</label>
+<input onchange="generalInclusionExclusion()" type="number" class="form-control example-inline-input" id="priorInput" value="4" >	 -->
+
+<p>Do you see the pattern? For every possible subset of events from our $n$ events, we calculate the probability of the "and" of the subset. If the subset has an odd number of events, we add its probability mass, otherwise we subtract the probability.  This can be written up mathematically &mdash; but it is a rather hard pattern to express in notation:</p>
+
+$$
+\begin{gather}
+\P(E_1 \or E_2 \or \cdots \or E_n) = \sum\limits_{r-1}^n (-1)^{r+1} Y_r \\
+\text{s.t. } Y_r = \sum\limits_{1 \leq i_1 < \cdots < i_r \leq n} \P(E_{i_1} \and \cdots \and E_{i_r})
+\end{gather}
+$$
+<p>The notation for $Y_r$ is especially hard to parse.  $Y_r$ sums over all ways of selecting a subset of $r$ events. For each selection of $r$ events, calculate the probability of the intersection of those events. $(-1)^{r+1}$ is saying: alternate between addition and subtraction, starting with addition.</p>
+
+<p>It is not especially important to follow the math notation here. The main take away is that the general inclusion exclusion principle gets incredibly complex with multiple events. Often, the way to make progress in this situation is to find a way to solve your problem using another method. </p>
+
+<p></p>
+
 <p>
-	The formulas for calculating the <b><i>or</i></b> of events that are not mutually exclusive often require calculating the probability of the <b><i>and</i></b> of events. Learn more in the next section.
+	The formulas for calculating the <b><i>or</i></b> of events that are not mutually exclusive often require calculating the probability of the <b><i>and</i></b> of events. Learn more about the probability of and in the next section.
 	</p>
-               
+           
+	
+<script>
+
+</script>
