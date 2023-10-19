@@ -24,14 +24,14 @@ pdf_link = base + 'index.html'
 title_name = 'titlepage.pdf'
 if (not os.path.exists(os.path.join('pdfs', title_name))):
     # generate pdf file
-    pdf_file = classprint.PdfGenerator([pdf_link]).main()
+    pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
     # save pdf to file
     with open(os.path.join('pdfs', title_name), "wb") as outfile:
         outfile.write(pdf_file[0].getbuffer())
 
 # get pdf_name and pdf_link for book from bookOutline and store in pdf_files
 pdf_files = {}
-count = 0 
+
 for part in data:
     pdf_files[part] = {'sections':{}}
     for page in data[part]['sections']:
@@ -43,7 +43,7 @@ for part in data:
         # check if pdf already exists
         if (not os.path.exists(os.path.join('pdfs', pdf_name))):
             # generate pdf file
-            pdf_file = classprint.PdfGenerator([pdf_link]).main()
+            pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
             # save pdf to file
             with open(os.path.join('pdfs', pdf_name), "wb") as outfile:
                 outfile.write(pdf_file[0].getbuffer())
@@ -58,13 +58,11 @@ for part in data:
             # check if pdf already exists
             if (not os.path.exists(os.path.join('pdfs', pdf_name))):
                 # generate pdf file
-                pdf_file = classprint.PdfGenerator([pdf_link]).main()
+                pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
                 # save pdf to file
                 with open(os.path.join('pdfs', pdf_name), "wb") as outfile:
                     outfile.write(pdf_file[0].getbuffer())
-    count+=1
-    if count==2:
-        break
+
 # Output PDF file name
 output_pdf = "CS109Book.pdf"
 

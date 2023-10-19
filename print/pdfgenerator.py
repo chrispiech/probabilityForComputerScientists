@@ -17,6 +17,9 @@ class PdfGenerator:
         pdf_file = PdfGenerator(['https://google.com']).main()
         with open('new_pdf.pdf', "wb") as outfile:
             outfile.write(pdf_file[0].getbuffer())
+    
+    Code by: Nikita Tonkoshkur
+    https://medium.com/@nikitatonkoshkur25/create-pdf-from-webpage-in-python-1e9603d6a430
     """
     driver = None
     # https://chromedevtools.github.io/devtools-protocol/tot/Page#method-printToPDF
