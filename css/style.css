@@ -5,6 +5,12 @@ body {
   font-size: 18px;
 }
 
+@media print {
+  .exclude-from-print {
+      display: none !important;
+  }
+}
+
 
 #sidebar ul li a,
 #sidebar ul li a:hover,

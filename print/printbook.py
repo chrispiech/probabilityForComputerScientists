@@ -64,7 +64,7 @@ for part in data:
                     outfile.write(pdf_file[0].getbuffer())
 
 # Output PDF file name
-output_pdf = "../en/Probability for Computer Scientists.pdf"
+output_pdf = "../en/ProbabilityForComputerScientists.pdf"
 
 # Create a PDF file writer object
 pdf_writer = PyPDF2.PdfWriter()
