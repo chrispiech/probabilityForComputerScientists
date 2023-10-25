@@ -26,7 +26,7 @@ examples you can build off of the corresponding combinatorics formulas:</p>
 	<div class="bordered">
 		<p><b><i>Definition</i></b>: Permutation Rule</p>
 
-		<p>A permutation is an ordered arrangement of n distinct object. Those $n$ objects can
+		<p>A permutation is an ordered arrangement of n distinct objects. Those $n$ objects can
 be permuted in $n \cdot (n – 1) \cdot (n – 2)  \cdots 2  \cdot 1 = n!$ ways.</p>
 	</div>
 </p>
@@ -46,7 +46,7 @@ characters B, A, Y, E, and S: $5! = 120$. Here is the full list:</p>
 
 <p>
 	<div class="purpleBox">
-		<b>Example</b>: a smart-phone has a 4-digit passcode. Suppose there are 4 smudges over 4 digits on
+		<b>Example</b>: a smartphone has a 4-digit passcode. Suppose there are 4 smudges over 4 digits on
 the screen. How many distinct passcodes are possible?<br/>
 <b>Solution</b>: Since the order of digits in the code is important, we should use permutations. And since
 there are exactly four smudges we know that each number in the passcode is distinct. Thus, we can plug in the
@@ -58,7 +58,7 @@ permutation formula: 4! = 24.
 
 <p>
 	<div class="bordered">
-		<p><b><i>Definition</i></b>: Permutations of In-Distinct Objects</p>
+		<p><b><i>Definition</i></b>: Permutations of Indistinct Objects</p>
 
 		<p>Generally when there are $n$ objects and:</p>
 		<p class="indent">
@@ -206,7 +206,7 @@ are distinct, and objects are not "replaced" once selected, then the number of w
 
 <p>
 	Here are all the $10 = {5 \choose 3}$ ways of choosing three items from a list of 5 unique numbers:
-	<pre class="language-python wrapPre"><code class="wrapPre"># Get all ways of chosing three numbers from [1,2,3,4,5]
+	<pre class="language-python wrapPre"><code class="wrapPre"># Get all ways of choosing three numbers from [1,2,3,4,5]
 >>> list(itertools.combinations([1,2,3,4,5], 3))
 [(1, 2, 3), (1, 2, 4), (1, 2, 5), (1, 3, 4), (1, 3, 5), (1, 4, 5), (2, 3, 4), (2, 3, 5), (2, 4, 5), (3, 4, 5)]</code></pre>
 	</p>
@@ -318,7 +318,7 @@ In this section we are going to be counting the many different ways that we can 
 
 $${}\frac{(n+r-1)!}{n!(r-1)!}  = \binom{n+r-1}{n} = \binom{n+r-1}{r-1}$$
 
-<p>The divider method can be derived via the "Stars and Bars" method. This is a creative construction where we consider permutations of indistinguishable items, represented by stars <code>*</code>, and dividers between our containers, represented by bars <code>|</code>. Any distinct permutation of these stars and bars represents a unique assignments of our items to containers.</p>
+<p>The divider method can be derived via the "Stars and Bars" method. This is a creative construction where we consider permutations of indistinguishable items, represented by stars <code>*</code>, and dividers between our containers, represented by bars <code>|</code>. Any distinct permutation of these stars and bars represents a unique assignment of our items to containers.</p>
 
 
 
@@ -386,10 +386,10 @@ This problem is analogous to solving the integer equation $x_1 + x_2 + x_3 + x_4
 </div>
 </p>
 
-<h2 id="bucketing_fixed">Bucketing into Fixed Sized Containers</h2>
+<h2 id="bucketing_fixed">Bucketing into Fixed-Sized Containers</h2>
 <p>
 	<div class="bordered">
-<p><b>Bucketing into Fixed Sized Containers:</b></p> If $n$ objects are distinct, then the number of ways of putting them into $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
+<p><b>Bucketing into Fixed-Sized Containers:</b></p> If $n$ objects are distinct, then the number of ways of putting them into $r$ groups of objects, such that group $i$ has size $n_i$, and $\sum_{i=1}^{r} n_i = n$, is:
 $$\frac{n!}{n_1!n_2!\cdots n_r!} = \binom{n}{n_1, n_2, \dots, n_r}$$
 
 where $\binom{n}{n_1, n_2, \dots, n_r}$ is special notation called the multinomial coefficient.
