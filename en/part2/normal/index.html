@@ -545,7 +545,7 @@ function drawNormalPdf(parentDivId, mu, sigma) {
 \begin{align*}
 W &= \frac{X -\mu}{\sigma} && \text{ Transform X: Subtract by $\mu$ and diving by $\sigma$} \\
   & = \frac{1}{\sigma}X - \frac{\mu}{\sigma} && \text{ Use algebra to rewrite the equation}\\
-  & = aX + b && \text{ Linear transform where $a = \frac{1}{\mu}$, $b = - \frac{\mu}{\sigma}$ }\\
+  & = aX + b && \text{ Linear transform where $a = \frac{1}{\sigma}$, $b = - \frac{\mu}{\sigma}$ }\\
    &\sim N(a\mu + b, a^2\sigma^2) && \text{ The linear transform of a Normal is another Normal}\\
  &\sim N(\frac{\mu}{\sigma} - \frac{\mu}{\sigma}, \frac{\sigma^2}{\sigma^2}) && \text{ Substituting values in for $a$ and $b$}\\
  &\sim N(0, 1) && \text{ The standard normal}
