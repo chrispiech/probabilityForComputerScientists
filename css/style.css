@@ -9,8 +9,25 @@ body {
   .exclude-from-print {
       display: none !important;
   }
-}
+  .newpage-before {
+      page-break-before: always;
+  }
 
+  .newpage-after {
+      page-break-after: always;
+  }
+  .bordered {
+        page-break-inside: avoid;
+    }
+
+    h3 {
+      break-after: avoid-page;
+  }
+
+  h2 {
+    break-after: avoid-page;
+}
+}
 
 #sidebar ul li a,
 #sidebar ul li a:hover,

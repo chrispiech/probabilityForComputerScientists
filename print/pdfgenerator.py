@@ -25,9 +25,11 @@ class PdfGenerator:
     # https://chromedevtools.github.io/devtools-protocol/tot/Page#method-printToPDF
     print_options = {
         'landscape': False,
-        'displayHeaderFooter': False,
+        'displayHeaderFooter': True,
+        'headerTemplate': '<span>This is a header</span>',
         'printBackground': True,
-        'preferCSSPageSize': True,
+        'preferCSSPageSize': False,
+        'footerTemplate':'<span class=pageNumber></span>'
     }
 
     def __init__(self, urls: List[str]):
