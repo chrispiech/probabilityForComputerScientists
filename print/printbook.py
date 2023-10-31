@@ -8,6 +8,10 @@ from tqdm import tqdm
 import hashlib
  
 
+TO_SKIP = {
+    "calculators": True,
+}
+
 # Opening JSON file
 f = open("../bookOutline.hjson")
 # returns JSON object as a dictionary
@@ -61,6 +65,7 @@ def print_book():
     for part in tqdm(data, desc="Sections"):
         pdf_files[part] = {'sections':{}}
         for page in data[part]['sections']:
+            if page in TO_SKIP: continue
             print_page(part, page)
 
             # save for table of contents
