@@ -35,6 +35,7 @@
 			"enigma":"Enigma Machine",
 			"serendipity":"Serendipity",
 			"random_shuffles":"Random Shuffles",
+			"counting_graphs":"Random Graphs",
 			"bacteria_evolution":"Bacteria Evolution"
 		}
 	},
@@ -59,12 +60,13 @@
 		"examples": {
 			"100_binomial_problems":"100 Binomial Problems",
 			"winning_series":"Winning Series",
+			"approximate_counting":"Approximate Counting",
 			"jury":"Jury Selection",
+					"prob_baby_delivery":"Probability of Baby Delivery",
 			"grading_eye_inflammation":"Grading Eye Inflamation",
 			"grades_not_normal":"Grades are Not Normal",
 			"curse_of_dimensionality":"Curse of Dimensionality"
-			"prob_baby_delivery":"Probability of Baby Delivery",
-			# "algorithmic_art":"Algorithmic Art"
+			"algorithmic_art":"Algorithmic Art"
 		}
 	},
 	"part3":{
@@ -86,6 +88,7 @@
 			"bayesian_carbon_dating":"Bayesian Carbon Dating",
 			"digital_vision_test":"Digital Vision Test",
 			"bridge_distribution":"Bridge Distribution",
+			"bayesian_viral_load_test":"Bayesian Viral Load Test",
 			"dart_logo":"CS109 Logo",
 			"tracking_in_2D":"Tracking in 2D"
 		}

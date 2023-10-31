@@ -1,0 +1,37 @@
+
+% rebase('templates/chapter.html', title="Counting Random Graphs")
+ 
+<center><h1>Counting Random Graphs</h1></center>
+<hr/>
+
+<p>In this example we are going to explore the density of randomly generated graphs (aka networks). This was a problem on the Stanford Midterm Fall 2022. As an example to get us started, here are three different networks each with 10 nodes and 12 random edges: </p>
+<img src = "{{pathToRoot}}img/chapters/countinggraphs.png" class="mainFigureFull"></img>
+
+<p><b>Count locations for edges</b>: First, lets establish how many locations there are for edges in a random network. Consider a network with 10 nodes. Count the number of possible locations for undirected edges. Recall that an undirected edge from node A to node B is not distinct from an edge from node B to node A. You can assume that an edge does not connect a node to itself.</p>
+
+<p><div class="bordered">
+Each edge connects 2 nodes, and there are 10 possible options for each node, so the answer is
+$$ \binom{10}{2} = 45.$$
+</div></p>
+
+<p><b>Count ways to place edges</b>: Now lets add random edges to the network! Assume the same network (with 10 nodes) has 12 random edges. If each pair of nodes is equally likely to have an edge, how many unique ways could we chose the location of the 12 edges?</p>
+
+<p><div class="bordered">
+  Let  $k = \binom{10}{2}$ be the number of possible locations for an edge, and we have 12 distinct (undirected) edges, so there are $\binom k {12}$ ways to do place edges.
+</div></p>
+
+<p><b>Probability of node degree</b>: Now that we have a randomly generated graph, lets explore the degree of our nodes! In the same network with 10 nodes and 12 edges, select a node uniformly at random. What is the probability that our node has exactly degree $i$? Note that  $0 \leq i 
+  \leq 9$. Recall that there are only 9 nodes to connect to from our chosen node, since there are 10 nodes in the graph.</p>
+
+  <p><div class="bordered">
+    Let $E$ be the event that our node has exactly $i$ connections. We will first compute the distribution of $P(E)$ using $|E| / |S|$. The sample space is the set of ways to choose 12 edges, and the event space is the set of ways to do so such that we've chosen exactly $i$ of the edges incident to our current node (which has 9 possible edges incident to it). To construct the event space $E$ we can consider a two step process: <ol>
+      <li>Select $i$ edges from the 9 possible edge locations connected to our node.</li> 
+      <li>Select the location for the $12 - i$ remaining edges. The edges can go to any of the $k$ locations for edges except for the $9$ incident to our node.</li>
+    </ol>As such the answer is
+\begin{align*}
+P(E) &= \frac{|E|}{|S|} \\
+&= \frac{\binom{9}{i} \binom{k-9}{12-i}}{\binom k {12}}.
+\end{align*}
+
+
+  </div></p>

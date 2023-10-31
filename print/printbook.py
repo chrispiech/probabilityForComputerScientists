@@ -3,6 +3,7 @@ import PyPDF2
 import pdfgenerator
 import re
 import os
+from tqdm import tqdm
  
 # def create_pdfs():
 # Opening JSON file
@@ -22,17 +23,16 @@ base = 'https://chrispiech.github.io/probabilityForComputerScientists/en/'
 # get pdf for title page
 pdf_link = base + 'index.html'
 title_name = 'titlepage.pdf'
-if (not os.path.exists(os.path.join('pdfs', title_name))):
-    # generate pdf file
-    pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
-    # save pdf to file
-    with open(os.path.join('pdfs', title_name), "wb") as outfile:
-        outfile.write(pdf_file[0].getbuffer())
+# generate pdf file
+pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
+# save pdf to file
+with open(os.path.join('pdfs', title_name), "wb") as outfile:
+    outfile.write(pdf_file[0].getbuffer())
 
 # get pdf_name and pdf_link for book from bookOutline and store in pdf_files
 pdf_files = {}
 
-for part in data:
+for part in tqdm(data, desc="Outer Loop"):
     pdf_files[part] = {'sections':{}}
     for page in data[part]['sections']:
         title = data[part]['sections'][page]
@@ -40,13 +40,12 @@ for part in data:
         pdf_link = base + part + '/' + page 
         # store pdf_name and title
         pdf_files[part]['sections'][pdf_name] = title
-        # check if pdf already exists
-        if (not os.path.exists(os.path.join('pdfs', pdf_name))):
-            # generate pdf file
-            pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
-            # save pdf to file
-            with open(os.path.join('pdfs', pdf_name), "wb") as outfile:
-                outfile.write(pdf_file[0].getbuffer())
+        # generate pdf file
+        pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
+        # save pdf to file
+        with open(os.path.join('pdfs', pdf_name), "wb") as outfile:
+            outfile.write(pdf_file[0].getbuffer())
+            # print(pdf_name)
     if 'examples' in data[part].keys():
         pdf_files[part]['examples'] = {}
         for page in data[part]['examples']:
@@ -55,13 +54,12 @@ for part in data:
             pdf_link = base + 'examples' + '/' + page 
             # store pdf_name and title
             pdf_files[part]['examples'][pdf_name] = title
-            # check if pdf already exists
-            if (not os.path.exists(os.path.join('pdfs', pdf_name))):
-                # generate pdf file
-                pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
-                # save pdf to file
-                with open(os.path.join('pdfs', pdf_name), "wb") as outfile:
-                    outfile.write(pdf_file[0].getbuffer())
+            # generate pdf file
+            pdf_file = pdfgenerator.PdfGenerator([pdf_link]).main()
+            # save pdf to file
+            with open(os.path.join('pdfs', pdf_name), "wb") as outfile:
+                outfile.write(pdf_file[0].getbuffer())
+                # print(pdf_name)
 
 # Output PDF file name
 output_pdf = "../en/ProbabilityForComputerScientists.pdf"
