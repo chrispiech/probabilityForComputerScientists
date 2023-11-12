@@ -4,6 +4,82 @@
 <center><h1>Marginalization</h1></center>
 <hr/>
 
-<p>An important insight regarding probabilistic models with many random variables is that "the joint distribution is complete information." From the joint distribution you can compute all probability questions involving those random variables in the model. This chapter is an example of that big take away.</p>
+<p>An important insight regarding probabilistic models with many random variables is that "the joint distribution is complete information." From the joint distribution you can compute all probability questions involving those random variables in the model. This chapter is an example of that insight.</p>
 
-<p>The central question of this chapter is: </p>
+<p class="mb-0">The central question of this chapter is: Given a  joint distribution, how can you compute the probability of random variables on their own? </p>
+
+
+<h3>Marginalization From Two Random Variables</h3>
+
+<p>To start,  consider two random variables $X$ and $Y$. If you are given the joint how can you compute $\p(X=x)$? Recall that if you have the joint you have a way to know the probability $\p(X=x,Y=y)$ for any value $x$ and $y$ . We already have a technique for computing $\p(X=x)$ from the joint. We can use the <a href="{{pathToLang}}part1/law_total">Law of Total Probability</a> (LOTP)! In this case $Y$ taking on each of its possible values make up the "background events". Since $Y$ must take on some value:
+
+\begin{align*}
+P(X=x) &= \sum_y \p(X=x, Y=y) \\
+\end{align*}
+
+Note that to apply the LOTP it must be the case that the events $Y=i$ and $Y=j$ (where $i\neq j$) must be mutually exclusvie and it must be the case that $\sum_y \p(Y=y) = 1$. Both are true.</p>
+
+<p>If we wanted $\p(Y=y)$ we could again use the Law of Total Probability, this time with $X$ taking on each of its possible values as the background events:
+
+\begin{align*}
+P(Y=y) &= \sum_x \p(X=x, Y=y) \\
+\end{align*}
+
+
+<h3>Example: Favorite Number</h3>
+
+<p>Consider the following joint distribution for $X$ and $Y$ where $X$ is a person's favorite binary digit and $Y$ is their year at Stanford. Here is a real joint distribution form a past class:
+
+  <table class="table">
+    <tr>
+      <th>Variable</th>
+      <th>Symbol</th>
+      <th>Type</th>
+    </tr>
+    <tr>
+      <td>Favorite Digit</td>
+      <td>$X$</td>
+      <td>Discrete number {0, 1}</td>
+    </tr>
+    <tr>
+      <td>Year in School</td>
+      <td>$Y$</td>
+      <td>Categorical {Frosh, Soph, Junior, Senior, 5+}</td>
+    </tr>
+  </table>
+
+  <div class="row sticky-top">
+    <div class="col-12 col-md-12">
+    <%
+    include('templates/jointGrid.html', data = [
+        [0.01, 0.13],
+        [0.05,0.33],
+        [0.04,0.21],
+        [0.03,0.12],
+        [0.02,0.06],
+      ],
+      key ='covid',
+      rows = ['$Y = \\text{Frosh}$', '$Y=\\text{Soph}$', '$Y=\\text{Junior}$', '$Y=\\text{Senior}$', '$Y=\\text{5+}$'],
+      cols = ['$X=0$', '$X=1$'],
+    )
+    %>
+    </div>
+    </div>
+
+<p>What is the probability that a student's favorite digit is 0, $\p(X=0)$? We can use the LOTP to compute this probability:
+  \begin{align*}
+  \p(X=0) = &\sum_y \p(X=0, Y=y) \\
+  = &+ \p(X=0, Y=\text{Frosh}) \\
+  &+ \p(X=0, Y=\text{Soph}) \\
+  &+ \p(X=0, Y=\text{Junior}) \\
+  &+ \p(X=0, Y=\text{Senior}) \\
+  &+ \p(X=0, Y=\text{5+}) \\
+  = &0.01 + 0.05 + 0.04 + 0.03 + 0.02 \\
+  = &0.15
+  \end{align*}
+  </p>
+
+
+
+</p>
+
