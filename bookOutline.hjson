@@ -49,7 +49,7 @@
 			"bernoulli":"Bernoulli Distribution",
 			"binomial":"Binomial Distribution",
 			"poisson":"Poisson Distribution",
-			#"geometric":"Geometric",
+			"geometric":"Geometric Distribution",
 			#"hyper_geo":"Hyper Geometric",
 			"continuous":"Continuous Distribution",
 			"uniform":"Uniform Distribution",
@@ -73,6 +73,7 @@
 		"title":"Part 3: Probabilistic Models",
 		"sections": {
 			"joint":"Joint Probability",
+			"marginalization":"Marginalization",
 			"multinomial":"Multinomial",
 			"continuous_joint":"Continuous Joint",
 			"inference":"Inference",
