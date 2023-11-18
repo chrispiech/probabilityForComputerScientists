@@ -421,11 +421,11 @@
 <div class="purpleBox">
   <b><i>Weather Example:</b></i> 
   
-  <p>Each day the weather in Bayeslandia can be {Sunny, Cloudy, Rainy} where $p_\text{sunny} = 0.7$, $p_\text{cloudy} = 0.2$ and $p_\text{rainy} = 0.1$. Assume each day is independent of one another. What is the probability that over the next 7 days we have 6 sunny days, 1 cloudy day and 0 rainy days?
+  <p>Each day the weather in Bayeslandia can be {Sunny, Cloudy, Rainy} where $p_\text{sunny} = 0.7$, $p_\text{cloudy} = 0.2$ and $p_\text{rainy} = 0.1$. Assume each day is independent of one another. What is the probability that over the next 7 days we have 5 sunny days, 1 cloudy day and 1 rainy days?
   \begin{align*}
   \P(X_{\text{sunny}}=6,X_{\text{rainy}} = 1&, X_{\text{cloudy}} = 0) \\
-  &= \frac{7!}{6!1!} (0.7)^6 \cdot (0.2)^1 \cdot (0.1) ^0 \\
-  &\approx 0.16
+  &= \frac{7!}{5!1!1!} (0.7)^5 \cdot (0.2)^1 \cdot (0.1) ^1 \\
+  &\approx 0.14
   \end{align*}
 </p>
 
@@ -441,10 +441,67 @@
 
 <p>The multinomial is especially popular because of its use as a model of language. For a full example see the <a href="../../examples/federalist">Federalist Paper Authorship</a> example.</p>
 
-<h3>Joint Probability</h3>
+<h3>Deriving Joint Probability</h3>
 
-<p>A way to deeper understand the multinomial is to derive the joint probability function for a particular multinomial. Consider a multinomial with $n = 7$ outcomes where each outcome can be one of three values ${S,C,R}$   </p>
+<p>A way to deeper understand the multinomial is to derive the joint probability function for a particular multinomial. Consider the multinomial from the previous example. In that multinomial with $n = 7$ outcomes where each outcome can be one of three values $\{S,C,R\}$ where S stands for Sunny, C stands for Cloudy and R stands for Rainy, and days are independent. $p_s = 0.7$, $p_c=0.2$, $p_r = 0.1$. We are going to derive the probability that out of the $n = 7$ days, 5 are sunny, 1 is cloudy and 1 is rainy.  </p>
 
+<p>Like our derivation for the binomial, we are going to consider all of the possible weeks with 5 sunny days, 1 rainy day and 1 cloudy day.</p>
+
+<pre style="height:400px" class="language-python"><code class="coins">  ('S', 'S', 'S', 'S', 'S', 'C', 'R')
+  ('S', 'S', 'S', 'S', 'S', 'R', 'C')
+  ('S', 'S', 'S', 'S', 'C', 'S', 'R')
+  ('S', 'S', 'S', 'S', 'C', 'R', 'S')
+  ('S', 'S', 'S', 'S', 'R', 'S', 'C')
+  ('S', 'S', 'S', 'S', 'R', 'C', 'S')
+  ('S', 'S', 'S', 'C', 'S', 'S', 'R')
+  ('S', 'S', 'S', 'C', 'S', 'R', 'S')
+  ('S', 'S', 'S', 'C', 'R', 'S', 'S')
+  ('S', 'S', 'S', 'R', 'S', 'S', 'C')
+  ('S', 'S', 'S', 'R', 'S', 'C', 'S')
+  ('S', 'S', 'S', 'R', 'C', 'S', 'S')
+  ('S', 'S', 'C', 'S', 'S', 'S', 'R')
+  ('S', 'S', 'C', 'S', 'S', 'R', 'S')
+  ('S', 'S', 'C', 'S', 'R', 'S', 'S')
+  ('S', 'S', 'C', 'R', 'S', 'S', 'S')
+  ('S', 'S', 'R', 'S', 'S', 'S', 'C')
+  ('S', 'S', 'R', 'S', 'S', 'C', 'S')
+  ('S', 'S', 'R', 'S', 'C', 'S', 'S')
+  ('S', 'S', 'R', 'C', 'S', 'S', 'S')
+  ('S', 'C', 'S', 'S', 'S', 'S', 'R')
+  ('S', 'C', 'S', 'S', 'S', 'R', 'S')
+  ('S', 'C', 'S', 'S', 'R', 'S', 'S')
+  ('S', 'C', 'S', 'R', 'S', 'S', 'S')
+  ('S', 'C', 'R', 'S', 'S', 'S', 'S')
+  ('S', 'R', 'S', 'S', 'S', 'S', 'C')
+  ('S', 'R', 'S', 'S', 'S', 'C', 'S')
+  ('S', 'R', 'S', 'S', 'C', 'S', 'S')
+  ('S', 'R', 'S', 'C', 'S', 'S', 'S')
+  ('S', 'R', 'C', 'S', 'S', 'S', 'S')
+  ('C', 'S', 'S', 'S', 'S', 'S', 'R')
+  ('C', 'S', 'S', 'S', 'S', 'R', 'S')
+  ('C', 'S', 'S', 'S', 'R', 'S', 'S')
+  ('C', 'S', 'S', 'R', 'S', 'S', 'S')
+  ('C', 'S', 'R', 'S', 'S', 'S', 'S')
+  ('C', 'R', 'S', 'S', 'S', 'S', 'S')
+  ('R', 'S', 'S', 'S', 'S', 'S', 'C')
+  ('R', 'S', 'S', 'S', 'S', 'C', 'S')
+  ('R', 'S', 'S', 'S', 'C', 'S', 'S')
+  ('R', 'S', 'S', 'C', 'S', 'S', 'S')
+  ('R', 'S', 'C', 'S', 'S', 'S', 'S')
+  ('R', 'C', 'S', 'S', 'S', 'S', 'S')</code></pre>
+
+  <p>First, note that each outcome for assignments to the weeks are mutually exclusive. Then note that the probability of any one outcome will be $(p_S)^5 \cdot p_C \cdot p_R$. The number of unique weeks with the chosen count of outcomes can be derived using the rule for <a href="../../part1/combinatorics/#perm_indisctinct">Permutations with Indistinct Objects</a>. There are 7 objects, 5 are indistinct from one another:
+  $${ {7} \choose {5,1,1} } = \frac{7!}{5!1!1!}$$
+</p>
+
+<p>Since the outcomes are mutually exclusive, we are going to be adding the probability of each case to itself $\frac{7!}{5!1!1!}$ times. Putting this all together we get the multinomial joint function for this particular case:
+
+  \begin{align*}
+  \P(X_{\text{sunny}}=5,X_{\text{rainy}} = 1&, X_{\text{cloudy}} = 1) \\
+  &= \frac{7!}{5!1!1!} (0.7)^5 \cdot (0.2)^1 \cdot (0.1) ^1 \\
+  &\approx 0.14
+  \end{align*}
+</p>
 
                         
 
