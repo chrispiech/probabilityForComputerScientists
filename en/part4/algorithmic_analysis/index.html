@@ -363,7 +363,6 @@
 	The law of total expectation gives you a way to calculate $\E[X]$ in the scenareo where it is easier to compute $\E[X|Y=y]$ where $Y$ is some other random variable:
 	\begin{align*}
 	\E[X] 
-	&= \E\big[E[X|Y]\big] \\
 	&= \sum_y \E[X|Y=y] \p(Y=y)
 	\end{align*}
 </div>
@@ -431,6 +430,19 @@ Now we can just plug values into the law of total expectation:
 1/3 \cdot \E[Y] = &5 \\
 \E[Y] = &15
 \end{align*}
+
+<h2>Proof of Law of Total Expectation</h2>
+
+<p>Let's prove the law of total expectation. In this proof we are going to go backwards! We are going to start with $\sum_y E[X|Y=y]P(Y=y)$ and show this equals $E[X]$. Our first step will be to expand $E[X|Y=y]$. The rest of the proof will just be algebra:</p>
+
+<div class="bordered">\begin{align*}\sum_y& E[X|Y=y]P(Y=y) \\
+	&= \sum_y\sum_x x P(X =x | Y = y) P(Y = y) \\
+	&= \sum_y\sum_x x P(X =x , Y = y)  \\
+	&= \sum_x\sum_y x P(X =x , Y = y)  \\
+	&= \sum_x x \sum_y  P(X =x , Y = y)  \\
+	&= \sum_x x P(X =x)  \\
+	&= E[X]\end{align*}
+	</div>
 
                         
 
