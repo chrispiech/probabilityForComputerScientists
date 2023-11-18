@@ -363,13 +363,13 @@
 
 <h3>Marginalization From Two Random Variables</h3>
 
-<p>To start,  consider two random variables $X$ and $Y$. If you are given the joint how can you compute $\p(X=x)$? Recall that if you have the joint you have a way to know the probability $\p(X=x,Y=y)$ for any value $x$ and $y$ . We already have a technique for computing $\p(X=x)$ from the joint. We can use the <a href="../../part1/law_total">Law of Total Probability</a> (LOTP)! In this case $Y$ taking on each of its possible values make up the "background events". Since $Y$ must take on some value:
+<p>To start,  consider two random variables $X$ and $Y$. If you are given the joint how can you compute $\p(X=x)$? Recall that if you have the joint you have a way to know the probability $\p(X=x,Y=y)$ for any value $x$ and $y$ . We already have a technique for computing $\p(X=x)$ from the joint. We can use the <a href="../../part1/law_total">Law of Total Probability</a> (LOTP)! In this case the events $Y = y$ make up the "background events":
 
 \begin{align*}
 P(X=x) &= \sum_y \p(X=x, Y=y) \\
 \end{align*}
 
-Note that to apply the LOTP it must be the case that the events $Y=i$ and $Y=j$ (where $i\neq j$) must be mutually exclusvie and it must be the case that $\sum_y \p(Y=y) = 1$. Both are true.</p>
+Note that to apply the LOTP it must be the case that the different events $Y=i$ must be mutually exclusvie and it must be the case that $\sum_y \p(Y=y) = 1$. Both are true.</p>
 
 <p>If we wanted $\p(Y=y)$ we could again use the Law of Total Probability, this time with $X$ taking on each of its possible values as the background events:
 
@@ -457,7 +457,13 @@ P(Y=y) &= \sum_x \p(X=x, Y=y) \\
 
 <h3>Marginalization with More Variables</h3>
 
-<p>Stub: Section coming soon!</p>
+<p>The idea of marginalization can be extended to joint distributions with more than two random variables. Consider having three random variables $X$, $Y$, and $Z$, we could marginalize out any of the variables:
+
+\begin{align*}
+P(X=x) &= \sum_{y,z} \p(X=x, Y=y, Z=z) \\
+P(Y=y) &= \sum_{x,z} \p(X=x, Y=y, Z=z) \\
+P(Z=z) &= \sum_{x,y} \p(X=x, Y=y, Z=z) \\
+</p>
 
 
 
