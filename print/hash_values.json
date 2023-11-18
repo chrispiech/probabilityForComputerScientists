@@ -43,7 +43,7 @@
     "../en/examples/curse_of_dimensionality/index.html": "fac70cbb46786f8792da2a807697b8a8",
     "../en/examples/algorithmic_art/index.html": "107ed32a10cd20d14999fbf543f94b44",
     "../en/part3/joint/index.html": "dbffbdcff9636a82dd909bb1466e9b41",
-    "../en/part3/multinomial/index.html": "8463e9a1ef3066c79e7386c3817fb770",
+    "../en/part3/multinomial/index.html": "c581d6289185d73a6ff6651ffa39c8f8",
     "../en/part3/continuous_joint/index.html": "8468ebeaa8c44eb7c2059cff4764cca5",
     "../en/part3/inference/index.html": "8c26b53e77d8fdbff3379332ab9a4c04",
     "../en/part3/bayesian_networks/index.html": "4e4c5711fbb7fa358080161e26612989",
@@ -76,10 +76,10 @@
     "../en/part5/naive_bayes/index.html": "1acd433f159bf1c94b1b7de2abdc2ddc",
     "../en/part5/log_regression/index.html": "bff4bfd7290ffce644df5d9f9fbf076d",
     "../en/examples/mle_demo/index.html": "b3161db15c9f254fe419a1125f0b3cbd",
-    "../en/examples/mle_pareto/index.html": "72d8ca58d5c1e9f088517acfa1893972",
+    "../en/examples/mle_pareto/index.html": "1456ee37e433b2996496a0370c7f9380",
     "../en/examples/mixture_models/index.html": "dee0c5dfca1250ce1820aea33b02397e",
     "../en/part2/geometric/index.html": "c0fba1c8af6bfea7717ffecd3428a3f4",
-    "../en/part3/marginalization/index.html": "a4b4dcbd6812fd335903de5c26a03dbe",
-    "../en/part2/more_discrete/index.html": "6271b236252bed6fc6067cfacf34c4de",
-    "../en/part2/categorical/index.html": "e676baa3874a8783ef49f89497fbb7ef"
+    "../en/part3/marginalization/index.html": "2c30e95538f2b7fe217c3d0991e392b5",
+    "../en/part2/more_discrete/index.html": "bca8c30051815138af7aaa63327a9507",
+    "../en/part2/categorical/index.html": "1a1ccbcbbef54d12377ff1e789a4268f"
 }

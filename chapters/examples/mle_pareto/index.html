@@ -27,7 +27,7 @@ observations = [1.677, 3.812, 1.463, 2.641, 1.256, 1.678, 1.157,
 
 <p>Derive a formula for the MLE estimate of $\alpha$ based on the data you have collected.</p>
 
-<h3>Writing the Log Likihood Function</h3>
+<h3>Writing the Log Likelihood Function</h3>
 
 <p>The first major objective in MLE is to come up with a log likelihood expression for our data. To do so we start by writing how likely our dataset looks, if we are told the value of $\alpha$:
 \begin{aligned}
@@ -35,7 +35,7 @@ L(\alpha) = f(x_1\dots x_n) = \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}}
 \end{aligned}
 </p>
 
-<p>Optimization will be much easier if we instead try to optimize the log liklihood:
+<p>Optimization will be much easier if we instead try to optimize the log likelihood:
     \begin{aligned}
 LL(\alpha) 
 &= \log L(\alpha) = \log \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}} \\
