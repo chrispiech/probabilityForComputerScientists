@@ -30,7 +30,7 @@
 \end{align*}
 <p>Argmax is short for Arguments of the Maxima. The argmax of a function is the value of the domain at which the function is maximized. It applies for domains of any dimension. 
 
-<p>A cool property of argmax is that since log is a monotone function, the argmax of a function is the same as the argmax of the log of the function! That's nice because logs make the math simpler. If we find the argmax of the log of likelihood it will be equal to the armax of the likelihood. Thus for MLE we first write the Log Likelihood function ($LL$)
+<p>A cool property of argmax is that since log is a monotone function, the argmax of a function is the same as the argmax of the log of the function! That's nice because logs make the math simpler. If we find the argmax of the log of likelihood it will be equal to the argmax of the likelihood. Thus for MLE we first write the Log Likelihood function ($LL$)
 \begin{align*}
     LL(\theta) = \log L(\theta) = \log \prod_{i=1}^n f(X_i|\theta) = \sum_{i=1}^n \log f(X_i|\theta)
 \end{align*}
@@ -43,7 +43,7 @@
 
 <p>Step one of MLE is to write the likelihood of a Bernoulli as a function that we can maximize. Since a Bernoulli is a discrete distribution, the likelihood is the probability mass function.
 
-<p>The probability mass function of a Bernoulli $X$ can be written as $f(x) = p^{x}(1-p)^{1-x}$. Wow! What's up with that? It's an equation that allows us to say that the probability that $X = 1$ is $p$ and the probability that $X = 0$ is $1- p$. Convince yourself that when $X_i=0$ and $X_i=1$ the PMF returns the right probabilities. We write the PMF this way because its derivable.
+<p>The probability mass function of a Bernoulli $X$ can be written as $f(x) = p^{x}(1-p)^{1-x}$. Wow! What's up with that? It's an equation that allows us to say that the probability that $X = 1$ is $p$ and the probability that $X = 0$ is $1- p$. Convince yourself that when $X_i=0$ and $X_i=1$ the PMF returns the right probabilities. We write the PMF this way because it's differentiable.
 
 <p>Now let's do some MLE estimation:
 \begin{align*}
@@ -71,7 +71,7 @@ L(\theta) &= \prod_{i=1}^n f(X_i|\theta) \\
 <p>Again, the last step of MLE is to chose values of $\theta$ that maximize the log likelihood function. In this case we can calculate the partial derivative of the $LL$ function with respect to both $\theta_0$ and $\theta_1$, set both equations to equal 0 and than solve for the values of $\theta$. Doing so results in the equations for the values $\hat{\mu} = \hat{\theta_0}$ and $\hat{\sigma^2} = \hat{\theta_1}$ that maximize likelihood. The result is: $\hat{\mu} = \frac{1}{n}\sum_{i=1}^n x_i$ and $\hat{\sigma^2} = \frac{1}{n}\sum_{i=1}^n (x_i - \hat{\mu})^2$.
 
 <h2>Linear Transform Plus Noise</h2>
-<p>MLE is an algorithm that can be used for any probability model with a derivable likelihood function. As an example lets estimate the parameter $\theta$ in a model where there is a random variable $Y$ such that $Y = \theta X + Z$, $Z \sim N(0, \sigma^2)$ and $X$ is an unknown distribution. 
+<p>MLE is an algorithm that can be used for any probability model with a differentiable likelihood function. As an example lets estimate the parameter $\theta$ in a model where there is a random variable $Y$ such that $Y = \theta X + Z$, $Z \sim N(0, \sigma^2)$ and $X$ is an unknown distribution. 
 
 <p>In the case where you are told the value of $X$, $\theta X$ is a number and $\theta X + Z$ is the sum of a gaussian and a number. This implies that $Y|X \sim N(\theta X, \sigma^2)$.  Our goal is to chose a value of $\theta$ that maximizes the probability IID: $(X_1, Y_1), (X_2, Y_2), \dots (X_n, Y_n)$. 
 
