@@ -36,18 +36,15 @@ class Compiler(object):
     #####################
 
     def compileTemplate(self, relativePath):
-        # print(relativePath)
         pathToLangRoot = self.getPathToRoot(relativePath)
         filePath = os.path.join(TEMPLATE_DIR, relativePath)
-        templateText = open(filePath).read()
+        templateText = open(filePath, encoding='utf-8').read()
         params = {
             'pathToRoot': '../' + pathToLangRoot, 
             'pathToLang' : pathToLangRoot,
         }
         self.addChapterLinks(params)
         compiledHtml = SimpleTemplate(templateText).render(params)
-        
-        fileName, fileExtension = os.path.splitext(relativePath)
         compiledHtml = compiledHtml.encode('utf8')
         path = OUT_DIR + '/' + relativePath
         self.makePath(path)
