@@ -213,7 +213,7 @@
 <li>
     <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part1_examples">
-        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/random_shuffles">Random Shuffles</a></li><li><a href="../../examples/counting_graphs">Random Graphs</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/random_shuffles">Random Shuffles</a></li><li><a href="../../examples/counting_graphs">Random Graphs</a></li><li><a href="../../examples/diversity_shapes">Diversity in Shapes</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
     </ul>
 </li>
 </li>
@@ -463,7 +463,14 @@ P(Y=y) &= \sum_x \p(X=x, Y=y) \\
 P(X=x) &= \sum_{y,z} \p(X=x, Y=y, Z=z) \\
 P(Y=y) &= \sum_{x,z} \p(X=x, Y=y, Z=z) \\
 P(Z=z) &= \sum_{x,y} \p(X=x, Y=y, Z=z) \\
+\end{align*}
+
+<div class="bordered">
+  <b><i>Notation:</i> Double Sum</b><br/>
+In this case the double sum notation: $$\sum\limits_{y, z}$$ Also written equivalently as: $$\sum_y \sum_z$$ means that we are summing over all possible values of $y$ and $z$. For example, if $Y$ is a random variable with 3 possible values and $Z$ is a random variable with 4 possible values, then $\sum_{y, z}$ means that we are summing over all 12 possible combinations of $y$ and $z$.</div>
 </p>
+
+<p>Here is an example in code. Assume we have a function <code>joint(x, y, z)</code> and that all $X$, $Y$ and $Z$ can take on values in the set $\{0, 1, 2, 3, 4\}$</p>
 
 
 

@@ -1,0 +1,116 @@
+% rebase('templates/chapter.html', title="Diversity in Shapes")
+
+
+<h1>
+  Diversity (Gini Impurity)
+</h1>
+<hr />
+<p>
+  In this question we are going to asks a simple question: what is the probability that two chosen objects from
+  a set are different. This statistic, formally called the <a
+    href="https://en.wikipedia.org/wiki/Diversity_index#Gini%E2%80%93Simpson_index">Gini Impurity</a> is used both in
+  Random Forest algorithms and in social science.
+</p>
+
+<p>
+a) Consider the following set of shapes. If you chose two shapes <b>with replacement</b> what is the
+  probability that the two shapes are the same? Note that it is possible to get two triangles: after you pick
+  the first triangle, you put it back into the set of shapes and it can be chosen again.
+
+  <br /><br />
+
+  <center>
+    <img class="mainFigureLg" src="{{pathToRoot}}img/chapters/gini1.png" />
+  </center>
+
+  <br/>
+
+
+</p>
+
+<p>
+  <div class="bordered">
+    <p>Define the Sample Space to be the 49 different outcomes of chosing the two shapes with replacement (7 choices for the first shape and 7 choices for the second shape). Notice that in our construction of the sample space we have chosen for the shapes to be treated as all being distinct from one another. An outcome in $S$ ($\in S$) is thus an ordered tuple of distinct shapes. For example one outcome in $S$ is (Shape$_4$, Shape$_2$). $|S| = 7 \times 7 = 49$. Note that all the outcomes in $S$ are equally likely (that was the reason why we treated shapes as distinct).
+    </p>
+
+    <p>Let $E$ be the subset of $S$ where the two shapes match. Let $A$ be the event that you have two squares and let $B$ be the event that you have two trianges. Note that $A$ and $B$ are mutually exclusive. By the step rule of counting $|A| = 6 \cdot 6 = 36$ since there are two steps to creating an outcome in $A$: chose a square then chose another square. Similarly $|B| = 1 \cdot 1 = 1$. </p>
+
+    $$
+    \begin{align*}
+    P(\text{same}) &= \frac{|E|}{|S|}\\
+    &= \frac{|A| + |B|}{|S|}\\
+    &= \frac{36 + 1}{49}\\
+    &= \frac{37}{49}
+\end{align*}
+    $$
+  </div>
+</p>
+
+<p>
+  b) Consider the following set of shapes. If you chose two shapes <b>with replacement</b> what is the probability that the
+    two shapes are <b>different</b>?
+  
+    <br /><br />
+  
+    <center>
+      <img class="mainFigureLg" src="{{pathToRoot}}img/chapters/gini2.png" />
+    </center>
+
+    <br/>
+  
+    <p>
+      <div class="bordered">
+        <p>Define the same Sample Space to be the 49 different outcomes of chosing the two shapes with replacement (7 choices for the first shape and 7 choices for the second shape). $|S| = 7 \times 7 = 49$. Note that all the outcomes in $S$ are equally likely.
+        </p>
+    
+        <p>Let $E$ be the subset of $S$ where the two shapes match.
+          <br/>Let $A$ be the event that you have two squares.
+          <br/>Let $B$ be the event that you have two trianges. 
+          <br/>Let $C$ be the event that you have two stars.
+          Note that $A$, $B$ and $C$ are mutually exclusive. By the step rule of counting
+          <br/> $|A| = 4 \cdot 4 = 16$  
+          <br/> $|B| = 2 \cdot 2 = 4$ 
+          <br/> $|C| = 1 \cdot 1 = 1$
+        
+        </p>
+    
+        $$
+        \begin{align*}
+        P(\text{different}) &= 1 - P(\text{same})\\
+        &= 1 - \frac{|E|}{|S|}\\
+        &= 1- \frac{|A| + |B| + |C|}{|S|}\\
+        &= 1- \frac{16 + 4 + 1}{49}\\
+        &= 1- \frac{21}{49} = \frac{4}{7}
+    \end{align*}
+        $$
+      </div>
+    </p>
+
+  </p>
+
+<h3>Gini Imputiy in Decision Trees</h3>
+
+In order to build a decision tree (a machine learning model, related to the Random Forest algorithm) we need to measure how much the Gini Impurity decreases after a node is added to the tree. We can then build the tree node by node. Each step of the way we will select the node which has the biggest decrease in Gini Impurity.</p>
+<p>
+<center>
+  <img class="mainFigureLg" src="{{pathToRoot}}img/chapters/gini3.png" /><br/>
+  <i>Aside: this particular node has split the shapes based off a value (which is slightly related to the shape). Shapes with value 0 go to the left child, shapes with value 1 go to the right.</i>
+</center>
+</p>
+
+<p>c) Let $G_L$ be the Gini Impurity of the left child and let $G_R$ be the Gini Impurity of the right child in the node pictured above. What is the value of max($G_L, G_R$)?</p>
+
+<p>
+  <div class="bordered">
+    <p>TODO: finish this solution. The general formula is:
+
+      $$
+      \begin{align*}
+      P(\text{different}) &=  1- P(\text{same})\\
+      &= 1 - \frac{|E|}{|S|}\\
+      &= 1 - \frac{\sum_{i}^n n_i^2}{|S|}\\
+      \end{align*}
+      $$
+    </p>
+  </div>
+</p>
