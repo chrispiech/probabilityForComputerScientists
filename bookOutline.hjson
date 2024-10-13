@@ -36,7 +36,7 @@
 			"serendipity":"Serendipity",
 			"random_shuffles":"Random Shuffles",
 			"counting_graphs":"Random Graphs",
-			"diversity_shapes":"Diversity in Shapes",
+			"diversity_shapes":"Set Diversity",
 			"bacteria_evolution":"Bacteria Evolution"
 		}
 	},

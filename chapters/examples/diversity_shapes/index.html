@@ -1,21 +1,21 @@
-% rebase('templates/chapter.html', title="Diversity in Shapes")
+% rebase('templates/chapter.html', title="Set Diversity")
 
 
 <h1>
-  Diversity (Gini Impurity)
+  Set Diversity (Gini Impurity)
 </h1>
 <hr />
 <p>
   In this question we are going to asks a simple question: what is the probability that two chosen objects from
   a set are different. This statistic, formally called the <a
     href="https://en.wikipedia.org/wiki/Diversity_index#Gini%E2%80%93Simpson_index">Gini Impurity</a> is used both in
-  Random Forest algorithms and in social science.
+  Random Forest algorithms and in social science. This was a problem from the Stanford Midterm in Fall 2023.
 </p>
 
 <p>
 a) Consider the following set of shapes. If you chose two shapes <b>with replacement</b> what is the
-  probability that the two shapes are the same? Note that it is possible to get two triangles: after you pick
-  the first triangle, you put it back into the set of shapes and it can be chosen again.
+  probability that the two shapes are <b>the same</b>? Note that it is possible to get two triangles: after you pick
+  the first triangle, you put it back into the set of shapes and it can be chosen again. 
 
   <br /><br />
 
@@ -48,7 +48,8 @@ a) Consider the following set of shapes. If you chose two shapes <b>with replace
 
 <p>
   b) Consider the following set of shapes. If you chose two shapes <b>with replacement</b> what is the probability that the
-    two shapes are <b>different</b>?
+    two shapes are <b>different</b>? Notice that the previous question asked for the probability that the two shapes are the same. The probability that two items are different is called the <a
+    href="https://en.wikipedia.org/wiki/Diversity_index#Gini%E2%80%93Simpson_index">Gini Impurity</a> of a set. 
   
     <br /><br />
   
@@ -90,27 +91,40 @@ a) Consider the following set of shapes. If you chose two shapes <b>with replace
 
 <h3>Gini Imputiy in Decision Trees</h3>
 
-In order to build a decision tree (a machine learning model, related to the Random Forest algorithm) we need to measure how much the Gini Impurity decreases after a node is added to the tree. We can then build the tree node by node. Each step of the way we will select the node which has the biggest decrease in Gini Impurity.</p>
+<p>Note: This next problem isn't remarkably different to the problems above. The point of this problem is to show you how the concept of Gini Impurity connects to Decision Trees.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Decision_tree#:~:text=9%20External%20links-,Overview,taken%20after%20computing%20all%20attributes).">Decision Trees</a> (and their big brother Random Forests) are some of the most popular classification AI algorithms that don't use deep nerual networks. They are built based off data, node-by-node. Once built, they can be used to make classification decisions. The critical decision when making a decision tree is to decide which node to add next. One way to make that decision is to chose the node which choice of new node leads to the largest decrease in Gini Impurity of the shapes that end up together at the end of the decision tree. </p>
+
 <p>
 <center>
   <img class="mainFigureLg" src="{{pathToRoot}}img/chapters/gini3.png" /><br/>
   <i>Aside: this particular node has split the shapes based off a value (which is slightly related to the shape). Shapes with value 0 go to the left child, shapes with value 1 go to the right.</i>
 </center>
+<br/>
 </p>
 
-<p>c) Let $G_L$ be the Gini Impurity of the left child and let $G_R$ be the Gini Impurity of the right child in the node pictured above. What is the value of max($G_L, G_R$)?</p>
+<p>c) Consider the node in the picture above. Let $G_L$ be the probability that two shapes, selected from the shapes in the left side, are different (Gini Impurity) and let $G_R$  be the probability  that two shapes, selected from the shapes in the right side, are different (again the Gini Impurity). What is the value of max($G_L, G_R$)? We only use the shape type to calculate the Gini Impurity. The value represents the features that were used to sort them between the left and right node and can be ignored in this question.</p>
 
 <p>
   <div class="bordered">
-    <p>TODO: finish this solution. The general formula is:
+    <p>
+First lets generalize our calculation of $G$ for a set of shapes. Let $n$ be the number of shapes in the set. Let $n_i$ be the number of shapes of type $i$ in the set. It is going to be easier to calculate the probability that two share ares are the same than the probability that two shapes are different. If we set up the sample space $S$ to be the set of all ways to pick two shapes (treating each shape as distinct, and treating the selection as ordered). The event space $E$ is then the subset of events where the shapes are the same. Because chosing the same shape of one type is mutually exclusive with chosing the same shape of another type, we can calculate the probability that two shapes are the same by calculating the probability that two shapes are the same for each type of shape and summing them up:
 
       $$
       \begin{align*}
-      P(\text{different}) &=  1- P(\text{same})\\
+      G &=  1- P(\text{same})\\
       &= 1 - \frac{|E|}{|S|}\\
       &= 1 - \frac{\sum_{i}^n n_i^2}{|S|}\\
       \end{align*}
       $$
     </p>
+
+    <p>$
+      G_L = 1 - \frac{2^2 + 5^2}{7^2}$ and $G_R = 1 - \frac{2^2 + 1^2}{3^2}$. For those curious $G_R$ is the larger of the two.
+    </p>
   </div>
 </p>
+
+<h3>Going Further</h3>
+
+<p>Note: in the midterm students were asked to calculate the "Expected" Gini Score, instead of the max. That uses <a href="{{pathToLang}}part2/expectation/">Expecataion</a>, a concept we will learn in the next section. We also asked for the Gini Impurity of a <a href="{{pathToRoot}}part2/poisson/">Poisson random variable</a>, a concept from Part 3.</p>
