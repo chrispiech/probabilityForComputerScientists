@@ -64,7 +64,6 @@
 			"winning_series":"Winning Series",
 			"approximate_counting":"Approximate Counting",
 			"jury":"Jury Selection",
-					"prob_baby_delivery":"Probability of Baby Delivery",
 			"grading_eye_inflammation":"Grading Eye Inflamation",
 			"grades_not_normal":"Grades are Not Normal",
 			"curse_of_dimensionality":"Curse of Dimensionality"
@@ -88,6 +87,7 @@
 			"fairness":"Fairness in AI",
 			"federalist":"Federalist Paper Authorship",
 			"name2age":"Name to Age",
+			"prob_baby_delivery":"Probability of Baby Delivery",
 			"bayesian_carbon_dating":"Bayesian Carbon Dating",
 			"digital_vision_test":"Digital Vision Test",
 			"bridge_distribution":"Bridge Distribution",
