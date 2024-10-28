@@ -390,7 +390,7 @@ hash of the second, there are 100 * 100 = 10,000 ways that the two strings may b
 	</p>
 
 	<p>
-<a href="https://en.wikipedia.org/wiki/Peter_Norvig">Peter Norvig</a>, the author of the cannonical text book "Artificial Intelligence" made the following compelling point on why computer scientists need to know how to count. To start, lets set a baseline for a really big number: The number of atoms in the observable universe, often estimated to be around 10 to the 80th power ($10^{80}$). There
+<a href="https://en.wikipedia.org/wiki/Peter_Norvig">Peter Norvig</a>, the author of the canonical textbook "Artificial Intelligence" made the following compelling point on why computer scientists need to know how to count. To start, let's set a baseline for a really big number: The number of atoms in the observable universe, often estimated to be around 10 to the 80th power ($10^{80}$). There
 certainly are a lot of atoms in the universe. As a leading expert said,</p>
 <p class="indent">
 	“Space is big. Really big. You just won’t believe how vastly, hugely, mind-bogglingly big it is.
@@ -405,7 +405,7 @@ Surely that would take a long time, because there must be many possible pictures
 assume the color model known as <a href="https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)">True Color</a>, in which each <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a> can be one of $2^{24}$ ≈ 17 million distinct
 colors.</p>
 
-<p>How many distinct pictures can you generate from (a) a smart phone camera shown with 12 million pixels, (b) a
+<p>How many distinct pictures can you generate from (a) a smartphone camera shown with 12 million pixels, (b) a
 grid with 300 pixels, and (c) a grid with just 12 pixels?</p>
 
 <p>
@@ -424,11 +424,11 @@ but that’s just peanuts to the number of pictures in a 300-pixel array. And 12
 <p>
 <div class="purpleBox">
 	<p><b><i>Example</i></b>: Unique states of Go</p>
-<p>For example a Go board has 19 × 19 points where a user can place a stone. Each of the points can be empty or occupied
+<p>For example, a Go board has 19 × 19 points where a user can place a stone. Each of the points can be empty or occupied
 by black or white stone. By the Step Rule of Counting, we can compute the number of unique board
 configurations.</p>
 
-<p><center><img class="mainFigure" src=../../../img/chapters/go.png></img><br/><i>In go there are 19x19 points. Each point can have a black stone, white stone, or no stone at all.</center></i></p>
+<p><center><img class="mainFigure" src=../../../img/chapters/go.png></img><br/><i>In Go there are 19x19 points. Each point can have a black stone, white stone, or no stone at all.</center></i></p>
 
 <p> Here we are going to construct the board one point at a time, step by step. Each time we add a point we have a unique choice where we can decide to make the point one of three options:
  {Black, White, No Stone}. Using this construction we can apply the Step Rule of Counting. If there was only one point, there would be three unique board configurations. If there were four points you would have $3 \cdot 3 \cdot 3 \cdot 3 = 81$ unique combinations. In Go there are $3^{(19×19)} ≈ 10^{172}$ possible board positions. The way we constructed our board didn't take into account which ones were illegal by the rules of Go. It turns out that "only" about
@@ -514,7 +514,7 @@ then there are $|A \or B| = |A|+|B|$ possible outcomes of the experiment.</p>
 
 <p>
 	<div class="bordered">
-		<p><b><i>Definition</i></b>: Inclusion  Exclusion Counting</p>
+		<p><b><i>Definition</i></b>: Inclusion-Exclusion Counting</p>
 
 		<p>If the outcome of an experiment can either be drawn from set $A$ or set $B$, and sets $A$ and $B$ may potentially
 overlap (i.e., it is not the case that $A$ and $B$ are mutually exclusive), then the number of outcomes of the experiment is
@@ -554,7 +554,7 @@ we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Excl
 
 <div id="allGrids"></div>
 
-<p>Now lets say we add in new "constraint" that we only want to accept pictures which have an odd number of pixels turned blue. There are two ways of getting to the answer. You could start out with the original 16 and work out that you need to subtract off 8 images that have either 0, 2 or 4 blue pixels (which is easier to work out after the next chapter). Or you could have counted up using Mutually Exclusive Counting: there are 4 ways of making an image with 1 pixel and 4 ways of making an image with 3. Both approaches lead to the same answer, 8.</p>
+<p>Now lets say we add in a new "constraint" that we only want to accept pictures which have an odd number of pixels turned blue. There are two ways of getting to the answer. You could start out with the original 16 and work out that you need to subtract off 8 images that have either 0, 2 or 4 blue pixels (which is easier to work out after the next chapter). Or you could have counted up using Mutually Exclusive Counting: there are 4 ways of making an image with 1 pixel and 4 ways of making an image with 3. Both approaches lead to the same answer, 8.</p>
 
 <div id="allGridsOneThree"></div>
 
