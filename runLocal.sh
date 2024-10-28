@@ -1,2 +1,2 @@
-python3 compile.py -t
-python3 -m http.server
+python compile.py -t
+python -m http.server

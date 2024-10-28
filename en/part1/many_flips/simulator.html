@@ -14,7 +14,7 @@ Probability of heads $p$: <input  type="number" class="form-control example-inli
 </div>
 Simulator results:
 <pre class="language-python"  style="height:50px;"><code id="results"></code></pre>
-Total number of heads: <span id="nHeads"></span>
+Total number of heads: <span class="nHeads"></span><br/>
 </div>
 
 <script>
@@ -39,7 +39,13 @@ function simulate() {
 			results += ', '
 		}
 	}
+
+	let pr_x = binomialPmf(n,p,nHeads).toFixed(3)
+
 	$("#results").html(results)
-	$("#nHeads").html(nHeads)
+	$(".nHeads").html(nHeads)
+	$(".nFlips").html(n)
+	$(".pHeads").html(p)
+	$(".prResult").html(pr_x)
 }
 </script>

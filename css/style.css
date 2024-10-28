@@ -1007,3 +1007,11 @@ a.toc-link {
   color: #555 !important;
   font-weight: normal !important;
 }
+
+.pb-0 {
+  padding-bottom: 0px !important;
+}
+
+.mb-0 {
+  margin-bottom: 0px !important;
+}

@@ -46,17 +46,68 @@ Of course, we have more information. Specifically, we know that Laura <b>hasn't<
 <canvas id="conditionalPMF" style="max-height: 400px"></canvas>
 </p>
 
-
-
 <p>
+
+	Let's approach this problem formally using inference. First we introduce a random variable $D$ to represent the days after delivery that the baby is born. Note that $D$ can be negative if the baby is due before the due date. We can use Inference to update our belief in $D$ given our observation that we have not delivered yet:
+
+	$$
+	\begin{align}
+	\P(D = i | \text{No Baby Yet}) &= \frac{\P(\text{No Baby Yet} | D = i) \P(D = i)}{\P(\text{No Baby Yet})} \\
+	\end{align}
+	$$
+</p>
+
+<p>$\P(\text{No Baby Yet} | D = i)$ is always either 1 or 0. Note that conditioning on $D=i$ means we are being told the actual date of delivery. If the delivery hasn't happened yet (eg today is before $i$) then the probability of No Baby Yet is 1. If the delivery has already happened (eg today is after $i$) then the probability of No Baby Yet is 0.</p>
+
+<p>$\P(D = i)$ is our prior belief (the probability of delivery dates based off historical data). $\P(\text{No Baby Yet})$ is the normalization constant. Instead of calculating it explicity, we can compute the numerators for each value of $i$. We can then normalize the distribution (compute the sum of the numerators, and divide every probability by this sum) in order to implicitly compute it. An equivalent (but more compute heavy) solution would be to expand $\P(\text{No Baby Yet})$ using the law of total probability:
+$$
+\P(\text{No Baby Yet}) = \sum_i \P(\text{No Baby Yet} | D = i) \P(D = i)
+$$
+
+</p>
+
+<p>How do we deal with the fact that babies are induced after $D = 14$? Well we can adjust our prior so that all of the probability for days 14 and on is shifted to day 14. This is equivalent to the following calculation:
+$$
+\P(D = 14) = \sum_{i \geq 14} \P(D = i)
+$$
+</p>
+
+<p><pre class="language-python"><code>def update_belief_baby(prior, today = -19):
+	# pr_D[i] is P(D = i| No Baby Yet).
+	pr_D = {}
+	min_i = -50
+	max_i = 14
+	for i in range(min_i, max_i + 1):
+		 # P(NoBaby | D = i)
+		 likelihood = 0 if i < today else 1
+		 pr_D[i] = likelihood * prior[i]
+	# implicitly computes the LOTP
+	normalize(pr_D)
+	return pr_D
+
+def normalize(unormalized_pmf):
+	total_sum = sum(unormalized_pmf.values())
+	normalized = {}
+	for key, value in unormalized_pmf.items():
+		normalized[key] = value / total_sum
+	return normalized
+</code></pre></p>
+
+<!-- <p>
 	Implementation notes: this calculation was performed by storing the PDF as a list of (day, probability) points. These values are sometimes called weighted samples, or "particles" and are the key component to a "<a href="https://en.wikipedia.org/wiki/Particle_filter">particle filtering</a>" approach. After we observe no-delivery, we set the probability of every point which has a day before today to be 0, and then re-normalize the remaining points (aka we "filter" the "particles"). This is convenient because the "posterior" belief doesn't follow a simple equation -- using particles means we never have to write that equation down in our code.
-	</p>
+	</p> -->
 
 <p>
+
+	<hr/>
+
+	<h3>Extension Problem</h3>
+
+	<p>Chris had two other good friends who had babies with the exact same due date (Really! This actually happened). What is the probability that all three babies are delivered on the exact same day?</p>
 
 <div class="bordered">
 
-	<p>Three friends have the exact same due date (Really! this isn't a hypothetical) What is the probability that all three couples deliver on the exact same day?
+	
 
 
 		<p>

@@ -80,16 +80,7 @@ and F are <b><i>not</i></b> mutually exclusive you can <b><i>not</i></b> simply 
 $$
 \p(E \or F) = \p(E) + \p(F) − \p(E \and F)
 $$</p>
-<p>This formula does have a version for more than two events, but it gets rather complex. For three events, $E$, $F$, and $G$ the formula is:
-	$$
-	\begin{align}
-	\p(E \or F \or G) =& \text{ }\p(E) + \p(F) + \p(G) \\
-& −\p(E \and F) − \p(E \and G)−P(F \and G) \\
-& +\p(E \and F \and G)
-	\end{align}
-	$$
-</p>
-<p>For $n$ events, $E_1, E_2, \dots E_n$: build a running sum. Add all the probabilities of the events on their own. Then subtract all pairs of events. Then add all subsets of 3 events. Then subtract all subset of 4 events. Continue this process, up until $n$, adding the subsets if the size of subsets is odd, else subtracting them. The alternating addition and subtraction is where the name inclusion exclusion comes from. This is a complex process and you should first check if there is an easier way to calculate your probability.
+<p>This formula does have a version for more than two events, but it gets rather complex. See the next two sections for more details.</p>
 </div>
 </p>
 
@@ -151,22 +142,24 @@ $$
 <label for="numberEvents">Number of events:</label>
 <input onchange="generalInclusionExclusion()" type="number" class="form-control example-inline-input" id="priorInput" value="4" >	 -->
 
-<p>Do you see the pattern? For every possible subset of events from our $n$ events, we calculate the probability of the "and" of the subset. If the subset has an odd number of events, we add its probability mass, otherwise we subtract the probability.  This can be written up mathematically &mdash; but it is a rather hard pattern to express in notation:</p>
+<p>Do you see the pattern? For $n$ events, $E_1, E_2, \dots E_n$: add all the probabilities of the events on their own. Then subtract all pairs of events. Then add all subsets of 3 events. Then subtract all subset of 4 events. Continue this process, up until subset of size $n$, adding the subsets if the size of subsets is odd, else subtracting them. The alternating addition and subtraction is where the name inclusion exclusion comes from. This is a complex process and you should first check if there is an easier way to calculate your probability.  This can be written up mathematically &mdash; but it is a rather hard pattern to express in notation:</p>
+
+
 
 $$
 \begin{gather}
-\P(E_1 \or E_2 \or \cdots \or E_n) = \sum\limits_{r-1}^n (-1)^{r+1} Y_r \\
+\P(E_1 \or E_2 \or \cdots \or E_n) = \sum\limits_{r=1}^n (-1)^{r+1} Y_r \\
 \text{s.t. } Y_r = \sum\limits_{1 \leq i_1 < \cdots < i_r \leq n} \P(E_{i_1} \and \cdots \and E_{i_r})
 \end{gather}
 $$
-<p>The notation for $Y_r$ is especially hard to parse.  $Y_r$ sums over all ways of selecting a subset of $r$ events. For each selection of $r$ events, calculate the probability of the intersection of those events. $(-1)^{r+1}$ is saying: alternate between addition and subtraction, starting with addition.</p>
+<p>The notation for $Y_r$ is especially hard to parse.  $Y_r$ sums over all ways of selecting a subset of $r$ events. For each selection of $r$ events, calculate the probability of the "and" of those events. $(-1)^{r+1}$ is saying: alternate between addition and subtraction, starting with addition.</p>
 
 <p>It is not especially important to follow the math notation here. The main take away is that the general inclusion exclusion principle gets incredibly complex with multiple events. Often, the way to make progress in this situation is to find a way to solve your problem using another method. </p>
 
 <p></p>
 
 <p>
-	The formulas for calculating the <b><i>or</i></b> of events that are not mutually exclusive often require calculating the probability of the <b><i>and</i></b> of events. Learn more about the probability of and in the next section.
+	The formulas for calculating the <b><i>or</i></b> of events that are not mutually exclusive often require calculating the probability of the <b><i>and</i></b> of events. Learn more in the chapter <a href="{{pathToLang}}part1/prob_and">Probability of <b>and</b></a>.
 	</p>
            
 	

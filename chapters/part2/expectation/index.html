@@ -24,10 +24,21 @@
 <pre class="language-python"><code>def expectation_sum_two_dice():
     exp_sum_two_dice = 0
     # sum of dice can take on the values 2 through 12
-    for x in range(2, 13):
-        pr_x = pmf_sum_two_dice(x) # pmf gives Pr(x)
+    for x in range(2, 12 + 1):
+        pr_x = pmf_sum_two_dice(x) # pmf gives Pr sum is x
         exp_sum_two_dice += x * pr_x
-    return exp_sum_two_dice</code></pre>
+    return exp_sum_two_dice
+	
+def pmf_sum_two_dice(x):
+    # Return the probability that two dice sum to x
+    count = 0
+    # Loop through all possible combinations of two dice
+    for dice1 in range(1, 6 + 1):
+        for dice2 in range(1, 6 + 1):
+            if dice1 + dice2 == x:
+                count += 1
+    return count / 36  # There are 36 possible outcomes (6x6)
+</code></pre>
 <p>If we worked it out manually we would get that if $X$ is the sum of two dice, $\E[X] = 7$:
 	$$
 \E[X] = \sum_x x \cdot \p(X=x) = 2 \cdot \frac{1}{36} + 3 \cdot \frac{2}{36} + \dots + 12 \frac{1}{36} = 7
@@ -37,7 +48,7 @@
 <!-- 
 <h2>Intuition of expectation</h2> -->
 
-<h2>Properties of expectation</h2>
+<h2>Properties of Expectation</h2>
 
 
 
@@ -46,7 +57,7 @@
 	<div class="bordered">
 		<p><b><i>Property</i></b>: Linearity of Expectation</p>
 		$$E[aX + b] = a\E[X]+b$$
-		
+		Where $a$ and $b$ are constants and not random variables.
 	</div>
 </p>
 
@@ -54,7 +65,8 @@
 	<div class="bordered">
 		<p><b><i>Property</i></b>: Expectation of the Sum of Random Variables</p>
 		$$E[X+Y] = E[X] +E[Y]$$
-		
+		This is true regardless of the relationship between $X$ and $Y$. They can be dependent, and they can have different distributions. This also applies with more than two random variables.
+		$$E\Big[\sum_{i=1}^n X_i\Big] = \sum_{i=1}^n E[X_i]$$
 	</div>
 </p>
 
@@ -77,5 +89,48 @@
 	</div>
 </p>
 
+<h2>Expectation of Sums Proof</h2>
+<p>One of the most useful properties of expectation is that the sum of expectation of random variables can be calculated by summing the expectations of each random variable on its own. Later in <a href="{{pathToLang}}part4/summation_vars/">Adding Random Variables</a> we will learn that computing the full probability mass function (or probability density function) when adding random variables is quite hard, especially when the random variables are dependent. However the expectation of sums is always decomposable:
+$$E[X+Y] = E[X] + E[Y]$$
+This very useful result is somewhat suprising. I believe that the best way to understand this result is via a proof. This proof, however, will use some concepts from the next section in the course reader, Probabilistic Models. Notice how the proof never needs to assume that $X$ and $Y$ are independent, or have the same distribution. In this proof $X$ and $Y$ are discrete, but if you made them continuous you would just replace the sum with an integral:</p>
 
-<!-- <h2>Law of Total Expectation</h2> -->
+\begin{align*}
+E&[X+Y] \\
+&= \sum_{x,y} (x+y) \p(X=x, Y=y) 
+  && \text{Expected value of a sum} \\
+&= \sum_{x,y} \Big[x \p(X=x, Y=y) +  y \p(X=x, Y=y) \Big]
+&& \text{Distributive property of sums}\\
+&= \sum_{x,y} x \p(X=x, Y=y) + \sum_{x,y} y \p(X=x, Y=y) 
+  && \text{Commutative property of sums}\\
+&= \sum_x\sum_y x \p(X=x, Y=y) + \sum_y\sum_x y \p(X=x, Y=y) 
+  && \text{Expanding sums} \\
+&= \sum_x x \sum_y  \p(X=x, Y=y) + \sum_y y \sum_x  \p(X=x, Y=y) 
+  && \text{Distributive property of sums} \\	  
+&= \sum_x x \p(X=x) + \sum_y y \p(Y=y) 
+  && \text{Marginalization} \\
+&= E[X] + E[Y] && \text{Definition of Expectation}
+\end{align*}
+
+<h2>Example of Law of Unconcious Statistician</h2>
+
+<p>The property of expectation:
+$$E[g(X)] = \sum_x g(x)\p(X=x)$$
+is both useful and hard to understand just by reading the equation. It allows us to calculate the expectation of a function of any function applied to a random variable! One function that will turn out to be very useful when computing <a href="{{pathToLang}}part2/variance">Variance</a> is $E[X^2]$. According to the Law of Unconcious Statistician:
+
+\begin{align*}
+E[X^2] &= \sum_x x^2 \p(X=x) 
+\end{align*}
+
+In this case $g$ is the squaring function. To calculate $E[X^2]$ we calculate expectation in a way similar to $E[X]$ with the exception that we square the value of $x$ before multiplying by the probability mass function. Here is code that calculates $E[X^2]$ for the sum of two dice:</p>
+
+<pre class="language-python"><code>def expectation_sum_two_dice_squared():
+    exp_sum_two_dice_squared = 0
+    # sum of dice can take on the values 2 through 12
+    for x in range(2, 12 + 1):
+        pr_x = pmf_sum_two_dice(x) # pmf gives Pr(x)
+        exp_sum_two_dice_squared += x**2 * pr_x
+    return exp_sum_two_dice_squared</code></pre>
+
+<h3>Expectation with Continuous Random Variables</h3>
+
+<p>Later in the course reader we will learn about continuous random variables. Expectation for those types of random variables is very similar. See <a href="{pathToLang}part2/continuous#ex_continuous">Continuos Random Variables</a> for details</p>
