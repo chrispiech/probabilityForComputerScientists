@@ -56,6 +56,7 @@
 			"continuous":"Continuous Distribution",
 			"uniform":"Uniform Distribution",
 			"exponential":"Exponential Distribution",
+			"erlang":"Erlang Distribution",
 			"normal":"Normal Distribution",
 			"binomial_approx":"Binomial Approximation"
 		},

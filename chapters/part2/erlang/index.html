@@ -1,0 +1,43 @@
+
+% rebase('templates/chapter.html', title="Erlang Distribution")
+ 
+<center><h1>Erlang Distribution</h1></center>
+<hr/>
+
+<p>
+    If events are occurring sequentially with the same mean rate of occurrence after each event,
+    an Erlang random variable measures the amount of time until the $k^{th}$ event occurs.
+    The random variable is the summation of $k$ independent and identically distributed (IID) Exponential random variables.
+</p>
+
+<%
+  include('templates/rvCards/erlang.html')
+%>
+<div style="height: 20px"></div>
+
+<p>
+If you set $k$ equal to 50 up above, that is the equivalent of summing together 50 Exponential random variables with a mean rate of $\lambda$. Notice
+how the resulting PDF resembles that of a Gaussian. We will explore why that is when we cover the <a href="{{pathToLang}}part4/clt/">Central Limit Theorem</a>.
+</p>
+
+<div class="purpleBox">
+<p><b><i>Example</i></b>:
+    Agner Krarup Erlang wants to reward the 10th customer who walks into his gag foam-phone store, "Phoney Foam Phones".
+    Agner needs 15 minutes to prepare the prize. Since a YouTube video went viral showcasing how foam-phones can be used to clean dishes,
+    the store has become surprisingly popular. People are walking in at a mean rate
+    of one person per minute. What is the probability that Erlang will have the time to prepare his prize?
+</p>
+    Let $X$ be the number of minutes until the 10th customer walks in. Since a customer walking in is an event that is
+    occurring at a mean rate of once per minute, $X \sim {\rm Erlang}(k = 10, \lambda = 1)$.
+    The question is asking us to calculate P(X > 15):
+
+    \begin{align*}
+    P(X > 15) &= 1 - P(X < 15) \\
+    &= 1 - F_{X}(15) \\
+    &= 1 - (1 - \sum_{n=0}^{10-1}{\frac{1}{n!} e^{-1 \cdot 15} (1 \cdot 15)^{n}}) \\
+    &= 1 - (1 - \sum_{n=0}^{9}{\frac{1}{n!} e^{-15} (15)^{n}}) \\
+    &= 0.070
+    \end{align*}
+
+    Sorry Agner!
+</div>
