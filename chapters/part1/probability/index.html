@@ -29,8 +29,8 @@
 <li> Coin flip is heads: $E$ = {Heads}
 <li> At least 1 head on 2 coin flips = {(H, H), (H, T), (T, H)}
 <li> Roll of die is 3 or less: E = {1, 2, 3}
-<li> You receive less than 20 emails in a day: $E = \{x|x ∈ Z,0 ≤ x < 20\}$ (non-neg. ints)
-<li> Wasted day (≥ 5 YouTube hours): $E = \{x|x ∈ R, 5 ≤ x ≤ 24\}$
+<li> You receive less than 20 emails in a day: $E = \{x|x ∈ ℤ,0 ≤ x < 20\}$ (non-neg. ints)
+<li> Wasted day (≥ 5 YouTube hours): $E = \{x|x ∈ ℝ, 5 ≤ x ≤ 24\}$
 </ul>
 Events can be represented as capital letters such as $E$ or $F$.
 </div>
@@ -51,7 +51,7 @@ Events can be represented as capital letters such as $E$ or $F$.
     $$</p>
 
 
-<p>In English this reads: lets say you perform $n$ trials of an "experiment" which could result in a particular "<a href="#events">Event</a>" occurring. The probability of the event occurring, $\p(\text{Event})$,
+<p>In English this reads: let's say you perform $n$ trials of an "experiment" which could result in a particular "<a href="#events">Event</a>" occurring. The probability of the event occurring, $\p(\text{Event})$,
 is the ratio of trials that result in the event, written as $\text{count}(\text{Event})$, to the number of trials performed, $n$.  In the limit, as your number of trials
 approaches infinity, the ratio will converge to the true probability. People also apply other semantics to the concept of a probability. One
 common meaning ascribed is that $\p(E)$ is a measure of the chance of event E occurring. </p>
@@ -93,14 +93,16 @@ approximately equal to the fraction of simulations that produced an outcome from
 of probability, as your number of simulations approaches infinity, the estimate becomes more accurate.
 
 <p>
-<b>Probabilities and percentages</b>: You might hear people refer to a probability as a percent. That the probability of rain tomorrow is 32%. The proper way to state this would be to say that 0.32 is the probability of rain. Percentages are simply probabilities multiplied by 100. "Percent" is latin for "out of one hundred".  
+<b>Probabilities and percentages</b>: You might hear people refer to a probability as a percent. That the probability of rain tomorrow is 32%. The proper way to state this would be to say that 0.32 is the probability of rain. Percentages are simply probabilities multiplied by 100. "Percent" is Latin for "out of one hundred".  
 </p>
 
 <div class="purpleBox">
-<p><b><i>Problem:</i></b> Use the definition of probability to approximate the answer to the question: "What is the probability a new-born elephant child is male?" Contrary to what you might think the gender outcomes of a newborn elephant are not equally likely between male and female. You have data from a report in Animal Reproductive Science which states that 3,070 elephants were born in Myanmar of which 2,180 were male [<a href="https://www.sciencedirect.com/science/article/pii/S0378432008004442?casa_token=ZTNldN7tjWQAAAAA:4lqVmht0l5ZWe0IsmUFei9VnYrtMAdQ9v4SAEkNCdOh6BBgFFesmlF6YQytPwVNrfrrPxNjbRoE">1</a>]. Humans also don't have a 50/50 sex ratio at birth [<a href="https://www.aihw.gov.au/getmedia/2a0c22a2-ba27-4ba0-ad47-ebbe51854cd6/aihw-per-100-in-brief.pdf.aspx">2</a>].</p>
+<p><b><i>Problem:</i></b> Use the definition of probability to approximate the answer to the question: "What is the probability a newborn elephant child is male?" Contrary to what you might think the gender outcomes of a newborn elephant are not equally likely between male and female. You have data from a report in Animal Reproductive Science which states that 3,070 elephants were born in Myanmar of which 2,180 were male [<a href="https://www.sciencedirect.com/science/article/pii/S0378432008004442?casa_token=ZTNldN7tjWQAAAAA:4lqVmht0l5ZWe0IsmUFei9VnYrtMAdQ9v4SAEkNCdOh6BBgFFesmlF6YQytPwVNrfrrPxNjbRoE">1</a>]. Humans also don't have a 50/50 sex ratio at birth [<a href="https://www.aihw.gov.au/getmedia/2a0c22a2-ba27-4ba0-ad47-ebbe51854cd6/aihw-per-100-in-brief.pdf.aspx">2</a>].</p>
 
 <p><b><i>Answer:</i></b>
+
 	The Experiment is: A single elephant birth in Myanmar. <br/>The sample space is the set of possible sexes assigned at birth, {Male, Female, Intersex}. <br/>$E$ is the event that a new-born elephant child is male, which in set notation is the subset {Male} of the sample space. The outcomes are not equally likely.</p>
+
 
 	<p> By the definition of probability, the ratio &mdash; of trials that result in the event, to the total number of trials &mdash; will tend to our desired probability:</p>
 
@@ -139,7 +141,7 @@ of probability, as your number of simulations approaches infinity, the estimate 
 
 <p>You can convince yourself of the first axiom by thinking about the math definition of probability. As you
 perform trials of an experiment it is not possible to get more events than trials (thus probabilities are less than
-1) and its not possible to get less than 0 occurrences of the event (thus probabilities are greater than 0).
+1) and it's not possible to get less than 0 occurrences of the event (thus probabilities are greater than 0).
 The second axiom makes sense too. If your event is the sample space, then each trial must produce
 the event. This is sort of like saying; the probability of you eating cake (event) if you eat cake (sample
 space that is the same as the event) is 1.
