@@ -167,7 +167,7 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <!-- <div></div> -->
-        <a style="text-align:center" href="../../index.html"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
+        <a style="text-align:left" href="../../index.html"><h3></i> Probability<br/>For Computer Science<br/></h3></a>
     </div>
 
     <div> 
@@ -213,7 +213,7 @@
 <li>
     <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part1_examples">
-        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/random_shuffles">Random Shuffles</a></li><li><a href="../../examples/counting_graphs">Random Graphs</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/random_shuffles">Random Shuffles</a></li><li><a href="../../examples/counting_graphs">Random Graphs</a></li><li><a href="../../examples/diversity_shapes">Set Diversity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
     </ul>
 </li>
 </li>
@@ -241,7 +241,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/approximate_counting">Approximate Counting</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/algorithmic_art">Algorithmic Art</a></li>
+        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/approximate_counting">Approximate Counting</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/algorithmic_art">Algorithmic Art</a></li>
     </ul>
 </li>
 </li>
@@ -264,7 +264,7 @@
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/digital_vision_test">Digital Vision Test</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/bayesian_viral_load_test">Bayesian Viral Load Test</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/digital_vision_test">Digital Vision Test</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/bayesian_viral_load_test">Bayesian Viral Load Test</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -373,11 +373,11 @@ Query Name: <input onchange="runName2Age()" class="form-control" value="Katherin
 
 <h3>Computation</h3>
 
-<p> The US Social Security applications data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
+<p> The US Social Security applications data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name. We will use $k$ to denote the number of entries in the dataset:
 	$$
 	P(B = b,N = n) \approx 
 	\frac{\text{count}(b, n)}
-	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	{k}
 	$$
 
 <p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary?</p>
@@ -387,11 +387,14 @@ Query Name: <input onchange="runName2Age()" class="form-control" value="Katherin
 		\begin{align*}
 		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})}
 		\end{align*}
-But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute using marginalization:
+
+Note: Bayes' Theorem is a more typical choice for inference tasks like this one. However, in this case its was necessary because it is easier to compute $P(B = b, N=n)$ than $P(N=n | B=b)$. That is why we used the definition of conditional probability instead.
+
+The conditional probability approach this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute using marginalization:
 
 \begin{align*}
 \P( N = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})\\
-&\approx \frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+&\approx \sum\limits_{y \in \text{years}} \frac{\text{count}(y, \text{Gary})}{k}
 \end{align*}
 
 
@@ -406,12 +409,12 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 {
 	\Big(
 	\frac{\text{count}(1950, \text{Gary})}
-	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	{k}
 	\Big)
 }
 {
 	\Big(
-	\frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	\frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{k}
 	\Big)
 } \\
 &\approx
@@ -750,6 +753,8 @@ function plotName(queryName) {
         })
     }
 </script>
+
+                         <br/><br/>
                 
                     </div>
                 </div>

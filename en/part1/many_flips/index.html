@@ -167,7 +167,7 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <!-- <div></div> -->
-        <a style="text-align:center" href="../../index.html"><h3><i class="fas fa-book-open"></i><br/> Course Reader for <br/>CS109<br/></h3></a>
+        <a style="text-align:left" href="../../index.html"><h3></i> Probability<br/>For Computer Science<br/></h3></a>
     </div>
 
     <div> 
@@ -213,7 +213,7 @@
 <li>
     <a href="#part1_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part1_examples">
-        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/random_shuffles">Random Shuffles</a></li><li><a href="../../examples/counting_graphs">Random Graphs</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
+        <li><a href="../../examples/enigma">Enigma Machine</a></li><li><a href="../../examples/serendipity">Serendipity</a></li><li><a href="../../examples/random_shuffles">Random Shuffles</a></li><li><a href="../../examples/counting_graphs">Random Graphs</a></li><li><a href="../../examples/diversity_shapes">Set Diversity</a></li><li><a href="../../examples/bacteria_evolution">Bacteria Evolution</a></li>
     </ul>
 </li>
 </li>
@@ -241,7 +241,7 @@
 <li>
     <a href="#part2_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part2_examples">
-        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/approximate_counting">Approximate Counting</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/algorithmic_art">Algorithmic Art</a></li>
+        <li><a href="../../examples/100_binomial_problems">100 Binomial Problems</a></li><li><a href="../../examples/winning_series">Winning Series</a></li><li><a href="../../examples/approximate_counting">Approximate Counting</a></li><li><a href="../../examples/jury">Jury Selection</a></li><li><a href="../../examples/grading_eye_inflammation">Grading Eye Inflamation</a></li><li><a href="../../examples/grades_not_normal">Grades are Not Normal</a></li><li><a href="../../examples/curse_of_dimensionality">Curse of Dimensionality</a></li><li><a href="../../examples/algorithmic_art">Algorithmic Art</a></li>
     </ul>
 </li>
 </li>
@@ -264,7 +264,7 @@
 <li>
     <a href="#part3_examples" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle show">Applications</a>
     <ul class="collapse list-unstyled show" id="part3_examples">
-        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/digital_vision_test">Digital Vision Test</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/bayesian_viral_load_test">Bayesian Viral Load Test</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
+        <li><a href="../../examples/fairness">Fairness in AI</a></li><li><a href="../../examples/federalist">Federalist Paper Authorship</a></li><li><a href="../../examples/name2age">Name to Age</a></li><li><a href="../../examples/prob_baby_delivery">Probability of Baby Delivery</a></li><li><a href="../../examples/bayesian_carbon_dating">Bayesian Carbon Dating</a></li><li><a href="../../examples/digital_vision_test">Digital Vision Test</a></li><li><a href="../../examples/bridge_distribution">Bridge Distribution</a></li><li><a href="../../examples/bayesian_viral_load_test">Bayesian Viral Load Test</a></li><li><a href="../../examples/dart_logo">CS109 Logo</a></li><li><a href="../../examples/tracking_in_2D">Tracking in 2D</a></li>
     </ul>
 </li>
 </li>
@@ -358,7 +358,7 @@
 
 <p>In this section we are going to consider the number of heads on $n$ coin flips. This thought experiment is going to be a basis for much probability theory! It goes far beyond coin flips.</p>
 
-<p>Say a coin comes up heads with probability $p$. Most coins are fair and as such come up heads with probability $p=0.5$. There are many events for which coin flips are a great analogy that have different values of $p$ so lets leave $p$ as a variable. You can try simulating coins here. Note that <code class="blue">H</code> is short for Heads and <code>T</code> is short for Tails. We think of each coin as distinct:</p>
+<p>Say a coin comes up heads with probability $p$. Most coins are fair and as such come up heads with probability $p=0.5$. There are many events for which coin flips are a great analogy that have different values of $p$ so let's leave $p$ as a variable. You can try simulating flipping coins here. Note that <code class="blue">H</code> is short for Heads and <code>T</code> is short for Tails. We think of each coin as distinct:</p>
 
 <p>
 <div class="bordered">
@@ -377,7 +377,7 @@ Probability of heads $p$: <input  type="number" class="form-control example-inli
 </div>
 Simulator results:
 <pre class="language-python"  style="height:50px;"><code id="results"></code></pre>
-Total number of heads: <span id="nHeads"></span>
+Total number of heads: <span class="nHeads"></span><br/>
 </div>
 
 <script>
@@ -402,30 +402,47 @@ function simulate() {
 			results += ', '
 		}
 	}
+
+	let pr_x = binomialPmf(n,p,nHeads).toFixed(3)
+
 	$("#results").html(results)
-	$("#nHeads").html(nHeads)
+	$(".nHeads").html(nHeads)
+	$(".nFlips").html(n)
+	$(".pHeads").html(p)
+	$(".prResult").html(pr_x)
 }
 </script></p>
 
 <p>
-	Let's explore a few probability questions in this domain.
+	Using the math in this chapter we will be able to show that the probability of getting exactly <span class="nHeads"></span> heads (when the probability of heads on each flip is <span class="pHeads"></span>) = <span class="prResult"></span>. Specifically in this chapter:
+
+	<ol>
+		<li><a href="#warmups">Warmups</a>: We calculate the probability of a few exact outcomes.</li>
+		<li><a href="exactlykheads">Exactly $k$ heads</a>. We derive the general formula.</li>
+		<li><a href="exactlykheads">More than $k$ heads</a>. We explore this interesting related problem.</li>
+	</ol>
 </p>
 
-<h2>Warmups</h2>
+<h2 id="warmups">Warmups</h2>
+
+<p>In all of these warmups we are going to consider the probability of different outcomes when you flip a coin $n$ times and each time the probability of heads is $p$. In each solution we will consider the case where $n=10$ and $p=0.6$.</p><br/>
 
 <p>
-	<b>What is the probability that all $n$ flips are heads?</b><br/>
+	<b>What is the probability that all $n$ flips are heads?</b> <br/>
 	<div class="bordered">
 
-		Lets say $n=10$ this question is asking what is the probability of getting:
+		This question is asking what is the probability of getting the outcome:
 		<pre class="language-python"><code class="coins">H, H, H, H, H, H, H, H, H, H</code></pre>
 		
-		Each coin flip is independent so we can use the rule for <a href="../../part1/prob_and">probability of <b>and</b> with independent events</a>. As such, the probability of $n$ heads is  $p$ multiplied by itself $n$ times: $p^n$. If $n=10$ and $p=0.6$ then the probability of $n$ heads is around 0.006.
+		<p>Where each flip lands in heads (<code class="blue">H</code>). Each coin flip is independent so we can use the rule for <a href="../../part1/prob_and">probability of <b>and</b> with independent events</a>. As such, the probability of $n$ heads is  $p$ multiplied by itself $n$ times: $p^n$.</p>
+		
+		<p>If $n=10$ and $p=0.6$ then the probability of $n$ heads = $p^n = 0.6^{10} \approx$ 0.006.</p>
+
 	</div>
-</p>
+</p><br/>
 
 <p>
-	<b>What is the probability that all $n$ flips are tails?</b><br/>
+	<b>What is the probability that all $n$ flips are tails? </b><br/>
 	<div class="bordered">
 
 		Lets say $n=10$ this question is asking what is the probability of getting:
@@ -433,7 +450,7 @@ function simulate() {
 		
 		Each coin flip is independent. The probability of tails on any coin flip is $1-p$. Again, since the coin flips are independent, the probability of tails $n$ times on $n$ flips is $(1-p)$ multiplied by itself $n$ times: $(1-p)^n$. If $n=10$ and $p=0.6$ then the probability of $n$ tails is around 0.0001.
 	</div>
-</p>
+</p><br/>
 
 <p>
 	<b>First $k$ heads then $n-k$ tails</b><br/>
@@ -450,7 +467,7 @@ function simulate() {
 
 <p>Next lets try to figure out the probability of exactly $k$ heads in the $n$ flips. Importantly we don't care where in the $n$ flips that we get the heads, as long as there are $k$ of them. Note that this question is different than the question of first $k$ heads and then $n-k$ tails which requires that the $k$ heads come first! That particular result does generate exactly $k$ coin flips, but there are others.</p>
 
-<p>There are many others! In fact any permutation of $k$ heads and $n-k$ tails will satisfy this event. Lets ask the computer to list them all for exactly $k=4$ heads within $n=10$ coin flips. The output region is scrollable:
+<p>There are many others! Lets ask the computer to list the ways we could generate exactly $k=4$ heads within $n=10$ coin flips. The output region is scrollable:
 
 <pre style="height:400px" class="language-python"><code class="coins">(H, H, H, H, T, T, T, T, T, T)
 (H, H, H, T, H, T, T, T, T, T)
@@ -661,19 +678,33 @@ function simulate() {
 (T, T, T, T, T, H, H, H, T, H)
 (T, T, T, T, T, H, H, T, H, H)
 (T, T, T, T, T, H, T, H, H, H)
-(T, T, T, T, T, T, H, H, H, H)</code></pre>
+(T, T, T, T, T, T, H, H, H, H)</code></pre></p>
 
-<p>Exactly how many outcomes are there with $k=4$ heads in $n=10$ flips? 210. The answer can be calculated using permutations of indistinct objects: $$N = \frac{n!}{k! (n-k)!} = {n \choose k}$$
+<p>Let's call each of these rows an "ordering" since each row is a unique way to order the 4 heads and 6 tails. Let $N$ be the number of unique orderings.</p>
 
-<p>The probability of exactly $k=4$ heads is the probability of the <b>or</b> of each of these outcomes. Because we consider each coin to be unique, each of these outcomes is "mutually exclusive" and as such if $E_i$ is the outcome from the $i$th row, $$\p(\text{exactly $k$ heads}) = \sum_{i=1}^N \p(E_i)$$</p>
+<p>Exactly how many unique orderings are there with $k=4$ heads in $n=10$ flips? $N=210$. Why? Each ordering listed above is a permutation of the list [<code class="blue">H</code>, <code class="blue">H</code>, <code class="blue">H</code>, <code class="blue">H</code>, <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>]. As such, the question "how many orderings are there?" is analogous to the question, how many distinct orderings of characters are possible for the string "HHHHTTTTT"? Because <code class="blue">H</code> characters are indistinct from one another (and same for <code>T</code>) we can solve this problem using <a href="../../part1/combinatorics/#perm_indisctinct">Permutations of Indistinct Objects</a>: 
+	
+	$$\text{Num Orderings} = \frac{n!}{k! (n-k)!} = {n \choose k}$$
 
-<p>The next question is, what is the probability of each of these outcomes?</p>
+<p>Each of these orderings can be thought of as one event, or outcome, of flipping 10 coins. Let's name $E_i$ to be the event that we get the exact outcome in the $i$th row. $E_1$ is the event that we get [<code class="blue">H</code>, <code class="blue">H</code>, <code class="blue">H</code>, <code class="blue">H</code>, <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>]. $E_2$ is the event that we get [<code class="blue">H</code>, <code class="blue">H</code>, <code class="blue">H</code>, <code>T</code>, <code class="blue">H</code>,  <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>, <code>T</code>] and so on.</p>
 
-<p>Here is a arbitrarily chosen outcome which satisfies the event of exactly $k=4$ heads in $n=10$ coin flips. In fact it is the one on row 128 in the list above:
+<p>The probability of exactly $k=4$ heads is the probability of the <b>or</b> of each of these events $E_i$. If you flip a coin 10 times, it is not possible to have more than one of the $E_i$ events occur (eg both $E_1$ and $E_2$ can't be true if you flip 10 coins). In other words, each of these events $E_i$ is "mutually exclusive" and as such: 
+	
+	$$
+	\begin{align}
+	\p(\text{exactly $k$ heads}) 
+	&= \p(E_1 \or E_2 \or \ldots \or E_N) \\
+	 &= \sum_{i=1}^N \p(E_i)
+	\end{align}
+	$$</p>
+
+<p>The next question is, what is the probability of each of these events $E_i$?</p>
+
+<p>Here is a arbitrarily chosen ordering which satisfies the event of exactly $k=4$ heads in $n=10$ coin flips. It is $E_{128}$, the ordering on row 128 in the list above:
 
 	<pre class="language-python"  style="height:50px;"><code class="coins">T, H, T, T, H, T, T, H, H, T</code></pre>
 
-<p>What is the probability of getting the exact sequence of heads and tails in the example above? Each coin flip is still independent, so we multiply $p$ for each heads and $1-p$ for each tails. Let $E_{128}$ be the event of this exact outcome:
+<p>What is the probability of event $E_{128}$, the exact sequence of heads and tails in the example above? Each coin flip is still independent, so we multiply $p$ for each heads and $1-p$ for each tails. 
 	$$\p(E_{128}) = (1-p) \cdot p \cdot (1-p) \cdot (1-p) \cdot p \cdot (1-p) \cdot (1-p) \cdot p \cdot p \cdot (1-p)$$
 If you rearrange these multiplication terms you get:
 	$$
@@ -682,7 +713,10 @@ If you rearrange these multiplication terms you get:
 	&= p^4 \cdot (1-p)^{6}
 	\end{align}
 	$$
-There is nothing too special about row 128. If you chose any row, you would get $k$ independent heads and $n-k$ independent tails. For any row $i$, $\p(E_i) = p^k \cdot (1-p)^{n-k}$. Now we are ready to calculate the probability of exactly $k$ heads:
+There is nothing too special about row 128. If you chose any row, you would get $k$ independent heads and $n-k$ independent tails. For any row $i$, $\p(E_i) = p^k \cdot (1-p)^{n-k}$. </p>
+
+
+<p>Now we are ready to calculate the probability of exactly $k$ heads:
 
 $$
 \begin{align}
@@ -693,10 +727,25 @@ $$
 	&= {n \choose k} \cdot p^k \cdot (1-p)^{n-k} && \text{Perm of indistinct objects} 
 \end{align}$$
 
+Let's bring that back to the example of getting exactly $k=4$ heads out of $n=10$ where the probability of getting a heads on any one flip is $p=0.6$. The probability of exactly $k$ heads is:
+$$
+\begin{align}
+\p(\text{exactly $k$ heads}) 
+&= {n \choose k} \cdot p^k \cdot (1-p)^{n-k} &&\text{Just derived!}\\
+	&= {10 \choose 4} \cdot 0.6^4 \cdot (1-0.6)^{10-4} && \text{Sub in $n$, $k$, $p$} \\
+	&= 210 \cdot 0.6^4 \cdot 0.4^6 && \text{Simplify} \\
+	&= 0.111
+\end{align}
+$$
+
+We are done! This result is truly useful. Care about the probability of number of voters who vote for a candidate? Care about the number of people who get a disease? Care about the number of people who click on an ad? This derivation is the basis for all of that! Later in this book we will formalize this incredible result into the <a href="../../../part2/binomial/">Binomial Random Variable</a>.
+
 <h2>More than $k$ heads</h2>
 
 <p>
-	You can use the formula for exactly $k$ heads to compute other probabilities. For example the probability of more than $k$ heads is:
+	There are many cases where you care about the probability of more than $k$ heads. We can derive a solution based on the forumla for exactly $k$ heads.</p>
+	
+	<p>If you want the probability of getting more than $k=4$ heads out of $n=10$ coin flips it is the probability of the <b>or</b> of each of the events where you get exactly $i$ heads for $i=5, 6, 7, 8, 9, 10$. Note that all the events where you get exactly $i$ heads are mutually exclusive from the events where you get exactly $j$ heads when $ i \neq j$. For example if you flip a coin 10 times, it is not possible to get exactly 4 heads and to also get exactly 5 heads.  As such the probability of <b>or</b> becomes addition:
 	$$
 \begin{align}
 \p(\text{more than $k$ heads}) 
@@ -704,6 +753,8 @@ $$
 	&= \sum_{i=k+1}^n {n \choose i} \cdot p^i \cdot (1-p)^{n-i} && \text{Substitution}\\
 \end{align}$$
 	</p>
+
+	<!-- <p><b>Buggy approach:</b> If the probability of $p$ was 0.5, a common incorrect solution I see to this problem is to count the number events where there are at least $k$ heads in the following way. </p> -->
 
 <script>
 
@@ -856,6 +907,8 @@ $$
         })
     }
 </script>
+
+                         <br/><br/>
                 
                     </div>
                 </div>

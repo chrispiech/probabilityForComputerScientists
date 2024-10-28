@@ -21,11 +21,11 @@ Query Name: <input onchange="runName2Age()" class="form-control" value="Katherin
 
 <h3>Computation</h3>
 
-<p> The US Social Security applications data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name:
+<p> The US Social Security applications data provides you with a function: <code>count(year, name)</code> which returns the number of US citizens, born in a given year with a given name. You also have access to a list <code>names</code> which has each name ever given in the US and <code>years</code> which has all the years. This function is implicitly giving us the joint probability over names and birth year. The probability of a joint assignment to name and birth year can be estimated as the count of people with that name, born on that year, over the total number of people in the dataset. Let $B$ be the year someone is born, and let $N$ be their name. We will use $k$ to denote the number of entries in the dataset:
 	$$
 	P(B = b,N = n) \approx 
 	\frac{\text{count}(b, n)}
-	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	{k}
 	$$
 
 <p>The question we would really like to answer is: what  is  your belief  that  a  resident  was  born  in  1950,  given  that  their name is Gary?</p>
@@ -35,11 +35,14 @@ Query Name: <input onchange="runName2Age()" class="form-control" value="Katherin
 		\begin{align*}
 		\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})}
 		\end{align*}
-But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute using marginalization:
+
+Note: Bayes' Theorem is a more typical choice for inference tasks like this one. However, in this case its was necessary because it is easier to compute $P(B = b, N=n)$ than $P(N=n | B=b)$. That is why we used the definition of conditional probability instead.
+
+The conditional probability approach this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute using marginalization:
 
 \begin{align*}
 \P( N = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})\\
-&\approx \frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+&\approx \sum\limits_{y \in \text{years}} \frac{\text{count}(y, \text{Gary})}{k}
 \end{align*}
 
 
@@ -54,12 +57,12 @@ But this leaves one term to compute: $\P(N = \text{Gary})$ which we can compute 
 {
 	\Big(
 	\frac{\text{count}(1950, \text{Gary})}
-	{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	{k}
 	\Big)
 }
 {
 	\Big(
-	\frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{\sum\limits_{i \in \text{names}} \sum\limits_{j \in \text{years}} \text{count}(i,j)}
+	\frac{  \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{k}
 	\Big)
 } \\
 &\approx

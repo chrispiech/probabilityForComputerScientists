@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+
 import os
 import pathlib
 from bottle import SimpleTemplate
