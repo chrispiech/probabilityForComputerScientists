@@ -5,7 +5,7 @@
 <head>
     
 
-<title>Probability of and</title>
+<title>Information Theory</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -354,91 +354,188 @@
               
                         
  
-
-<center><h1>Probability of <b>and</b></h1></center>
+<center><h1>Information Theory</h1></center>
 <hr/>
 
-<p>The probability of the <b><i>and</i></b> of two events, say $E$ and $F$, written $\p(E \and F)$, is the probability of both events happening. You might see equivalent notations $\p(EF)$, $\p(E ∩ F)$ and $\p(E,F)$ to mean the probability of and. How you calculate the probability of event $E$ and event $F$ happening
-depends on whether or not the events are "independent". In the same way that mutual exclusion makes it easy to calculate the probability of the <b><i>or</i></b> of events, independence is a property that makes it easy to calculate the probability of the <b><i>and</i></b> of events.</p>     
+<p>Information theory is an incredibly powerful perspective which plays a central role in a ton of algorithms, including Decision Trees, the WordleBot, Adaptive Tests, Compression of Data, Optimal Poker Play and even compression of data! It is a concept that is not too complicated, but can get confusing for some. The goal of this chapter is to balance showing off the awesome power of Information Theory while also keeping things as straight forward as possible. To that end, a great place to start is thinking about how you could write a bot that can play the question answering game of "Think of an Animal". </p>
 
-<h2><b>And</b> with Independent Events</h2>
 
-<p>If events are <a href="../../part1/independence"><b></i>independent</i></b></a> then calculating the probability of <b><i>and</i></b> becomes simple multiplication:
+<h3>Think of an Animal?</h3>
+<p>The game of "Think of an Animal" goes like this. The human is going to be thinking of an animal. We assume that the distribution of how often they chose an animal is known (based off how popular the animal is to four year olds):</p>
 
 <p>
-	<div class="bordered">
-		<b><i>Definition</i></b>: Probability of <b><i>and</i></b> for independent events.<br/>
+  <center>
+  <img class="mainFigureFull" src="../../../img/chapters/thinkingofananimal.png"></img>
+  </center>
+  </p>
 
-		<p>If two events: $E$, $F$ are independent then the probability of $E$ <b><i>and</i></b> $F$ occurring is:
-			$$
-			\p(E \and F) = \p(E) \cdot \p(F)
-			$$
-		</p> 
-		<p>This property applies regardless of how the probabilities of $E$ and $F$ were calculated and
-whether or not the events are mutually exclusive. </p>
-
-<p> The independence principle extends to more than two
-events. For $n$ events $E_1, E_2, \dots E_n$ that are <b><i>mutually</i></b> independent of one another -- the independence equation also holds for all subsets of the events.
-$$
-\p(E_1 \and E_2 \and \dots \and E_n) = \prod_{i=1}^n \p(E_i)
-$$
-</p>
-<p></p>
-	</div>
-</p>
-
-<p >
-	We can prove this equation by combining the definition of conditional probability and the definition of independence.
-	<div class="purpleBox">
-	<p><b><i>Proof</i></b>: If $E$ is independent of $F$ then $\p(E \and F) = \p(E) \cdot \p(F)$</p>
-	$$
-	\begin{align}
-	\p(E|F) &= \frac{\p(E \and F)}{\p(F)} && \text{Definition of }
-	\href{ ../../part1/cond_prob/}{\text{conditional probability}} 
-	\\
-	\p(E) &=  \frac{\p(E \and F)}{\p(F)} && \text{Definition of }
-	\href{ ../../part1/independence/}{\text{independence}} \\
-	\p(E \and F) &= \p(E) \cdot \p(F) && \text{Rearranging terms}
-	\end{align}
-	$$
-</div>
-	</p>
-
-<p>See the chapter on <a href="../../part1/independence">independence</a> to learn about when you can assume that two events are independent</p>
-
-<h2><b>And</b> with Dependent Events</h2>
-
-<p>Events which are not independent are called <b><i>dependent</i></b> events. How can you calculate the probability of the <b>and</b> of dependent events? If your events are mutually exclusive you might be able to use a technique called DeMorgan's law, which we cover in a later chapter. For the probability of and in dependent events there is a direct formula called the chain rule which can be directly derived from the definition of conditional probability:
-
-	<p>
-	<div class="bordered">
-
-<b><i>Definition</i></b>: The chain rule.<br/>
-
-<p>The formula in the definition of conditional probability can be re-arranged to derive a general way of calculating the probability of the <b><i>and</i></b> of any two events:
-$$
-\p(E \and F) = \p(E | F) \cdot \p(F)
-$$
-</p>
-<p>Of course there is nothing special about $E$ that says it should go first. Equivalently:
-	$$
-	\p(E \and F) = \p(F \and E) =  \p(F | E) \cdot \p(E)
-	$$
-</p>
-
-<p>We call this formula the "chain rule." Intuitively it states that the probability of observing events $E$ <b><i>and</i></b> $F$ is the
-probability of observing $F$, multiplied by the probability of observing $E$, given that you have observed $F$.
-It generalizes to more than two events:
-$$
-\begin{align}
-\p(E_1 \and E_2 \and \dots \and E_n) = &\p(E_1) \cdot \p(E_2|E_1) \cdot \p(E_3 |E_1 \and E_2) \dots  \\  &\p(E_n|E_1 \dots E_{n−1})
-\end{align}
-$$
-	</div>
-	</p>
-
+<p>The task of your algorithm is to select which question to ask next. Assume you are given a bank of yes or no questions which include classics like:
+<ul>
+  <li>Is it a pet?</li>
+  <li>Does it live in the water?</li>
+  <li>Are you thinking of a dog?</li>
+</ul>
 
 </p>
+
+<h3>Chosing a Best Question</h3>
+
+How can we chose the best question to ask? Consider a simplified game with five animals (Dog, Cat, Elephant, Bear and Monkey) and only two questions to chose from "Is it a pet?" and "Is it a Dog?" For each question we can use the Law of Total Probability to think through the probability the response will be "yes" or "no". Even better! We can think through the resulting probability mass function of the animal random variable based on each possible answer to each possible question: 
+
+<p>
+  <center>
+  <img class="mainFigureFull" src="../../../img/chapters/thinkofananimalqs.png"></img>
+  </center>
+  </p>
+<p>
+  We are so close! If we could only quantify how much uncertainty the four resulting probability mass functions have, we could simply chose the question that minimizes our expected uncertainty as to what animal the person is thinking of. This quantification of uncertainty is formally called "Entropy" and it is the key concept in Information Theory.
+</p>
+  <h3>Measure of Uncertainty from a High Level</h3>
+
+  <p>Let $X$ be any random variable. A very elegant way to quantify how much uncertainty the Probability Mass Function of $X$ represents is to think through all the values that $X$ could take on and for each value calculate how surprised you would be if it turned out that $X$ in fact took on that value. If you calculate a weighted sum over these surprise values, you would get the expected Surprise of the random variable</p>
+
+  \begin{align*}
+  \text{Uncertainty}(X) 
+  &= E[\text{Surprise}(X)] \\
+  &= \sum_x \text{Surprise}(x) \cdot P(X=x)
+  \end{align*}
+
+  That is the big idea! The main remaining todo is to define what we mean by "Surprise" of an event.
+
+  <h3>Measure of Surprise of an Event</h3>
+
+  <p>How should we quantify the degree to which we would be surprised if we were told that $X$ took on the value $x$? There are many ways one could quantify Surprise, all of which are based on the probability of the event $\P(X=x)$. Here are three reasonble Surprise functions: </p>
+
+  <p>
+    <center>
+    <img class="mainFigureFull" src="../../../img/chapters/surprise.png"></img>
+    </center>
+    </p>
+
+    <p>All of these functions hit the following desiderata: 
+      
+      <ul>
+        <li>Low probability events are surprising</li>
+        <li>High probability events are not surprising</li>
+        <li>Surprise is a monotonically decreasing function of probability</li>
+      </ul>
+    </p>
+
+    <p>For many reasons, Information Theory defines Surprise using a variation of the middle equation $$\text{Surprise}(E) = \log_2 \frac{1}{P(E)}$$</p>
+
+    <p>Looking at the relationship between $P(E)$ and the value of $Surprise(E)$ we can observe some of those intuitive relationships:</p>
+    <p>
+    <table class="table">
+      <tr>
+          <th>Probability of Event<br>$P(E)$</th>
+          <th>Surprise of Event<br>$\text{Surprise}(E) = \log_2 \frac{1}{P(E)}$</th>
+      </tr>
+      <tr>
+          <td>1/2</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td>1/4</td>
+          <td>2</td>
+      </tr>
+      <tr>
+          <td>1/8</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>1/16</td>
+          <td>4</td>
+      </tr>
+      <tr>
+          <td>1/32</td>
+          <td>5</td>
+      </tr>
+      <tr>
+          <td>1/64</td>
+          <td>6</td>
+      </tr>
+      <tr>
+          <td>1/128</td>
+          <td>7</td>
+      </tr>
+  </table>
+  </p>
+
+  <p>In other words, if an event with probability $P(E) = 1/16$ were to occur we would be four times as "Surprised" as if an event with $P(E) = 1/2$ were to occur. That feels nice!</p>
+
+<p>
+  <div class="bordered">
+    <p><b><i>Definition:</i></b> Surprise of an Event (Information Content)</p>
+  
+    <!-- WARNING: from wikipedia -->
+    <p>The information content, also called the surprisal or self-information, of an event 
+      E
+      is a function which increases as the probability  of an event decreases. When 
+      the probability is close to 1, the surprisal of the event is low, but if 
+      the probability is close to 0, the surprisal of the event occuring is high. This relationship is described by the function:</p>
+    
+  
+    \begin{align*}
+    \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) 
+    \end{align*}
+
+    This can be written (in a more confusing way) as:
+    \begin{align*}
+    \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big)  \\
+    &= \log_2 \p(E)^{-1} \\
+    &= -\log_2 \p(E)
+    \end{align*}
+
+    In the initial definition of Surprise of an Event, the function name $I$ was used as shorthand for Surprise. $I$ stands for "Information Content" or "Self Information", two other names for Surprise of an event.
+    
+  </div>
+</p>
+<p>
+  There are many other stories that we could tell for why $\log_2 \frac{1}{\p(E)}$ is a great choice for our measure of Surprise. Claude Shannon, the father of information theory, chose the base 2 logarithm because it would allow you to express your amount of surprise in bits (as in 0, 1 values used in a computer). Information theory has many applications, but it was first invented when he was trying to come up with a way to optimally compress text based data!
+  </p>
+
+  <h3>Uncertainty of a Random Variable (Entropy)</h3>
+  <p>Now that we have a formal definition of Surprise we can revisit the computation of Uncertainty of a random variable.</p>
+
+  <p>
+    <div class="bordered">
+      <p><b><i>Definition:</i></b> Uncertainty of an Random Variable (Entropy)</p>
+    
+      <p>Let $H$ be our measure of how much uncertainty we have about a random variable $X$. Define $H$ to be the expected surprise of observing the assignment to $X$. $H(X) = E[\text{Surprise}(X)]$. Using the Law of Unconcious Statistician, and the definition of Surprise of an event, we can expand out the formula for $H$ as: </p>
+      
+    
+      $$
+      H(X) = \sum_{x \in X} \log_2 \Big(\frac{1}{\p(X=x)}\Big) \cdot \p(X=x)  
+      $$
+
+      Uncertainty ($H$) can also be rewritten (in a more confusing way) as:
+      \begin{align*}
+      \text{H}(X) 
+&= \sum_{x \in X} \text{Surprise}(X=x) \cdot P(X=x)  \\
+&= \sum_{x \in X} \log_2 \frac{1}{P(X=x)} \cdot P(X=x)  \\
+&= \sum_{x \in X} \log_2 P(X=x) ^{-1}\cdot P(X=x)  \\
+&= \sum_{x \in X} - \log_2 P(X=x)\cdot P(X=x)  \\
+&= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x)  \\
+ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x)  
+      \end{align*}
+
+  
+      
+    </div>
+  </p>
+
+  <!-- .png -->
+
+  <p>We now have all the theoretical tools we need to select our best question in the game of "Think of an Animal". For each possible resulting Probability Mass Function, we can calculate the Uncertainty $(H)$ of that PMF:</p>
+  <p>
+    <center>
+    <img class="mainFigureFull" src="../../../img/chapters/thinkofananimalentropy.png"></img>
+    </center>
+    </p>
+
+    <p>The question "Is it a pet?" has an expected uncertainty of 1.3. The question "Is it a Dog?" has an expected uncertainty of 1.7. As such we would be less uncertain about what animal our friend is thinking about, in expectation, if we were to ask the question "Is it a pet?"</p>
+
+    <p>This is one of many applications of Information Theory!</p>
 
                         
 

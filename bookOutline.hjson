@@ -106,6 +106,7 @@
 			"bootstrapping":"Bootstrapping",
 			#"parameters":"Uncertainty in Parameters",
 			"algorithmic_analysis":"Algorithmic Analysis",
+			"information_theory":"Information Theory"
 			#"bounds":"Probability Bounds"
 		},
 		"examples": {
