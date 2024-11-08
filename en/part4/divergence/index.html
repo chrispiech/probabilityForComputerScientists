@@ -358,6 +358,8 @@
 <center><h1>Distance Between Distributions</h1></center>
 <hr/>
 
+<p>Here is an important question! How can you quantify how different two distributions are? In other words, if I have two Probability Mass Functions, can I calculate a number that says how much they diverge from one another? Here are three reasonable ways to quantify distance between distributions:</p>
+
 <!-- hurricanesVsObserved.png -->
 
 <h3>Total Variational Distance</h3>
@@ -376,6 +378,59 @@
     
   </div>
 </p>
+
+<h3>Earth Mover's Distance</h3>
+
+<p>Imagine one distribution is a lump of dirt. How much work would it take to make it look just like the other? Also called the Wasserstein metric.</p>
+
+<p>This value is very meaningful, but it doesn't have a closed form equation. Instead it is computed by solving a linear program. If the range of values that the random variables can take on is of size $n$, the linear program has a run time of $O(n^3 \cdot \log n)$ which is very slow.</p>
+
+<h3>Kullback Leiber Divergence</h3>
+
+<p>Let $X$ and $Y$ be discrete random variables. Calculate the expected "excess surprise" from using Y as your Probability Mass Function instead of X when the actual Probability Mass Function is X.
+
+
+<p>
+  <div class="bordered">
+    <p><b><i>Definition:</i></b> Kullback Leiber Divergence</p>
+  
+    <p>Let $X$ and $Y$ be discrete random variables</p>
+
+    
+
+  \begin{align*}
+  \text{KL}(X, Y) 
+&= \sum_{x \in X} \text{ExcessSurprise}(x) \cdot P(X=x) \\
+&= \sum_{x \in X} \Big[\text{Surprise}_X(x) - \text{Surprise}_Y(x)\Big] \cdot P(X=x) \\
+&= \sum_{x \in X} \Big[\log_2\frac{1}{P(Y=x)} - \log_2 \frac{1}{P(X=x)}\Big] \cdot P(X=x) \\
+&= \sum_{x \in X} - \log_2 P(Y=x) + \log_2 P(X=x) \cdot P(X=x) \\
+&= \sum_{x \in X}  \log_2 \frac{P(X=x)}{P(Y=x) } \cdot P(X=x) \\
+
+  \end{align*}
+  </div>
+</p>
+
+<p>Here is example code for calculating how different an observed pmf of hurricanes per year is from a predicted poisson distribution</p>
+
+<pre class="language-python"><code>from scipy import stats
+import math
+
+def kl_divergence(predicted_lambda, observed_pmf):
+    """
+    We predicted that the number of hurricanes would be 
+    X ~ Poisson(predicted_lambda) and observed a real world
+    number of hurricanes Y ~ observed_pmf
+    """
+    X = stats.poisson(predicted_lambda)
+    divergence = 0
+    # loop over all the values of hurricanes
+    for i in range(0, 40):
+      pr_X_i = X.pmf(i)
+      pr_Y_i = observed_pmf[i]
+      excess_surprise_i = math.log(pr_X_i / pr_Y_i)
+      divergence += excess_surprise_i * pr_X_i
+    return divergence
+</code></pre>  
 
                         
 

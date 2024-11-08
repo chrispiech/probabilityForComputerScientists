@@ -525,6 +525,26 @@ How can we chose the best question to ask? Consider a simplified game with five 
     </div>
   </p>
 
+  <p>Here is code that calculates the Uncertainty $(H)$ of a random variable, based on its probability mass function:</p>
+
+  <pre class="language-python"><code>import numpy as np
+
+def calc_uncertainty(pmf):
+  """
+  Calculate how much uncertainty is represented by this 
+  probability mass function. Also known as the Entropy of a
+  random variable, H(X).
+  """
+  uncertainty = 0
+  for x in pmf:
+      p_x = pmf[x]
+      # skip zero probabilities
+      if p_x == 0: continue
+      suprise_x = np.log2(1/p_x)
+      uncertainty += suprise_x * p_x
+  return uncertainty
+ </code></pre>  
+
   <!-- .png -->
 
   <p>We now have all the theoretical tools we need to select our best question in the game of "Think of an Animal". For each possible resulting Probability Mass Function, we can calculate the Uncertainty $(H)$ of that PMF:</p>
