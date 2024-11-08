@@ -1,0 +1,28 @@
+
+% rebase('templates/chapter.html', title="Distance Between Distributions")
+ 
+<center><h1>Distance Between Distributions</h1></center>
+<hr/>
+
+<!-- hurricanesVsObserved.png -->
+
+<h3>Total Variational Distance</h3>
+
+<p>Loop over all possible values and calculate the absolute difference in probability.</p>
+
+<p>
+  <div class="bordered">
+    <p><b><i>Definition:</i></b> Total Variation Distance</p>
+  
+    <p>Let $X$ and $Y$ be discrete random variables</p>
+
+    \begin{align*}
+      \text{TV}(X, Y) = \frac{1}{2} \sum_{i} |\P(X = i) - \P(Y = i)|
+    \end{align*}
+    
+  </div>
+</p>
+
+<h3>Earth Mover's Distance</h3>
+
+<p>Imagine one distribution is a lump of dirt. How much work would it take to make it look just like the other? Also called the Wasserstein metric.</p>
