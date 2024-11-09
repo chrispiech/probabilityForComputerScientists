@@ -1,0 +1,36 @@
+
+% rebase('templates/chapter.html', title="Expectation of Sum Proof")
+ 
+<center><h1>Expectation of Sum Proof</h1></center>
+<hr/>
+
+<p>Now that we have learned about joint probabilities, we have all the tools we need to prove one of the most useful properties of Expectation: the fact that the expectation of a sum of random variables is equal to the sum of expectation (even if the variables are not independent). In other words:</p>
+
+<p>For any two random variables $X$ and $Y$,
+$$
+\E[X + Y] = \E[X] + \E[Y]
+$$
+</p>
+
+<p>The proof is going to use the Law of Unconcious statistician (<a href="{{pathToLang}}part2/expectation#lotus">LOTUS</a>) where the function is addition!</p>
+
+<p>
+  <div class="bordered">
+    <p><b><i>Proof:</i></b> Expectation of Sum</p>
+
+    Let $X$ and $Y$ be any two random variables:
+    \begin{align*}
+
+\E&[X+Y] \\
+&= \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && LOTUS\\
+&= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{Distribute}\\
+&= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{Rearrange Sums}\\
+&= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{Refactor}\\
+&= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{Def of Marginal}\\
+&= \E[X] + \E[Y] && \text{Def of Expectation}
+
+    \end{align*}
+  </div>
+</p>
+
+<p>At no point in the proof do we need to assume that $X$ and $Y$ are independent. In the second step the joint probability ends up in each sum, and in both cases, one of the sums ends up marginalizing over the joint probability! </p>
