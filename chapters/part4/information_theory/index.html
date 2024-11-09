@@ -4,11 +4,11 @@
 <center><h1>Information Theory</h1></center>
 <hr/>
 
-<p>Information theory is an incredibly powerful perspective which plays a central role in a ton of algorithms, including Decision Trees, the WordleBot, Adaptive Tests, Compression of Data, Optimal Poker Play and even compression of data! It is a concept that is not too complicated, but can get confusing for some. The goal of this chapter is to balance showing off the awesome power of Information Theory while also keeping things as straight forward as possible. To that end, a great place to start is thinking about how you could write a bot that can play the question answering game of "Think of an Animal". </p>
+<p>Information theory is an incredibly powerful perspective which plays a central role in a ton of algorithms, including Decision Trees, the WordleBot, Adaptive Tests, Optimal Poker Play and even ompression of data (like Huffman Encoding or even Jpeg files)! The goal of this chapter is to balance showing off the awesome power of Information Theory while also keeping things as straight forward as possible. To that end, a great place to start is thinking about how you could write a bot that can play the question answering game of, "Think of an Animal". </p>
 
 
-<h3>Think of an Animal?</h3>
-<p>The game of "Think of an Animal" goes like this. The human is going to be thinking of an animal. We assume that the distribution of how often they chose an animal is known (based off how popular the animal is to four year olds):</p>
+<h3>Think of an Animal!</h3>
+<p>The game of "Think of an Animal" goes like this: The human is going to be thinking of an animal. We assume that the distribution of how often they chose an animal is known (based off how popular the animal is to four year olds):</p>
 
 <p>
   <center>
@@ -27,7 +27,7 @@
 
 <h3>Chosing a Best Question</h3>
 
-How can we chose the best question to ask? Consider a simplified game with five animals (Dog, Cat, Elephant, Bear and Monkey) and only two questions to chose from "Is it a pet?" and "Is it a Dog?" For each question we can use the Law of Total Probability to think through the probability the response will be "yes" or "no". Even better! We can think through the resulting probability mass function of the animal random variable based on each possible answer to each possible question: 
+How can we chose the best question to ask? Consider a simplified game with five animals (Dog, Cat, Elephant, Bear and Monkey) and only two questions to chose from "Is it a pet?" and "Is it a Dog?" For each question we can use the Law of Total Probability to think through the probability the response will be "yes" or "no". Even better! For each possible answer to each possible question, we can think through the resulting probability mass function over animals if we were to see that answer to that question:
 
 <p>
   <center>
@@ -42,7 +42,7 @@ How can we chose the best question to ask? Consider a simplified game with five 
   <p>Let $X$ be any random variable. A very elegant way to quantify how much uncertainty the Probability Mass Function of $X$ represents is to think through all the values that $X$ could take on and for each value calculate how surprised you would be if it turned out that $X$ in fact took on that value. If you calculate a weighted sum over these surprise values, you would get the expected Surprise of the random variable</p>
 
   \begin{align*}
-  \text{Uncertainty}(X) 
+  &\text{Uncertainty}(X) \\
   &= E[\text{Surprise}(X)] \\
   &= \sum_x \text{Surprise}(x) \cdot P(X=x)
   \end{align*}
@@ -70,7 +70,7 @@ How can we chose the best question to ask? Consider a simplified game with five 
 
     <p>For many reasons, Information Theory defines Surprise using a variation of the middle equation $$\text{Surprise}(E) = \log_2 \frac{1}{P(E)}$$</p>
 
-    <p>Looking at the relationship between $P(E)$ and the value of $Surprise(E)$ we can observe some of those intuitive relationships:</p>
+    <p>Looking at the relationship between $P(E)$ and the value of $\text{Surprise}(E)$ we can observe some of those intuitive relationships:</p>
     <p>
     <table class="table">
       <tr>
@@ -108,7 +108,7 @@ How can we chose the best question to ask? Consider a simplified game with five 
   </table>
   </p>
 
-  <p>In other words, if an event with probability $P(E) = 1/16$ were to occur we would be four times as "Surprised" as if an event with $P(E) = 1/2$ were to occur. That feels nice!</p>
+  <p>If an event with probability $P(E) = 1/16$ were to occur we would be four times as "Surprised" as if an event with $P(E) = 1/2$ were to occur. That feels nice!</p>
 
 <p>
   <div class="bordered">
