@@ -25,7 +25,7 @@ $$
 &= \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && LOTUS\\
 &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{Distribute}\\
 &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{Rearrange Sums}\\
-&= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{Refactor}\\
+&= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{Factor Out}\\
 &= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{Def of Marginal}\\
 &= \E[X] + \E[Y] && \text{Def of Expectation}
 
