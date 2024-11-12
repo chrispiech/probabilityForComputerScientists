@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    
+
 
 <title>Counting</title>
 
@@ -137,8 +136,8 @@
   $\DeclareMathOperator{\p}{P}$
   $\DeclareMathOperator{\P}{P}$
   $\DeclareMathOperator{\c}{^C}$
-  $\DeclareMathOperator{\or}{  or}$
-  $\DeclareMathOperator{\and}{  and}$
+  $\DeclareMathOperator{\or}{ or}$
+  $\DeclareMathOperator{\and}{ and}$
   $\DeclareMathOperator{\var}{Var}$
   $\DeclareMathOperator{\Var}{Var}$
   $\DeclareMathOperator{\Std}{Std}$
@@ -156,14 +155,14 @@
   $\DeclareMathOperator{\R}{\mathbb{R}}$
   $\DeclareMathOperator*{\argmax}{arg\,max}$
   $\newcommand{\d}{\, d}$
-  
+
 </div>
+
+
+
 
 <body class="greyBackground">
 
-
-    <div class="wrapper">
-        <!-- Sidebar  -->
 <nav id="sidebar">
     <div class="sidebar-header">
         <!-- <div></div> -->
@@ -313,47 +312,28 @@
 </ul>
 
 
-
-    <!-- <ul class="list-unstyled components">
-        
-         <li>
-            <p>Part ?: Misfits</p>
-        </li>
-        <li>
-             <a href="../../examples/probBabies.html">Probability and babies</a>
-            
-             <a href="../../">Sampling from a likelihood function</a>
-             <a href="../../">Law of Total Expectation</a>
-            
-        </li>
-    </ul> -->
-
-
-
     <ul class="list-unstyled CTAs">
         <li>
             Ⓒ Chris Piech, Stanford University
-            <!-- <a href="https://compedu.stanford.edu/codeinplace/v1/#/course" class="download">Back to Code in Place</a> -->
         </li>
     </ul>
 </nav>
-        <!-- Page Content  -->
-        <div id="content">
+
+  <div class="wrapper">
+
+
+    <!-- Page Content  -->
+    <div id="content">
 
 <button type="button" id="sidebarCollapse" class="mobile-only btn btn-dark exclude-from-print">
     <i class="fas fa-align-left"></i>
     <span></span>
 </button>
-            <!-- <button id="curiosityButton" onclick = "onCuriosity()" type="button" class="btn btn-primary btn-sm">
-              <span style="font-size:150%">I'm Curious</span>
-              <span></span>
-          </button> -->
+      <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+          <div class="col handout">
+
             
-            <div class="container-fluid">
-                <div class="row d-flex justify-content-center">
-                    <div class="col handout" >
-              
-                        
  
 <center><h1>Counting</h1></center>
 <hr/>
@@ -696,7 +676,7 @@ we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Excl
 
 
 
-                        
+
 
 
 
@@ -834,236 +814,261 @@ we have: $|A|$ = 64, $|B|$ = 64, and $|A \and B|$ = 16, so by the Inclusion-Excl
     }
 </script>
 
-                         <br/><br/>
-                
-                    </div>
-                </div>
-            </div>
+            <br /><br />
+
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script>
 
-$(document).ready(function() {
-  //addH2Numbers()
-  enableSearch()
-})
-
-function addH2Numbers() {
-  $("h2").each(function(i){
-    let title = $(this).html()
-    title = `${i+1}. ${title}`
-    $(this).html(title)
-  })
-}
-
-function enableSearch() {
-  $("#probability-for-digital-world-search").on('keyup', function (e) {
-      if (e.key === 'Enter' || e.keyCode === 13) {
-          let query = $("#probability-for-digital-world-search").val()
-          
-          window.location = `../../search.html?q=${query}`
-      }
-  });
-  // $.ajax({
-  //     type: "GET",
-  //     url: "../../../searchIndex.json",
-  //     dataType: "text",
-  //     success: function(data) {addSearchIndexData(data);}
-  //  });
-}
-
-function standardPMFConfig(xValues, yValues, xLabel, yLabel){
-  return {
-    type: 'bar',
-    data: {
-      labels: xValues,
-      datasets: [{
-        label: 'P(x)',
-        fill: false,
-        backgroundColor: 'blue',
-        borderColor: 'blue',
-        data: yValues,
-        pointRadius:1,
-        maxBarThickness:100,
-        pointHitRadius: 20
-      }]
-    },
-    options: {
-
-      steppedLine: false,
-      responsive: true,
-      tooltips: {
-        mode: 'index',
-        intersect: false,
-      },
-      hover: {
-        mode: 'nearest',
-        intersect: true
-      },
-      animation: {
-            duration: 0
-        },
-      plugins: {
-        legend: {
-              display: false
-           },
-         },
-      scales: {
-        x: {
-          display: true,
-          type: 'linear',
-          title: {
-            display: true,
-            text: xLabel
-          }
-        },
-        y: {
-          display: true,
-          title: {
-            display: true,
-            text: yLabel
-          },
-          ticks: {
-            beginAtZero: true
-          }
-        }
-      }
+  <script>
+    // Calculate and set the viewport height
+    function setVh() {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
-  };
-}
+    // Initial calculation
+    setVh();
+    // Recalculate on resize or orientation change
+    window.addEventListener('resize', setVh);
+    window.addEventListener('orientationchange', setVh);
 
-function standardPDFConfig(xValues, yValues, xLabel, yLabel){
-  return {
-    type: 'line',
-    data: {
-      labels: xValues,
-      datasets: [{
-        label: 'f(x)',
-        fill: false,
-        backgroundColor: 'blue',
-        borderColor: 'blue',
-        data: yValues,
-        pointRadius:1,
-        maxBarThickness:100,
-        pointHitRadius: 20
-      }]
-    },
-    options: {
-      steppedLine: false,
-      responsive: true,
-      tooltips: {
-        mode: 'index',
-        intersect: false,
-      },
-      hover: {
-        mode: 'nearest',
-        intersect: true
-      },
-      animation: {
-            duration: 0
-        },
-      plugins: {
-        legend: {
-              display: false
-           },
-         },
-      scales: {
-        x: {
-          display: true,
-          type: 'linear',
-          title: {
-            display: true,
-            text: xLabel
-          }
-        },
-        y: {
-          display: true,
-          title: {
-            display: true,
-            text: yLabel
-          },
-          ticks: {
-            beginAtZero: true
-          }
-        }
-      }
+    document.addEventListener('DOMContentLoaded', function() {
+        var sidebarCollapse = document.getElementById('sidebarCollapse');
+        var sidebar = document.getElementById('sidebar');
+
+        sidebarCollapse.addEventListener('click', function() {
+            // Toggle the 'active' class on the sidebar
+            // sidebar.classList.toggle('active');
+            // Toggle the 'sidebar-open' class on the body
+            document.body.classList.toggle('sidebar-open');
+        });
+    });
+  </script>
+  <script>
+
+    $(document).ready(function () {
+      //addH2Numbers()
+      enableSearch()
+    })
+
+    function addH2Numbers() {
+      $("h2").each(function (i) {
+        let title = $(this).html()
+        title = `${i + 1}. ${title}`
+        $(this).html(title)
+      })
     }
-  };
-}
 
-function standardPDFsConfig(datasets, xValues, xLabel, yLabel){
-  return {
-    type: 'line',
-    data: {
-      datasets: datasets
-    },
-    options: {
-
-      steppedLine: false,
-      responsive: true,
-      tooltips: {
-        mode: 'index',
-        intersect: false,
-      },
-      hover: {
-        mode: 'nearest',
-        intersect: true
-      },
-      animation: {
-            duration: 0
-        },
-      plugins: {
-        legend: {
-              display: false
-           },
-         },
-      scales: {
-        x: {
-          display: true,
-          type: 'linear',
-          title: {
-            display: true,
-            text: xLabel
-          }
-        },
-        y: {
-          display: true,
-          title: {
-            display: true,
-            text: yLabel
-          },
-          ticks: {
-            beginAtZero: true
-          }
-        }
-      }
-    }
-  };
-}
-
-
-function addSearchIndexData(data) {
-  var idx = lunr(function () {
-    this.ref('name')
-    this.field('text')
-
-    let documents = JSON.parse(data)
-
-    documents.forEach(function (doc) {
-      this.add(doc)
-    }, this)
-
-    $("#probability-for-digital-world-search").on('keyup', function (e) {
+    function enableSearch() {
+      $("#probability-for-digital-world-search").on('keyup', function (e) {
         if (e.key === 'Enter' || e.keyCode === 13) {
+          let query = $("#probability-for-digital-world-search").val()
+
+          window.location = `../../search.html?q=${query}`
+        }
+      });
+      // $.ajax({
+      //     type: "GET",
+      //     url: "../../../searchIndex.json",
+      //     dataType: "text",
+      //     success: function(data) {addSearchIndexData(data);}
+      //  });
+    }
+
+    function standardPMFConfig(xValues, yValues, xLabel, yLabel) {
+      return {
+        type: 'bar',
+        data: {
+          labels: xValues,
+          datasets: [{
+            label: 'P(x)',
+            fill: false,
+            backgroundColor: 'blue',
+            borderColor: 'blue',
+            data: yValues,
+            pointRadius: 1,
+            maxBarThickness: 100,
+            pointHitRadius: 20
+          }]
+        },
+        options: {
+
+          steppedLine: false,
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          animation: {
+            duration: 0
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              type: 'linear',
+              title: {
+                display: true,
+                text: xLabel
+              }
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: yLabel
+              },
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          }
+        }
+      };
+    }
+
+    function standardPDFConfig(xValues, yValues, xLabel, yLabel) {
+      return {
+        type: 'line',
+        data: {
+          labels: xValues,
+          datasets: [{
+            label: 'f(x)',
+            fill: false,
+            backgroundColor: 'blue',
+            borderColor: 'blue',
+            data: yValues,
+            pointRadius: 1,
+            maxBarThickness: 100,
+            pointHitRadius: 20
+          }]
+        },
+        options: {
+          steppedLine: false,
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          animation: {
+            duration: 0
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              type: 'linear',
+              title: {
+                display: true,
+                text: xLabel
+              }
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: yLabel
+              },
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          }
+        }
+      };
+    }
+
+    function standardPDFsConfig(datasets, xValues, xLabel, yLabel) {
+      return {
+        type: 'line',
+        data: {
+          datasets: datasets
+        },
+        options: {
+
+          steppedLine: false,
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          animation: {
+            duration: 0
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              type: 'linear',
+              title: {
+                display: true,
+                text: xLabel
+              }
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: yLabel
+              },
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          }
+        }
+      };
+    }
+
+
+    function addSearchIndexData(data) {
+      var idx = lunr(function () {
+        this.ref('name')
+        this.field('text')
+
+        let documents = JSON.parse(data)
+
+        documents.forEach(function (doc) {
+          this.add(doc)
+        }, this)
+
+        $("#probability-for-digital-world-search").on('keyup', function (e) {
+          if (e.key === 'Enter' || e.keyCode === 13) {
             let query = $("#probability-for-digital-world-search").val()
             let results = idx.search(query)
-        }
-    });
-  })
-}
+          }
+        });
+      })
+    }
 
-    </script>
+  </script>
 
 </body>
 

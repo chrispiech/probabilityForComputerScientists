@@ -1,36 +1,320 @@
-
 % rebase('templates/chapter.html', title="Expectation of Sum Proof")
- 
-<center><h1>Expectation of Sum Proof</h1></center>
-<hr/>
 
-<p>Now that we have learned about joint probabilities, we have all the tools we need to prove one of the most useful properties of Expectation: the fact that the expectation of a sum of random variables is equal to the sum of expectation (even if the variables are not independent). In other words:</p>
+<center>
+  <h1>Expectation of Sum Proof</h1>
+</center>
+<hr />
+
+<p>Now that we have learned about joint probabilities, we have all the tools we need to prove one of the most useful
+  properties of Expectation: the fact that the expectation of a sum of random variables is equal to the sum of
+  expectation (even if the variables are not independent). In other words:</p>
 
 <p>For any two random variables $X$ and $Y$,
-$$
-\E[X + Y] = \E[X] + \E[Y]
-$$
+  $$
+  \E[X + Y] = \E[X] + \E[Y]
+  $$
 </p>
 
-<p>The proof is going to use the Law of Unconcious statistician (<a href="{{pathToLang}}part2/expectation#lotus">LOTUS</a>) where the function is addition!</p>
+<p>The proof is going to use the Law of Unconcious statistician (<a
+    href="{{pathToLang}}part2/expectation#lotus">LOTUS</a>) where the function is addition!</p>
 
 <p>
-  <div class="bordered">
-    <p><b><i>Proof:</i></b> Expectation of Sum</p>
+<div class="bordered">
+  <p><b><i>Proof:</i></b> Expectation of Sum</p>
 
-    Let $X$ and $Y$ be any two random variables:
-    \begin{align*}
+  Let $X$ and $Y$ be any two random variables:
+  \begin{align*}
 
-\E&[X+Y] \\
-&= \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && LOTUS\\
-&= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{Distribute}\\
-&= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{Rearrange Sums}\\
-&= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{Factor Out}\\
-&= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{Def of Marginal}\\
-&= \E[X] + \E[Y] && \text{Def of Expectation}
+  \E&[X+Y] \\
+  &= \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && LOTUS\\
+  &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{Distribute}\\
+  &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{Rearrange Sums}\\
+  &= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{Factor Out}\\
+  &= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{Def of Marginal}\\
+  &= \E[X] + \E[Y] && \text{Def of Expectation}
 
-    \end{align*}
-  </div>
+  \end{align*}
+</div>
 </p>
 
-<p>At no point in the proof do we need to assume that $X$ and $Y$ are independent. In the second step the joint probability ends up in each sum, and in both cases, one of the sums ends up marginalizing over the joint probability! </p>
+<p>At no point in the proof do we need to assume that $X$ and $Y$ are independent. In the second step the joint
+  probability ends up in each sum, and in both cases, one of the sums ends up marginalizing over the joint probability!
+</p>
+
+<style>
+  /* X values (shades of light blue) */
+  .x-value {
+    background-color: #e0f7ff;
+    /* Base light blue */
+  }
+
+  .x-bright-1 {
+    background-color: #f0fbff;
+    /* Lightest blue */
+  }
+
+  .x-bright-2 {
+    background-color: #d0efff;
+  }
+
+  .x-bright-3 {
+    background-color: #b0e7ff;
+  }
+
+  .x-bright-4 {
+    background-color: #90dfff;
+    /* Darkest blue */
+  }
+
+  /* Y values (shades of pink) */
+  .y-value {
+    background-color: #ffe0f0;
+    /* Base light pink */
+  }
+
+  .y-bright-1 {
+    background-color: #fff0f8;
+    /* Lightest pink */
+  }
+
+  .y-bright-2 {
+    background-color: #ffd0e8;
+  }
+
+  .y-bright-3 {
+    background-color: #ffb0e0;
+  }
+
+  .y-bright-4 {
+    background-color: #ff90d8;
+    /* Darkest pink */
+  }
+
+ 
+</style>
+<h3>Visualization of the Proof</h3>
+
+<p>
+Here is a visualization to show the idea behind the proof. This table shows the joint probabilities \( P(X, Y) \) for two random variables \( X \) and \( Y \) that are not independent.
+</p>
+
+<!-- Joint Probability Table -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th rowspan="2">\( X \)</th>
+      <th colspan="2">\( Y \)</th>
+    </tr>
+    <tr>
+      <th>4</th>
+      <th>5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.1</td>
+      <td>0.3</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.2</td>
+      <td>0.4</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Computing E[X] -->
+<h5>Computing \( E[X] \) using joint probabilities:</h5>
+
+<p>A key insight from the proof is that we can compute $E[X]$ using values from the joint:
+\begin{align*}
+E[X] 
+&= \sum_{x} x P(X = x) \\
+&= \sum_{x} x \cdot \sum_{y} P(X = x, Y = y) \\
+&= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y) \\
+
+
+\end{align*}
+
+</p>
+
+<!-- E[X] Table -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>\( X \)</th>
+      <th>\( Y \)</th>
+      <th>\( P(X, Y) \)</th>
+      <th>\( x \cdot P(X, Y) \)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>4</td>
+      <td>0.1</td>
+      <td class="x-value x-bright-1">1 × 0.1 = 0.1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>5</td>
+      <td>0.3</td>
+      <td class="x-value x-bright-2">1 × 0.3 = 0.3</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>4</td>
+      <td>0.2</td>
+      <td class="x-value x-bright-3">2 × 0.2 = 0.4</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>5</td>
+      <td>0.4</td>
+      <td class="x-value x-bright-4">2 × 0.4 = 0.8</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Summing up the contributions:</p>
+
+<p>
+  \( E[X] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6 \)
+</p>
+
+<!-- Computing E[Y] -->
+<h4>Computing \( E[Y] \) using joint probabilities:</h4>
+
+<p>We compute \( E[Y] = \sum_{x} \sum_{y} y \cdot P(X = x, Y = y) \).</p>
+
+<!-- E[Y] Table -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>\( X \)</th>
+      <th>\( Y \)</th>
+      <th>\( P(X, Y) \)</th>
+      <th>\( y \cdot P(X, Y) \)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>4</td>
+      <td>0.1</td>
+      <td class="y-value y-bright-1">4 × 0.1 = 0.4</td>
+    </tr>
+    <td>1</td>
+    <td>5</td>
+    <td>0.3</td>
+    <td class="y-value y-bright-2">5 × 0.3 = 1.5</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>4</td>
+      <td>0.2</td>
+      <td class="y-value y-bright-3">4 × 0.2 = 0.8</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>5</td>
+      <td>0.4</td>
+      <td class="y-value y-bright-4">5 × 0.4 = 2.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Summing up the contributions:</p>
+
+<p>
+  \( E[Y] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7 \)
+</p>
+
+<!-- Computing E[X + Y] -->
+<h4>Computing \( E[X + Y] \) using joint probabilities:</h4>
+
+<p>We compute \( E[X + Y] = \sum_{x} \sum_{y} (x + y) \cdot P(X = x, Y = y) \).</p>
+
+<p>We expand \( (x + y) \cdot P(X, Y) \) into \( x \cdot P(X, Y) + y \cdot P(X, Y) \) and highlight the contributions:
+</p>
+
+<!-- E[X + Y] Table -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>\( X \)</th>
+      <th>\( Y \)</th>
+      <th>\( P(X, Y) \)</th>
+      <th>\( x \cdot P(X, Y) \)</th>
+      <th>\( y \cdot P(X, Y) \)</th>
+      <th>\( (x + y) \cdot P(X, Y) \)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>4</td>
+      <td>0.1</td>
+      <td class="x-value x-bright-1">0.1</td>
+      <td class="y-value y-bright-1">0.4</td>
+      <td>0.1 + 0.4 = 0.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>5</td>
+      <td>0.3</td>
+      <td class="x-value x-bright-2">0.3</td>
+      <td class="y-value y-bright-2">1.5</td>
+      <td>0.3 + 1.5 = 1.8</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>4</td>
+      <td>0.2</td>
+      <td class="x-value x-bright-3">0.4</td>
+      <td class="y-value y-bright-3">0.8</td>
+      <td>0.4 + 0.8 = 1.2</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>5</td>
+      <td>0.4</td>
+      <td class="x-value x-bright-4">0.8</td>
+      <td class="y-value y-bright-4">2.0</td>
+      <td>0.8 + 2.0 = 2.8</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Summing up the contributions:</p>
+
+<ul>
+  <li>Sum of \( x \cdot P(X, Y) \): <span class="x-value">0.1</span> + <span class="x-value">0.3</span> + <span
+      class="x-value">0.4</span> + <span class="x-value">0.8</span> = 1.6</li>
+  <li>Sum of \( y \cdot P(X, Y) \): <span class="y-value">0.4</span> + <span class="y-value">1.5</span> + <span
+      class="y-value">0.8</span> + <span class="y-value">2.0</span> = 4.7</li>
+  <li>Sum of \( (x + y) \cdot P(X, Y) \): \( 0.5 + 1.8 + 1.2 + 2.8 = 6.3 \) (This is \( E[X + Y] \))</li>
+</ul>
+
+<p>Note that for each term:</p>
+
+<p>
+  \( (x + y) \cdot P(X, Y) = x \cdot P(X, Y) + y \cdot P(X, Y) \)
+</p>
+
+<!-- Conclusion -->
+<h4>Conclusion:</h4>
+
+<p>
+  We can see that:
+</p>
+
+<p>
+  \( E[X] = 1.6 \), \( E[Y] = 4.7 \), and \( E[X + Y] = E[X] + E[Y] = 1.6 + 4.7 = 6.3 \).
+</p>
+
+<p>
+  By coloring the values with shades of light blue for \( x \cdot P(X, Y) \) and shades of pink for \( y \cdot P(X, Y)
+  \), and varying their brightness, it becomes clear how each term contributes to the expectations.
+</p>

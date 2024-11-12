@@ -1,8 +1,13 @@
-body {
+html, body {
   font-family: "Times New Roman", serif;
-  /*font-family: 'Source Serif Pro', serif;*/
-  /*font-family: 'Crimson Text', serif;*/
-  font-size: 18px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+}
+
+body {
+  font-size:18px;
 }
 
 @media print {
@@ -124,6 +129,7 @@ greyBackground as a style class)
 /* Style for the body of a handout page */
 .greyBackground{
   background-color: #555; /*#efefef*/
+  
 }
 /* When the handout drops bellow a threshold remove padding */
 @media (max-width: 1300px) {
@@ -334,7 +340,8 @@ purpleBox:
     background: #333;/*#7386D5;*/
     color: #ccc;
     transition: all 0.3s;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 #sidebar.active {
@@ -352,13 +359,11 @@ purpleBox:
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-.sidebar-header a {
-  
-}
 
 .sidebar-header a h3 {
   margin-top: 10px;
   color:white;
+  font-size:28px;
 }
 
 #sidebar ul.components {
@@ -408,6 +413,7 @@ a[data-toggle="collapse"] {
   margin-left: 10px;
   width: calc(100% - 30px);
   margin-top: 10px;
+  font-size: 16px;
       background: #444;
     border-color: black;
     color:white;
