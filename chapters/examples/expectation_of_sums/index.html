@@ -90,63 +90,67 @@
     /* Darkest pink */
   }
 
+  h4 {
+    margin-top: 30px;
+  }
+
  
 </style>
-<h3>Visualization of the Proof</h3>
+<h3>Demonstration of the Proof</h3>
 
 <p>
-Here is a visualization to show the idea behind the proof. This table shows the joint probabilities \( P(X, Y) \) for two random variables \( X \) and \( Y \) that are not independent.
+Here is an example to show the idea behind the proof. This table shows the joint probabilities $\P(X=x, Y=y)$ for two random variables \( X \) and \( Y \) that are not independent. You will see how computing $E[X+Y]$ is the sum of terms that are used in $E[X]$ and $E[Y]$.
 </p>
 
 <!-- Joint Probability Table -->
 <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th rowspan="2">\( X \)</th>
-      <th colspan="2">\( Y \)</th>
-    </tr>
-    <tr>
-      <th>4</th>
-      <th>5</th>
-    </tr>
-  </thead>
+
   <tbody>
     <tr>
-      <td>1</td>
+      <td></td>
+      <td>$Y = 4$</td>
+        <td>$Y = 5$</td>
+    </tr>
+    <tr>
+      <td>$X = 1$</td>
       <td>0.1</td>
       <td>0.3</td>
     </tr>
     <tr>
-      <td>2</td>
+      <td>$X = 2$</td>
       <td>0.2</td>
       <td>0.4</td>
     </tr>
   </tbody>
 </table>
 
-<!-- Computing E[X] -->
-<h5>Computing \( E[X] \) using joint probabilities:</h5>
+<p>Aside: These two random variables can each only take on two values. Having only four values in the joint table will make it easier to gain intuition.</p>
 
-<p>A key insight from the proof is that we can compute $E[X]$ using values from the joint:
+<!-- Computing E[X] -->
+<h4>Computing \( E[X] \) using joint probabilities:</h4>
+
+<p>A key insight from the proof is that we can compute $E[X]$ using values from the joint. To do this we are going to use <a href="{{pathToLang}}part3/marginalization">marginalization</a>:
+$$
+P(X = x) = \sum_{y} P(X = x, Y = y)
+$$
+We can expand $E[X]$ so that it is calculated only using values from the joint probability table:
 \begin{align*}
 E[X] 
-&= \sum_{x} x P(X = x) \\
-&= \sum_{x} x \cdot \sum_{y} P(X = x, Y = y) \\
-&= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y) \\
-
-
+&= \sum_{x} x \cdot P(X = x) \\
+&= \sum_{x} x \cdot \sum_{y} P(X = x, Y = y)  && \text{Marginalization of }X\\
+&= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y)&& \text{Distribute }y\\
 \end{align*}
-
 </p>
+
 
 <!-- E[X] Table -->
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>\( X \)</th>
-      <th>\( Y \)</th>
-      <th>\( P(X, Y) \)</th>
-      <th>\( x \cdot P(X, Y) \)</th>
+      <th>\( x \)</th>
+      <th>\( y \)</th>
+      <th>\( P(X=x, Y=y) \)</th>
+      <th>\( x \cdot P(X=x, Y=y) \)</th>
     </tr>
   </thead>
   <tbody>
@@ -177,25 +181,33 @@ E[X]
   </tbody>
 </table>
 
-<p>Summing up the contributions:</p>
 
 <p>
-  \( E[X] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6 \)
+  E[$X$] = <span class="x-value">0.1</span> + <span class="x-value">0.3</span> + <span
+      class="x-value">0.4</span> + <span class="x-value">0.8</span> = 1.6
 </p>
 
 <!-- Computing E[Y] -->
 <h4>Computing \( E[Y] \) using joint probabilities:</h4>
 
-<p>We compute \( E[Y] = \sum_{x} \sum_{y} y \cdot P(X = x, Y = y) \).</p>
+<p>Similarly, we can compute $E[Y]$ using only values from the joint: 
+
+  \begin{align*}
+E[Y] 
+&= \sum_{y} y \cdot P(Y = y) \\
+&= \sum_{x} y \cdot \sum_{x} P(X = x, Y = y)  && \text{Marginalization of }Y\\
+&= \sum_{x} \sum_{y} y \cdot P(X = x, Y = y)&& \text{Distribute }x\\
+\end{align*}
+</p>
 
 <!-- E[Y] Table -->
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>\( X \)</th>
-      <th>\( Y \)</th>
-      <th>\( P(X, Y) \)</th>
-      <th>\( y \cdot P(X, Y) \)</th>
+      <th>\( x \)</th>
+      <th>\( y \)</th>
+      <th>\( P(X=x, Y=y) \)</th>
+      <th>\( y \cdot P(X=x, Y=y) \)</th>
     </tr>
   </thead>
   <tbody>
@@ -225,30 +237,33 @@ E[X]
   </tbody>
 </table>
 
-<p>Summing up the contributions:</p>
-
-<p>
-  \( E[Y] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7 \)
+<p>E[$Y$] = <span class="y-value">0.4</span> + <span class="y-value">1.5</span> + <span
+  class="y-value">0.8</span> + <span class="y-value">2.0</span> = 4.7
 </p>
 
 <!-- Computing E[X + Y] -->
 <h4>Computing \( E[X + Y] \) using joint probabilities:</h4>
 
-<p>We compute \( E[X + Y] = \sum_{x} \sum_{y} (x + y) \cdot P(X = x, Y = y) \).</p>
-
-<p>We expand \( (x + y) \cdot P(X, Y) \) into \( x \cdot P(X, Y) + y \cdot P(X, Y) \) and highlight the contributions:
+<p>
+We can rewrite $E[X + Y]$ to be the sum of  terms used in the calculations of $E[X]$ and $E[Y]$ above:
+  \begin{align*}
+  E[X + Y] 
+  &= \sum_{x,y}(x + y) \cdot P(X = x, Y = y)\\
+  &= \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) 
+  \end{align*}
 </p>
 
-<!-- E[X + Y] Table -->
+
+<p>
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>\( X \)</th>
-      <th>\( Y \)</th>
-      <th>\( P(X, Y) \)</th>
-      <th>\( x \cdot P(X, Y) \)</th>
-      <th>\( y \cdot P(X, Y) \)</th>
-      <th>\( (x + y) \cdot P(X, Y) \)</th>
+      <th>\( x \)</th>
+      <th>\( y \)</th>
+      <th>\( P(x, y) \)</th>
+      <th>\( x \cdot P(x, y) \)</th>
+      <th>\( y \cdot P(x, y) \)</th>
+      <th>\( (x + y) \cdot P(x, y) \)</th>
     </tr>
   </thead>
   <tbody>
@@ -285,36 +300,52 @@ E[X]
       <td>0.8 + 2.0 = 2.8</td>
     </tr>
   </tbody>
-</table>
+</table></p>
+<p><i>Recall that $P(x, y)$ is shorthand for $P(X=x,Y=y)$.</i>
+</p> 
 
-<p>Summing up the contributions:</p>
 
-<ul>
-  <li>Sum of \( x \cdot P(X, Y) \): <span class="x-value">0.1</span> + <span class="x-value">0.3</span> + <span
-      class="x-value">0.4</span> + <span class="x-value">0.8</span> = 1.6</li>
-  <li>Sum of \( y \cdot P(X, Y) \): <span class="y-value">0.4</span> + <span class="y-value">1.5</span> + <span
-      class="y-value">0.8</span> + <span class="y-value">2.0</span> = 4.7</li>
-  <li>Sum of \( (x + y) \cdot P(X, Y) \): \( 0.5 + 1.8 + 1.2 + 2.8 = 6.3 \) (This is \( E[X + Y] \))</li>
-</ul>
-
-<p>Note that for each term:</p>
 
 <p>
-  \( (x + y) \cdot P(X, Y) = x \cdot P(X, Y) + y \cdot P(X, Y) \)
-</p>
 
-<!-- Conclusion -->
-<h4>Conclusion:</h4>
+  Using the above derivation of the formula for $E[X+Y]$ in terms of values from the joint probability table:
+
+  \begin{align*}
+  E[X + Y] = \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) 
+  \end{align*}
+
+  Plugging in values:<br/>
+
+  E[$X+Y$] =
+  <span class="x-value">0.1</span> + 
+  <span class="y-value">0.4</span> +
+  <span class="x-value">0.3</span> + 
+  <span class="y-value">1.5</span> +
+  <span class="x-value">0.4</span> + 
+  <span class="y-value">0.8</span> +
+  <span class="x-value">0.8</span> +
+  <span class="y-value">2.0</span>
+  = 6.3
+  </p>
+  <p>
+    We can observe that each of these values showed up exactly once when calculating $E[X]$ and $E[Y]$. This is why the proof works for any two random variables, even if they are not independent.
+    </p>
+    <p>
+
+E[$X$] = <span class="x-value">0.1</span> + <span class="x-value">0.3</span> + <span
+      class="x-value">0.4</span> + <span class="x-value">0.8</span> = 1.6<br/>
+ E[$Y$] = <span class="y-value">0.4</span> + <span class="y-value">1.5</span> + <span
+      class="y-value">0.8</span> + <span class="y-value">2.0</span> = 4.7<br/>
+
+    </p>
+
+
+
+
+
+
 
 <p>
-  We can see that:
-</p>
-
-<p>
-  \( E[X] = 1.6 \), \( E[Y] = 4.7 \), and \( E[X + Y] = E[X] + E[Y] = 1.6 + 4.7 = 6.3 \).
-</p>
-
-<p>
-  By coloring the values with shades of light blue for \( x \cdot P(X, Y) \) and shades of pink for \( y \cdot P(X, Y)
-  \), and varying their brightness, it becomes clear how each term contributes to the expectations.
+  Because they are summing the same values, it is no surprise that the sum of the expectations is equal to the expectation of the sum:
+ \( E[X + Y] = E[X] + E[Y] = 1.6 + 4.7 = 6.3 \)
 </p>
