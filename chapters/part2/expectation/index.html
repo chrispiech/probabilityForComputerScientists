@@ -92,25 +92,7 @@ def pmf_sum_two_dice(x):
 <h2>Expectation of Sums Proof</h2>
 <p>One of the most useful properties of expectation is that the sum of expectation of random variables can be calculated by summing the expectations of each random variable on its own. Later in <a href="{{pathToLang}}part4/summation_vars/">Adding Random Variables</a> we will learn that computing the full probability mass function (or probability density function) when adding random variables is quite hard, especially when the random variables are dependent. However the expectation of sums is always decomposable:
 $$E[X+Y] = E[X] + E[Y]$$
-This very useful result is somewhat suprising. I believe that the best way to understand this result is via a proof. This proof, however, will use some concepts from the next section in the course reader, Probabilistic Models. Notice how the proof never needs to assume that $X$ and $Y$ are independent, or have the same distribution. In this proof $X$ and $Y$ are discrete, but if you made them continuous you would just replace the sum with an integral:</p>
-
-\begin{align*}
-E&[X+Y] \\
-&= \sum_{x,y} (x+y) \p(X=x, Y=y) 
-  && \text{Expected value of a sum} \\
-&= \sum_{x,y} \Big[x \p(X=x, Y=y) +  y \p(X=x, Y=y) \Big]
-&& \text{Distributive property of sums}\\
-&= \sum_{x,y} x \p(X=x, Y=y) + \sum_{x,y} y \p(X=x, Y=y) 
-  && \text{Commutative property of sums}\\
-&= \sum_x\sum_y x \p(X=x, Y=y) + \sum_y\sum_x y \p(X=x, Y=y) 
-  && \text{Expanding sums} \\
-&= \sum_x x \sum_y  \p(X=x, Y=y) + \sum_y y \sum_x  \p(X=x, Y=y) 
-  && \text{Distributive property of sums} \\	  
-&= \sum_x x \p(X=x) + \sum_y y \p(Y=y) 
-  && \text{Marginalization} \\
-&= E[X] + E[Y] && \text{Definition of Expectation}
-\end{align*}
-
+This very useful result is somewhat suprising. I believe that the best way to understand this result is via a proof. This proof, however, will use some concepts from the next section in the course reader, Probabilistic Models. Once you have learned how to think about random variables jointly you will be able to understand this proof. There is a section of the reader that goes over the proof in details and gives of visualization for why it is true! <a href="{{pathToLang}}examples/expectation_of_sums/">Proof of Expectation of Sum of Random Variables</a>.</p>
 <h2>Example of Law of Unconcious Statistician</h2>
 
 <p>The property of expectation:
