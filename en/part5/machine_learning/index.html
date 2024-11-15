@@ -341,13 +341,13 @@
 <p>Machine Learning is the subfield of computer science that gives computers the ability to perform tasks without being explicitly programmed. There are several different tasks that fall under the domain of machine learning and several different algorithms for "learning". In this chapter, we are going to focus on Classification and two classic Classification algorithms: Naive Bayes and Logistic Regression.
 
 <h2>Classification</h2>
-<p>In classification tasks, your job is to use training data with feature/label pairs ($\mathbf{x}$, y) in order to estimate a function $\hat{y} = g(\mathbf{x})$. This function can then be used to make a prediction. In classification the value of $y$ takes on one of a \textbf{discrete} number of values. As such we often chose $g(\mathbf{x}) = \underset{y}{\operatorname{argmax }}\text{ }\hat{P}(Y=y|\mathbf{X})$.
+<p>In classification tasks, your job is to use training data with feature/label pairs ($\mathbf{x}$, y) in order to estimate a function $\hat{y} = g(\mathbf{x})$. This function can then be used to make a prediction. In classification the value of $y$ takes on one of a \textbf{discrete} number of values. As such we often chose $g(\mathbf{x}) = \underset{y}{\operatorname{argmax }}\text{ }\hat{P}(Y=y|\mathbf{X} = \mathbf{x})$.
 
  <p>In the classification task you are given $N$ training pairs:
  $(\mathbf{x}^{(1)},y^{(1)}), (\mathbf{x}^{(2)},y^{(2)}), \dots , (\mathbf{x}^{(N)},y^{(N)})$
  Where $\mathbf{x}^{(i)}$ is a vector of $m$ discrete features for the $i$th training example and $y^{(i)}$ is the discrete label for the $i$th training example.
  
- <p>In our introduction to machine learning, we are going to assume that all values in our training data-set are binary. While this is not a necessary assumption (both naive Bayes and logistic regression can work for non-binary data), it makes it much easier to learn the core concepts. Specifically we assume that all labels are binary $y^{(i)} \in \{0, 1\} \text{ }\forall i$ and all features are binary $x^{(i)}_j \in \{0, 1\} \text{ }\forall i, j$.
+ <p>In our introduction to machine learning, we are going to assume that all values in our training data-set are binary. While this is not a necessary assumption, it makes it much easier to learn the core concepts. Specifically we assume that all labels are binary $y^{(i)} \in \{0, 1\} \text{ }\forall i$ and all features are binary $x^{(i)}_j \in \{0, 1\} \text{ }\forall i, j$.
 
 
 

@@ -340,21 +340,21 @@
 
 <p>MLE is great, but it is not the only way to estimate parameters! This section introduces an alternate algorithm, Maximum A Posteriori (MAP).The paradigm of MAP is that we should chose the value for our parameters that is the most likely given the data. At first blush this might seem the same as MLE, however notice that MLE chooses the value of parameters that makes the \emph{data} most likely. Formally, for IID random variables $X_1, \dots, X_n$:
 \begin{align*}
-\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } f(\theta | X_1, X_2, \dots X_n) 
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } f(\Theta = \theta | X_1=x_1, X_2=x_2, \dots X_n=x_n) 
 \end{align*}
 In the equation above we trying to calculate the conditional probability of unobserved random variables given observed random variables. When that is the case, think Bayes Theorem! Expand the function $f$ using the continuous version of Bayes Theorem.
 \begin{align*}
-\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } f(\theta | X_1, X_2, \dots X_n) && \text{Now apply Bayes Theorem}\\
-=& \underset{\theta}{\operatorname{argmax }} \text{ } \frac{f(X_1, X_2, \dots, X_n | \theta) g(\theta)}{h(X_1, X_2, \dots X_n)} && \text{Ahh much better}
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } f(\Theta = \theta | X_1=x_1, X_2=x_2, \dots X_n=x_n) \\
+=& \underset{\theta}{\operatorname{argmax }} \text{ } \frac{f(X_1=x_1, X_2=x_2, \dots, X_n=x_n |\Theta = \theta) f(\Theta = \theta)}{f(X_1=x_1, X_2=x_2, \dots X_n=x_n)} && \text{Bayes}
 \end{align*}
-Note that $f, g$ and $h$ are all probability densities. I used different symbols to make it explicit that they may have different functions. Now we are going to leverage two observations. First, the data is assumed to be IID so we can decompose the density of the data given $\theta$. Second, the denominator is a constant with respect to $\theta$. As such its value does not affect the argmax and we can drop that term. Mathematically:
+Note that $f$ are all probability densities or probability mass functions. Now we are going to leverage two observations. First, the data is assumed to be IID so we can decompose the density of the data given $\theta$. Second, the denominator is a constant with respect to $\theta$. As such its value does not affect the argmax and we can drop that term. Mathematically:
 \begin{align*}
-\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } \frac{\prod_{i=1}^n f(X_i | \theta) g(\theta)}{h(X_1, X_2, \dots X_n)} && \text{Since the samples are IID}\\
-=& \underset{\theta}{\operatorname{argmax }} \text{ } \prod_{i=1}^n f(X_i | \theta) g(\theta) && \text{Since $h$ is constant with respect to $\theta$}
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } \frac{f(\Theta = \theta) \cdot \prod_{i=1}^n f(X_i =x_i| \Theta = \theta) }{f(X_1 = x_1, X_2 = x_2, \dots X_n = x_n)} && \text{Since the samples are IID}\\
+=& \underset{\theta}{\operatorname{argmax }} \text{ } f(\Theta = \theta) \cdot\prod_{i=1}^n f(X_i =x_i |\Theta =  \theta)  && \text{Denom. is constant with respect to $\theta$}
 \end{align*}
 As before, it will be more convenient to find the argmax of the log of the MAP function, which gives us the final form for MAP estimation of parameters.
 \begin{align*}
-\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } \left( \log (g(\theta)) + \sum_{i=1}^n \log(f(X_i | \theta)) \right)
+\theta_{\text{MAP}} =& \underset{\theta}{\operatorname{argmax }} \text{ } \left( \log f(\Theta = \theta) + \sum_{i=1}^n \log(f(X_i =x_i|\Theta = \theta)) \right)
 \end{align*}
 Using Bayesian terminology, the MAP estimate is the mode of the "posterior" distribution for $\theta$. If you look at this equation side by side with the MLE equation you will notice that MAP is the argmax of the exact same function \emph{plus} a term for the log of the prior.
 

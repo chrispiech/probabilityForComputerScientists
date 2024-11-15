@@ -10,17 +10,17 @@
 
 <h2>Likelihood</h2>
 
-<p>We made the assumption that our data are identically distributed. This means that they must have either the same probability mass function (if the data are discrete) or the same probability density function (if the data are continuous). To simplify our conversation about parameter estimation we are going to use the notation $f(X|\theta)$ to refer to this shared PMF or PDF. Our new notation is interesting in two ways. First, we have now included a conditional on $\theta$ which is our way of indicating that the likelihood of different values of $X$ depends on the values of our parameters. Second, we are going to use the same symbol $f$ for both discrete and continuous distributions.
+<p>We made the assumption that our data are identically distributed. This means that they must have either the same probability mass function (if the data are discrete) or the same probability density function (if the data are continuous). To simplify our conversation about parameter estimation we are going to use the notation $f(X=x|\Theta = \theta)$ to refer to this shared PMF or PDF. Our new notation is interesting in two ways. First, we have now included a conditional on $\theta$ which is our way of indicating that the likelihood of different values of $X$ depends on the values of our parameters. Second, we are going to use the same symbol $f$ for both discrete and continuous distributions.
 
 
 <p>What does likelihood mean and how is "likelihood" different than  "probability"? In the case of discrete distributions, likelihood is a synonym for the probability mass, or joint probability mass, of your data. In the case of continuous distribution, likelihood refers to the probability density of your data.
 
 <p>Since we assumed that each data point is independent, the likelihood of all of our data is the product of the likelihood of each data point. Mathematically, the likelihood of our data give parameters $\theta$ is:
 \begin{align*}
-    L(\theta) = \prod_{i=1}^n f(X_i|\theta)
+    L(\theta) = \prod_{i=1}^n f(X_i = x_i|\Theta = \theta)
 \end{align*}
 
-<p>For different values of parameters, the likelihood of our data will be different. If we have correct parameters our data will be much more probable than if we have incorrect parameters. For that reason we write likelihood as a function of our parameters ($\theta$).
+<p>For different values of parameters, the likelihood of our data will be different. If we have correct parameters our data will be much more probable than if we have incorrect parameters. For that reason we write likelihood as a function of our parameters ($\theta$). 
 
 <h2>Maximization</h2>
 
@@ -32,7 +32,10 @@
 
 <p>A cool property of argmax is that since log is a monotone function, the argmax of a function is the same as the argmax of the log of the function! That's nice because logs make the math simpler. If we find the argmax of the log of likelihood it will be equal to the armax of the likelihood. Thus for MLE we first write the Log Likelihood function ($LL$)
 \begin{align*}
-    LL(\theta) = \log L(\theta) = \log \prod_{i=1}^n f(X_i|\theta) = \sum_{i=1}^n \log f(X_i|\theta)
+    LL(\theta) 
+    &= \log L(\theta) \\
+    &= \log \prod_{i=1}^n f(X_i=x_i|\Theta = \theta) \\
+    &= \sum_{i=1}^n \log f(X_i = x_i|\Theta = \theta)
 \end{align*}
 
 <p>To use a maximum likelihood estimator, first write the log likelihood of the data given your parameters. Then chose the value of parameters that maximize the log likelihood function. Argmax can be computed in many ways. All of the methods that we cover in this class require computing the first derivative of the function.
