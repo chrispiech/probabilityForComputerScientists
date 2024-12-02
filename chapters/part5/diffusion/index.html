@@ -1,0 +1,256 @@
+% rebase('templates/chapter.html', title="Diffusion")
+
+<center>
+  <h1>Diffusion</h1>
+</center>
+<hr />
+
+<h3>Diffusion Task</h3>
+
+<p><b>Goal:</b> Create a model that can generate pictures of trees from the "tree photo distribution"</p>
+
+<p><b>Data:</b> Many pictures of trees:<br />
+
+  <img src="{{pathToRoot}}img/chapters/trees.jpg" class="mainFigureFull"></img>
+</p>
+
+<div style="height:20px"></div>
+
+<h3>Big Picture Idea</h3>
+
+<p>
+  Supplement your dataset by iteratively adding gaussian noise to pixels, then train a deep learning
+  model to remove noise.<br />
+  <img src="{{pathToRoot}}img/chapters/diffusionnoise.jpg" class="mainFigureFull"></img>
+  <p>A reasonable number of steps would be to add 10% noise each time step, so that after 10 timesteps each pixel is fully noise.</p>
+</p>
+
+<p>The key task is to train a deep neural network to predict the "denoised" value of pixels:</p>
+<img src="{{pathToRoot}}img/chapters/diffusiondenoise.jpg" class="mainFigureFull"></img>
+</p>
+
+<p>Loss: Mean squared error between the predicted pixels and the true color. Set the parameters of your neural network to minimize loss. Then you have a model which can remove 10% noise one step at a time. Start with random noise, then run it through your denoising neural network 10 times.</p>
+
+<!-- <h3>Theory</h3>
+<p>This simple algorithm is exactly the right thing to do! And a lot of it starts with the fact that we are adding in Gaussian noise! Let $x_t$ be a pixel value at time $t$ and let $x_{t+1}$ be the pixel value at time $t+1$. Adding in Gaussian noise can be formalized using the following equation:
+\begin{align*}
+x_{t+1} &:= x_t + n_t && n_t \sim N(0, 
+\sigma^2)
+\end{align*}</p>
+
+<p>
+<div class="bordered">
+ <b>Critical fact #1</b>: $x_{t-1} | x_t$ is also Gaussian!<br/>
+ 
+  A very not obvious result is that, if $\sigma$ is small enough, $x_{t-1} | x_t$ is well approximated by a Gaussian distribution. This is a critical fact that makes the diffusion algorithm work. The gaussian has a known variance, but an unknown mean. 
+
+  $$
+  x_{t-1}|x_t \sim N(\mu_{t-1}(x_t), \sigma^2)
+  $$
+ 
+  That is great news. As a result of this surprising fact we can conclude that in order to know the entire distribution of $x_{t-1}$, we only need to estimate a single number, which we denote $\mu_{t-1}(x_t)$.
+</div>
+</p>
+
+<p>
+<div class="bordered">
+  <b>Critical fact #2</b>: Standard regression is all you need!<br/>
+
+  <p>If we build a neural network to estimate $\mu_{t-1}(x_t)$ we should judge how good it is by seeing how the resulting normal distribution matches the true distribution. That difference in distributions can be measured as 
+    KL divergence. Happily, in this case minimizing KL divergence is the same as minimizing mean squared error between the predicted pixel and the true pixel. So we can train a neural network to minimize mean squared error and we are done!</p>
+  </p>
+ </div>
+</p> -->
+
+<div style="height:20px"></div>
+
+<h3>Theory Behind Diffusion Models</h3>
+
+<p>The magic of diffusion models lies in the Gaussian noise process. Let’s break it down:</p>
+
+
+<h4>1. Adding Noise: The Forward Process</h4>
+<p>
+At each step \( t \), we add Gaussian noise to the pixel values:
+\[
+x_{t+1} = x_t + n_t \quad \text{where } n_t \sim N(0, \sigma^2).
+\]
+This gradually turns the original image into pure noise.
+</p>
+
+
+<div style="height:20px"></div>
+
+
+<h4>2. Removing Noise: The Reverse Process</h4>
+
+<p>To reverse this process, we need the conditional distribution \( x_{t-1} | x_t \). Here’s the surprising part:</p>
+
+<div class="bordered">
+<b>Critical Fact #1:</b> \( x_{t-1} | x_t \) is Gaussian with known variance<br/>
+
+<p>
+If the noise variance \( \sigma^2 \) is small enough, the distribution of \( x_{t-1} | x_t \) can be approximated as:
+\[
+x_{t-1} | x_t \sim N(\mu_{t-1}(x_t), \sigma^2),
+\]
+where:
+<ul>
+  <li>\( \mu_{t-1}(x_t) \): The mean of the Gaussian, which depends on \( x_t \).</li>
+  <li>\( \sigma^2 \): The known variance of the noise.</li>
+</ul>
+This is great news! It means we only need to estimate the mean \( \mu_{t-1}(x_t) \) to fully describe \( x_{t-1} | x_t \).
+</p>
+</div>
+
+<div style="height:20px"></div>
+
+<h4>3. Training the Neural Network</h4>
+<div class="bordered">
+<b>Critical Fact #2:</b> Standard regression is all you need!<br/>
+
+<p>
+To train the neural network, we need it to predict \( \mu_{t-1}(x_t) \), the mean of the Gaussian. How do we measure the quality of the predictions?
+</p>
+
+<p>
+The difference between the predicted Gaussian \( q_\theta(x_{t-1} | x_t) \) (from the neural network) and the true Gaussian \( p(x_{t-1} | x_t) \) can be measured by the <b>KL divergence</b>. Happily in this case:
+\[
+\text{Minimizing KL divergence } \Leftrightarrow \text{Minimizing mean squared error (MSE)}.
+\]
+This is only true because the distributions are Gaussian. Thus, we can simply train the neural network to minimize the MSE between its prediction of pixel values ($\mu_{t-1}(x_t) $) and the true pixel values.
+</p>
+
+<p>Once trained, the neural network can iteratively denoise an image, starting with random noise, until it generates a clear, realistic image.</p>
+</div>
+
+<div style="height:20px"></div>
+
+
+<h4>4. The Complete Diffusion Algorithm</h4>
+<p>Here’s the full workflow for a diffusion model:</p>
+<ol>
+  <li><b>Forward process:</b> Add Gaussian noise to turn images into pure noise.</li>
+  <li><b>Reverse process:</b> Train a neural network to predict the mean \( \mu_{t-1}(x_t) \) and remove noise step-by-step.</li>
+  <li><b>Image generation:</b> Start with random noise and run the neural network in reverse \( T \) times to generate a realistic image.</li>
+</ol>
+
+<p>This elegant approach combines simple Gaussian noise with the power of deep learning to generate stunning results!</p>
+
+<div style="height:20px"></div>
+<hr/>
+
+<div style="height:40px"></div>
+
+<h3>Proof Sketch of Critical Idea #1</h3>
+
+
+<p>
+<b>Claim:</b> \( x_{t-1} | x_t \) is approximately Gaussian when the noise variance \( \sigma^2 \) is small enough.
+</p>
+
+<p>We start with Bayes' theorem to express the conditional probability:
+\[
+\p(x_{t-1} | x_t) = \frac{ \p(x_t | x_{t-1}) \p(x_{t-1}) }{ \p(x_t) }
+\]
+
+We are going to think about the log of this expression. This is because the log of a Gaussian is a quadratic function, which will make our math easier. We can write:
+
+\[
+\log \p(x_{t-1} | x_t) = \log \p(x_t | x_{t-1}) + \log \p(x_{t-1}) - \log \p(x_t)
+\]
+
+Let's break down the terms in this expression.<br/><br/>
+
+<b>Forward process likelihood:</b><br/> From the forward process, \( x_t \) given \( x_{t-1} \) is Gaussian:
+\[
+\p(x_t | x_{t-1}) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{(x_t - x_{t-1})^2}{2 \sigma^2}\right).
+\]
+Taking the log, we get:
+\[
+\log \p(x_t | x_{t-1}) = -\frac{(x_t - x_{t-1})^2}{2 \sigma^2} + \text{constant}
+\]
+
+<b>Prior on \( x_{t-1} \):</b><br/> The prior \( p(x_{t-1}) \) is the probability of \( x_{t-1} \) at the previous step. This one is hard to know! What is the prior distribution of a pixel of a tree? However we employ a really neat trick. Its log-density can be Taylor expanded around \( x_t \), assuming \( x_{t-1} \) is close to \( x_t \):
+\[
+\log \p(x_{t-1}) \approx \log \p(x_t) + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)
+\]
+
+
+<b>Completing the square:</b><br/> 
+There are two terms in the above expressions involving the difference between  $x_{t-1}$ and $x_t$. As a helpful step, we will complete the square for these terms.
+<div class="purpleBox">
+ Complete the square for this sum of terms:
+
+\[
+-\frac{(x_t - x_{t-1})^2}{2 \sigma^2} + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)
+\]
+
+First, rewrite \( (x_t - x_{t-1})^2 \):
+\[
+(x_t - x_{t-1})^2 = (x_{t-1} - x_t)^2
+\]
+Allowing us to rewrite our sum as:
+\[
+-\frac{1}{2 \sigma^2} (x_{t-1} - x_t)^2 + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)
+\]
+</p>
+
+<p> 
+
+
+Factor out \( -\frac{1}{2 \sigma^2} \) to make the quadratic term more explicit:
+\[
+-\frac{1}{2 \sigma^2} \left[ (x_{t-1} - x_t)^2 - 2 \sigma^2 \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t) \right]
+\]
+</p>
+
+<p>
+The expression inside the brackets is a quadratic expression in \( (x_{t-1} - x_t) \). Let’s complete the square for:
+\[
+(x_{t-1} - x_t)^2 - 2 \sigma^2 \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)
+\]
+</p>
+
+<p>
+This allows us to rewrite the quadratic expression as:
+\[
+\left[ (x_{t-1} - x_t) - \sigma^2 \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right]^2 - \left( \sigma^2 \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right)^2
+\]
+</p>
+
+</div>
+
+Substitute this back. Let $K$ stand in for $\text{constant}$:
+
+\begin{align*}
+\log \p(x_{t-1} | x_t) 
+&= \log \p(x_t | x_{t-1}) + \log \p(x_{t-1}) - \log \p(x_t) \\
+&= -\frac{(x_t - x_{t-1})^2}{2 \sigma^2} + \Big(\log \p(x_t) + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)\Big) - \log \p(x_t) +  K \\
+&= -\frac{(x_t - x_{t-1})^2}{2 \sigma^2} + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)+  K \\
+&= -\frac{1}{2 \sigma^2} \left[ \left( x_{t-1} - x_t - \sigma^2 \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right)^2 \right] + K
+\end{align*}
+</p>
+
+
+<p>
+<b>Final Result:</b>  
+Recall that the log of the gaussian PMF looks like this:
+<div class="purpleBox">
+  Let $X \sim N(\mu, \sigma^2)$. What is the log of the PMF of $X$?
+  $$\log \P(X=x) = -\frac{1}{2 \sigma^2}  (x - \mu)^2 + K$$
+</div>
+
+From the above, we see that \( x_{t-1} | x_t \) is Gaussian. How do we know this? The distribution is identical, up to additive factors, to the log-density of a Normal distribution.
+\[
+x_{t-1} | x_t \sim N\left( \mu_{t-1}, \sigma^2 \right),
+\]
+where:
+\[
+\mu_{t-1} = x_t + \sigma^2\Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big]
+\]
+The variance remains \( \sigma^2 \), which is fixed from the forward process.  
+</p>
+
+
+

@@ -126,7 +126,8 @@
 			"map":"Maximum A Posteriori",
 			"machine_learning":"Machine Learning",
 			"naive_bayes":"Naïve Bayes",
-			"log_regression":"Logistic Regression"
+			"log_regression":"Logistic Regression",
+			"diffusion":"Diffusion"
 		},
 		"examples": {
 			"mle_demo":"MLE Normal Demo",
